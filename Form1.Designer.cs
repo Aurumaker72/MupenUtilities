@@ -39,6 +39,7 @@ namespace MupenUtils
             this.st_Status1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.gp_input = new System.Windows.Forms.GroupBox();
+            this.btn_PlayPause = new System.Windows.Forms.Button();
             this.chk_Cright = new System.Windows.Forms.CheckBox();
             this.chk_Cdown = new System.Windows.Forms.CheckBox();
             this.chk_Cleft = new System.Windows.Forms.CheckBox();
@@ -48,6 +49,7 @@ namespace MupenUtils
             this.chk_Up = new System.Windows.Forms.CheckBox();
             this.chk_Cup = new System.Windows.Forms.CheckBox();
             this.chk_R = new System.Windows.Forms.CheckBox();
+            this.chk_Z = new System.Windows.Forms.CheckBox();
             this.chk_L = new System.Windows.Forms.CheckBox();
             this.Chk_start = new System.Windows.Forms.CheckBox();
             this.chk_B = new System.Windows.Forms.CheckBox();
@@ -57,7 +59,6 @@ namespace MupenUtils
             this.btn_FrameFront = new System.Windows.Forms.Button();
             this.btn_FrameBack2 = new System.Windows.Forms.Button();
             this.btn_FrameBack = new System.Windows.Forms.Button();
-            this.pb_JoystickPanel = new System.Windows.Forms.PictureBox();
             this.gp_User = new System.Windows.Forms.GroupBox();
             this.txt_PathName = new System.Windows.Forms.TextBox();
             this.lbl_Name = new System.Windows.Forms.Label();
@@ -96,13 +97,12 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
-            this.btn_PlayPause = new System.Windows.Forms.Button();
-            this.chk_Z = new System.Windows.Forms.CheckBox();
+            this.st_Status2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btn_Loop = new System.Windows.Forms.Button();
             this.gb_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_input.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPanel)).BeginInit();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
@@ -180,7 +180,8 @@ namespace MupenUtils
             // st_Status
             // 
             this.st_Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.st_Status1});
+            this.st_Status1,
+            this.st_Status2});
             this.st_Status.Location = new System.Drawing.Point(0, 422);
             this.st_Status.Name = "st_Status";
             this.st_Status.Size = new System.Drawing.Size(671, 22);
@@ -210,6 +211,7 @@ namespace MupenUtils
             // 
             // gp_input
             // 
+            this.gp_input.Controls.Add(this.btn_Loop);
             this.gp_input.Controls.Add(this.btn_PlayPause);
             this.gp_input.Controls.Add(this.chk_Cright);
             this.gp_input.Controls.Add(this.chk_Cdown);
@@ -230,13 +232,23 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.btn_FrameFront);
             this.gp_input.Controls.Add(this.btn_FrameBack2);
             this.gp_input.Controls.Add(this.btn_FrameBack);
-            this.gp_input.Controls.Add(this.pb_JoystickPanel);
             this.gp_input.Location = new System.Drawing.Point(424, 24);
             this.gp_input.Name = "gp_input";
             this.gp_input.Size = new System.Drawing.Size(240, 296);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input [WIP]";
+            // 
+            // btn_PlayPause
+            // 
+            this.btn_PlayPause.Location = new System.Drawing.Point(112, 264);
+            this.btn_PlayPause.Name = "btn_PlayPause";
+            this.btn_PlayPause.Size = new System.Drawing.Size(24, 23);
+            this.btn_PlayPause.TabIndex = 0;
+            this.btn_PlayPause.TabStop = false;
+            this.btn_PlayPause.Text = "| |";
+            this.btn_PlayPause.UseVisualStyleBackColor = true;
+            this.btn_PlayPause.Click += new System.EventHandler(this.btn_PlayPause_Click);
             // 
             // chk_Cright
             // 
@@ -337,7 +349,7 @@ namespace MupenUtils
             // chk_R
             // 
             this.chk_R.AutoSize = true;
-            this.chk_R.Location = new System.Drawing.Point(176, 144);
+            this.chk_R.Location = new System.Drawing.Point(152, 160);
             this.chk_R.Name = "chk_R";
             this.chk_R.Size = new System.Drawing.Size(34, 17);
             this.chk_R.TabIndex = 0;
@@ -345,10 +357,21 @@ namespace MupenUtils
             this.chk_R.Text = "R";
             this.chk_R.UseVisualStyleBackColor = true;
             // 
+            // chk_Z
+            // 
+            this.chk_Z.AutoSize = true;
+            this.chk_Z.Location = new System.Drawing.Point(72, 152);
+            this.chk_Z.Name = "chk_Z";
+            this.chk_Z.Size = new System.Drawing.Size(33, 17);
+            this.chk_Z.TabIndex = 0;
+            this.chk_Z.TabStop = false;
+            this.chk_Z.Text = "Z";
+            this.chk_Z.UseVisualStyleBackColor = true;
+            // 
             // chk_L
             // 
             this.chk_L.AutoSize = true;
-            this.chk_L.Location = new System.Drawing.Point(128, 160);
+            this.chk_L.Location = new System.Drawing.Point(112, 168);
             this.chk_L.Name = "chk_L";
             this.chk_L.Size = new System.Drawing.Size(32, 17);
             this.chk_L.TabIndex = 0;
@@ -370,7 +393,7 @@ namespace MupenUtils
             // chk_B
             // 
             this.chk_B.AutoSize = true;
-            this.chk_B.Location = new System.Drawing.Point(160, 192);
+            this.chk_B.Location = new System.Drawing.Point(152, 200);
             this.chk_B.Name = "chk_B";
             this.chk_B.Size = new System.Drawing.Size(33, 17);
             this.chk_B.TabIndex = 0;
@@ -407,6 +430,7 @@ namespace MupenUtils
             this.btn_FrameFront2.TabStop = false;
             this.btn_FrameFront2.Text = ">>";
             this.btn_FrameFront2.UseVisualStyleBackColor = true;
+            this.btn_FrameFront2.Click += new System.EventHandler(this.btn_FrameFront2_Click);
             // 
             // btn_FrameFront
             // 
@@ -428,6 +452,7 @@ namespace MupenUtils
             this.btn_FrameBack2.TabStop = false;
             this.btn_FrameBack2.Text = "<<";
             this.btn_FrameBack2.UseVisualStyleBackColor = true;
+            this.btn_FrameBack2.Click += new System.EventHandler(this.btn_FrameBack2_Click);
             // 
             // btn_FrameBack
             // 
@@ -438,15 +463,7 @@ namespace MupenUtils
             this.btn_FrameBack.TabStop = false;
             this.btn_FrameBack.Text = "<";
             this.btn_FrameBack.UseVisualStyleBackColor = true;
-            // 
-            // pb_JoystickPanel
-            // 
-            this.pb_JoystickPanel.BackColor = System.Drawing.Color.Transparent;
-            this.pb_JoystickPanel.Location = new System.Drawing.Point(112, 24);
-            this.pb_JoystickPanel.Name = "pb_JoystickPanel";
-            this.pb_JoystickPanel.Size = new System.Drawing.Size(120, 105);
-            this.pb_JoystickPanel.TabIndex = 0;
-            this.pb_JoystickPanel.TabStop = false;
+            this.btn_FrameBack.Click += new System.EventHandler(this.btn_FrameBack_Click);
             // 
             // gp_User
             // 
@@ -828,26 +845,22 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
-            // btn_PlayPause
+            // st_Status2
             // 
-            this.btn_PlayPause.Location = new System.Drawing.Point(112, 264);
-            this.btn_PlayPause.Name = "btn_PlayPause";
-            this.btn_PlayPause.Size = new System.Drawing.Size(24, 23);
-            this.btn_PlayPause.TabIndex = 0;
-            this.btn_PlayPause.TabStop = false;
-            this.btn_PlayPause.Text = "| |";
-            this.btn_PlayPause.UseVisualStyleBackColor = true;
+            this.st_Status2.Name = "st_Status2";
+            this.st_Status2.Size = new System.Drawing.Size(67, 17);
+            this.st_Status2.Text = "1234567890";
             // 
-            // chk_Z
+            // btn_Loop
             // 
-            this.chk_Z.AutoSize = true;
-            this.chk_Z.Location = new System.Drawing.Point(88, 136);
-            this.chk_Z.Name = "chk_Z";
-            this.chk_Z.Size = new System.Drawing.Size(33, 17);
-            this.chk_Z.TabIndex = 0;
-            this.chk_Z.TabStop = false;
-            this.chk_Z.Text = "Z";
-            this.chk_Z.UseVisualStyleBackColor = true;
+            this.btn_Loop.Location = new System.Drawing.Point(8, 264);
+            this.btn_Loop.Name = "btn_Loop";
+            this.btn_Loop.Size = new System.Drawing.Size(24, 23);
+            this.btn_Loop.TabIndex = 0;
+            this.btn_Loop.TabStop = false;
+            this.btn_Loop.Text = "🔁";
+            this.btn_Loop.UseVisualStyleBackColor = true;
+            this.btn_Loop.Click += new System.EventHandler(this.btn_Loop_Click);
             // 
             // MainForm
             // 
@@ -869,7 +882,6 @@ namespace MupenUtils
             this.gp_M64.ResumeLayout(false);
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPanel)).EndInit();
             this.gp_User.ResumeLayout(false);
             this.gp_User.PerformLayout();
             this.gpRom.ResumeLayout(false);
@@ -933,7 +945,6 @@ namespace MupenUtils
         private System.Windows.Forms.GroupBox gpRom;
         private System.Windows.Forms.Button btn_Override;
         private System.Windows.Forms.GroupBox gp_input;
-        private System.Windows.Forms.PictureBox pb_JoystickPanel;
         private System.Windows.Forms.Button btn_FrameBack;
         private System.Windows.Forms.Button btn_FrameFront;
         private System.Windows.Forms.Button btn_FrameFront2;
@@ -954,6 +965,8 @@ namespace MupenUtils
         private System.Windows.Forms.CheckBox chk_Up;
         private System.Windows.Forms.Button btn_PlayPause;
         private System.Windows.Forms.CheckBox chk_Z;
+        private System.Windows.Forms.ToolStripStatusLabel st_Status2;
+        private System.Windows.Forms.Button btn_Loop;
     }
 }
 

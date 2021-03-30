@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -15,12 +14,14 @@ namespace MupenUtils
         
         string Path;
         bool FileLoaded = true;
+        bool loopInputs = true;
 
         // M64 Data as Strings
         string Magic;
         string Version;
         string UID;
         UInt32 VIs;
+        UInt32 frames;
         string RRs;
         string Controllers;
         string StartType;
@@ -40,6 +41,7 @@ namespace MupenUtils
         public CheckBox[] controllerbuttons;
         List<int> inputList = new List<int>();
         int frame;
+        System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
 
         public MainForm()
         {
@@ -61,42 +63,44 @@ namespace MupenUtils
         void InitController()
         {
             controllerbuttons = new CheckBox[] {
-            chk_Right,  // R_DPAD
-            chk_Left,   // L_DPAD
-            chk_Down,   // D_DPAD
-            chk_Up,     // U_DPAD
-            Chk_start,  // START_BUTTON
-            chk_Z,      // Z_TRIG
-            chk_B,      // B_BUTTON    
-            chk_A,      // A_BUTTON    
+            chk_Right,  // R_DPAD              (CONTROL)
+            chk_Left,   // L_DPAD              (CONTROL)
+            chk_Down,   // D_DPAD              (CONTROL)
+            chk_Up,     // U_DPAD              (CONTROL)
 
+            Chk_start,  // START_BUTTON        (CONTROL)
+            chk_Z,      // Z_TRIG              (CONTROL)
+            chk_B,      // B_BUTTON            (CONTROL)
+            chk_A,      // A_BUTTON            (CONTROL)
 
-            chk_Cright, // R_CBUTTON
-            chk_Cleft,  // L_CBUTTON    
-            chk_Cdown,  //D_CBUTTON    
-            chk_Up,     //U_CBUTTON    
-            
-            
-            
-            chk_R,      //R_TRIG
-            chk_L       //L_TRIG
+            chk_Cright, // R_CBUTTON           (CONTROL)
+            chk_Cleft,  // L_CBUTTON           (CONTROL)
+            chk_Cdown,  //D_CBUTTON            (CONTROL)
+            chk_Up,     //U_CBUTTON            (CONTROL)
+
+            chk_R,      //R_TRIG               (CONTROL)
+            chk_L       //L_TRIG               (CONTROL)
         };
 
+            stepFrameTimer.Tick += new EventHandler(AdvanceInputAuto);
+            stepFrameTimer.Interval = 32; // 30 fps
+            stepFrameTimer.Stop();
         }
+        
         void InitUI()
         {
-            st_Status1.Text = "";
+            st_Status1.Text = st_Status2.Text = "";
             rb_M64sel.Checked = true;
             EnableM64View(false,true);
         }
 
-        void ShowStatus(string msg)
+        void ShowStatus(string msg, ToolStripStatusLabel ctl)
         {
-            st_Status1.Text = msg;
+            ctl.Text = msg;
             new Thread(() =>
                {
                Thread.Sleep(2000);
-               st_Status1.Text = ""; // This is NOT thread-safe. HOW DOES THIS NOT CRASH?!?!?! 
+               ctl.Text = ""; // This is NOT thread-safe. HOW DOES THIS NOT CRASH?!?!?! 
                }).Start();
         }
         void RedControl(Control ctrl)
@@ -127,11 +131,11 @@ namespace MupenUtils
         }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
-            ShowStatus("Selecting movie...");
+            ShowStatus("Selecting movie...",st_Status1);
             object[] result = UIHelper.ShowFileDialog(true, rb_M64sel.Checked);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
             {
-                ShowStatus("Cancelled movie selection");
+                ShowStatus("Cancelled movie selection",st_Status1);
                 return;
             }
 
@@ -233,13 +237,13 @@ namespace MupenUtils
         }
         void LoadM64()
         {
-            ShowStatus("Loading M64");
+            ShowStatus("Loading M64",st_Status1);
 
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
             if(len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64",StringComparison.InvariantCultureIgnoreCase))
             {
-                ShowStatus("Invalid M64");
+                ShowStatus("Invalid M64",st_Status1);
                 txt_Path.Text = Path = string.Empty;
                 this.ActiveControl = null;
                 RedControl(btn_PathSel);
@@ -294,13 +298,12 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
             Debug.WriteLine("VI/s:" + VIs);
-            UInt32 frames = VIs / 2;
+            frames = VIs / 2;
             for (int i = 0; i <= frames; i++)
             {
                 Debug.WriteLine("--- Sample " + i + "/" + frames + " ---");
                 inputList.Add(br.ReadInt32());
             }
-
 
             br.Close(); // destroy handle
 
@@ -330,26 +333,26 @@ namespace MupenUtils
 
             
 
-            ShowStatus("Loaded M64");
+            ShowStatus("Loaded M64",st_Status1);
         }
 
         void LoadST()
         {
             // WIP...
-            ShowStatus("ST Loading not implemented yet");
+            ShowStatus("ST Loading not implemented yet",st_Status1);
         }
 
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
         {
             if(!txt_Path.ReadOnly)
             txt_Path.ReadOnly = true;
-            ShowStatus("Type: M64");
+            ShowStatus("Type: M64",st_Status1);
         }
         private void rb_STsel_MouseDown(object sender, MouseEventArgs e)
         {
             if(!txt_Path.ReadOnly)
             txt_Path.ReadOnly = true;
-            ShowStatus("Type: Savestate");
+            ShowStatus("Type: Savestate",st_Status1);
         }
 
 
@@ -385,22 +388,96 @@ namespace MupenUtils
             }
             return value;
         }
-        void SetChkboxes(int value)
+        void SetInput(int value)
         {
-            for (int i = 0; i < controllerbuttons.Length; i++)
+            int numbuttons = controllerbuttons.Length; // wip
+            for (int i = 0; i < numbuttons; i++)
             {
-                controllerbuttons[i].Checked = Convert.ToBoolean(value & (int)Math.Pow(2, i));
+                 controllerbuttons[i].Checked = Convert.ToBoolean(value & (int)Math.Pow(2, i));   
             }
         }
-        void StepFrame()
+        bool checkAllowedStep(int stepAmount)
         {
-            frame++;
+            if(frame > frames || frame < 0)
+            {
+                frame = (int)frames;
+                if(loopInputs)
+                {
+                    if(frame >= frames)
+                    {
+                        frame = 0;
+                    }else if(frame < 0)
+                    {
+                        frame = (int)frames;
+                    }
+                }
+                lbl_FrameSelected.ForeColor = Color.Red;
+                lbl_FrameSelected.Text = "Frame " + frame;
+                return false;
+            }
+            return true;
+        }
+        void StepFrame(int stepAmount)
+        {
+            frame += stepAmount;
+            if (!checkAllowedStep(stepAmount)) return;
             lbl_FrameSelected.Text = "Frame " + frame;
-            SetChkboxes(inputList[frame]);
+            lbl_FrameSelected.ForeColor = Color.Black;
+            SetInput(inputList[frame]);
         }
         private void btn_FrameFront_Click(object sender, EventArgs e)
         {
-            StepFrame();
+            StepFrame(1);
+        }
+
+        private void btn_FrameFront2_Click(object sender, EventArgs e)
+        {
+            StepFrame(2);
+        }
+
+        private void btn_FrameBack_Click(object sender, EventArgs e)
+        {
+            StepFrame(-1);
+        }
+
+        private void btn_FrameBack2_Click(object sender, EventArgs e)
+        {
+            StepFrame(-2);
+        }
+
+        private void btn_PlayPause_Click(object sender, EventArgs e)
+        {
+            // Toggle timer
+            if (stepFrameTimer.Enabled)
+            {
+                stepFrameTimer.Enabled = false;
+                btn_PlayPause.Text = ">";
+            }
+            else
+            {
+                stepFrameTimer.Enabled = true;
+                btn_PlayPause.Text = "| |";
+            }
+            ShowStatus("Timer enabled: " + stepFrameTimer.Enabled,st_Status2);
+        }
+        void AdvanceInputAuto(object obj, EventArgs e)
+        {
+            StepFrame(1);
+        }
+
+        private void btn_Loop_Click(object sender, EventArgs e)
+        {
+            this.ActiveControl = null;
+            if (loopInputs)
+            {
+                loopInputs = false;
+                btn_Loop.Text = "➡️";
+            }
+            else
+            {                
+                loopInputs = true;
+                btn_Loop.Text = "🔁";
+            }
         }
     }
 }
