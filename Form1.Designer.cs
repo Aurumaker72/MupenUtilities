@@ -96,6 +96,8 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
+            this.btn_PlayPause = new System.Windows.Forms.Button();
+            this.chk_Z = new System.Windows.Forms.CheckBox();
             this.gb_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -208,6 +210,7 @@ namespace MupenUtils
             // 
             // gp_input
             // 
+            this.gp_input.Controls.Add(this.btn_PlayPause);
             this.gp_input.Controls.Add(this.chk_Cright);
             this.gp_input.Controls.Add(this.chk_Cdown);
             this.gp_input.Controls.Add(this.chk_Cleft);
@@ -217,6 +220,7 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.chk_Up);
             this.gp_input.Controls.Add(this.chk_Cup);
             this.gp_input.Controls.Add(this.chk_R);
+            this.gp_input.Controls.Add(this.chk_Z);
             this.gp_input.Controls.Add(this.chk_L);
             this.gp_input.Controls.Add(this.Chk_start);
             this.gp_input.Controls.Add(this.chk_B);
@@ -396,7 +400,7 @@ namespace MupenUtils
             // 
             // btn_FrameFront2
             // 
-            this.btn_FrameFront2.Location = new System.Drawing.Point(168, 264);
+            this.btn_FrameFront2.Location = new System.Drawing.Point(176, 264);
             this.btn_FrameFront2.Name = "btn_FrameFront2";
             this.btn_FrameFront2.Size = new System.Drawing.Size(40, 23);
             this.btn_FrameFront2.TabIndex = 0;
@@ -406,17 +410,18 @@ namespace MupenUtils
             // 
             // btn_FrameFront
             // 
-            this.btn_FrameFront.Location = new System.Drawing.Point(136, 264);
+            this.btn_FrameFront.Location = new System.Drawing.Point(144, 264);
             this.btn_FrameFront.Name = "btn_FrameFront";
             this.btn_FrameFront.Size = new System.Drawing.Size(27, 23);
             this.btn_FrameFront.TabIndex = 0;
             this.btn_FrameFront.TabStop = false;
             this.btn_FrameFront.Text = ">";
             this.btn_FrameFront.UseVisualStyleBackColor = true;
+            this.btn_FrameFront.Click += new System.EventHandler(this.btn_FrameFront_Click);
             // 
             // btn_FrameBack2
             // 
-            this.btn_FrameBack2.Location = new System.Drawing.Point(40, 264);
+            this.btn_FrameBack2.Location = new System.Drawing.Point(32, 264);
             this.btn_FrameBack2.Name = "btn_FrameBack2";
             this.btn_FrameBack2.Size = new System.Drawing.Size(40, 23);
             this.btn_FrameBack2.TabIndex = 0;
@@ -426,7 +431,7 @@ namespace MupenUtils
             // 
             // btn_FrameBack
             // 
-            this.btn_FrameBack.Location = new System.Drawing.Point(88, 264);
+            this.btn_FrameBack.Location = new System.Drawing.Point(80, 264);
             this.btn_FrameBack.Name = "btn_FrameBack";
             this.btn_FrameBack.Size = new System.Drawing.Size(27, 23);
             this.btn_FrameBack.TabIndex = 0;
@@ -823,6 +828,27 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
+            // btn_PlayPause
+            // 
+            this.btn_PlayPause.Location = new System.Drawing.Point(112, 264);
+            this.btn_PlayPause.Name = "btn_PlayPause";
+            this.btn_PlayPause.Size = new System.Drawing.Size(24, 23);
+            this.btn_PlayPause.TabIndex = 0;
+            this.btn_PlayPause.TabStop = false;
+            this.btn_PlayPause.Text = "| |";
+            this.btn_PlayPause.UseVisualStyleBackColor = true;
+            // 
+            // chk_Z
+            // 
+            this.chk_Z.AutoSize = true;
+            this.chk_Z.Location = new System.Drawing.Point(88, 136);
+            this.chk_Z.Name = "chk_Z";
+            this.chk_Z.Size = new System.Drawing.Size(33, 17);
+            this.chk_Z.TabIndex = 0;
+            this.chk_Z.TabStop = false;
+            this.chk_Z.Text = "Z";
+            this.chk_Z.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -926,6 +952,8 @@ namespace MupenUtils
         private System.Windows.Forms.CheckBox chk_Down;
         private System.Windows.Forms.CheckBox chk_Left;
         private System.Windows.Forms.CheckBox chk_Up;
+        private System.Windows.Forms.Button btn_PlayPause;
+        private System.Windows.Forms.CheckBox chk_Z;
     }
 }
 

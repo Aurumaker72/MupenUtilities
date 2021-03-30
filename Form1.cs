@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -19,7 +20,7 @@ namespace MupenUtils
         string Magic;
         string Version;
         string UID;
-        string VIs;
+        UInt32 VIs;
         string RRs;
         string Controllers;
         string StartType;
@@ -30,15 +31,21 @@ namespace MupenUtils
         string InputPlugin;
         string AudioPlugin;
         string RSPPlugin;
+        int Samples;
 
         string M64Name; // Name = m64 file name (path)
         string Author;
         string Description;
 
+        public CheckBox[] controllerbuttons;
+        List<int> inputList = new List<int>();
+        int frame;
+
         public MainForm()
         {
             InitializeComponent();
             InitUI();
+            InitController();
         }
 
         public static string ByteArrayToString(byte[] ba)
@@ -51,6 +58,31 @@ namespace MupenUtils
             
         }
         
+        void InitController()
+        {
+            controllerbuttons = new CheckBox[] {
+            chk_Right,  // R_DPAD
+            chk_Left,   // L_DPAD
+            chk_Down,   // D_DPAD
+            chk_Up,     // U_DPAD
+            Chk_start,  // START_BUTTON
+            chk_Z,      // Z_TRIG
+            chk_B,      // B_BUTTON    
+            chk_A,      // A_BUTTON    
+
+
+            chk_Cright, // R_CBUTTON
+            chk_Cleft,  // L_CBUTTON    
+            chk_Cdown,  //D_CBUTTON    
+            chk_Up,     //U_CBUTTON    
+            
+            
+            
+            chk_R,      //R_TRIG
+            chk_L       //L_TRIG
+        };
+
+        }
         void InitUI()
         {
             st_Status1.Text = "";
@@ -224,12 +256,12 @@ namespace MupenUtils
             Magic = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             Version = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             UID = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            VIs = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            VIs = br.ReadUInt32();//ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             RRs = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             br.ReadByte(); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
             Controllers = ByteArrayToString(BitConverter.GetBytes(br.ReadByte()));
             br.ReadBytes(2); // reserved --- Seek 2 bytes forward (dummy)
-            br.ReadInt32(); // input samples --- Seek 4 bytes forward (dummy)
+            Samples = br.ReadInt32(); // input samples --- Seek 4 bytes forward (dummy)
             StartType = GetMovieStartupType(br.ReadInt16());
 
             br.ReadInt16(); // reserved -- seek 2 bytes forward (dummy)
@@ -259,6 +291,17 @@ namespace MupenUtils
             Author = utf8.GetString(br.ReadBytes(222));
             Description = utf8.GetString(br.ReadBytes(256));
 
+            // Load inputs
+            // We need a buffer to check if end of file reached
+            Debug.WriteLine("VI/s:" + VIs);
+            UInt32 frames = VIs / 2;
+            for (int i = 0; i <= frames; i++)
+            {
+                Debug.WriteLine("--- Sample " + i + "/" + frames + " ---");
+                inputList.Add(br.ReadInt32());
+            }
+
+
             br.Close(); // destroy handle
 
             /*Set Controls*/
@@ -266,7 +309,7 @@ namespace MupenUtils
             txt_misc_Version.Text = Version;
             txt_misc_UID.Text = UID;
 
-            txt_VIs.Text = VIs;
+            txt_VIs.Text = ascii.GetString(BitConverter.GetBytes(VIs));
             txt_RR.Text = RRs;
             txt_CTRLS.Text = Controllers;
             txt_StartType.Text = StartType;
@@ -283,6 +326,9 @@ namespace MupenUtils
             txt_PathName.Text = Name;
             txt_Author.Text = Author;
             txt_Desc.Text = Description;
+
+
+            
 
             ShowStatus("Loaded M64");
         }
@@ -321,5 +367,40 @@ namespace MupenUtils
             }
         }
 
+
+
+
+
+
+
+        int GetChkboxes()
+        {
+            int value = 0;
+            for (int i = 0; i < controllerbuttons.Length; i++)
+            {
+                if (controllerbuttons[i].Checked)
+                {
+                    value |= (int)Math.Pow(2, i);
+                }
+            }
+            return value;
+        }
+        void SetChkboxes(int value)
+        {
+            for (int i = 0; i < controllerbuttons.Length; i++)
+            {
+                controllerbuttons[i].Checked = Convert.ToBoolean(value & (int)Math.Pow(2, i));
+            }
+        }
+        void StepFrame()
+        {
+            frame++;
+            lbl_FrameSelected.Text = "Frame " + frame;
+            SetChkboxes(inputList[frame]);
+        }
+        private void btn_FrameFront_Click(object sender, EventArgs e)
+        {
+            StepFrame();
+        }
     }
 }
