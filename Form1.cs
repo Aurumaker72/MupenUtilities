@@ -55,7 +55,7 @@ namespace MupenUtils
         {
             st_Status1.Text = "";
             rb_M64sel.Checked = true;
-            EnableM64View(false);
+            EnableM64View(false,true);
         }
 
         void ShowStatus(string msg)
@@ -77,18 +77,19 @@ namespace MupenUtils
                ctrl.ForeColor = tempcolor;
                }).Start();
         }
-        void EnableM64View(bool flag)
+        void EnableM64View(bool flag, bool change)
         {
             Size s;
+            FileLoaded = flag;
             if (flag)
             {
                 gp_M64.Show();
-                s = new Size(458, 483);
+                s = new Size(687, 483);
             } 
             else
             {
                 gp_M64.Hide();
-               s = new Size(458, 150);
+               s = new Size(360+btn_Override.Width+20, 150);
             }
             this.Size = s;
         }
@@ -103,7 +104,6 @@ namespace MupenUtils
             }
 
             Path = txt_Path.Text = (string)result[0];
-            FileLoaded = true;
 
             if (rb_M64sel.Checked){
                 LoadM64();}
@@ -211,10 +211,10 @@ namespace MupenUtils
                 txt_Path.Text = Path = string.Empty;
                 this.ActiveControl = null;
                 RedControl(btn_PathSel);
-                EnableM64View(false);
+                EnableM64View(false,true);
                 return;
             }
-            EnableM64View(true);
+            EnableM64View(true,true);
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
             BinaryReader br = new BinaryReader(File.Open(Path, FileMode.Open));
@@ -307,9 +307,19 @@ namespace MupenUtils
         }
 
 
-        private void MainForm_Resize(object sender, EventArgs e)
+        private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
-            Debug.WriteLine(this.Size);
+            if (FileLoaded)
+            {
+                EnableM64View(false, false);
+                btn_Override.Text = "Expand";
+            }
+            else
+            {
+                EnableM64View(true, false);
+                btn_Override.Text = "Collapse";
+            }
         }
+
     }
 }
