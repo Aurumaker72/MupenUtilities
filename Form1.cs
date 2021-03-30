@@ -312,7 +312,7 @@ namespace MupenUtils
             txt_misc_Version.Text = Version;
             txt_misc_UID.Text = UID;
 
-            txt_VIs.Text = ascii.GetString(BitConverter.GetBytes(VIs));
+            txt_VIs.Text = ByteArrayToString(BitConverter.GetBytes(VIs));
             txt_RR.Text = RRs;
             txt_CTRLS.Text = Controllers;
             txt_StartType.Text = StartType;
@@ -411,7 +411,6 @@ namespace MupenUtils
                         frame = (int)frames;
                     }
                 }
-                lbl_FrameSelected.ForeColor = Color.Red;
                 lbl_FrameSelected.Text = "Frame " + frame;
                 return false;
             }
