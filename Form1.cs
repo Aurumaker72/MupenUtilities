@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,6 @@ namespace MupenUtils
         string Version;
         string UID;
         string VIs;
-        string VIsecond;
         string RRs;
         string Controllers;
         string StartType;
@@ -30,7 +30,7 @@ namespace MupenUtils
         string AudioPlugin;
         string RSPPlugin;
 
-        string Name; // Name = m64 file name (path)
+        string M64Name; // Name = m64 file name (path)
         string Author;
         string Description;
 
@@ -56,13 +56,23 @@ namespace MupenUtils
             rb_M64sel.Checked = true;
         }
 
-        void ShowStatus(string Message)
+        void ShowStatus(string msg)
         {
-            st_Status1.Text = Message;
+            st_Status1.Text = msg;
             new Thread(() =>
                {
                Thread.Sleep(2000);
                st_Status1.Text = ""; // This is NOT thread-safe. HOW DOES THIS NOT CRASH?!?!?! 
+               }).Start();
+        }
+        void RedControl(Control ctrl)
+        {
+            Color tempcolor = ctrl.ForeColor;
+            ctrl.ForeColor = Color.Red;
+            new Thread(() =>
+               {
+               Thread.Sleep(1000);
+               ctrl.ForeColor = tempcolor;
                }).Start();
         }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
@@ -84,104 +94,77 @@ namespace MupenUtils
                 LoadST();
         }
 
-        void LoadM64()
+        string GetMovieStartupType(short stype)
         {
-            ShowStatus("Loading M64");
-            ASCIIEncoding ascii = new ASCIIEncoding();
-            UTF8Encoding utf8 = new UTF8Encoding();
-            BinaryReader br = new BinaryReader(File.Open(Path, FileMode.Open));
-
-            // Read header
-            Magic = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            Version = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            UID = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-
-            //00C 4-byte little-endian unsigned int: number of frames (vertical interrupts)
-            //010 4-byte little-endian unsigned int: rerecord count
-            //014 1-byte unsigned int: frames (vertical interrupts) per second
-            //015 1-byte unsigned int: number of controllers
-            VIs = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            RRs = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            VIsecond = ByteArrayToString(BitConverter.GetBytes(br.ReadByte())); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
-            
-            Controllers = ByteArrayToString(BitConverter.GetBytes(br.ReadByte()));
-            br.ReadBytes(2); // reserved --- Seek 2 bytes forward (dummy)
-            br.ReadInt32(); // input samples --- Seek 4 bytes forward (dummy)
-            Int16 movieStartupType = br.ReadInt16();
-            switch (movieStartupType)
+            string type;
+            switch (stype)
             {
                 case 1:
-                    StartType = "Snapshot";
+                    type = "Snapshot";
                     break;
                 case 2:
-                    StartType = "Power on";
+                    type = "Power on";
                     break;
                 case 4:
-                    StartType = "EEPROM";
+                    type = "EEPROM";
                     break;
                 default:
-                    StartType = "Unknown";
+                    type = "Unknown";
                     break;
             }
-
-
-            br.ReadInt16(); // reserved -- seek 2 bytes forward (dummy)
-            br.ReadInt32(); // controller flags
-            br.ReadBytes(160); // reserved
-            RomName = ascii.GetString(br.ReadBytes(32)); // rom name
-            Crc32 = br.ReadUInt32().ToString();// crc32
-            
-            Int16 romCountry = br.ReadInt16(); // country code
-            br.ReadBytes(56); // reserved
-            switch(romCountry&0xFF)
+            return type;
+        }
+        string GetCountryCode(short ccode)
+        {
+            string code = "Error";
+            switch(ccode&0xFF)
 	        {
 	        /* Demo */
 	        case 0:
-                    RomCountry = "Demo";
+                    code = "Demo";
 	        	break;
-
 	        case '7':
-                    RomCountry = "Beta";
+                    code = "Beta";
 	        	break;
 
 	        case 0x41:
-                    RomCountry = "USA/Japan";
+                    code = "USA/Japan";
 	        	break;
 
 	        /* Germany */
 	        case 0x44:
-                    RomCountry = "German";
+                    code = "German";
 	        	break;
 
 	        /* USA */
 	        case 0x45:
                 case 0x60:
-                    RomCountry = "USA";
+                    code = "USA";
 	        	break;
 
 	        /* France */
 	        case 0x46:
-                    RomCountry = "France";
+                    code = "France";
 	        	break;
 
 	        /* Italy */
 	        case 'I':
-                    RomCountry = "Italy";
+                    code = "Italy";
 	        	break;
 
 	        /* Japan */
 	        case 0x4A:
-                    RomCountry = "Japan";
+                    code = "Japan";
 	        	break;
 
 	        case 'S':	/* Spain */
-                    RomCountry = "Spain";
+                    code = "Spain";
 	        	break;
 
 	        /* Australia */
 	        case 0x55:
 	        case 0x59:
-                    RomCountry = "Australia";
+                    code = "Australia";
 	        	break;
 
             case 0x50:
@@ -190,13 +173,56 @@ namespace MupenUtils
 	        case 0x21:
 	        case 0x38:
 	        case 0x70:
-                    RomCountry = "Europe";
+                    code = "Europe";
 	        	break;
 
 	        default:
-                    RomCountry = "Unknown (" + romCountry + ")";
+                    code = "Unknown (" + ccode + ")";
 	        	break;
 	        }
+            return code;
+        }
+        void LoadM64()
+        {
+            ShowStatus("Loading M64");
+
+            // Check for suspicious properties
+            long len = new FileInfo(Path).Length;
+            if(len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64",StringComparison.InvariantCultureIgnoreCase))
+            {
+                ShowStatus("Invalid M64");
+                txt_Path.Text = Path = string.Empty;
+                this.ActiveControl = null;
+                RedControl(btn_PathSel);
+                return;
+            }
+            ASCIIEncoding ascii = new ASCIIEncoding();
+            UTF8Encoding utf8 = new UTF8Encoding();
+            BinaryReader br = new BinaryReader(File.Open(Path, FileMode.Open));
+
+            
+            // Read header
+            Magic = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            Version = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            UID = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            VIs = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            RRs = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            br.ReadByte(); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
+            Controllers = ByteArrayToString(BitConverter.GetBytes(br.ReadByte()));
+            br.ReadBytes(2); // reserved --- Seek 2 bytes forward (dummy)
+            br.ReadInt32(); // input samples --- Seek 4 bytes forward (dummy)
+            StartType = GetMovieStartupType(br.ReadInt16());
+
+            br.ReadInt16(); // reserved -- seek 2 bytes forward (dummy)
+            br.ReadInt32(); // controller flags -- seek 4 bytes forward (dummy)
+            br.ReadBytes(160); // reserved -- seek 160 bytes forward (dummy)
+            RomName = ascii.GetString(br.ReadBytes(32)); // rom name
+            Crc32 = br.ReadUInt32().ToString();// crc32
+            
+            RomCountry = GetCountryCode(br.ReadInt16()); // Country code
+            br.ReadBytes(56); // reserved -- seek 56 bytes forward (dummy)
+
+            
             /*
             64-byte ASCII string: name of video plugin used when recording, directly from plugin
             64-byte ASCII string: name of sound plugin used when recording, directly from plugin
