@@ -99,8 +99,8 @@ namespace MupenUtils
             ctl.Text = msg;
             new Thread(() =>
                {
-               Thread.Sleep(2000);
-               ctl.Text = ""; // This is NOT thread-safe. HOW DOES THIS NOT CRASH?!?!?! 
+               Thread.Sleep(1000);
+               ctl.GetCurrentParent().Invoke((MethodInvoker)(() => ctl.Text = string.Empty));
                }).Start();
         }
         void RedControl(Control ctrl)
@@ -395,6 +395,11 @@ namespace MupenUtils
             {
                  controllerbuttons[i].Checked = Convert.ToBoolean(value & (int)Math.Pow(2, i));   
             }
+            //// Mask out last
+            //int _value = (value & (int)Math.Pow(2, numbuttons + 3));
+            //ushort x = (ushort) (_value >> 8);
+            //ushort y = (ushort) (_value & 0xff);
+            //Debug.WriteLine("--- Raw " + _value + " ---\nX: " + x + " Y: " + y);
         }
         bool checkAllowedStep(int stepAmount)
         {
