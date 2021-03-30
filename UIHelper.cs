@@ -66,10 +66,6 @@ namespace MupenUtils
 
             return new object[] { path, true };
         }
-
-        public static void ShowStatus(string Message, ToolStripStatusLabel StatusLabel)
-        {
-            // no
-        }
+        
     }
 }

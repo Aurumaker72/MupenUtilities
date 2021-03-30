@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace MupenUtils
         {
             st_Status1.Text = "";
             rb_M64sel.Checked = true;
+            EnableM64View(false);
         }
 
         void ShowStatus(string msg)
@@ -75,6 +77,21 @@ namespace MupenUtils
                ctrl.ForeColor = tempcolor;
                }).Start();
         }
+        void EnableM64View(bool flag)
+        {
+            Size s;
+            if (flag)
+            {
+                gp_M64.Show();
+                s = new Size(458, 483);
+            } 
+            else
+            {
+                gp_M64.Hide();
+               s = new Size(458, 150);
+            }
+            this.Size = s;
+        }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
             ShowStatus("Selecting movie...");
@@ -88,10 +105,10 @@ namespace MupenUtils
             Path = txt_Path.Text = (string)result[0];
             FileLoaded = true;
 
-            if (rb_M64sel.Checked)
-                LoadM64();
-            else if (rb_STsel.Checked)
-                LoadST();
+            if (rb_M64sel.Checked){
+                LoadM64();}
+            else if (rb_STsel.Checked){
+                LoadST();}
         }
 
         string GetMovieStartupType(short stype)
@@ -194,8 +211,10 @@ namespace MupenUtils
                 txt_Path.Text = Path = string.Empty;
                 this.ActiveControl = null;
                 RedControl(btn_PathSel);
+                EnableM64View(false);
                 return;
             }
+            EnableM64View(true);
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
             BinaryReader br = new BinaryReader(File.Open(Path, FileMode.Open));
@@ -288,5 +307,9 @@ namespace MupenUtils
         }
 
 
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            Debug.WriteLine(this.Size);
+        }
     }
 }
