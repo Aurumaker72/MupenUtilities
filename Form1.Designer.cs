@@ -92,6 +92,10 @@ namespace MupenUtils
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.checkBox8 = new System.Windows.Forms.CheckBox();
             this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.checkBox13 = new System.Windows.Forms.CheckBox();
             this.gb_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -207,6 +211,10 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.checkBox9);
             this.gp_input.Controls.Add(this.checkBox8);
             this.gp_input.Controls.Add(this.checkBox7);
+            this.gp_input.Controls.Add(this.checkBox13);
+            this.gp_input.Controls.Add(this.checkBox12);
+            this.gp_input.Controls.Add(this.checkBox11);
+            this.gp_input.Controls.Add(this.checkBox10);
             this.gp_input.Controls.Add(this.checkBox6);
             this.gp_input.Controls.Add(this.checkBox5);
             this.gp_input.Controls.Add(this.checkBox4);
@@ -767,6 +775,54 @@ namespace MupenUtils
             this.checkBox9.Text = "C>";
             this.checkBox9.UseVisualStyleBackColor = false;
             // 
+            // checkBox10
+            // 
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox10.Location = new System.Drawing.Point(24, 24);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(34, 17);
+            this.checkBox10.TabIndex = 0;
+            this.checkBox10.TabStop = false;
+            this.checkBox10.Text = "U";
+            this.checkBox10.UseVisualStyleBackColor = false;
+            // 
+            // checkBox11
+            // 
+            this.checkBox11.AutoSize = true;
+            this.checkBox11.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox11.Location = new System.Drawing.Point(8, 40);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(32, 17);
+            this.checkBox11.TabIndex = 0;
+            this.checkBox11.TabStop = false;
+            this.checkBox11.Text = "L";
+            this.checkBox11.UseVisualStyleBackColor = false;
+            // 
+            // checkBox12
+            // 
+            this.checkBox12.AutoSize = true;
+            this.checkBox12.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox12.Location = new System.Drawing.Point(24, 56);
+            this.checkBox12.Name = "checkBox12";
+            this.checkBox12.Size = new System.Drawing.Size(34, 17);
+            this.checkBox12.TabIndex = 0;
+            this.checkBox12.TabStop = false;
+            this.checkBox12.Text = "D";
+            this.checkBox12.UseVisualStyleBackColor = false;
+            // 
+            // checkBox13
+            // 
+            this.checkBox13.AutoSize = true;
+            this.checkBox13.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox13.Location = new System.Drawing.Point(40, 40);
+            this.checkBox13.Name = "checkBox13";
+            this.checkBox13.Size = new System.Drawing.Size(34, 17);
+            this.checkBox13.TabIndex = 0;
+            this.checkBox13.TabStop = false;
+            this.checkBox13.Text = "R";
+            this.checkBox13.UseVisualStyleBackColor = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -866,6 +922,10 @@ namespace MupenUtils
         private System.Windows.Forms.CheckBox checkBox9;
         private System.Windows.Forms.CheckBox checkBox8;
         private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.CheckBox checkBox13;
+        private System.Windows.Forms.CheckBox checkBox12;
+        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.CheckBox checkBox10;
     }
 }
 
