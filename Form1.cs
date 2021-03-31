@@ -407,8 +407,10 @@ namespace MupenUtils
             for (int i = 0; i < numbuttons; i++)
             {
                 //Debug.WriteLine("Checkbox index " + i + " | Value AND: " + (value & (int)Math.Pow(2, i)));
-                 controllerButtonsChk[i].Checked = Convert.ToBoolean(value & (int)Math.Pow(2, i));   
+                controllerButtonsChk[i].Checked = (value & (int)Math.Pow(2, i)) != 0;
             }
+            chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
+            chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
             // (int)Math.Pow(2, numbuttons + 1)         = 131072
             // value & (int)Math.Pow(2, numbuttons + 1) = 0 ???
             ushort joystick = (ushort)(value & (int)Math.Pow(2, numbuttons + 1));
