@@ -105,6 +105,7 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
+            this.btn_PlayDirection = new System.Windows.Forms.Button();
             this.gb_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -241,6 +242,7 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.chk_RESERVED2);
             this.gp_input.Controls.Add(this.chk_restart);
             this.gp_input.Controls.Add(this.chk_RESERVED1);
+            this.gp_input.Controls.Add(this.btn_PlayDirection);
             this.gp_input.Controls.Add(this.btn_Loop);
             this.gp_input.Controls.Add(this.btn_PlayPause);
             this.gp_input.Controls.Add(this.chk_Cright);
@@ -301,7 +303,7 @@ namespace MupenUtils
             // chk_RESERVED2
             // 
             this.chk_RESERVED2.AutoSize = true;
-            this.chk_RESERVED2.Location = new System.Drawing.Point(296, 328);
+            this.chk_RESERVED2.Location = new System.Drawing.Point(88, 80);
             this.chk_RESERVED2.Name = "chk_RESERVED2";
             this.chk_RESERVED2.Size = new System.Drawing.Size(71, 21);
             this.chk_RESERVED2.TabIndex = 2;
@@ -311,7 +313,7 @@ namespace MupenUtils
             // chk_restart
             // 
             this.chk_restart.AutoSize = true;
-            this.chk_restart.Location = new System.Drawing.Point(296, 280);
+            this.chk_restart.Location = new System.Drawing.Point(88, 32);
             this.chk_restart.Name = "chk_restart";
             this.chk_restart.Size = new System.Drawing.Size(76, 21);
             this.chk_restart.TabIndex = 1;
@@ -321,7 +323,7 @@ namespace MupenUtils
             // chk_RESERVED1
             // 
             this.chk_RESERVED1.AutoSize = true;
-            this.chk_RESERVED1.Location = new System.Drawing.Point(296, 304);
+            this.chk_RESERVED1.Location = new System.Drawing.Point(88, 56);
             this.chk_RESERVED1.Name = "chk_RESERVED1";
             this.chk_RESERVED1.Size = new System.Drawing.Size(71, 21);
             this.chk_RESERVED1.TabIndex = 1;
@@ -330,7 +332,7 @@ namespace MupenUtils
             // 
             // btn_Loop
             // 
-            this.btn_Loop.Location = new System.Drawing.Point(11, 325);
+            this.btn_Loop.Location = new System.Drawing.Point(10, 325);
             this.btn_Loop.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Loop.Name = "btn_Loop";
             this.btn_Loop.Size = new System.Drawing.Size(32, 28);
@@ -348,7 +350,7 @@ namespace MupenUtils
             this.btn_PlayPause.Size = new System.Drawing.Size(32, 28);
             this.btn_PlayPause.TabIndex = 0;
             this.btn_PlayPause.TabStop = false;
-            this.btn_PlayPause.Text = "| |";
+            this.btn_PlayPause.Text = ">";
             this.btn_PlayPause.UseVisualStyleBackColor = true;
             this.btn_PlayPause.Click += new System.EventHandler(this.btn_PlayPause_Click);
             // 
@@ -1008,6 +1010,18 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
+            // btn_PlayDirection
+            // 
+            this.btn_PlayDirection.Location = new System.Drawing.Point(290, 325);
+            this.btn_PlayDirection.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_PlayDirection.Name = "btn_PlayDirection";
+            this.btn_PlayDirection.Size = new System.Drawing.Size(32, 28);
+            this.btn_PlayDirection.TabIndex = 0;
+            this.btn_PlayDirection.TabStop = false;
+            this.btn_PlayDirection.Text = ">";
+            this.btn_PlayDirection.UseVisualStyleBackColor = true;
+            this.btn_PlayDirection.Click += new System.EventHandler(this.btn_PlayDirection_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1121,6 +1135,7 @@ namespace MupenUtils
         private System.Windows.Forms.TextBox txt_joyX;
         private System.Windows.Forms.CheckBox chk_restart;
         private System.Windows.Forms.Label lbl_XY;
+        private System.Windows.Forms.Button btn_PlayDirection;
     }
 }
 
