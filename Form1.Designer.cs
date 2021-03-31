@@ -41,7 +41,7 @@ namespace MupenUtils
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.gp_input = new System.Windows.Forms.GroupBox();
             this.lbl_XY = new System.Windows.Forms.Label();
-            this.txt_JoyY = new System.Windows.Forms.TextBox();
+            this.txt_joyY = new System.Windows.Forms.TextBox();
             this.txt_joyX = new System.Windows.Forms.TextBox();
             this.chk_RESERVED2 = new System.Windows.Forms.CheckBox();
             this.chk_restart = new System.Windows.Forms.CheckBox();
@@ -156,13 +156,13 @@ namespace MupenUtils
             // 
             // btn_Override
             // 
-            this.btn_Override.Location = new System.Drawing.Point(208, 48);
+            this.btn_Override.Location = new System.Drawing.Point(272, 48);
             this.btn_Override.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Override.Name = "btn_Override";
-            this.btn_Override.Size = new System.Drawing.Size(100, 28);
+            this.btn_Override.Size = new System.Drawing.Size(36, 28);
             this.btn_Override.TabIndex = 0;
             this.btn_Override.TabStop = false;
-            this.btn_Override.Text = "Expand";
+            this.btn_Override.Text = "v";
             this.btn_Override.UseVisualStyleBackColor = true;
             this.btn_Override.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Override_MouseDown);
             // 
@@ -236,7 +236,7 @@ namespace MupenUtils
             // gp_input
             // 
             this.gp_input.Controls.Add(this.lbl_XY);
-            this.gp_input.Controls.Add(this.txt_JoyY);
+            this.gp_input.Controls.Add(this.txt_joyY);
             this.gp_input.Controls.Add(this.txt_joyX);
             this.gp_input.Controls.Add(this.chk_RESERVED2);
             this.gp_input.Controls.Add(this.chk_restart);
@@ -280,14 +280,14 @@ namespace MupenUtils
             this.lbl_XY.TabIndex = 0;
             this.lbl_XY.Text = "X/Y";
             // 
-            // txt_JoyY
+            // txt_joyY
             // 
-            this.txt_JoyY.Location = new System.Drawing.Point(8, 152);
-            this.txt_JoyY.Name = "txt_JoyY";
-            this.txt_JoyY.ReadOnly = true;
-            this.txt_JoyY.Size = new System.Drawing.Size(64, 22);
-            this.txt_JoyY.TabIndex = 0;
-            this.txt_JoyY.TabStop = false;
+            this.txt_joyY.Location = new System.Drawing.Point(8, 152);
+            this.txt_joyY.Name = "txt_joyY";
+            this.txt_joyY.ReadOnly = true;
+            this.txt_joyY.Size = new System.Drawing.Size(64, 22);
+            this.txt_joyY.TabIndex = 0;
+            this.txt_joyY.TabStop = false;
             // 
             // txt_joyX
             // 
@@ -1117,7 +1117,7 @@ namespace MupenUtils
         private System.Windows.Forms.Button btn_Loop;
         private System.Windows.Forms.CheckBox chk_RESERVED2;
         private System.Windows.Forms.CheckBox chk_RESERVED1;
-        private System.Windows.Forms.TextBox txt_JoyY;
+        private System.Windows.Forms.TextBox txt_joyY;
         private System.Windows.Forms.TextBox txt_joyX;
         private System.Windows.Forms.CheckBox chk_restart;
         private System.Windows.Forms.Label lbl_XY;

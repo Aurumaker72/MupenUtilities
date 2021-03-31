@@ -127,17 +127,13 @@ namespace MupenUtils
         {
             Size s;
             FileLoaded = flag;
-            if (flag)
-            {
-                gp_M64.Show();
-                s = new Size(1005,580);
-            } 
-            else
-            {
-                gp_M64.Hide();
-               s = new Size(360+btn_Override.Width+20, 150);
-            }
+
+            this.SuspendLayout();
+            gp_M64.Visible = flag;
+            s = flag ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
+
             this.Size = s;
+            this.ResumeLayout();
         }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
@@ -374,12 +370,12 @@ namespace MupenUtils
             if (FileLoaded)
             {
                 EnableM64View(false, false);
-                btn_Override.Text = "Expand";
+                btn_Override.Text = "v";
             }
             else
             {
                 EnableM64View(true, false);
-                btn_Override.Text = "Collapse";
+                btn_Override.Text = "^";
             }
         }
 
@@ -415,6 +411,8 @@ namespace MupenUtils
             Debug.WriteLine("[FRAME] " + frame + " " + "After doing lowword computing | Joystick ushort = " + joystick.ToString());
             sbyte joystickX = (sbyte)(joystick >> 8);
             sbyte joystickY = (sbyte)(joystick & 0x00FF);
+            txt_joyX.Text = joystickX.ToString();
+            txt_joyY.Text = joystickY.ToString();
             //Debug.WriteLine("[FRAME] " + frame + " " + "--- WORD: " + joystick.ToString() + " --- X/Y " + joystickX.ToString() + " " + joystickY.ToString());
             
         }
