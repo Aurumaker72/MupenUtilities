@@ -463,6 +463,7 @@ namespace MupenUtils
 #if DEBUG
             Debug.WriteLine("Window Resize (W/H) " + Width + " " + Height);
 #endif
+            this.MinimumSize = FileLoaded ? new Size(980, 480) : new Size(0, 0);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
