@@ -106,6 +106,7 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
+            this.txt_Frame = new System.Windows.Forms.TextBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -236,6 +237,7 @@ namespace MupenUtils
             // 
             // gp_input
             // 
+            this.gp_input.Controls.Add(this.txt_Frame);
             this.gp_input.Controls.Add(this.lbl_XY);
             this.gp_input.Controls.Add(this.txt_joyY);
             this.gp_input.Controls.Add(this.txt_joyX);
@@ -1022,6 +1024,15 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
+            // txt_Frame
+            // 
+            this.txt_Frame.Location = new System.Drawing.Point(325, 330);
+            this.txt_Frame.Name = "txt_Frame";
+            this.txt_Frame.Size = new System.Drawing.Size(35, 22);
+            this.txt_Frame.TabIndex = 0;
+            this.txt_Frame.TabStop = false;
+            this.txt_Frame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Frame_KeyDown);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1137,6 +1148,7 @@ namespace MupenUtils
         private System.Windows.Forms.CheckBox chk_restart;
         private System.Windows.Forms.Label lbl_XY;
         private System.Windows.Forms.Button btn_PlayDirection;
+        private System.Windows.Forms.TextBox txt_Frame;
     }
 }
 

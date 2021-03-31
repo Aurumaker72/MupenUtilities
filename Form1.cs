@@ -369,10 +369,22 @@ namespace MupenUtils
 
         void StepFrame(int stepAmount)
         {
-            frame += stepAmount;
-            if (!checkAllowedStep(stepAmount)) return;
+            //frame += stepAmount;
+            //if (!checkAllowedStep(stepAmount)) return;
+            //lbl_FrameSelected.Text = "Frame " + frame;
+            //lbl_FrameSelected.ForeColor = Color.Black;
+            //SetInput(inputList[frame]);
+
+
+            SetFrame(frame + stepAmount);
+        }
+        void SetFrame(int targetframe)
+        {
+            frame = targetframe;
+            if (!checkAllowedStep(targetframe)) return;
             lbl_FrameSelected.Text = "Frame " + frame;
             lbl_FrameSelected.ForeColor = Color.Black;
+            txt_Frame.Text = frame.ToString();
             SetInput(inputList[frame]);
         }
         #endregion
@@ -476,6 +488,14 @@ namespace MupenUtils
             }
         }
 
+
+        private void txt_Frame_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(ExtensionMethods.ValidStringInt(txt_Frame.Text, 0, (int)frames) && e.KeyCode == Keys.Enter)
+            {
+                SetFrame(Int32.Parse(txt_Frame.Text));
+            }
+        }
 
 
         #endregion
