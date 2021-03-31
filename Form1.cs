@@ -411,21 +411,16 @@ namespace MupenUtils
             }
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
-            // (int)Math.Pow(2, numbuttons + 1)         = 131072
-            // value & (int)Math.Pow(2, numbuttons + 1) = 0 ???
-            ushort joystick = (ushort)(value & (int)Math.Pow(2, numbuttons + 1));
+            int joystick = 16&ExtensionMethods.LowWord(value);
+            Debug.WriteLine("[FRAME] " + frame + " " + "After doing lowword computing | Joystick ushort = " + joystick.ToString());
             sbyte joystickX = (sbyte)(joystick >> 8);
             sbyte joystickY = (sbyte)(joystick & 0x00FF);
-            Debug.WriteLine("--- WORD: " + joystick.ToString() + " --- X/Y " + joystickX.ToString() + " " + joystickY.ToString());
-            //// Mask out last
-            //int _value = (value & (int)Math.Pow(2, numbuttons + 3));
-            //ushort x = (ushort) (_value >> 8);
-            //ushort y = (ushort) (_value & 0xff);
-            //Debug.WriteLine("--- Raw " + _value + " ---\nX: " + x + " Y: " + y);
+            //Debug.WriteLine("[FRAME] " + frame + " " + "--- WORD: " + joystick.ToString() + " --- X/Y " + joystickX.ToString() + " " + joystickY.ToString());
+            
         }
         bool checkAllowedStep(int stepAmount)
         {
-            if(frame > frames || frame < 0)
+            if(frame >= frames || frame < 0 || frame >= inputList.Count)
             {
                 frame = (int)frames;
                 if(loopInputs)
