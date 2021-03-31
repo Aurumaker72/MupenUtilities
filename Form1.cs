@@ -160,21 +160,32 @@ namespace MupenUtils
         #endregion
 
         #region I/O
+        private void ShowStatus_ThreadSafe(string txt)
+        {
+            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = txt));
+            Thread.Sleep(1000);
+            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = string.Empty));
+        }
+        private void EnableM64View_ThreadSafe(bool flag)
+        {
+            Size s;
+            FileLoaded = flag;
+            gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
+            s = flag ? new Size(1005, 580) : new Size(360 + btn_Override.Width + 20, 150);
+            this.Invoke((MethodInvoker)(() => this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
+            gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill));
+            st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = FileLoaded));
+            this.Invoke((MethodInvoker)(() => this.Size = s));
+
+        }
 
         void LoadM64()
         {
-            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = M64_LOADING_TEXT));
-            Thread.Sleep(1000);
-            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = string.Empty));
-
-            this.Invoke((MethodInvoker)(() => this.Text = M64_LOADING_TEXT));
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
             if (!bypassTypeCheck && (len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase)))
             {
-                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = M64_FAILED_TEXT));
-                Thread.Sleep(1000);
-                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = string.Empty));
+                ShowStatus_ThreadSafe(M64_FAILED_TEXT);
                 // set status
 
                 txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
@@ -184,15 +195,7 @@ namespace MupenUtils
                 // clear active control
 
 
-                Size sz;
-                FileLoaded = false;
-                gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = false));
-                sz = false ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
-                this.Invoke((MethodInvoker)(() => this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
-                gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill));
-                st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = FileLoaded));
-
-                this.Invoke((MethodInvoker)(() => this.Size = sz));
+                EnableM64View_ThreadSafe(false);
 
                 // set m64 style
 
@@ -203,7 +206,7 @@ namespace MupenUtils
             FileStream fs = File.Open(Path, FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
 
-            
+
             // Read header
             Magic = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             Version = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
@@ -221,11 +224,11 @@ namespace MupenUtils
             br.ReadBytes(160); // reserved -- seek 160 bytes forward (dummy)
             RomName = ascii.GetString(br.ReadBytes(32)); // rom name
             Crc32 = br.ReadUInt32().ToString();// crc32
-            
+
             RomCountry = DataHelper.GetCountryCode(br.ReadInt16()); // Country code
             br.ReadBytes(56); // reserved -- seek 56 bytes forward (dummy)
 
-            
+
             /*
             64-byte ASCII string: name of video plugin used when recording, directly from plugin
             64-byte ASCII string: name of sound plugin used when recording, directly from plugin
@@ -280,21 +283,14 @@ namespace MupenUtils
             txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
-            Size s;
-            FileLoaded = true;
+            EnableM64View_ThreadSafe(true);
 
-            gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = true));
-            s = true ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
-            this.Invoke((MethodInvoker)(() => this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
-            gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill));
-            st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = FileLoaded));
-            this.Invoke((MethodInvoker)(() => this.Size = s));
-
-            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = M64_LOADED_TEXT));
-            Thread.Sleep(1000);
-            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = string.Empty));
+            ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
         }
+
+        
+
         void LoadST()
         {
             // WIP...
