@@ -60,8 +60,8 @@ namespace MupenUtils
         public MainForm()
         {
             InitializeComponent();
-            InitUI();
             InitController();
+            InitUI();
         }
 
         public static string ByteArrayToString(byte[] ba)
@@ -163,17 +163,39 @@ namespace MupenUtils
 
         void LoadM64()
         {
-            ShowStatus(M64_LOADING_TEXT,st_Status1);
-            this.Text = M64_LOADING_TEXT;
+            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = M64_LOADING_TEXT));
+            Thread.Sleep(1000);
+            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = string.Empty));
+
+            this.Invoke((MethodInvoker)(() => this.Text = M64_LOADING_TEXT));
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
             if (!bypassTypeCheck && (len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase)))
             {
-                ShowStatus("Invalid M64", st_Status1);
-                txt_Path.Text = Path = string.Empty;
-                this.ActiveControl = null;
-                RedControl(btn_PathSel);
-                EnableM64View(false, true);
+                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = M64_FAILED_TEXT));
+                Thread.Sleep(1000);
+                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = string.Empty));
+                // set status
+
+                txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
+                // clear path textbox
+
+                this.Invoke((MethodInvoker)(() => this.ActiveControl = null));
+                // clear active control
+
+
+                Size sz;
+                FileLoaded = false;
+                gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = false));
+                sz = false ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
+                this.Invoke((MethodInvoker)(() => this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
+                gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill));
+                st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = FileLoaded));
+
+                this.Invoke((MethodInvoker)(() => this.Size = sz));
+
+                // set m64 style
+
                 return;
             }
             ASCIIEncoding ascii = new ASCIIEncoding();
@@ -236,33 +258,42 @@ namespace MupenUtils
             br.Close(); // destroy handle
 
             /*Set Controls*/
-            txt_misc_Magic.Text = Magic;
-            txt_misc_Version.Text = Version;
-            txt_misc_UID.Text = UID;
+            txt_misc_Magic.Invoke((MethodInvoker)(() => txt_misc_Magic.Text = Magic));
+            txt_misc_Version.Invoke((MethodInvoker)(() => txt_misc_Version.Text = Version));
+            txt_misc_UID.Invoke((MethodInvoker)(() => txt_misc_UID.Text = UID));
 
-            txt_VIs.Text = ByteArrayToString(BitConverter.GetBytes(VIs));
-            txt_RR.Text = RRs;
-            txt_CTRLS.Text = Controllers;
-            txt_StartType.Text = StartType;
-            //RomName
-            txt_videoplugin.Text = VideoPlugin;
-            txt_inputplugin.Text = InputPlugin;
-            txtbox_Audioplugin.Text = AudioPlugin;
-            txt_Rsp.Text = RSPPlugin;
+            txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = ByteArrayToString(BitConverter.GetBytes(VIs))));
+            txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = RRs));
+            txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = Controllers));
+            txt_StartType.Invoke((MethodInvoker)(() => txt_StartType.Text = StartType));
 
-            txt_Rom.Text = RomName;
-            txt_Crc.Text = Crc32;
-            txt_RomCountry.Text = RomCountry;
+            txt_videoplugin.Invoke((MethodInvoker)(() => txt_videoplugin.Text = VideoPlugin));
+            txt_inputplugin.Invoke((MethodInvoker)(() => txt_inputplugin.Text = InputPlugin));
+            txtbox_Audioplugin.Invoke((MethodInvoker)(() => txtbox_Audioplugin.Text = AudioPlugin));
+            txt_Rsp.Invoke((MethodInvoker)(() => txt_Rsp.Text = RSPPlugin));
 
-            txt_PathName.Text = Name;
-            txt_Author.Text = Author;
-            txt_Desc.Text = Description;
+            txt_Rom.Invoke((MethodInvoker)(() => txt_Rom.Text = RomName));
+            txt_Crc.Invoke((MethodInvoker)(() => txt_Crc.Text = Crc32));
+            txt_RomCountry.Invoke((MethodInvoker)(() => txt_RomCountry.Text = RomCountry));
 
+            txt_PathName.Invoke((MethodInvoker)(() => txt_PathName.Text = M64Name));
+            txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
+            txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
-            
-            EnableM64View(true,true);
-            ShowStatus(M64_LOADED_TEXT,st_Status1);
-            this.Text = M64_LOADED_TEXT;
+            Size s;
+            FileLoaded = true;
+
+            gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = true));
+            s = true ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
+            this.Invoke((MethodInvoker)(() => this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
+            gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill));
+            st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = FileLoaded));
+            this.Invoke((MethodInvoker)(() => this.Size = s));
+
+            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = M64_LOADED_TEXT));
+            Thread.Sleep(1000);
+            st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = string.Empty));
+
         }
         void LoadST()
         {
@@ -353,7 +384,9 @@ namespace MupenUtils
             Path = txt_Path.Text = (string)result[0];
 
             if (rb_M64sel.Checked){
-                LoadM64();}
+                Thread m64load = new Thread ( () => LoadM64() );
+                m64load.Start();
+                }
             else if (rb_STsel.Checked){
                 LoadST();}
         }
