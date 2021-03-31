@@ -418,17 +418,18 @@ namespace MupenUtils
         }
         bool checkAllowedStep(int stepAmount)
         {
-            if(frame >= frames || frame < 0 || frame >= inputList.Count)
+            if(frame >= frames || frame <= 0 || frame >= inputList.Count)
             {
+                if(!loopInputs)
                 frame = (int)frames;
-                if(loopInputs)
+                else
                 {
                     if(frame >= frames)
                     {
                         frame = 0;
-                    }else if(frame < 0)
+                    }else if(frame <= 0)
                     {
-                        frame = (int)frames;
+                        frame = (int)frames-1;
                     }
                 }
                 lbl_FrameSelected.Text = "Frame " + frame;
