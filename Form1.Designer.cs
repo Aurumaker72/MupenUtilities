@@ -31,7 +31,7 @@ namespace MupenUtils
         {
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
-            this.gb_Path = new System.Windows.Forms.GroupBox();
+            this.gp_Path = new System.Windows.Forms.GroupBox();
             this.btn_Override = new System.Windows.Forms.Button();
             this.rb_STsel = new System.Windows.Forms.RadioButton();
             this.rb_M64sel = new System.Windows.Forms.RadioButton();
@@ -106,7 +106,7 @@ namespace MupenUtils
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
             this.btn_PlayDirection = new System.Windows.Forms.Button();
-            this.gb_Path.SuspendLayout();
+            this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_input.SuspendLayout();
@@ -138,22 +138,22 @@ namespace MupenUtils
             this.txt_Path.TabIndex = 0;
             this.txt_Path.TabStop = false;
             // 
-            // gb_Path
+            // gp_Path
             // 
-            this.gb_Path.Controls.Add(this.btn_Override);
-            this.gb_Path.Controls.Add(this.rb_STsel);
-            this.gb_Path.Controls.Add(this.rb_M64sel);
-            this.gb_Path.Controls.Add(this.txt_Path);
-            this.gb_Path.Controls.Add(this.btn_PathSel);
-            this.gb_Path.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gb_Path.Location = new System.Drawing.Point(0, 0);
-            this.gb_Path.Margin = new System.Windows.Forms.Padding(4);
-            this.gb_Path.Name = "gb_Path";
-            this.gb_Path.Padding = new System.Windows.Forms.Padding(4);
-            this.gb_Path.Size = new System.Drawing.Size(940, 89);
-            this.gb_Path.TabIndex = 2;
-            this.gb_Path.TabStop = false;
-            this.gb_Path.Text = "Selection";
+            this.gp_Path.Controls.Add(this.btn_Override);
+            this.gp_Path.Controls.Add(this.rb_STsel);
+            this.gp_Path.Controls.Add(this.rb_M64sel);
+            this.gp_Path.Controls.Add(this.txt_Path);
+            this.gp_Path.Controls.Add(this.btn_PathSel);
+            this.gp_Path.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gp_Path.Location = new System.Drawing.Point(0, 0);
+            this.gp_Path.Margin = new System.Windows.Forms.Padding(4);
+            this.gp_Path.Name = "gp_Path";
+            this.gp_Path.Padding = new System.Windows.Forms.Padding(4);
+            this.gp_Path.Size = new System.Drawing.Size(940, 89);
+            this.gp_Path.TabIndex = 2;
+            this.gp_Path.TabStop = false;
+            this.gp_Path.Text = "Selection";
             // 
             // btn_Override
             // 
@@ -1029,7 +1029,7 @@ namespace MupenUtils
             this.ClientSize = new System.Drawing.Size(940, 546);
             this.Controls.Add(this.gp_M64);
             this.Controls.Add(this.st_Status);
-            this.Controls.Add(this.gb_Path);
+            this.Controls.Add(this.gp_Path);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.ShowIcon = false;
@@ -1037,8 +1037,8 @@ namespace MupenUtils
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mupen Utilities ";
             this.Resize += new System.EventHandler(this.MainForm_Resize);
-            this.gb_Path.ResumeLayout(false);
-            this.gb_Path.PerformLayout();
+            this.gp_Path.ResumeLayout(false);
+            this.gp_Path.PerformLayout();
             this.st_Status.ResumeLayout(false);
             this.st_Status.PerformLayout();
             this.gp_M64.ResumeLayout(false);
@@ -1061,7 +1061,7 @@ namespace MupenUtils
 
         private System.Windows.Forms.Button btn_PathSel;
         private System.Windows.Forms.TextBox txt_Path;
-        private System.Windows.Forms.GroupBox gb_Path;
+        private System.Windows.Forms.GroupBox gp_Path;
         private System.Windows.Forms.StatusStrip st_Status;
         private System.Windows.Forms.ToolStripStatusLabel st_Status1;
         private System.Windows.Forms.RadioButton rb_STsel;

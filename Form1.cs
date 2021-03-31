@@ -21,7 +21,7 @@ namespace MupenUtils
         const string ST_SELECTED_TEXT = "Type: ST";
 
         string Path;
-        bool FileLoaded = true;
+        bool FileLoaded = false;
         bool loopInputs = true;
         bool bypassTypeCheck = false;
         bool forwardsPlayback = true;
@@ -108,6 +108,11 @@ namespace MupenUtils
         {
             st_Status1.Text = st_Status2.Text = "";
             rb_M64sel.Checked = true;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            st_Status.Visible = false;
+            gp_M64.Visible = false;
+            gp_Path.Dock = DockStyle.Fill;
+
             EnableM64View(false,true);
         }
 
@@ -144,6 +149,9 @@ namespace MupenUtils
             this.SuspendLayout();
             gp_M64.Visible = flag;
             s = flag ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
+            this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
+            gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill;
+            st_Status.Visible = FileLoaded;
 
             this.Size = s;
             this.ResumeLayout();
@@ -363,16 +371,8 @@ namespace MupenUtils
         }
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
-            if (FileLoaded)
-            {
-                EnableM64View(false, false);
-                btn_Override.Text = "v";
-            }
-            else
-            {
-                EnableM64View(true, false);
-                btn_Override.Text = "^";
-            }
+            EnableM64View(!FileLoaded, false);
+            btn_Override.Text = FileLoaded ? "v" : "^";
         }
         private void btn_FrameFront_Click(object sender, EventArgs e)
         {
