@@ -40,6 +40,7 @@ namespace MupenUtils
             this.st_Status2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.gp_input = new System.Windows.Forms.GroupBox();
+            this.txt_Frame = new System.Windows.Forms.TextBox();
             this.lbl_XY = new System.Windows.Forms.Label();
             this.txt_joyY = new System.Windows.Forms.TextBox();
             this.txt_joyX = new System.Windows.Forms.TextBox();
@@ -106,7 +107,6 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
-            this.txt_Frame = new System.Windows.Forms.TextBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -275,6 +275,15 @@ namespace MupenUtils
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input [WIP]";
             // 
+            // txt_Frame
+            // 
+            this.txt_Frame.Location = new System.Drawing.Point(325, 330);
+            this.txt_Frame.Name = "txt_Frame";
+            this.txt_Frame.Size = new System.Drawing.Size(35, 22);
+            this.txt_Frame.TabIndex = 0;
+            this.txt_Frame.TabStop = false;
+            this.txt_Frame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Frame_KeyDown);
+            // 
             // lbl_XY
             // 
             this.lbl_XY.AutoSize = true;
@@ -364,7 +373,7 @@ namespace MupenUtils
             this.btn_PlayPause.Size = new System.Drawing.Size(32, 28);
             this.btn_PlayPause.TabIndex = 0;
             this.btn_PlayPause.TabStop = false;
-            this.btn_PlayPause.Text = ">";
+            this.btn_PlayPause.Text = "|>";
             this.btn_PlayPause.UseVisualStyleBackColor = true;
             this.btn_PlayPause.Click += new System.EventHandler(this.btn_PlayPause_Click);
             // 
@@ -1023,15 +1032,6 @@ namespace MupenUtils
             this.lb_starttype.Size = new System.Drawing.Size(74, 17);
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
-            // 
-            // txt_Frame
-            // 
-            this.txt_Frame.Location = new System.Drawing.Point(325, 330);
-            this.txt_Frame.Name = "txt_Frame";
-            this.txt_Frame.Size = new System.Drawing.Size(35, 22);
-            this.txt_Frame.TabIndex = 0;
-            this.txt_Frame.TabStop = false;
-            this.txt_Frame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Frame_KeyDown);
             // 
             // MainForm
             // 

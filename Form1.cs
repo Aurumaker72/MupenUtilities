@@ -454,7 +454,7 @@ namespace MupenUtils
         {
             // Toggle timer
             stepFrameTimer.Enabled = !stepFrameTimer.Enabled;
-            btn_PlayPause.Text = stepFrameTimer.Enabled ? "| |" : ">";
+            btn_PlayPause.Text = stepFrameTimer.Enabled ? "| |" : forwardsPlayback ? "|>" : "<|";
         }
         private void btn_Loop_Click(object sender, EventArgs e)
         {
@@ -466,6 +466,7 @@ namespace MupenUtils
         {
             forwardsPlayback = !forwardsPlayback;
             btn_PlayDirection.Text = forwardsPlayback ? ">" : "<";
+            btn_PlayPause.Text = stepFrameTimer.Enabled ? "| |" : forwardsPlayback ? "|>" : "<|";
         }
         private void MainForm_Resize(object sender, EventArgs e)
         {
