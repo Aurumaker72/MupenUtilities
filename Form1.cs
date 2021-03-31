@@ -335,17 +335,14 @@ namespace MupenUtils
             {
                 controllerButtonsChk[i].Checked = (value & (int)Math.Pow(2, i)) != 0;
             }
-            chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
-            chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
-            // joystick = (ushort)(value & 3);//(ushort)ExtensionMethods.LowWord(value);
-            // Debug.WriteLine("[FRAME] " + frame + " " + "After doing lowword computing | Joystick ushort = " + joystick.ToString());
             byte[] data = BitConverter.GetBytes(value);
             sbyte joystickX = (sbyte)data[2];
             sbyte joystickY = (sbyte)data[3];
+
             txt_joyX.Text = joystickX.ToString();
-            txt_joyY.Text = joystickY.ToString();
-            //Debug.WriteLine("[FRAME] " + frame + " " + "--- WORD: " + joystick.ToString() + " --- X/Y " + joystickX.ToString() + " " + joystickY.ToString());
-            
+            txt_joyY.Text = joystickY.ToString();       
+            chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
+            chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
 
         bool checkAllowedStep(int stepAmount)
