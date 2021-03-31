@@ -12,10 +12,16 @@ namespace MupenUtils
 {
     public partial class MainForm : Form
     {
-        
+        const string M64_LOADED_TEXT = "M64 Loaded";
+        const string M64_LOADING_TEXT = "M64 Loading";
+        const string M64_FAILED_TEXT = "M64 Invalid";
+        const string M64_SELECTED_TEXT = "Type: M64";
+        const string ST_SELECTED_TEXT = "Type: ST";
+
         string Path;
         bool FileLoaded = true;
         bool loopInputs = true;
+        bool bypassTypeCheck = false;
 
         // M64 Data as Strings
         string Magic;
@@ -241,20 +247,19 @@ namespace MupenUtils
         }
         void LoadM64()
         {
-            ShowStatus("Loading M64",st_Status1);
-
+            ShowStatus(M64_LOADING_TEXT,st_Status1);
+            this.Text = M64_LOADING_TEXT;
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
-            if(len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64",StringComparison.InvariantCultureIgnoreCase))
+            if (!bypassTypeCheck && (len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase)))
             {
-                ShowStatus("Invalid M64",st_Status1);
+                ShowStatus("Invalid M64", st_Status1);
                 txt_Path.Text = Path = string.Empty;
                 this.ActiveControl = null;
                 RedControl(btn_PathSel);
-                EnableM64View(false,true);
+                EnableM64View(false, true);
                 return;
             }
-            EnableM64View(true,true);
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
             FileStream fs = File.Open(Path, FileMode.Open);
@@ -339,8 +344,9 @@ namespace MupenUtils
 
 
             
-
-            ShowStatus("Loaded M64",st_Status1);
+            EnableM64View(true,true);
+            ShowStatus(M64_LOADED_TEXT,st_Status1);
+            this.Text = M64_LOADED_TEXT;
         }
 
         void LoadST()
@@ -351,15 +357,15 @@ namespace MupenUtils
 
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
         {
-            if(!txt_Path.ReadOnly)
-            txt_Path.ReadOnly = true;
-            ShowStatus("Type: M64",st_Status1);
+            bypassTypeCheck = e.Button != MouseButtons.Left;
+            btn_PathSel.ForeColor = bypassTypeCheck ? Color.Orange : Color.Black;
+            btn_PathSel.Text = e.Button==MouseButtons.Left ? "Browse M64" : "Browse Any";
         }
         private void rb_STsel_MouseDown(object sender, MouseEventArgs e)
         {
-            if(!txt_Path.ReadOnly)
-            txt_Path.ReadOnly = true;
-            ShowStatus("Type: Savestate",st_Status1);
+            bypassTypeCheck = e.Button != MouseButtons.Left;
+            btn_PathSel.ForeColor = bypassTypeCheck ? Color.Orange : Color.Black;
+            btn_PathSel.Text = e.Button==MouseButtons.Left ? "Browse ST" : "Browse Any";
         }
 
 

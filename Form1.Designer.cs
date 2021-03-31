@@ -123,7 +123,7 @@ namespace MupenUtils
             this.btn_PathSel.Size = new System.Drawing.Size(100, 28);
             this.btn_PathSel.TabIndex = 0;
             this.btn_PathSel.TabStop = false;
-            this.btn_PathSel.Text = "Browse";
+            this.btn_PathSel.Text = "Browse M64";
             this.btn_PathSel.UseVisualStyleBackColor = true;
             this.btn_PathSel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_PathSel_MouseClick);
             // 
