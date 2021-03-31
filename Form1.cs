@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -38,7 +39,7 @@ namespace MupenUtils
         string Author;
         string Description;
 
-        public CheckBox[] controllerbuttons;
+        public CheckBox[] controllerButtonsChk;
         List<int> inputList = new List<int>();
         int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
@@ -62,7 +63,7 @@ namespace MupenUtils
         
         void InitController()
         {
-            controllerbuttons = new CheckBox[] {
+            controllerButtonsChk = new CheckBox[] {
             chk_Right,  // R_DPAD              (CONTROL)
             chk_Left,   // L_DPAD              (CONTROL)
             chk_Down,   // D_DPAD              (CONTROL)
@@ -79,7 +80,10 @@ namespace MupenUtils
             chk_Up,     //U_CBUTTON            (CONTROL)
 
             chk_R,      //R_TRIG               (CONTROL)
-            chk_L       //L_TRIG               (CONTROL)
+            chk_L,       //L_TRIG               (CONTROL)
+
+            chk_RESERVED1,    // RESERVED!!! (CONTROL)
+            chk_RESERVED2     // RESERVED!!! (CONTROL)
         };
 
             stepFrameTimer.Tick += new EventHandler(AdvanceInputAuto);
@@ -253,7 +257,8 @@ namespace MupenUtils
             EnableM64View(true,true);
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
-            BinaryReader br = new BinaryReader(File.Open(Path, FileMode.Open));
+            FileStream fs = File.Open(Path, FileMode.Open);
+            BinaryReader br = new BinaryReader(fs);
 
             
             // Read header
@@ -299,8 +304,10 @@ namespace MupenUtils
             // We need a buffer to check if end of file reached
             Debug.WriteLine("VI/s:" + VIs);
             frames = VIs / 2;
+            NetworkStream nstr = br.BaseStream as NetworkStream;
             for (int i = 0; i <= frames; i++)
             {
+                if (br.BaseStream.Position + 4 > fs.Length) continue;
                 Debug.WriteLine("--- Sample " + i + "/" + frames + " ---");
                 inputList.Add(br.ReadInt32());
             }
@@ -379,9 +386,9 @@ namespace MupenUtils
         int GetChkboxes()
         {
             int value = 0;
-            for (int i = 0; i < controllerbuttons.Length; i++)
+            for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
-                if (controllerbuttons[i].Checked)
+                if (controllerButtonsChk[i].Checked)
                 {
                     value |= (int)Math.Pow(2, i);
                 }
@@ -390,11 +397,18 @@ namespace MupenUtils
         }
         void SetInput(int value)
         {
-            int numbuttons = controllerbuttons.Length; // wip
+            int numbuttons = controllerButtonsChk.Length; // wip
             for (int i = 0; i < numbuttons; i++)
             {
-                 controllerbuttons[i].Checked = Convert.ToBoolean(value & (int)Math.Pow(2, i));   
+                //Debug.WriteLine("Checkbox index " + i + " | Value AND: " + (value & (int)Math.Pow(2, i)));
+                 controllerButtonsChk[i].Checked = Convert.ToBoolean(value & (int)Math.Pow(2, i));   
             }
+            // (int)Math.Pow(2, numbuttons + 1)         = 131072
+            // value & (int)Math.Pow(2, numbuttons + 1) = 0 ???
+            ushort joystick = (ushort)(value & (int)Math.Pow(2, numbuttons + 1));
+            sbyte joystickX = (sbyte)(joystick >> 8);
+            sbyte joystickY = (sbyte)(joystick & 0x00FF);
+            Debug.WriteLine("--- WORD: " + joystick.ToString() + " --- X/Y " + joystickX.ToString() + " " + joystickY.ToString());
             //// Mask out last
             //int _value = (value & (int)Math.Pow(2, numbuttons + 3));
             //ushort x = (ushort) (_value >> 8);
@@ -462,7 +476,6 @@ namespace MupenUtils
                 stepFrameTimer.Enabled = true;
                 btn_PlayPause.Text = "| |";
             }
-            ShowStatus("Timer enabled: " + stepFrameTimer.Enabled,st_Status2);
         }
         void AdvanceInputAuto(object obj, EventArgs e)
         {
