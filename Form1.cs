@@ -158,9 +158,6 @@ namespace MupenUtils
             this.ResumeLayout();
         }
 
-        #endregion
-
-        #region I/O
         private void ShowStatus_ThreadSafe(string txt)
         {
             st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = txt));
@@ -179,6 +176,10 @@ namespace MupenUtils
             this.Invoke((MethodInvoker)(() => this.Size = s));
 
         }
+
+        #endregion
+
+        #region I/O
 
         void LoadM64()
         {
@@ -255,7 +256,9 @@ namespace MupenUtils
             int findx = 0;
             while(findx <= frames)
             {
-                if (br.BaseStream.Position + 4 > fs.Length) continue;
+                if (br.BaseStream.Position + 4 > fs.Length) {
+                    findx++;
+                    continue; }
 #if DEBUG
                 Debug.WriteLine("--- Sample " + findx + "/" + frames + " ---");
 #endif
@@ -459,13 +462,6 @@ namespace MupenUtils
 #endif
         }
 
-
-
-
-
-
-        #endregion
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (m64ThreadRunning)
@@ -478,5 +474,11 @@ namespace MupenUtils
                 return;
             }
         }
+
+
+
+        #endregion
+
+        
     }
 }
