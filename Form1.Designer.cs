@@ -46,6 +46,7 @@ namespace MupenUtils
             this.chk_RESERVED2 = new System.Windows.Forms.CheckBox();
             this.chk_restart = new System.Windows.Forms.CheckBox();
             this.chk_RESERVED1 = new System.Windows.Forms.CheckBox();
+            this.btn_PlayDirection = new System.Windows.Forms.Button();
             this.btn_Loop = new System.Windows.Forms.Button();
             this.btn_PlayPause = new System.Windows.Forms.Button();
             this.chk_Cright = new System.Windows.Forms.CheckBox();
@@ -105,7 +106,6 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
-            this.btn_PlayDirection = new System.Windows.Forms.Button();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -329,6 +329,18 @@ namespace MupenUtils
             this.chk_RESERVED1.TabIndex = 1;
             this.chk_RESERVED1.Text = "Res. 1";
             this.chk_RESERVED1.UseVisualStyleBackColor = true;
+            // 
+            // btn_PlayDirection
+            // 
+            this.btn_PlayDirection.Location = new System.Drawing.Point(290, 325);
+            this.btn_PlayDirection.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_PlayDirection.Name = "btn_PlayDirection";
+            this.btn_PlayDirection.Size = new System.Drawing.Size(32, 28);
+            this.btn_PlayDirection.TabIndex = 0;
+            this.btn_PlayDirection.TabStop = false;
+            this.btn_PlayDirection.Text = ">";
+            this.btn_PlayDirection.UseVisualStyleBackColor = true;
+            this.btn_PlayDirection.Click += new System.EventHandler(this.btn_PlayDirection_Click);
             // 
             // btn_Loop
             // 
@@ -663,7 +675,7 @@ namespace MupenUtils
             // lb_VIs
             // 
             this.lb_VIs.AutoSize = true;
-            this.lb_VIs.Location = new System.Drawing.Point(11, 158);
+            this.lb_VIs.Location = new System.Drawing.Point(10, 150);
             this.lb_VIs.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb_VIs.Name = "lb_VIs";
             this.lb_VIs.Size = new System.Drawing.Size(27, 17);
@@ -693,7 +705,7 @@ namespace MupenUtils
             // lb_RR
             // 
             this.lb_RR.AutoSize = true;
-            this.lb_RR.Location = new System.Drawing.Point(11, 128);
+            this.lb_RR.Location = new System.Drawing.Point(10, 120);
             this.lb_RR.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb_RR.Name = "lb_RR";
             this.lb_RR.Size = new System.Drawing.Size(74, 17);
@@ -761,7 +773,7 @@ namespace MupenUtils
             // lbl_ROMNAME
             // 
             this.lbl_ROMNAME.AutoSize = true;
-            this.lbl_ROMNAME.Location = new System.Drawing.Point(11, 30);
+            this.lbl_ROMNAME.Location = new System.Drawing.Point(10, 25);
             this.lbl_ROMNAME.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_ROMNAME.Name = "lbl_ROMNAME";
             this.lbl_ROMNAME.Size = new System.Drawing.Size(81, 17);
@@ -771,7 +783,7 @@ namespace MupenUtils
             // lbl_ROMCRC
             // 
             this.lbl_ROMCRC.AutoSize = true;
-            this.lbl_ROMCRC.Location = new System.Drawing.Point(11, 59);
+            this.lbl_ROMCRC.Location = new System.Drawing.Point(10, 54);
             this.lbl_ROMCRC.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_ROMCRC.Name = "lbl_ROMCRC";
             this.lbl_ROMCRC.Size = new System.Drawing.Size(72, 17);
@@ -781,7 +793,7 @@ namespace MupenUtils
             // lbl_RomCountry
             // 
             this.lbl_RomCountry.AutoSize = true;
-            this.lbl_RomCountry.Location = new System.Drawing.Point(11, 89);
+            this.lbl_RomCountry.Location = new System.Drawing.Point(10, 84);
             this.lbl_RomCountry.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_RomCountry.Name = "lbl_RomCountry";
             this.lbl_RomCountry.Size = new System.Drawing.Size(93, 17);
@@ -1009,18 +1021,6 @@ namespace MupenUtils
             this.lb_starttype.Size = new System.Drawing.Size(74, 17);
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
-            // 
-            // btn_PlayDirection
-            // 
-            this.btn_PlayDirection.Location = new System.Drawing.Point(290, 325);
-            this.btn_PlayDirection.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_PlayDirection.Name = "btn_PlayDirection";
-            this.btn_PlayDirection.Size = new System.Drawing.Size(32, 28);
-            this.btn_PlayDirection.TabIndex = 0;
-            this.btn_PlayDirection.TabStop = false;
-            this.btn_PlayDirection.Text = ">";
-            this.btn_PlayDirection.UseVisualStyleBackColor = true;
-            this.btn_PlayDirection.Click += new System.EventHandler(this.btn_PlayDirection_Click);
             // 
             // MainForm
             // 

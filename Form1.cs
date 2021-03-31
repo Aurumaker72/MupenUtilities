@@ -153,7 +153,8 @@ namespace MupenUtils
             this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill;
             st_Status.Visible = FileLoaded;
-
+            this.MaximizeBox = FileLoaded;
+            if (!FileLoaded) this.WindowState = FormWindowState.Normal;
             this.Size = s;
             this.ResumeLayout();
         }
@@ -173,6 +174,8 @@ namespace MupenUtils
             this.Invoke((MethodInvoker)(() => this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
             gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill));
             st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = FileLoaded));
+            this.Invoke((MethodInvoker)(() => this.MaximizeBox = FileLoaded));
+            if (!FileLoaded) this.Invoke((MethodInvoker)(() => this.WindowState = FormWindowState.Normal));
             this.Invoke((MethodInvoker)(() => this.Size = s));
 
         }
@@ -215,9 +218,9 @@ namespace MupenUtils
             Version = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             UID = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             VIs = br.ReadUInt32();//ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            RRs = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            RRs = br.ReadUInt32().ToString();
             br.ReadByte(); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
-            Controllers = ByteArrayToString(BitConverter.GetBytes(br.ReadByte()));
+            Controllers = br.ReadByte().ToString();
             br.ReadBytes(2); // reserved --- Seek 2 bytes forward (dummy)
             Samples = br.ReadInt32(); // input samples --- Seek 4 bytes forward (dummy)
             StartType = DataHelper.GetMovieStartupType(br.ReadInt16());
@@ -276,7 +279,7 @@ namespace MupenUtils
             txt_misc_Version.Invoke((MethodInvoker)(() => txt_misc_Version.Text = Version));
             txt_misc_UID.Invoke((MethodInvoker)(() => txt_misc_UID.Text = UID));
 
-            txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = ByteArrayToString(BitConverter.GetBytes(VIs))));
+            txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = VIs.ToString()));
             txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = RRs));
             txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = Controllers));
             txt_StartType.Invoke((MethodInvoker)(() => txt_StartType.Text = StartType));
