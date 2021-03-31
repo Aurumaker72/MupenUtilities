@@ -124,7 +124,7 @@ namespace MupenUtils
             if (flag)
             {
                 gp_M64.Show();
-                s = new Size(687, 483);
+                s = new Size(1005,580);
             } 
             else
             {
@@ -495,6 +495,13 @@ namespace MupenUtils
                 loopInputs = true;
                 btn_Loop.Text = "🔁";
             }
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+#if DEBUG
+            Debug.WriteLine("Window Resize (W/H) " + Width + " " + Height);
+#endif
         }
     }
 }
