@@ -330,18 +330,18 @@ namespace MupenUtils
 
         void SetInput(int value)
         {
-            int numbuttons = controllerButtonsChk.Length; // wip
+            int numbuttons = controllerButtonsChk.Length;
             for (int i = 0; i < numbuttons; i++)
             {
-                //Debug.WriteLine("Checkbox index " + i + " | Value AND: " + (value & (int)Math.Pow(2, i)));
                 controllerButtonsChk[i].Checked = (value & (int)Math.Pow(2, i)) != 0;
             }
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
-            int joystick = 16&ExtensionMethods.LowWord(value);
-            Debug.WriteLine("[FRAME] " + frame + " " + "After doing lowword computing | Joystick ushort = " + joystick.ToString());
-            sbyte joystickX = (sbyte)(joystick >> 8);
-            sbyte joystickY = (sbyte)(joystick & 0x00FF);
+            // joystick = (ushort)(value & 3);//(ushort)ExtensionMethods.LowWord(value);
+            // Debug.WriteLine("[FRAME] " + frame + " " + "After doing lowword computing | Joystick ushort = " + joystick.ToString());
+            byte[] data = BitConverter.GetBytes(value);
+            sbyte joystickX = (sbyte)data[2];
+            sbyte joystickY = (sbyte)data[3];
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
             //Debug.WriteLine("[FRAME] " + frame + " " + "--- WORD: " + joystick.ToString() + " --- X/Y " + joystickX.ToString() + " " + joystickY.ToString());
