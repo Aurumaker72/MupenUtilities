@@ -25,6 +25,7 @@ namespace MupenUtils
         bool loopInputs = true;
         bool bypassTypeCheck = false;
         bool forwardsPlayback = true;
+        bool m64ThreadRunning = false;
 
         // M64 Data as Strings
         string Magic;
@@ -181,6 +182,7 @@ namespace MupenUtils
 
         void LoadM64()
         {
+            m64ThreadRunning = true;
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
             if (!bypassTypeCheck && (len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase)))
@@ -196,9 +198,9 @@ namespace MupenUtils
 
 
                 EnableM64View_ThreadSafe(false);
-
                 // set m64 style
 
+                m64ThreadRunning = false;
                 return;
             }
             ASCIIEncoding ascii = new ASCIIEncoding();
@@ -250,13 +252,19 @@ namespace MupenUtils
             // We need a buffer to check if end of file reached
             Debug.WriteLine("VI/s:" + VIs);
             frames = VIs / 2;
-            NetworkStream nstr = br.BaseStream as NetworkStream;
-            for (int i = 0; i <= frames; i++)
+            int findx = 0;
+            while(findx <= frames)
             {
                 if (br.BaseStream.Position + 4 > fs.Length) continue;
-                Debug.WriteLine("--- Sample " + i + "/" + frames + " ---");
+#if DEBUG
+                Debug.WriteLine("--- Sample " + findx + "/" + frames + " ---");
+#endif
                 inputList.Add(br.ReadInt32());
+                findx++;
             }
+
+
+
 
             br.Close(); // destroy handle
 
@@ -287,6 +295,7 @@ namespace MupenUtils
 
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
+            m64ThreadRunning = false;
         }
 
         
@@ -456,5 +465,18 @@ namespace MupenUtils
 
 
         #endregion
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (m64ThreadRunning)
+            {
+                e.Cancel =
+                    MessageBox.Show("The m64 loading thread is still running. Are you sure you want to close the program? (might cause issues)",
+                    "Thread running",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning) == DialogResult.No;
+                return;
+            }
+        }
     }
 }
