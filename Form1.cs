@@ -623,6 +623,22 @@ namespace MupenUtils
             }
         }
 
+        private void txt_joyX_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(ExtensionMethods.ValidStringByte(txt_Frame.Text, -127, 127) && e.KeyCode == Keys.Enter)
+            {
+                UpdateJoystickValues(RelativeToAbsolute(new Point(byte.Parse(txt_joyX.Text),byte.Parse(txt_joyY.Text))), false);
+            }
+        }
+
+        private void txt_joyY_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(ExtensionMethods.ValidStringByte(txt_Frame.Text, -127, 127) && e.KeyCode == Keys.Enter)
+            {
+                UpdateJoystickValues(RelativeToAbsolute(new Point(byte.Parse(txt_joyX.Text),byte.Parse(txt_joyY.Text))), false);
+            }
+        }
+
         private void btn_Savem64_MouseClick(object sender, MouseEventArgs e)
         {
             WriteM64();

@@ -348,6 +348,7 @@ namespace MupenUtils
             this.txt_joyY.Size = new System.Drawing.Size(64, 22);
             this.txt_joyY.TabIndex = 0;
             this.txt_joyY.TabStop = false;
+            this.txt_joyY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_joyY_KeyDown);
             // 
             // txt_joyX
             // 
@@ -357,6 +358,7 @@ namespace MupenUtils
             this.txt_joyX.Size = new System.Drawing.Size(64, 22);
             this.txt_joyX.TabIndex = 0;
             this.txt_joyX.TabStop = false;
+            this.txt_joyX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_joyX_KeyDown);
             // 
             // chk_RESERVED2
             // 

@@ -22,6 +22,15 @@ public static class ExtensionMethods
         return true;
         return false;
     }
+    public static bool ValidStringByte(string str, int min, int max)
+    {
+        if(str.Length == 0||String.IsNullOrEmpty(str)||String.IsNullOrWhiteSpace(str))return false;
+        foreach(char c in str){if(c<'0'||c>'9')return false;}
+        int r=byte.Parse(str);
+        if (r>=min&&r<=max)
+        return true;
+        return false;
+    }
     public static string ByteArrayToString(byte[] ba)
     {
         StringBuilder hex = new StringBuilder(ba.Length * 2);
