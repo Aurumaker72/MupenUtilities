@@ -556,16 +556,15 @@ namespace MupenUtils
         private void DrawJoystick(PaintEventArgs e)
         {
             Pen linepen = new Pen(Color.Blue, 3);
-            Pen outlinepen = new Pen(Color.Black, 1);
             e.Graphics.DrawLine(linepen, JOY_middle, JOY_Abs); 
+            e.Graphics.DrawRectangle(Pens.Black, 0,0,pb_JoystickPic.Width-1,pb_JoystickPic.Height-1);
             e.Graphics.FillEllipse(Brushes.Red, JOY_Abs.X - 4, JOY_Abs.Y - 4, 8, 8);
-            e.Graphics.DrawEllipse(outlinepen, 0, 0, pb_JoystickPic.Width-outlinepen.Width, pb_JoystickPic.Height-outlinepen.Width);
-            e.Graphics.DrawLine(outlinepen, JOY_middle.X, JOY_middle.Y, 0, JOY_middle.Y);
-            e.Graphics.DrawLine(outlinepen, JOY_middle.X, JOY_middle.Y, JOY_middle.X, pb_JoystickPic.Height);
-            e.Graphics.DrawLine(outlinepen, JOY_middle.X, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-            e.Graphics.DrawLine(outlinepen, JOY_middle.X, JOY_middle.Y, JOY_middle.X, 0);
+            e.Graphics.DrawEllipse(Pens.Black, 1,1, pb_JoystickPic.Width-3, pb_JoystickPic.Height-3);
+            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, 0, JOY_middle.Y);
+            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, JOY_middle.X, pb_JoystickPic.Height);
+            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, JOY_middle.X, 0);
             linepen.Dispose();
-            outlinepen.Dispose();
 
         }
 
