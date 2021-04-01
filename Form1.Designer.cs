@@ -107,6 +107,7 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
+            this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -115,6 +116,7 @@ namespace MupenUtils
             this.gpRom.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_M64_misc.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -237,6 +239,7 @@ namespace MupenUtils
             // 
             // gp_input
             // 
+            this.gp_input.Controls.Add(this.pb_JoystickPic);
             this.gp_input.Controls.Add(this.txt_Frame);
             this.gp_input.Controls.Add(this.lbl_XY);
             this.gp_input.Controls.Add(this.txt_joyY);
@@ -1033,6 +1036,17 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
+            // pb_JoystickPic
+            // 
+            this.pb_JoystickPic.BackColor = System.Drawing.Color.Transparent;
+            this.pb_JoystickPic.Location = new System.Drawing.Point(200, 25);
+            this.pb_JoystickPic.Name = "pb_JoystickPic";
+            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 145);
+            this.pb_JoystickPic.TabIndex = 3;
+            this.pb_JoystickPic.TabStop = false;
+            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
+            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1064,6 +1078,7 @@ namespace MupenUtils
             this.gp_Plugins.PerformLayout();
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1149,6 +1164,7 @@ namespace MupenUtils
         private System.Windows.Forms.Label lbl_XY;
         private System.Windows.Forms.Button btn_PlayDirection;
         private System.Windows.Forms.TextBox txt_Frame;
+        private System.Windows.Forms.PictureBox pb_JoystickPic;
     }
 }
 

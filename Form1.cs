@@ -54,6 +54,12 @@ namespace MupenUtils
         int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
 
+        // Joystick input
+        //int JOY_Relx, JOY_Rely, JOY_Absx, JOY_Absy;
+        Point JOY_Rel, JOY_Abs, JOY_middle;
+        bool JOY_mouseDown;
+        const int JOY_clampDif = 4;
+
         #endregion
 
         #region Setup
@@ -103,6 +109,9 @@ namespace MupenUtils
             stepFrameTimer.Tick += new EventHandler(AdvanceInputAuto);
             stepFrameTimer.Interval = 32; // 30 fps
             stepFrameTimer.Stop();
+
+            JOY_middle.X = pb_JoystickPic.Width / 2;
+            JOY_middle.Y = pb_JoystickPic.Height / 2;
         }
         
         void InitUI()
@@ -340,7 +349,8 @@ namespace MupenUtils
             sbyte joystickY = (sbyte)data[3];
 
             txt_joyX.Text = joystickX.ToString();
-            txt_joyY.Text = joystickY.ToString();       
+            txt_joyY.Text = joystickY.ToString();
+            UpdateJoystickValues(new Point(RelativeToAbsolute(joystickX), RelativeToAbsolute(joystickY)), false);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
@@ -499,8 +509,71 @@ namespace MupenUtils
         }
 
 
+
         #endregion
 
-        
+
+        #region Joystick Drawing, Events, etc...
+
+        // 82 / -82
+        int AbsoluteToRelative(int abs)
+        {
+            return abs - 82;
+        }
+        int RelativeToAbsolute(int rel)
+        {
+           return rel + 82;
+        }
+
+        void SnapJoystick()
+        {
+            if (JOY_Rel.X < 5 && JOY_Rel.X > -5)
+            {
+                JOY_Rel.X = 0;
+                JOY_Abs.X = pb_JoystickPic.Width / 2;
+            }
+            else if (JOY_Rel.Y < 5 && JOY_Rel.Y > -5)
+            {
+                JOY_Rel.Y = 0;
+                JOY_Abs.Y = pb_JoystickPic.Height / 2;
+            }
+        }
+
+        void UpdateJoystickValues(Point e, bool user)
+        {
+            JOY_Abs.X = ExtensionMethods.Clamp(e.X, JOY_clampDif/2, pb_JoystickPic.Width - JOY_clampDif);
+            JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif/2, pb_JoystickPic.Height - JOY_clampDif);
+            JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -127, 127);
+            JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
+
+            if(user)
+            SnapJoystick();
+
+            pb_JoystickPic.Refresh();
+        }
+        private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
+
+        private void DrawJoystick(PaintEventArgs e)
+        {
+            Pen linepen = new Pen(Color.Blue, 4);
+            Pen outlinepen = new Pen(Color.Black, 2);
+            e.Graphics.DrawLine(linepen, JOY_middle, JOY_Abs); 
+            e.Graphics.FillEllipse(Brushes.Red, JOY_Abs.X - 4, JOY_Abs.Y - 4, 8, 8);
+            e.Graphics.DrawEllipse(outlinepen, 0, 0, pb_JoystickPic.Width-outlinepen.Width, pb_JoystickPic.Height-outlinepen.Width);
+            e.Graphics.DrawLine(outlinepen, JOY_middle.X, JOY_middle.Y, 0, JOY_middle.Y);
+            e.Graphics.DrawLine(outlinepen, JOY_middle.X, JOY_middle.Y, JOY_middle.X, pb_JoystickPic.Height);
+            e.Graphics.DrawLine(outlinepen, JOY_middle.X, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+            e.Graphics.DrawLine(outlinepen, JOY_middle.X, JOY_middle.Y, JOY_middle.X, 0);
+            linepen.Dispose();
+            outlinepen.Dispose();
+
+        }
+
+        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (Control.MouseButtons==MouseButtons.Left) UpdateJoystickValues(e.Location,true);
+        }
+
+        #endregion
     }
 }
