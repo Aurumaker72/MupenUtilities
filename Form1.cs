@@ -31,19 +31,21 @@ namespace MupenUtils
         string Magic;
         string Version;
         string UID;
-        UInt32 VIs;
+        UInt32 VIs; // vis
+        byte VI_s; // vi/s
         UInt32 frames;
-        string RRs;
-        string Controllers;
-        string StartType;
+        UInt32 RRs;
+        byte Controllers;
+        Int16 StartType;
         string RomName;
-        string Crc32;
-        string RomCountry;
+        UInt32 Crc32;
+        UInt16 RomCountry;
         string VideoPlugin;
         string InputPlugin;
         string AudioPlugin;
         string RSPPlugin;
-        int Samples;
+        UInt32 Samples;
+        UInt32 ControllerFlags;
 
         string M64Name; // Name = m64 file name (path)
         string Author;
@@ -127,6 +129,7 @@ namespace MupenUtils
             new Thread(() =>
                {
                Thread.Sleep(1000);
+               if(ctl.GetCurrentParent()!=null)
                ctl.GetCurrentParent().Invoke((MethodInvoker)(() => ctl.Text = string.Empty));
                }).Start();
         }
@@ -184,7 +187,7 @@ namespace MupenUtils
 
         #region I/O
 
-        void LoadM64()
+        void ReadM64()
         {
             m64ThreadRunning = true;
             // Check for suspicious properties
@@ -218,20 +221,20 @@ namespace MupenUtils
             Version = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             UID = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             VIs = br.ReadUInt32();//ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            RRs = br.ReadUInt32().ToString();
-            br.ReadByte(); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
-            Controllers = br.ReadByte().ToString();
+            RRs = br.ReadUInt32();
+            VI_s = br.ReadByte(); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
+            Controllers = br.ReadByte();
             br.ReadBytes(2); // reserved --- Seek 2 bytes forward (dummy)
-            Samples = br.ReadInt32(); // input samples --- Seek 4 bytes forward (dummy)
-            StartType = DataHelper.GetMovieStartupType(br.ReadInt16());
+            Samples = br.ReadUInt32(); // input samples --- Seek 4 bytes forward (dummy)
+            StartType = br.ReadInt16();//DataHelper.GetMovieStartupType(br.ReadInt16());
 
             br.ReadInt16(); // reserved -- seek 2 bytes forward (dummy)
-            br.ReadInt32(); // controller flags -- seek 4 bytes forward (dummy)
+            ControllerFlags = br.ReadUInt32(); // controller flags -- seek 4 bytes forward (dummy)
             br.ReadBytes(160); // reserved -- seek 160 bytes forward (dummy)
             RomName = ascii.GetString(br.ReadBytes(32)); // rom name
-            Crc32 = br.ReadUInt32().ToString();// crc32
+            Crc32 = br.ReadUInt32();// crc32
 
-            RomCountry = DataHelper.GetCountryCode(br.ReadInt16()); // Country code
+            RomCountry = br.ReadUInt16();//.GetCountryCode(br.ReadInt16()); // Country code
             br.ReadBytes(56); // reserved -- seek 56 bytes forward (dummy)
 
 
@@ -280,9 +283,9 @@ namespace MupenUtils
             txt_misc_UID.Invoke((MethodInvoker)(() => txt_misc_UID.Text = UID));
 
             txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = VIs.ToString()));
-            txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = RRs));
-            txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = Controllers));
-            txt_StartType.Invoke((MethodInvoker)(() => txt_StartType.Text = StartType));
+            txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = RRs.ToString()));
+            txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = Controllers.ToString()));
+            txt_StartType.Invoke((MethodInvoker)(() => txt_StartType.Text = DataHelper.GetMovieStartupType(StartType)));
 
             txt_videoplugin.Invoke((MethodInvoker)(() => txt_videoplugin.Text = VideoPlugin));
             txt_inputplugin.Invoke((MethodInvoker)(() => txt_inputplugin.Text = InputPlugin));
@@ -290,8 +293,8 @@ namespace MupenUtils
             txt_Rsp.Invoke((MethodInvoker)(() => txt_Rsp.Text = RSPPlugin));
 
             txt_Rom.Invoke((MethodInvoker)(() => txt_Rom.Text = RomName));
-            txt_Crc.Invoke((MethodInvoker)(() => txt_Crc.Text = Crc32));
-            txt_RomCountry.Invoke((MethodInvoker)(() => txt_RomCountry.Text = RomCountry));
+            txt_Crc.Invoke((MethodInvoker)(() => txt_Crc.Text = Crc32.ToString()));
+            txt_RomCountry.Invoke((MethodInvoker)(() => txt_RomCountry.Text = DataHelper.GetCountryCode(RomCountry)));
 
             txt_PathName.Invoke((MethodInvoker)(() => txt_PathName.Text = M64Name));
             txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
@@ -302,6 +305,59 @@ namespace MupenUtils
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
             m64ThreadRunning = false;
+        }
+
+        void WriteM64()
+        {
+            if (!FileLoaded) return;
+            FileStream fs = File.Open(Path+"-modified.m64", FileMode.OpenOrCreate);
+            BinaryWriter br = new BinaryWriter(fs);
+
+            byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
+            Array.Clear(zeroar1, 0, zeroar1.Length); 
+            Array.Clear(zeroar2, 0, zeroar2.Length);
+
+            UID = txt_misc_UID.Text;
+            VIs = UInt32.Parse(txt_VIs.Text);
+            RRs = UInt32.Parse(txt_RR.Text);
+            Controllers = byte.Parse(txt_CTRLS.Text);
+            RomName = txt_Rom.Text;
+            VideoPlugin = txt_videoplugin.Text;
+            AudioPlugin = txtbox_Audioplugin.Text;
+            InputPlugin = txt_inputplugin.Text;
+            RSPPlugin = txt_Rsp.Text;
+            Author = txt_Author.Text;
+            Description = txt_Desc.Text;
+
+            br.Write(1295397914); // Int32 - Magic (4D36341A)
+            br.Write(3); // UInt32 - Version number (3)
+            br.Write(UID); // UInt32 - UID
+            br.Write(VIs); // UInt32 - VIs
+            br.Write(RRs); // UInt32 - RRs
+            br.Write(VI_s); // Byte - VI/s
+            br.Write(Controllers); // Byte - Controllers
+            br.Write((Int16)0); // 2 Bytes - RESERVED
+            br.Write(Samples); // UInt32 - Input Samples
+            br.Write(StartType); // UInt16 - Movie start type
+            br.Write((Int16)0); // 2 bytes - RESERVED
+            br.Write(ControllerFlags); // UInt32 - Controller Flags
+            br.Write(zeroar1,0,zeroar1.Length); // 160 bytes - RESERVED
+            br.Write(RomName);
+            br.Write(Crc32);
+            br.Write(RomName);
+            br.Write(RomCountry);
+            br.Write(zeroar2,0,zeroar2.Length); // 56 bytes - RESERVED
+            br.Write(VideoPlugin);
+            br.Write(AudioPlugin);
+            br.Write(InputPlugin);
+            br.Write(RSPPlugin);
+            br.Write(Author);
+            br.Write(Description);
+            for (int i = 0; i < inputList.Count/4; i++)
+            {
+            br.Write(inputList[i]);
+            }
+            br.Close();
         }
 
         
@@ -408,7 +464,7 @@ namespace MupenUtils
             Properties.Settings.Default.Save();
 
             if (rb_M64sel.Checked){
-                Thread m64load = new Thread ( () => LoadM64() );
+                Thread m64load = new Thread ( () => ReadM64() );
                 m64load.Start();
                 }
             else if (rb_STsel.Checked){
@@ -418,7 +474,7 @@ namespace MupenUtils
         {
             Path = Properties.Settings.Default.LastPath;
              if (rb_M64sel.Checked){
-                Thread m64load = new Thread ( () => LoadM64() );
+                Thread m64load = new Thread ( () => ReadM64() );
                 m64load.Start();
                 }
             else if (rb_STsel.Checked){
@@ -503,7 +559,6 @@ namespace MupenUtils
             }
         }
 
-
         private void txt_Frame_KeyDown(object sender, KeyEventArgs e)
         {
             if(ExtensionMethods.ValidStringInt(txt_Frame.Text, 0, (int)frames) && e.KeyCode == Keys.Enter)
@@ -512,7 +567,10 @@ namespace MupenUtils
             }
         }
 
-
+        private void btn_Savem64_MouseClick(object sender, MouseEventArgs e)
+        {
+            WriteM64();
+        }
 
         #endregion
 
@@ -556,7 +614,7 @@ namespace MupenUtils
         }
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
 
-       
+      
 
         private void DrawJoystick(PaintEventArgs e)
         {

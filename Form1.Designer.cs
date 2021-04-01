@@ -35,6 +35,7 @@ namespace MupenUtils
             this.btn_Override = new System.Windows.Forms.Button();
             this.rb_STsel = new System.Windows.Forms.RadioButton();
             this.rb_M64sel = new System.Windows.Forms.RadioButton();
+            this.btn_LoadLatest = new System.Windows.Forms.Button();
             this.st_Status = new System.Windows.Forms.StatusStrip();
             this.st_Status1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.st_Status2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -87,6 +88,7 @@ namespace MupenUtils
             this.txt_RomCountry = new System.Windows.Forms.TextBox();
             this.lbl_ROMNAME = new System.Windows.Forms.Label();
             this.lbl_ROMCRC = new System.Windows.Forms.Label();
+            this.btn_Savem64 = new System.Windows.Forms.Button();
             this.lbl_RomCountry = new System.Windows.Forms.Label();
             this.gp_Plugins = new System.Windows.Forms.GroupBox();
             this.lbl_Video = new System.Windows.Forms.Label();
@@ -108,7 +110,6 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
-            this.btn_LoadLatest = new System.Windows.Forms.Button();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -195,6 +196,18 @@ namespace MupenUtils
             this.rb_M64sel.Text = "M64";
             this.rb_M64sel.UseVisualStyleBackColor = true;
             this.rb_M64sel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_M64sel_MouseDown);
+            // 
+            // btn_LoadLatest
+            // 
+            this.btn_LoadLatest.Location = new System.Drawing.Point(210, 45);
+            this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_LoadLatest.Name = "btn_LoadLatest";
+            this.btn_LoadLatest.Size = new System.Drawing.Size(56, 28);
+            this.btn_LoadLatest.TabIndex = 0;
+            this.btn_LoadLatest.TabStop = false;
+            this.btn_LoadLatest.Text = "Last";
+            this.btn_LoadLatest.UseVisualStyleBackColor = true;
+            this.btn_LoadLatest.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Last_MouseClick);
             // 
             // st_Status
             // 
@@ -654,7 +667,6 @@ namespace MupenUtils
             this.txt_PathName.Location = new System.Drawing.Point(128, 30);
             this.txt_PathName.Margin = new System.Windows.Forms.Padding(4);
             this.txt_PathName.Name = "txt_PathName";
-            this.txt_PathName.ReadOnly = true;
             this.txt_PathName.Size = new System.Drawing.Size(132, 22);
             this.txt_PathName.TabIndex = 0;
             this.txt_PathName.TabStop = false;
@@ -674,7 +686,6 @@ namespace MupenUtils
             this.txt_Desc.Location = new System.Drawing.Point(128, 89);
             this.txt_Desc.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Desc.Name = "txt_Desc";
-            this.txt_Desc.ReadOnly = true;
             this.txt_Desc.Size = new System.Drawing.Size(132, 22);
             this.txt_Desc.TabIndex = 0;
             this.txt_Desc.TabStop = false;
@@ -694,7 +705,6 @@ namespace MupenUtils
             this.txt_VIs.Location = new System.Drawing.Point(128, 148);
             this.txt_VIs.Margin = new System.Windows.Forms.Padding(4);
             this.txt_VIs.Name = "txt_VIs";
-            this.txt_VIs.ReadOnly = true;
             this.txt_VIs.Size = new System.Drawing.Size(132, 22);
             this.txt_VIs.TabIndex = 0;
             this.txt_VIs.TabStop = false;
@@ -714,7 +724,6 @@ namespace MupenUtils
             this.txt_RR.Location = new System.Drawing.Point(128, 118);
             this.txt_RR.Margin = new System.Windows.Forms.Padding(4);
             this.txt_RR.Name = "txt_RR";
-            this.txt_RR.ReadOnly = true;
             this.txt_RR.Size = new System.Drawing.Size(132, 22);
             this.txt_RR.TabIndex = 0;
             this.txt_RR.TabStop = false;
@@ -744,7 +753,6 @@ namespace MupenUtils
             this.txt_Author.Location = new System.Drawing.Point(128, 59);
             this.txt_Author.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Author.Name = "txt_Author";
-            this.txt_Author.ReadOnly = true;
             this.txt_Author.Size = new System.Drawing.Size(132, 22);
             this.txt_Author.TabIndex = 0;
             this.txt_Author.TabStop = false;
@@ -757,6 +765,7 @@ namespace MupenUtils
             this.gpRom.Controls.Add(this.txt_RomCountry);
             this.gpRom.Controls.Add(this.lbl_ROMNAME);
             this.gpRom.Controls.Add(this.lbl_ROMCRC);
+            this.gpRom.Controls.Add(this.btn_Savem64);
             this.gpRom.Controls.Add(this.lbl_RomCountry);
             this.gpRom.Location = new System.Drawing.Point(11, 236);
             this.gpRom.Margin = new System.Windows.Forms.Padding(4);
@@ -772,7 +781,6 @@ namespace MupenUtils
             this.txt_Rom.Location = new System.Drawing.Point(128, 20);
             this.txt_Rom.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Rom.Name = "txt_Rom";
-            this.txt_Rom.ReadOnly = true;
             this.txt_Rom.Size = new System.Drawing.Size(132, 22);
             this.txt_Rom.TabIndex = 0;
             this.txt_Rom.TabStop = false;
@@ -816,6 +824,18 @@ namespace MupenUtils
             this.lbl_ROMCRC.Size = new System.Drawing.Size(72, 17);
             this.lbl_ROMCRC.TabIndex = 0;
             this.lbl_ROMCRC.Text = "ROM CRC";
+            // 
+            // btn_Savem64
+            // 
+            this.btn_Savem64.Location = new System.Drawing.Point(10, 115);
+            this.btn_Savem64.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Savem64.Name = "btn_Savem64";
+            this.btn_Savem64.Size = new System.Drawing.Size(100, 28);
+            this.btn_Savem64.TabIndex = 0;
+            this.btn_Savem64.TabStop = false;
+            this.btn_Savem64.Text = "Save M64";
+            this.btn_Savem64.UseVisualStyleBackColor = true;
+            this.btn_Savem64.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Savem64_MouseClick);
             // 
             // lbl_RomCountry
             // 
@@ -862,7 +882,6 @@ namespace MupenUtils
             this.txt_videoplugin.Location = new System.Drawing.Point(128, 10);
             this.txt_videoplugin.Margin = new System.Windows.Forms.Padding(4);
             this.txt_videoplugin.Name = "txt_videoplugin";
-            this.txt_videoplugin.ReadOnly = true;
             this.txt_videoplugin.Size = new System.Drawing.Size(132, 22);
             this.txt_videoplugin.TabIndex = 0;
             this.txt_videoplugin.TabStop = false;
@@ -882,7 +901,6 @@ namespace MupenUtils
             this.txt_inputplugin.Location = new System.Drawing.Point(128, 39);
             this.txt_inputplugin.Margin = new System.Windows.Forms.Padding(4);
             this.txt_inputplugin.Name = "txt_inputplugin";
-            this.txt_inputplugin.ReadOnly = true;
             this.txt_inputplugin.Size = new System.Drawing.Size(132, 22);
             this.txt_inputplugin.TabIndex = 0;
             this.txt_inputplugin.TabStop = false;
@@ -902,7 +920,6 @@ namespace MupenUtils
             this.txtbox_Audioplugin.Location = new System.Drawing.Point(128, 69);
             this.txtbox_Audioplugin.Margin = new System.Windows.Forms.Padding(4);
             this.txtbox_Audioplugin.Name = "txtbox_Audioplugin";
-            this.txtbox_Audioplugin.ReadOnly = true;
             this.txtbox_Audioplugin.Size = new System.Drawing.Size(132, 22);
             this.txtbox_Audioplugin.TabIndex = 0;
             this.txtbox_Audioplugin.TabStop = false;
@@ -922,7 +939,6 @@ namespace MupenUtils
             this.txt_Rsp.Location = new System.Drawing.Point(128, 98);
             this.txt_Rsp.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Rsp.Name = "txt_Rsp";
-            this.txt_Rsp.ReadOnly = true;
             this.txt_Rsp.Size = new System.Drawing.Size(132, 22);
             this.txt_Rsp.TabIndex = 0;
             this.txt_Rsp.TabStop = false;
@@ -1024,7 +1040,6 @@ namespace MupenUtils
             this.txt_CTRLS.Location = new System.Drawing.Point(117, 118);
             this.txt_CTRLS.Margin = new System.Windows.Forms.Padding(4);
             this.txt_CTRLS.Name = "txt_CTRLS";
-            this.txt_CTRLS.ReadOnly = true;
             this.txt_CTRLS.Size = new System.Drawing.Size(132, 22);
             this.txt_CTRLS.TabIndex = 0;
             this.txt_CTRLS.TabStop = false;
@@ -1048,18 +1063,6 @@ namespace MupenUtils
             this.lb_starttype.Size = new System.Drawing.Size(74, 17);
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
-            // 
-            // btn_LoadLatest
-            // 
-            this.btn_LoadLatest.Location = new System.Drawing.Point(210, 45);
-            this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_LoadLatest.Name = "btn_LoadLatest";
-            this.btn_LoadLatest.Size = new System.Drawing.Size(56, 28);
-            this.btn_LoadLatest.TabIndex = 0;
-            this.btn_LoadLatest.TabStop = false;
-            this.btn_LoadLatest.Text = "Last";
-            this.btn_LoadLatest.UseVisualStyleBackColor = true;
-            this.btn_LoadLatest.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Last_MouseClick);
             // 
             // MainForm
             // 
@@ -1180,6 +1183,7 @@ namespace MupenUtils
         private System.Windows.Forms.TextBox txt_Frame;
         private System.Windows.Forms.PictureBox pb_JoystickPic;
         private System.Windows.Forms.Button btn_LoadLatest;
+        private System.Windows.Forms.Button btn_Savem64;
     }
 }
 

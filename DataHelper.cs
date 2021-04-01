@@ -28,7 +28,7 @@ namespace MupenUtils
             }
             return type;
         }
-        public static string GetCountryCode(short ccode)
+        public static string GetCountryCode(ushort ccode)
         {
             string code = "Error";
             switch(ccode&0xFF)
