@@ -30,7 +30,7 @@ namespace MupenUtils
         // M64 Data as Strings
         string Magic;
         string Version;
-        string UID;
+        Int32 UID;
         UInt32 VIs; // vis
         byte VI_s; // vi/s
         UInt32 frames;
@@ -180,7 +180,7 @@ namespace MupenUtils
             this.Invoke((MethodInvoker)(() => this.MaximizeBox = FileLoaded));
             if (!FileLoaded) this.Invoke((MethodInvoker)(() => this.WindowState = FormWindowState.Normal));
             this.Invoke((MethodInvoker)(() => this.Size = s));
-
+            
         }
 
         #endregion
@@ -192,7 +192,7 @@ namespace MupenUtils
             m64ThreadRunning = true;
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
-            if (!bypassTypeCheck && (len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)))
+            if (!bypassTypeCheck && (/*len < 1028 || */!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)))
             {
                 ShowStatus_ThreadSafe(M64_FAILED_TEXT);
                 // set status
@@ -219,7 +219,7 @@ namespace MupenUtils
             // Read header
             Magic = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             Version = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            UID = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            UID = br.ReadInt32();
             VIs = br.ReadUInt32();//ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             RRs = br.ReadUInt32();
             VI_s = br.ReadByte(); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
@@ -280,7 +280,7 @@ namespace MupenUtils
             /*Set Controls*/
             txt_misc_Magic.Invoke((MethodInvoker)(() => txt_misc_Magic.Text = Magic));
             txt_misc_Version.Invoke((MethodInvoker)(() => txt_misc_Version.Text = Version));
-            txt_misc_UID.Invoke((MethodInvoker)(() => txt_misc_UID.Text = UID));
+            txt_misc_UID.Invoke((MethodInvoker)(() => txt_misc_UID.Text = UID.ToString()));
 
             txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = VIs.ToString()));
             txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = RRs.ToString()));
@@ -304,7 +304,7 @@ namespace MupenUtils
 
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
-            m64ThreadRunning = false;
+            m64ThreadRunning = false; 
         }
 
         void WriteM64()
@@ -317,7 +317,7 @@ namespace MupenUtils
             Array.Clear(zeroar1, 0, zeroar1.Length); 
             Array.Clear(zeroar2, 0, zeroar2.Length);
 
-            UID = txt_misc_UID.Text;
+            UID = Int32.Parse(txt_misc_UID.Text);
             VIs = UInt32.Parse(txt_VIs.Text);
             RRs = UInt32.Parse(txt_RR.Text);
             Controllers = byte.Parse(txt_CTRLS.Text);
@@ -331,7 +331,7 @@ namespace MupenUtils
 
             br.Write((Int32)1295397914); // Int32 - Magic (4D36341A)
             br.Write((UInt32)3); // UInt32 - Version number (3)
-            br.Write(Int32.Parse(UID)); // UInt32 - UID
+            br.Write(UID); // UInt32 - UID
             br.Write((UInt32)VIs); // UInt32 - VIs
             br.Write((UInt32)RRs); // UInt32 - RRs
             br.Write(VI_s); // Byte - VI/s
@@ -357,6 +357,7 @@ namespace MupenUtils
             {
             br.Write(inputList[i]);
             }
+            br.Flush();
             br.Close();
         }
 
@@ -475,6 +476,7 @@ namespace MupenUtils
             Path = Properties.Settings.Default.LastPath;
              if (rb_M64sel.Checked){
                 Thread m64load = new Thread ( () => ReadM64() );
+
                 m64load.Start();
                 }
             else if (rb_STsel.Checked){
@@ -543,7 +545,7 @@ namespace MupenUtils
 #if DEBUG
             Debug.WriteLine("Window Resize (W/H) " + Width + " " + Height);
 #endif
-            this.MinimumSize = FileLoaded ? new Size(980, 480) : new Size(0, 0);
+           // this.MinimumSize = FileLoaded ? new Size(980, 480) : new Size(0, 0);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
