@@ -71,16 +71,7 @@ namespace MupenUtils
             InitUI();
         }
 
-        public static string ByteArrayToString(byte[] ba)
-        {
-           StringBuilder hex = new StringBuilder(ba.Length * 2);
-            foreach (byte b in ba)
-                hex.AppendFormat("{0:x2}", b);
-
-            return "0x" + hex.ToString().ToUpper();
-            
-        }
-        
+       
         void InitController()
         {
             controllerButtonsChk = new CheckBox[] {
@@ -198,7 +189,7 @@ namespace MupenUtils
             m64ThreadRunning = true;
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
-            if (!bypassTypeCheck && (len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase)))
+            if (!bypassTypeCheck && (len < 1028 || !System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)))
             {
                 ShowStatus_ThreadSafe(M64_FAILED_TEXT);
                 // set status
@@ -223,9 +214,9 @@ namespace MupenUtils
 
 
             // Read header
-            Magic = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            Version = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            UID = ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            Magic = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            Version = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            UID = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             VIs = br.ReadUInt32();//ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             RRs = br.ReadUInt32().ToString();
             br.ReadByte(); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
@@ -413,7 +404,20 @@ namespace MupenUtils
 
             Path = txt_Path.Text = (string)result[0];
 
+            Properties.Settings.Default.LastPath = Path;
+            Properties.Settings.Default.Save();
+
             if (rb_M64sel.Checked){
+                Thread m64load = new Thread ( () => LoadM64() );
+                m64load.Start();
+                }
+            else if (rb_STsel.Checked){
+                LoadST();}
+        }
+        private void btn_Last_MouseClick(object sender, MouseEventArgs e)
+        {
+            Path = Properties.Settings.Default.LastPath;
+             if (rb_M64sel.Checked){
                 Thread m64load = new Thread ( () => LoadM64() );
                 m64load.Start();
                 }
@@ -551,6 +555,8 @@ namespace MupenUtils
             pb_JoystickPic.Refresh();
         }
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
+
+       
 
         private void DrawJoystick(PaintEventArgs e)
         {

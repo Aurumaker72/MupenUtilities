@@ -40,6 +40,7 @@ namespace MupenUtils
             this.st_Status2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.gp_input = new System.Windows.Forms.GroupBox();
+            this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.txt_Frame = new System.Windows.Forms.TextBox();
             this.lbl_XY = new System.Windows.Forms.Label();
             this.txt_joyY = new System.Windows.Forms.TextBox();
@@ -107,16 +108,16 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
-            this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
+            this.btn_LoadLatest = new System.Windows.Forms.Button();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_input.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_M64_misc.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -147,6 +148,7 @@ namespace MupenUtils
             this.gp_Path.Controls.Add(this.rb_STsel);
             this.gp_Path.Controls.Add(this.rb_M64sel);
             this.gp_Path.Controls.Add(this.txt_Path);
+            this.gp_Path.Controls.Add(this.btn_LoadLatest);
             this.gp_Path.Controls.Add(this.btn_PathSel);
             this.gp_Path.Dock = System.Windows.Forms.DockStyle.Top;
             this.gp_Path.Location = new System.Drawing.Point(0, 0);
@@ -160,7 +162,7 @@ namespace MupenUtils
             // 
             // btn_Override
             // 
-            this.btn_Override.Location = new System.Drawing.Point(272, 48);
+            this.btn_Override.Location = new System.Drawing.Point(272, 45);
             this.btn_Override.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Override.Name = "btn_Override";
             this.btn_Override.Size = new System.Drawing.Size(36, 28);
@@ -277,6 +279,17 @@ namespace MupenUtils
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input [WIP]";
+            // 
+            // pb_JoystickPic
+            // 
+            this.pb_JoystickPic.BackColor = System.Drawing.Color.Transparent;
+            this.pb_JoystickPic.Location = new System.Drawing.Point(200, 25);
+            this.pb_JoystickPic.Name = "pb_JoystickPic";
+            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 145);
+            this.pb_JoystickPic.TabIndex = 3;
+            this.pb_JoystickPic.TabStop = false;
+            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
+            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
             // 
             // txt_Frame
             // 
@@ -1036,16 +1049,17 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
-            // pb_JoystickPic
+            // btn_LoadLatest
             // 
-            this.pb_JoystickPic.BackColor = System.Drawing.Color.Transparent;
-            this.pb_JoystickPic.Location = new System.Drawing.Point(200, 25);
-            this.pb_JoystickPic.Name = "pb_JoystickPic";
-            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 145);
-            this.pb_JoystickPic.TabIndex = 3;
-            this.pb_JoystickPic.TabStop = false;
-            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
-            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
+            this.btn_LoadLatest.Location = new System.Drawing.Point(210, 45);
+            this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_LoadLatest.Name = "btn_LoadLatest";
+            this.btn_LoadLatest.Size = new System.Drawing.Size(56, 28);
+            this.btn_LoadLatest.TabIndex = 0;
+            this.btn_LoadLatest.TabStop = false;
+            this.btn_LoadLatest.Text = "Last";
+            this.btn_LoadLatest.UseVisualStyleBackColor = true;
+            this.btn_LoadLatest.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Last_MouseClick);
             // 
             // MainForm
             // 
@@ -1070,6 +1084,7 @@ namespace MupenUtils
             this.gp_M64.ResumeLayout(false);
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.gp_User.ResumeLayout(false);
             this.gp_User.PerformLayout();
             this.gpRom.ResumeLayout(false);
@@ -1078,7 +1093,6 @@ namespace MupenUtils
             this.gp_Plugins.PerformLayout();
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1165,6 +1179,7 @@ namespace MupenUtils
         private System.Windows.Forms.Button btn_PlayDirection;
         private System.Windows.Forms.TextBox txt_Frame;
         private System.Windows.Forms.PictureBox pb_JoystickPic;
+        private System.Windows.Forms.Button btn_LoadLatest;
     }
 }
 
