@@ -110,6 +110,7 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
+            this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -145,6 +146,7 @@ namespace MupenUtils
             // 
             // gp_Path
             // 
+            this.gp_Path.Controls.Add(this.chk_readonly);
             this.gp_Path.Controls.Add(this.btn_Override);
             this.gp_Path.Controls.Add(this.rb_STsel);
             this.gp_Path.Controls.Add(this.rb_M64sel);
@@ -176,7 +178,7 @@ namespace MupenUtils
             // rb_STsel
             // 
             this.rb_STsel.AutoSize = true;
-            this.rb_STsel.Location = new System.Drawing.Point(85, 59);
+            this.rb_STsel.Location = new System.Drawing.Point(65, 60);
             this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_STsel.Name = "rb_STsel";
             this.rb_STsel.Size = new System.Drawing.Size(47, 21);
@@ -291,7 +293,7 @@ namespace MupenUtils
             this.gp_input.Size = new System.Drawing.Size(371, 364);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
-            this.gp_input.Text = "Input [WIP]";
+            this.gp_input.Text = "Input";
             // 
             // pb_JoystickPic
             // 
@@ -1064,6 +1066,20 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
+            // chk_readonly
+            // 
+            this.chk_readonly.AutoSize = true;
+            this.chk_readonly.Checked = true;
+            this.chk_readonly.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_readonly.Location = new System.Drawing.Point(115, 60);
+            this.chk_readonly.Name = "chk_readonly";
+            this.chk_readonly.Size = new System.Drawing.Size(90, 21);
+            this.chk_readonly.TabIndex = 0;
+            this.chk_readonly.TabStop = false;
+            this.chk_readonly.Text = "Readonly";
+            this.chk_readonly.UseVisualStyleBackColor = true;
+            this.chk_readonly.CheckedChanged += new System.EventHandler(this.chk_readonly_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1184,6 +1200,7 @@ namespace MupenUtils
         private System.Windows.Forms.PictureBox pb_JoystickPic;
         private System.Windows.Forms.Button btn_LoadLatest;
         private System.Windows.Forms.Button btn_Savem64;
+        private System.Windows.Forms.CheckBox chk_readonly;
     }
 }
 

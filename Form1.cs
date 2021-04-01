@@ -26,6 +26,7 @@ namespace MupenUtils
         bool bypassTypeCheck = false;
         bool forwardsPlayback = true;
         bool m64ThreadRunning = false;
+        bool readOnly = true;
 
         // M64 Data as Strings
         string Magic;
@@ -53,6 +54,7 @@ namespace MupenUtils
 
         public CheckBox[] controllerButtonsChk;
         List<int> inputList = new List<int>();
+        List<int> SAVE_inputList = new List<int>();
         int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
 
@@ -115,7 +117,8 @@ namespace MupenUtils
             st_Status.Visible = false;
             gp_M64.Visible = false;
             gp_Path.Dock = DockStyle.Fill;
-
+            JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
+            UpdateReadOnly();
             EnableM64View(false,true);
         }
 
@@ -271,6 +274,7 @@ namespace MupenUtils
                 inputList.Add(br.ReadInt32());
                 findx++;
             }
+            SAVE_inputList = inputList; // copy
 
 
 
@@ -379,7 +383,7 @@ namespace MupenUtils
             br.Write(rsp,0,64);
             br.Write(author,0,222);
             br.Write(desc,0,256);
-            for (int i = 0; i < inputList.Count/4; i++)
+            for (int i = 0; i < SAVE_inputList.Count/4; i++)
             {
             br.Write(inputList[i]);
             }
@@ -411,8 +415,26 @@ namespace MupenUtils
             }
             return value;
         }
+        void SetInput(int frame)
+        {
+            int value = SAVE_inputList[frame]; // get value at that frame 
+            for (int i = 0; i < controllerButtonsChk.Length; i++)
+            {
+                int button = ExtensionMethods.BoolToInt(controllerButtonsChk[i].Checked);
+                button = button << (32 - i);
+                value |= button;
+                Debug.WriteLine("BUTTON Value loop: " + (value).ToString());
+            }
+            byte[] joydata = BitConverter.GetBytes(inputList[frame]);
+            joydata[2] = (byte)JOY_Rel.X;
+            joydata[3] = (byte)JOY_Rel.Y;
 
-        void SetInput(int value)
+            value |= BitConverter.ToInt32(joydata,0);
+            Debug.WriteLine("JOYSTICK Value after calculations end: " + (value |= BitConverter.ToInt32(joydata, 0)).ToString());
+
+            SAVE_inputList[frame] = value;
+        }
+        void GetInput(int value)
         {
             int numbuttons = controllerButtonsChk.Length;
             for (int i = 0; i < numbuttons; i++)
@@ -470,7 +492,7 @@ namespace MupenUtils
             lbl_FrameSelected.Text = "Frame " + frame;
             lbl_FrameSelected.ForeColor = Color.Black;
             txt_Frame.Text = frame.ToString();
-            SetInput(inputList[frame]);
+            GetInput(inputList[frame]);
         }
         #endregion
 
@@ -600,6 +622,45 @@ namespace MupenUtils
         {
             WriteM64();
         }
+        void UpdateReadOnly()
+        {
+            readOnly = chk_readonly.Checked;
+            chk_readonly.Text = readOnly ? "Readonly" : "Readwrite";
+
+            // Groupboxes + Child controls
+            foreach (Control ctl in gp_User.Controls)
+            {
+                if(ctl is TextBox){
+                TextBox txt = ctl as TextBox;
+                txt.ReadOnly = readOnly;
+                }
+            }
+            txt_Rom.ReadOnly = readOnly;
+            txt_CTRLS.ReadOnly = readOnly;
+            foreach (Control ctl in gp_Plugins.Controls)
+            {
+                if(ctl is TextBox){
+                TextBox txt = ctl as TextBox;
+                txt.ReadOnly = readOnly;
+                }
+            }
+
+            // Joystick buttons + Joystick
+            pb_JoystickPic.Enabled = !readOnly;
+            txt_joyX.ReadOnly = readOnly;
+            txt_joyY.ReadOnly = readOnly;
+            foreach (Control ctl in gp_input.Controls)
+            {
+                if(ctl is CheckBox){
+                CheckBox chk = ctl as CheckBox;
+                chk.Enabled = !readOnly;
+                }
+            }
+        }
+        private void chk_readonly_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateReadOnly();
+        }
 
         #endregion
 
@@ -636,14 +697,19 @@ namespace MupenUtils
             JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -127, 127);
             JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
 
-            if(user)
-            SnapJoystick();
 
+            if(user){
+            SnapJoystick();
+                if (!readOnly)
+                {
+                    // Write to array
+                    SetInput(frame);
+                }
+            }
             pb_JoystickPic.Refresh();
         }
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
 
-      
 
         private void DrawJoystick(PaintEventArgs e)
         {

@@ -39,5 +39,12 @@ public static class ExtensionMethods
     {
         return ASCIIEncoding.ASCII.GetBytes(str);
     }
-        
+    public static int BoolToInt(bool value)
+    {
+        return value ? 1 : 0;
+    }
+    public static bool IntToBool(int value)
+    {
+        return value != 0;
+    }
 }
