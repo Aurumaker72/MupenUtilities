@@ -350,7 +350,7 @@ namespace MupenUtils
 
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
-            UpdateJoystickValues(new Point(RelativeToAbsolute(joystickX), RelativeToAbsolute(joystickY)), false);
+            UpdateJoystickValues(RelativeToAbsolute(new Point(joystickX,joystickY)), false);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
@@ -520,11 +520,10 @@ namespace MupenUtils
         {
             return abs - 82;
         }
-        int RelativeToAbsolute(int rel)
+        Point RelativeToAbsolute(Point rel)
         {
-           return rel + 82;
+            return new Point(rel.X+82,rel.Y+72);
         }
-
         void SnapJoystick()
         {
             if (JOY_Rel.X < 5 && JOY_Rel.X > -5)
