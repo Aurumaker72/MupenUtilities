@@ -329,11 +329,11 @@ namespace MupenUtils
             Author = txt_Author.Text;
             Description = txt_Desc.Text;
 
-            br.Write(1295397914); // Int32 - Magic (4D36341A)
-            br.Write(3); // UInt32 - Version number (3)
-            br.Write(UID); // UInt32 - UID
-            br.Write(VIs); // UInt32 - VIs
-            br.Write(RRs); // UInt32 - RRs
+            br.Write((Int32)1295397914); // Int32 - Magic (4D36341A)
+            br.Write((UInt32)3); // UInt32 - Version number (3)
+            br.Write(Int32.Parse(UID)); // UInt32 - UID
+            br.Write((UInt32)VIs); // UInt32 - VIs
+            br.Write((UInt32)RRs); // UInt32 - RRs
             br.Write(VI_s); // Byte - VI/s
             br.Write(Controllers); // Byte - Controllers
             br.Write((Int16)0); // 2 Bytes - RESERVED
