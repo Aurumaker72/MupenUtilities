@@ -61,7 +61,7 @@ namespace MupenUtils
         // Joystick input
         //int JOY_Relx, JOY_Rely, JOY_Absx, JOY_Absy;
         Point JOY_Rel, JOY_Abs, JOY_middle;
-        bool JOY_mouseDown;
+        bool JOY_mouseDown, JOY_followMouse;
         const int JOY_clampDif = 4;
 
         #endregion
@@ -151,16 +151,16 @@ namespace MupenUtils
         void EnableM64View(bool flag, bool change)
         {
             Size s;
-            FileLoaded = flag;
+            if(change) FileLoaded = flag;
 
             this.SuspendLayout();
             gp_M64.Visible = flag;
             s = flag ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
-            this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
-            gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill;
-            st_Status.Visible = FileLoaded;
-            this.MaximizeBox = FileLoaded;
-            if (!FileLoaded) this.WindowState = FormWindowState.Normal;
+            this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
+            gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
+            st_Status.Visible = flag;
+            this.MaximizeBox = flag;
+            if (!flag) this.WindowState = FormWindowState.Normal;
             this.Size = s;
             this.ResumeLayout();
         }
@@ -177,11 +177,11 @@ namespace MupenUtils
             FileLoaded = flag;
             gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
             s = flag ? new Size(1005, 580) : new Size(360 + btn_Override.Width + 20, 150);
-            this.Invoke((MethodInvoker)(() => this.FormBorderStyle = FileLoaded ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
-            gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = FileLoaded ? DockStyle.Top : DockStyle.Fill));
-            st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = FileLoaded));
-            this.Invoke((MethodInvoker)(() => this.MaximizeBox = FileLoaded));
-            if (!FileLoaded) this.Invoke((MethodInvoker)(() => this.WindowState = FormWindowState.Normal));
+            this.Invoke((MethodInvoker)(() => this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
+            gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill));
+            st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = flag));
+            this.Invoke((MethodInvoker)(() => this.MaximizeBox = flag));
+            if (!flag) this.Invoke((MethodInvoker)(() => this.WindowState = FormWindowState.Normal));
             this.Invoke((MethodInvoker)(() => this.Size = s));
             
         }
@@ -267,7 +267,8 @@ namespace MupenUtils
             {
                 if (br.BaseStream.Position + 4 > fs.Length) {
                     findx++;
-                    continue; }
+                    continue;
+                }
 #if DEBUG
                 Debug.WriteLine("--- Sample " + findx + "/" + frames + " ---");
 #endif
@@ -417,6 +418,8 @@ namespace MupenUtils
         }
         void SetInput(int frame)
         {
+            if (!FileLoaded) 
+                return;
             int value = SAVE_inputList[frame]; // get value at that frame 
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
@@ -433,6 +436,8 @@ namespace MupenUtils
             Debug.WriteLine("JOYSTICK Value after calculations end: " + (value |= BitConverter.ToInt32(joydata, 0)).ToString());
 
             SAVE_inputList[frame] = value;
+            if (!readOnly)
+                inputList[frame] = SAVE_inputList[frame];
         }
         void GetInput(int value)
         {
@@ -710,6 +715,21 @@ namespace MupenUtils
         }
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
 
+        private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e)
+        {
+            JOY_mouseDown = JOY_followMouse;
+        }
+
+        private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
+        {
+            JOY_followMouse = e.Button != MouseButtons.Right || !JOY_followMouse;
+            if (e.Button == MouseButtons.Left && JOY_followMouse)
+            {
+                JOY_followMouse = false;
+            }
+            JOY_mouseDown = true;
+            UpdateJoystickValues(e.Location, true);
+        }
 
         private void DrawJoystick(PaintEventArgs e)
         {
@@ -728,7 +748,7 @@ namespace MupenUtils
 
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
         {
-            if (Control.MouseButtons==MouseButtons.Left) UpdateJoystickValues(e.Location,true);
+            if (JOY_mouseDown) UpdateJoystickValues(e.Location,true);
         }
 
         #endregion
