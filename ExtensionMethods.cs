@@ -31,5 +31,13 @@ public static class ExtensionMethods
          return "0x" + hex.ToString().ToUpper();
          
     }
+    public static string StringASCII(string str)
+    {
+        return ASCIIEncoding.ASCII.GetString(ASCIIEncoding.UTF8.GetBytes(str));
+    }
+    public static byte[] StringBytes(string str)
+    {
+        return ASCIIEncoding.ASCII.GetBytes(str);
+    }
         
 }

@@ -251,7 +251,7 @@ namespace MupenUtils
             InputPlugin = ascii.GetString(br.ReadBytes(64));
             RSPPlugin = ascii.GetString(br.ReadBytes(64));
 
-            Name = System.IO.Path.GetFileNameWithoutExtension(Path);
+            M64Name = System.IO.Path.GetFileNameWithoutExtension(Path);
             Author = utf8.GetString(br.ReadBytes(222));
             Description = utf8.GetString(br.ReadBytes(256));
 
@@ -310,6 +310,7 @@ namespace MupenUtils
         void WriteM64()
         {
             if (!FileLoaded) return;
+            File.Delete(Path + "-modified.m64");
             FileStream fs = File.Open(Path+"-modified.m64", FileMode.OpenOrCreate);
             BinaryWriter br = new BinaryWriter(fs);
 
@@ -347,18 +348,42 @@ namespace MupenUtils
             br.Write(RomName);
             br.Write(RomCountry);
             br.Write(zeroar2,0,zeroar2.Length); // 56 bytes - RESERVED
-            br.Write(VideoPlugin);
-            br.Write(AudioPlugin);
-            br.Write(InputPlugin);
-            br.Write(RSPPlugin);
-            br.Write(Author);
-            br.Write(Description);
+
+            
+            byte[] gfx = new byte[64];
+            byte[] audio = new byte[64];
+            byte[] input = new byte[64];
+            byte[] rsp = new byte[64];
+            byte[] author = new byte[222];
+            byte[] desc = new byte[256];
+            
+            gfx =    ASCIIEncoding.ASCII.GetBytes(VideoPlugin);
+            audio =  ASCIIEncoding.ASCII.GetBytes(AudioPlugin);
+            input =  ASCIIEncoding.ASCII.GetBytes(InputPlugin);
+            rsp =    ASCIIEncoding.ASCII.GetBytes(RSPPlugin);
+            author = ASCIIEncoding.ASCII.GetBytes(Author);
+            desc =   ASCIIEncoding.ASCII.GetBytes(Description);
+            
+            Array.Resize(ref gfx, 64);
+            Array.Resize(ref audio, 64);
+            Array.Resize(ref input, 64);
+            Array.Resize(ref rsp, 64);
+            Array.Resize(ref author, 222);
+            Array.Resize(ref desc, 256);
+            
+            br.Write(gfx,0,64);
+            br.Write(audio,0,64);
+            br.Write(input,0,64);
+            br.Write(rsp,0,64);
+            br.Write(author,0,222);
+            br.Write(desc,0,256);
             for (int i = 0; i < inputList.Count/4; i++)
             {
             br.Write(inputList[i]);
             }
             br.Flush();
             br.Close();
+            MessageBox.Show("Finished");
         }
 
         
@@ -545,7 +570,7 @@ namespace MupenUtils
 #if DEBUG
             Debug.WriteLine("Window Resize (W/H) " + Width + " " + Height);
 #endif
-           // this.MinimumSize = FileLoaded ? new Size(980, 480) : new Size(0, 0);
+           // this.MinimumSize = F  ileLoaded ? new Size(980, 480) : new Size(0, 0);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
