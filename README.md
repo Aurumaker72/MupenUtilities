@@ -11,3 +11,7 @@ The Buttons are shown as checkboxes.
 #### Frame Control
 You can seek back and forth to any point in a movie with intuitive controls.
 Playing the movie back in real-time (30 FPS) is also possible.
+
+#### Reasons why this is better than stroop
+1.
+2.
