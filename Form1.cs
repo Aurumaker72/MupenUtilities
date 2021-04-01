@@ -343,9 +343,11 @@ namespace MupenUtils
             br.Write((Int16)0); // 2 bytes - RESERVED
             br.Write(ControllerFlags); // UInt32 - Controller Flags
             br.Write(zeroar1,0,zeroar1.Length); // 160 bytes - RESERVED
-            br.Write(RomName);
+            byte[] romname = new byte[32];
+            romname = ASCIIEncoding.ASCII.GetBytes(RomName);
+            Array.Resize(ref romname, 32);
+            br.Write(romname, 0, 32);
             br.Write(Crc32);
-            br.Write(RomName);
             br.Write(RomCountry);
             br.Write(zeroar2,0,zeroar2.Length); // 56 bytes - RESERVED
 
