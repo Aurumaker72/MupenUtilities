@@ -555,8 +555,8 @@ namespace MupenUtils
 
         private void DrawJoystick(PaintEventArgs e)
         {
-            Pen linepen = new Pen(Color.Blue, 4);
-            Pen outlinepen = new Pen(Color.Black, 2);
+            Pen linepen = new Pen(Color.Blue, 3);
+            Pen outlinepen = new Pen(Color.Black, 1);
             e.Graphics.DrawLine(linepen, JOY_middle, JOY_Abs); 
             e.Graphics.FillEllipse(Brushes.Red, JOY_Abs.X - 4, JOY_Abs.Y - 4, 8, 8);
             e.Graphics.DrawEllipse(outlinepen, 0, 0, pb_JoystickPic.Width-outlinepen.Width, pb_JoystickPic.Height-outlinepen.Width);
