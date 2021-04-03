@@ -688,10 +688,9 @@ namespace MupenUtils
 
         #region Joystick Drawing, Events, etc...
 
-        // 82 / -82
-        int AbsoluteToRelative(int abs)
+        Point AbsoluteToRelative(Point abs)
         {
-            return abs - 82;
+            return new Point(abs.X-82,abs.Y+72);
         }
         Point RelativeToAbsolute(Point rel)
         {
