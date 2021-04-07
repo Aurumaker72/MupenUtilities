@@ -29,6 +29,7 @@ namespace MupenUtils
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
             this.gp_Path = new System.Windows.Forms.GroupBox();
@@ -1092,9 +1093,9 @@ namespace MupenUtils
             this.Controls.Add(this.gp_M64);
             this.Controls.Add(this.st_Status);
             this.Controls.Add(this.gp_Path);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mupen Utilities ";
