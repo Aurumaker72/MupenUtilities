@@ -5,8 +5,11 @@ This can be seen as a continuation of the M64 Editor by [mkdasher](https://githu
 ## M64
 The data of any M64 file is presented in a simple interface.
 
-#### Input Viewer
-You can view M64 Joystick Inputs on each frame in a clean, interactive TASInput style interface.
+#### Header
+You can view and edit all meaningful M64 Header data.
+
+#### Input
+You can view and edit M64 Joystick Inputs on each frame in a clean, interactive TASInput style interface.
 
 #### Frame Control
 You can seek back and forth, reverse playback, step frames and more intuitive controls.
