@@ -350,6 +350,7 @@ namespace MupenUtils
             this.txt_joyY.TabIndex = 0;
             this.txt_joyY.TabStop = false;
             this.txt_joyY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_joyY_KeyDown);
+            this.txt_joyY.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // txt_joyX
             // 
@@ -360,6 +361,7 @@ namespace MupenUtils
             this.txt_joyX.TabIndex = 0;
             this.txt_joyX.TabStop = false;
             this.txt_joyX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_joyX_KeyDown);
+            this.txt_joyX.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_RESERVED2
             // 
@@ -370,6 +372,7 @@ namespace MupenUtils
             this.chk_RESERVED2.TabIndex = 2;
             this.chk_RESERVED2.Text = "Res. 2";
             this.chk_RESERVED2.UseVisualStyleBackColor = true;
+            this.chk_RESERVED2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_restart
             // 
@@ -380,6 +383,7 @@ namespace MupenUtils
             this.chk_restart.TabIndex = 1;
             this.chk_restart.Text = "Restart";
             this.chk_restart.UseVisualStyleBackColor = true;
+            this.chk_restart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_RESERVED1
             // 
@@ -390,6 +394,7 @@ namespace MupenUtils
             this.chk_RESERVED1.TabIndex = 1;
             this.chk_RESERVED1.Text = "Res. 1";
             this.chk_RESERVED1.UseVisualStyleBackColor = true;
+            this.chk_RESERVED1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // btn_PlayDirection
             // 
@@ -439,6 +444,7 @@ namespace MupenUtils
             this.chk_Cright.TabStop = false;
             this.chk_Cright.Text = "C>";
             this.chk_Cright.UseVisualStyleBackColor = false;
+            this.chk_Cright.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Cdown
             // 
@@ -452,6 +458,7 @@ namespace MupenUtils
             this.chk_Cdown.TabStop = false;
             this.chk_Cdown.Text = "Cv";
             this.chk_Cdown.UseVisualStyleBackColor = false;
+            this.chk_Cdown.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Cleft
             // 
@@ -465,6 +472,7 @@ namespace MupenUtils
             this.chk_Cleft.TabStop = false;
             this.chk_Cleft.Text = "C<";
             this.chk_Cleft.UseVisualStyleBackColor = false;
+            this.chk_Cleft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Right
             // 
@@ -478,6 +486,7 @@ namespace MupenUtils
             this.chk_Right.TabStop = false;
             this.chk_Right.Text = "R";
             this.chk_Right.UseVisualStyleBackColor = false;
+            this.chk_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Down
             // 
@@ -491,6 +500,7 @@ namespace MupenUtils
             this.chk_Down.TabStop = false;
             this.chk_Down.Text = "D";
             this.chk_Down.UseVisualStyleBackColor = false;
+            this.chk_Down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Left
             // 
@@ -504,6 +514,7 @@ namespace MupenUtils
             this.chk_Left.TabStop = false;
             this.chk_Left.Text = "L";
             this.chk_Left.UseVisualStyleBackColor = false;
+            this.chk_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Up
             // 
@@ -517,6 +528,7 @@ namespace MupenUtils
             this.chk_Up.TabStop = false;
             this.chk_Up.Text = "U";
             this.chk_Up.UseVisualStyleBackColor = false;
+            this.chk_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Cup
             // 
@@ -530,6 +542,7 @@ namespace MupenUtils
             this.chk_Cup.TabStop = false;
             this.chk_Cup.Text = "C^";
             this.chk_Cup.UseVisualStyleBackColor = false;
+            this.chk_Cup.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_R
             // 
@@ -542,6 +555,7 @@ namespace MupenUtils
             this.chk_R.TabStop = false;
             this.chk_R.Text = "R";
             this.chk_R.UseVisualStyleBackColor = true;
+            this.chk_R.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Z
             // 
@@ -554,6 +568,7 @@ namespace MupenUtils
             this.chk_Z.TabStop = false;
             this.chk_Z.Text = "Z";
             this.chk_Z.UseVisualStyleBackColor = true;
+            this.chk_Z.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_L
             // 
@@ -566,6 +581,7 @@ namespace MupenUtils
             this.chk_L.TabStop = false;
             this.chk_L.Text = "L";
             this.chk_L.UseVisualStyleBackColor = true;
+            this.chk_L.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // Chk_start
             // 
@@ -578,6 +594,7 @@ namespace MupenUtils
             this.Chk_start.TabStop = false;
             this.Chk_start.Text = "Start";
             this.Chk_start.UseVisualStyleBackColor = true;
+            this.Chk_start.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_B
             // 
@@ -590,6 +607,7 @@ namespace MupenUtils
             this.chk_B.TabStop = false;
             this.chk_B.Text = "B";
             this.chk_B.UseVisualStyleBackColor = true;
+            this.chk_B.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_A
             // 
@@ -602,6 +620,7 @@ namespace MupenUtils
             this.chk_A.TabStop = false;
             this.chk_A.Text = "A";
             this.chk_A.UseVisualStyleBackColor = true;
+            this.chk_A.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // lbl_FrameSelected
             // 
@@ -1100,6 +1119,7 @@ namespace MupenUtils
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mupen Utilities ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.gp_Path.ResumeLayout(false);
             this.gp_Path.PerformLayout();

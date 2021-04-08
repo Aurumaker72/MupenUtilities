@@ -50,7 +50,8 @@ public static class ExtensionMethods
     }
     public static int BoolToInt(bool value)
     {
-        return value ? 1 : 0;
+        if (value) return 1;
+        return 0;
     }
     public static bool IntToBool(int value)
     {

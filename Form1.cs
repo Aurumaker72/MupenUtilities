@@ -118,6 +118,7 @@ namespace MupenUtils
             gp_M64.Visible = false;
             gp_Path.Dock = DockStyle.Fill;
             JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
+            this.KeyPreview = true;
             UpdateReadOnly();
             EnableM64View(false,true);
         }
@@ -420,24 +421,23 @@ namespace MupenUtils
         {
             if (!FileLoaded) 
                 return;
-            int value = SAVE_inputList[frame]; // get value at that frame 
+            int value = inputList[frame]; // get value at that frame 
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
-                int button = ExtensionMethods.BoolToInt(controllerButtonsChk[i].Checked);
-                button = button << (32 - i);
-                value |= button;
-                Debug.WriteLine("BUTTON Value loop: " + (value).ToString());
+                int c = ExtensionMethods.BoolToInt(controllerButtonsChk[i].Checked);
+                Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | I: " + i + " | C: " + c);
+
+                value |= c << i;
             }
-            byte[] joydata = BitConverter.GetBytes(inputList[frame]);
+            byte[] joydata = BitConverter.GetBytes(value);
             joydata[2] = (byte)JOY_Rel.X;
             joydata[3] = (byte)JOY_Rel.Y;
 
-            value |= BitConverter.ToInt32(joydata,0);
-            Debug.WriteLine("JOYSTICK Value after calculations end: " + (value |= BitConverter.ToInt32(joydata, 0)).ToString());
-
-            SAVE_inputList[frame] = value;
-            if (!readOnly)
-                inputList[frame] = SAVE_inputList[frame];
+            value = BitConverter.ToInt32(joydata,0); 
+     
+            inputList[frame] = value;
+            Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
+            //GetInput(inputList[frame]); // also update visuals!
         }
         void GetInput(int value)
         {
@@ -569,12 +569,24 @@ namespace MupenUtils
         {
             StepFrame(-2);
         }
-        void AdvanceInputAuto(object obj, EventArgs e)
+        void StepFrameAuto()
         {
             if(forwardsPlayback)
             StepFrame(1);
             else
             StepFrame(-1);
+        }
+        void AdvanceInputAuto(object obj, EventArgs e)
+        {
+
+            StepFrameAuto();
+        }
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Oem5) //  (\ or |)
+            {
+                StepFrameAuto();
+            }
         }
         private void btn_PlayPause_Click(object sender, EventArgs e)
         {
@@ -696,6 +708,14 @@ namespace MupenUtils
         {
             return new Point(rel.X+82,rel.Y+72);
         }
+        
+        private void InputChk_Changed(object sender, MouseEventArgs e)
+        {
+            // This fires when any input checkbox has been changed
+            if (!readOnly || !FileLoaded) return;
+            SetInput(frame);
+        }
+
         void SnapJoystick()
         {
             if (JOY_Rel.X < 5 && JOY_Rel.X > -5)
@@ -718,14 +738,9 @@ namespace MupenUtils
             JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
 
 
-            if(user){
-            SnapJoystick();
-                if (!readOnly)
-                {
-                    // Write to array
-                    SetInput(frame);
-                }
-            }
+            if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
+            if (user && !readOnly) SetInput(frame);
+
             pb_JoystickPic.Refresh();
         }
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
