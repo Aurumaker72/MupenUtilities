@@ -172,10 +172,10 @@ namespace MupenUtils
             // 
             this.btn_Tips.Location = new System.Drawing.Point(310, 16);
             this.btn_Tips.Name = "btn_Tips";
-            this.btn_Tips.Size = new System.Drawing.Size(45, 28);
+            this.btn_Tips.Size = new System.Drawing.Size(50, 28);
             this.btn_Tips.TabIndex = 0;
             this.btn_Tips.TabStop = false;
-            this.btn_Tips.Text = "Tips";
+            this.btn_Tips.Text = "More";
             this.btn_Tips.UseVisualStyleBackColor = true;
             this.btn_Tips.Click += new System.EventHandler(this.btn_Tips_Click);
             // 

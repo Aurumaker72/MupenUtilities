@@ -117,4 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="txt_More_Info.Text" xml:space="preserve">
+    <value>MupenUtilities
+
+WIP utility app for Mupen64
+This can be seen as a continuation of the M64 Editor by mkdasher
+
+Author: Aurumaker72
+
+Special thanks to Madghostek for helping me with some tough programming issues
+</value>
+  </data>
 </root>

@@ -14,11 +14,13 @@ namespace MupenUtils
     {
         #region Vars
 
-        const string M64_LOADED_TEXT = "M64 Loaded";
-        const string M64_LOADING_TEXT = "M64 Loading";
-        const string M64_FAILED_TEXT = "M64 Invalid";
-        const string M64_SELECTED_TEXT = "Type: M64";
-        const string ST_SELECTED_TEXT = "Type: ST";
+        public const string PROGRAM_NAME = "Mupen Utilities";
+         
+        public const string M64_LOADED_TEXT = "M64 Loaded";
+        public const string M64_LOADING_TEXT = "M64 Loading";
+        public const string M64_FAILED_TEXT = "M64 Invalid";
+        public const string M64_SELECTED_TEXT = "Type: M64";
+        public const string ST_SELECTED_TEXT = "Type: ST";
 
         Thread m64load;
         MoreForm moreForm = new MoreForm();
@@ -123,6 +125,7 @@ namespace MupenUtils
             gp_Path.Dock = DockStyle.Fill;
             JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
             this.KeyPreview = true;
+            this.Text = PROGRAM_NAME;
             UpdateReadOnly();
             EnableM64View(false,true);
         }
