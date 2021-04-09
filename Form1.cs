@@ -776,8 +776,8 @@ namespace MupenUtils
             if (readOnly || !FileLoaded)
             return; 
             
-            SetInput(frame);
             UpdateFrameControlUI();
+            SetInput(frame);
         }
 
         void SnapJoystick()
