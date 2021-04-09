@@ -70,15 +70,16 @@ namespace MupenUtils
             this.lbl_More_TipInfo.Size = new System.Drawing.Size(55, 32);
             this.lbl_More_TipInfo.TabIndex = 0;
             this.lbl_More_TipInfo.Text = "Tip";
+            this.lbl_More_TipInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.event_NewTip);
             // 
             // lbl_More_Tip
             // 
             this.lbl_More_Tip.AutoSize = true;
             this.lbl_More_Tip.Location = new System.Drawing.Point(72, 40);
             this.lbl_More_Tip.Name = "lbl_More_Tip";
-            this.lbl_More_Tip.Size = new System.Drawing.Size(260, 17);
+            this.lbl_More_Tip.Size = new System.Drawing.Size(337, 17);
             this.lbl_More_Tip.TabIndex = 0;
-            this.lbl_More_Tip.Text = "Press the \"New Tip\" button to show a tip";
+            this.lbl_More_Tip.Text = "Press the \"New Tip\" button or \"Tip\" text to show a tip";
             // 
             // btn_More_NewTip
             // 
@@ -89,7 +90,7 @@ namespace MupenUtils
             this.btn_More_NewTip.TabStop = false;
             this.btn_More_NewTip.Text = "New Tip";
             this.btn_More_NewTip.UseVisualStyleBackColor = true;
-            this.btn_More_NewTip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_More_NewTip_MouseDown);
+            this.btn_More_NewTip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.event_NewTip);
             // 
             // gp_More_About
             // 

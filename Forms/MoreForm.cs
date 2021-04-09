@@ -30,11 +30,6 @@ namespace MupenUtils
             }
         }
 
-        private void btn_More_NewTip_MouseDown(object sender, MouseEventArgs e)
-        {
-            lbl_More_Tip.Text = TipProvider.GetRandomTip();
-        }
-
         private void pb_More_Logo_MouseDown(object sender, MouseEventArgs e)
         {
             Process.Start("https://github.com/Aurumaker72/MupenUtilities");
@@ -66,6 +61,11 @@ namespace MupenUtils
             {
                 Process.Start("https://github.com/Aurumaker72/MupenUtilities/releases");
             }
+        }
+
+        private void event_NewTip(object sender, MouseEventArgs e)
+        {
+           lbl_More_Tip.Text = TipProvider.GetRandomTip();
         }
     }
 }
