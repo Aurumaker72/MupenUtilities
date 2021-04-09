@@ -306,7 +306,7 @@ namespace MupenUtils
             txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
 
             EnableM64View_ThreadSafe(true);
@@ -582,6 +582,7 @@ namespace MupenUtils
             lbl_FrameSelected.Text = "Frame " + frame;
             lbl_FrameSelected.ForeColor = Color.Black;
             txt_Frame.Text = frame.ToString();
+            if(frame < tr_MovieScrub.Maximum)
             tr_MovieScrub.Value = frame;
         }
         void AdvanceInputAuto(object obj, EventArgs e)
