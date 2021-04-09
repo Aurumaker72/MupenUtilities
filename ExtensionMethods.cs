@@ -57,4 +57,8 @@ public static class ExtensionMethods
     {
         return value != 0;
     }
+    public static void SetBit(ref int value, bool bitval, int bitpos)
+    {
+        if (!bitval)value&=~(1<<bitpos);else value|=1<<bitpos;
+    }
 }

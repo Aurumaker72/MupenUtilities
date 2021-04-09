@@ -424,13 +424,19 @@ namespace MupenUtils
         {
             if (!FileLoaded) 
                 return;
-            int value = inputList[frame]; // get value at that frame 
+            int value = 0xCC;
+            try{ value = inputList[frame]; } // get value at that frame. If this fails then m64 is corrupted 
+            catch
+            {
+                EnableM64View(false, false);
+                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.", "M64 corrupted");
+                return;
+            }
+
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
-                int c = ExtensionMethods.BoolToInt(controllerButtonsChk[i].Checked);
-                Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | I: " + i + " | C: " + c);
-
-                value |= c << i;
+                Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | BUTTON: " + controllerButtonsChk[i].Text.ToString() + " | Checked: " + controllerButtonsChk[i].Checked.ToString());
+                ExtensionMethods.SetBit(ref value, controllerButtonsChk[i].Checked, i);
             }
             byte[] joydata = BitConverter.GetBytes(value);
             joydata[2] = (byte)JOY_Rel.X;
@@ -728,7 +734,10 @@ namespace MupenUtils
         private void InputChk_Changed(object sender, MouseEventArgs e)
         {
             // This fires when any input checkbox has been changed
-            if (!readOnly || !FileLoaded) return;
+            if (readOnly || !FileLoaded){
+            MessageBox.Show("If this happens tell auru!!");
+            return; 
+            }
             SetInput(frame);
         }
 

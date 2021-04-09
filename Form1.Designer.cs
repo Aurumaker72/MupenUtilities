@@ -42,6 +42,7 @@ namespace MupenUtils
             this.st_Status1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.st_Status2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
+            this.tr_MovieScrub = new System.Windows.Forms.TrackBar();
             this.gp_input = new System.Windows.Forms.GroupBox();
             this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.txt_Frame = new System.Windows.Forms.TextBox();
@@ -112,17 +113,16 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
-            this.tr_MovieScrub = new System.Windows.Forms.TrackBar();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
             this.gp_input.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_M64_misc.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -272,6 +272,15 @@ namespace MupenUtils
             this.gp_M64.TabStop = false;
             this.gp_M64.Text = "M64";
             // 
+            // tr_MovieScrub
+            // 
+            this.tr_MovieScrub.Location = new System.Drawing.Point(650, 385);
+            this.tr_MovieScrub.Name = "tr_MovieScrub";
+            this.tr_MovieScrub.Size = new System.Drawing.Size(175, 56);
+            this.tr_MovieScrub.TabIndex = 4;
+            this.tr_MovieScrub.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tr_MovieScrub.Scroll += new System.EventHandler(this.tr_MovieScrub_Scroll);
+            // 
             // gp_input
             // 
             this.gp_input.Controls.Add(this.pb_JoystickPic);
@@ -375,7 +384,7 @@ namespace MupenUtils
             this.chk_RESERVED2.TabIndex = 2;
             this.chk_RESERVED2.Text = "Res. 2";
             this.chk_RESERVED2.UseVisualStyleBackColor = true;
-            this.chk_RESERVED2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_RESERVED2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_restart
             // 
@@ -386,7 +395,7 @@ namespace MupenUtils
             this.chk_restart.TabIndex = 1;
             this.chk_restart.Text = "Restart";
             this.chk_restart.UseVisualStyleBackColor = true;
-            this.chk_restart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_restart.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_RESERVED1
             // 
@@ -397,7 +406,7 @@ namespace MupenUtils
             this.chk_RESERVED1.TabIndex = 1;
             this.chk_RESERVED1.Text = "Res. 1";
             this.chk_RESERVED1.UseVisualStyleBackColor = true;
-            this.chk_RESERVED1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_RESERVED1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // btn_PlayDirection
             // 
@@ -447,7 +456,7 @@ namespace MupenUtils
             this.chk_Cright.TabStop = false;
             this.chk_Cright.Text = "C>";
             this.chk_Cright.UseVisualStyleBackColor = false;
-            this.chk_Cright.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Cright.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Cdown
             // 
@@ -461,7 +470,7 @@ namespace MupenUtils
             this.chk_Cdown.TabStop = false;
             this.chk_Cdown.Text = "Cv";
             this.chk_Cdown.UseVisualStyleBackColor = false;
-            this.chk_Cdown.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Cdown.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Cleft
             // 
@@ -475,7 +484,7 @@ namespace MupenUtils
             this.chk_Cleft.TabStop = false;
             this.chk_Cleft.Text = "C<";
             this.chk_Cleft.UseVisualStyleBackColor = false;
-            this.chk_Cleft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Cleft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Right
             // 
@@ -489,7 +498,7 @@ namespace MupenUtils
             this.chk_Right.TabStop = false;
             this.chk_Right.Text = "R";
             this.chk_Right.UseVisualStyleBackColor = false;
-            this.chk_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Down
             // 
@@ -503,7 +512,7 @@ namespace MupenUtils
             this.chk_Down.TabStop = false;
             this.chk_Down.Text = "D";
             this.chk_Down.UseVisualStyleBackColor = false;
-            this.chk_Down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Left
             // 
@@ -517,7 +526,7 @@ namespace MupenUtils
             this.chk_Left.TabStop = false;
             this.chk_Left.Text = "L";
             this.chk_Left.UseVisualStyleBackColor = false;
-            this.chk_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Up
             // 
@@ -531,7 +540,7 @@ namespace MupenUtils
             this.chk_Up.TabStop = false;
             this.chk_Up.Text = "U";
             this.chk_Up.UseVisualStyleBackColor = false;
-            this.chk_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Cup
             // 
@@ -545,7 +554,7 @@ namespace MupenUtils
             this.chk_Cup.TabStop = false;
             this.chk_Cup.Text = "C^";
             this.chk_Cup.UseVisualStyleBackColor = false;
-            this.chk_Cup.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Cup.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_R
             // 
@@ -558,7 +567,7 @@ namespace MupenUtils
             this.chk_R.TabStop = false;
             this.chk_R.Text = "R";
             this.chk_R.UseVisualStyleBackColor = true;
-            this.chk_R.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_R.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_Z
             // 
@@ -571,7 +580,7 @@ namespace MupenUtils
             this.chk_Z.TabStop = false;
             this.chk_Z.Text = "Z";
             this.chk_Z.UseVisualStyleBackColor = true;
-            this.chk_Z.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_Z.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_L
             // 
@@ -584,7 +593,7 @@ namespace MupenUtils
             this.chk_L.TabStop = false;
             this.chk_L.Text = "L";
             this.chk_L.UseVisualStyleBackColor = true;
-            this.chk_L.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_L.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // Chk_start
             // 
@@ -597,7 +606,7 @@ namespace MupenUtils
             this.Chk_start.TabStop = false;
             this.Chk_start.Text = "Start";
             this.Chk_start.UseVisualStyleBackColor = true;
-            this.Chk_start.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.Chk_start.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_B
             // 
@@ -610,7 +619,7 @@ namespace MupenUtils
             this.chk_B.TabStop = false;
             this.chk_B.Text = "B";
             this.chk_B.UseVisualStyleBackColor = true;
-            this.chk_B.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_B.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // chk_A
             // 
@@ -623,7 +632,7 @@ namespace MupenUtils
             this.chk_A.TabStop = false;
             this.chk_A.Text = "A";
             this.chk_A.UseVisualStyleBackColor = true;
-            this.chk_A.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            this.chk_A.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
             // 
             // lbl_FrameSelected
             // 
@@ -1107,15 +1116,6 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
-            // tr_MovieScrub
-            // 
-            this.tr_MovieScrub.Location = new System.Drawing.Point(650, 385);
-            this.tr_MovieScrub.Name = "tr_MovieScrub";
-            this.tr_MovieScrub.Size = new System.Drawing.Size(175, 56);
-            this.tr_MovieScrub.TabIndex = 4;
-            this.tr_MovieScrub.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tr_MovieScrub.Scroll += new System.EventHandler(this.tr_MovieScrub_Scroll);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1139,6 +1139,7 @@ namespace MupenUtils
             this.st_Status.PerformLayout();
             this.gp_M64.ResumeLayout(false);
             this.gp_M64.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
@@ -1150,7 +1151,6 @@ namespace MupenUtils
             this.gp_Plugins.PerformLayout();
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
