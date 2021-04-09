@@ -497,9 +497,7 @@ namespace MupenUtils
         {
             frame = targetframe;
             if (!checkAllowedStep(targetframe)) return;
-            lbl_FrameSelected.Text = "Frame " + frame;
-            lbl_FrameSelected.ForeColor = Color.Black;
-            txt_Frame.Text = frame.ToString();
+            UpdateFrameControlUI();
             GetInput(inputList[frame]);
         }
         #endregion
@@ -579,10 +577,17 @@ namespace MupenUtils
             else
             StepFrame(-1);
         }
+        void UpdateFrameControlUI()
+        {
+            lbl_FrameSelected.Text = "Frame " + frame;
+            lbl_FrameSelected.ForeColor = Color.Black;
+            txt_Frame.Text = frame.ToString();
+            tr_MovieScrub.Value = frame;
+        }
         void AdvanceInputAuto(object obj, EventArgs e)
         {
-
             StepFrameAuto();
+            UpdateFrameControlUI();
         }
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
