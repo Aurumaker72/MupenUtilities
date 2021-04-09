@@ -496,8 +496,8 @@ namespace MupenUtils
         void SetFrame(int targetframe)
         {
             frame = targetframe;
-            if (!checkAllowedStep(targetframe)) return;
             UpdateFrameControlUI();
+            if (!checkAllowedStep(targetframe)) return;
             GetInput(inputList[frame]);
         }
         #endregion
