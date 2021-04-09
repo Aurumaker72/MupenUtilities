@@ -692,17 +692,17 @@ namespace MupenUtils
 
         private void txt_joyX_KeyDown(object sender, KeyEventArgs e)
         {
-            if(ExtensionMethods.ValidStringByte(txt_Frame.Text, -127, 127) && e.KeyCode == Keys.Enter)
+            if(ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text) && e.KeyCode == Keys.Enter)
             {
-                UpdateJoystickValues(RelativeToAbsolute(new Point(byte.Parse(txt_joyX.Text),byte.Parse(txt_joyY.Text))), false);
+                UpdateJoystickValues(RelativeToAbsolute(new Point(sbyte.Parse(txt_joyX.Text),sbyte.Parse(txt_joyY.Text))), false);
             }
         }
 
         private void txt_joyY_KeyDown(object sender, KeyEventArgs e)
         {
-            if(ExtensionMethods.ValidStringByte(txt_Frame.Text, -127, 127) && e.KeyCode == Keys.Enter)
+            if(ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text) && e.KeyCode == Keys.Enter)
             {
-                UpdateJoystickValues(RelativeToAbsolute(new Point(byte.Parse(txt_joyX.Text),byte.Parse(txt_joyY.Text))), false);
+                UpdateJoystickValues(RelativeToAbsolute(new Point(sbyte.Parse(txt_joyX.Text),sbyte.Parse(txt_joyY.Text))), false);
             }
         }
 
@@ -774,7 +774,7 @@ namespace MupenUtils
         {
             // This fires when any input checkbox has been changed
             if (readOnly || !FileLoaded)
-            return; 
+            return;
             
             UpdateFrameControlUI();
             SetInput(frame);

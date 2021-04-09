@@ -23,14 +23,13 @@ public static class ExtensionMethods
         return true;
         return false;
     }
-    public static bool ValidStringByte(string str, int min, int max)
+    public static bool ValidStringSByte(string str)
     {
         if(str.Length == 0||String.IsNullOrEmpty(str)||String.IsNullOrWhiteSpace(str))return false;
         foreach(char c in str){if(c<'0'||c>'9')return false;}
-        int r=byte.Parse(str);
-        if (r>=min&&r<=max)
+        int r=int.Parse(str);
+        if (r>sbyte.MaxValue||r<sbyte.MinValue)return false;
         return true;
-        return false;
     }
     public static string ByteArrayToString(byte[] ba)
     {
