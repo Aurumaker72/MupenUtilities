@@ -1,4 +1,5 @@
 ﻿using MupenUtils.Helpers;
+using MupenUtils.Networking;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,11 +15,19 @@ namespace MupenUtils
 {
     public partial class MoreForm : Form
     {
+        UpdateNotifier updateNotifier = new UpdateNotifier();
+        public byte versionResult = MainForm.UPDATE_UNKNOWN;
+
         public MoreForm()
         {
             InitializeComponent();
             this.Text = MainForm.PROGRAM_NAME + " - More";
-            
+
+            if(!updateNotifier.CheckForInternetConnection())
+            {
+                btn_More_CheckUpdates.Enabled = false;
+                btn_More_CheckUpdates.Text = "No Internet";
+            }
         }
 
         private void btn_More_NewTip_MouseDown(object sender, MouseEventArgs e)
@@ -44,6 +53,19 @@ namespace MupenUtils
         private void Llbl_More_MupenCringe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("http://tasvideos.org/EmulatorResources/Mupen.html");
+        }
+
+        private void btn_More_CheckUpdates_Click(object sender, EventArgs e)
+        {
+            if (versionResult == MainForm.UPDATE_UNKNOWN)
+            versionResult = updateNotifier.GetGithubVersion();
+            if (versionResult == MainForm.UPDATE_CLIENT_AHEAD || versionResult == MainForm.UPDATE_EQUAL)
+            {
+                MessageBox.Show("You are up to date!",MainForm.PROGRAM_NAME + " - Up to date");
+            }else if (versionResult == MainForm.UPDATE_CLIENT_OUTDATED && MessageBox.Show("Your " + MainForm.PROGRAM_NAME + " is outdated. Do you want to visit the releases page?", MainForm.PROGRAM_NAME + " - Outdated!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                Process.Start("https://github.com/Aurumaker72/MupenUtilities/releases");
+            }
         }
     }
 }

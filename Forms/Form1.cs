@@ -14,6 +14,7 @@ namespace MupenUtils
     {
         #region Vars
 
+        public const string PROGRAM_VERSION = "1.1";
         public const string PROGRAM_NAME = "Mupen Utilities";
          
         public const string M64_LOADED_TEXT = "M64 Loaded";
@@ -21,6 +22,11 @@ namespace MupenUtils
         public const string M64_FAILED_TEXT = "M64 Invalid";
         public const string M64_SELECTED_TEXT = "Type: M64";
         public const string ST_SELECTED_TEXT = "Type: ST";
+
+        public const byte UPDATE_CLIENT_OUTDATED = 0;
+        public const byte UPDATE_CLIENT_AHEAD = 1;
+        public const byte UPDATE_EQUAL = 2;
+        public const byte UPDATE_UNKNOWN = 255;
 
         Thread m64load;
         MoreForm moreForm = new MoreForm();

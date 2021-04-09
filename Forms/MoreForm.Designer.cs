@@ -42,6 +42,7 @@ namespace MupenUtils
             this.Llbl_More_Mupen = new System.Windows.Forms.LinkLabel();
             this.txt_More_Info = new System.Windows.Forms.TextBox();
             this.pb_More_Logo = new System.Windows.Forms.PictureBox();
+            this.btn_More_CheckUpdates = new System.Windows.Forms.Button();
             this.gp_More_Tips.SuspendLayout();
             this.gp_More_About.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_More_Logo)).BeginInit();
@@ -92,6 +93,7 @@ namespace MupenUtils
             // 
             // gp_More_About
             // 
+            this.gp_More_About.Controls.Add(this.btn_More_CheckUpdates);
             this.gp_More_About.Controls.Add(this.lbl_More_Related2);
             this.gp_More_About.Controls.Add(this.lbl_More_Related);
             this.gp_More_About.Controls.Add(this.Llbl_More_MupenCringe);
@@ -192,6 +194,17 @@ namespace MupenUtils
             this.pb_More_Logo.TabStop = false;
             this.pb_More_Logo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_More_Logo_MouseDown);
             // 
+            // btn_More_CheckUpdates
+            // 
+            this.btn_More_CheckUpdates.Location = new System.Drawing.Point(384, 224);
+            this.btn_More_CheckUpdates.Name = "btn_More_CheckUpdates";
+            this.btn_More_CheckUpdates.Size = new System.Drawing.Size(139, 31);
+            this.btn_More_CheckUpdates.TabIndex = 0;
+            this.btn_More_CheckUpdates.TabStop = false;
+            this.btn_More_CheckUpdates.Text = "Check for Updates";
+            this.btn_More_CheckUpdates.UseVisualStyleBackColor = true;
+            this.btn_More_CheckUpdates.Click += new System.EventHandler(this.btn_More_CheckUpdates_Click);
+            // 
             // MoreForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -225,5 +238,6 @@ namespace MupenUtils
         private System.Windows.Forms.Label lbl_More_Related;
         private System.Windows.Forms.LinkLabel Llbl_More_Resources;
         private System.Windows.Forms.LinkLabel Llbl_More_MupenCringe;
+        private System.Windows.Forms.Button btn_More_CheckUpdates;
     }
 }
