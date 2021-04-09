@@ -20,6 +20,8 @@ namespace MupenUtils
         const string M64_SELECTED_TEXT = "Type: M64";
         const string ST_SELECTED_TEXT = "Type: ST";
 
+        Thread m64load;
+
         string Path, SavePath;
         bool FileLoaded = false;
         bool ExpandedMenu = false;
@@ -27,7 +29,6 @@ namespace MupenUtils
         bool loopInputs = true;
         bool bypassTypeCheck = false;
         bool forwardsPlayback = true;
-        bool m64ThreadRunning = false;
         bool readOnly = true;
 
         // M64 Data as Strings
@@ -211,33 +212,36 @@ namespace MupenUtils
         #endregion
 
         #region I/O
+        void ErrorM64(){
+          ShowStatus_ThreadSafe(M64_FAILED_TEXT);
+          // set status
 
+          txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
+          // clear path textbox
+
+          this.Invoke((MethodInvoker)(() => this.ActiveControl = null));
+          // clear active control
+
+
+          EnableM64View_ThreadSafe(false);
+          // set m64 style
+
+          m64load.Abort(); // try kill thread
+        }
         void ReadM64()
         {
-            m64ThreadRunning = true;
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
             if (!bypassTypeCheck && (/*len < 1028 || */!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)))
             {
-                ShowStatus_ThreadSafe(M64_FAILED_TEXT);
-                // set status
-
-                txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
-                // clear path textbox
-
-                this.Invoke((MethodInvoker)(() => this.ActiveControl = null));
-                // clear active control
-
-
-                EnableM64View_ThreadSafe(false);
-                // set m64 style
-
-                m64ThreadRunning = false;
+                ErrorM64();
                 return;
             }
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
-            FileStream fs = File.Open(Path, FileMode.Open);
+            FileStream fs;
+            try{fs = File.Open(Path, FileMode.Open);}
+            catch{ErrorM64();return; }
             BinaryReader br = new BinaryReader(fs);
 
 
@@ -292,7 +296,7 @@ namespace MupenUtils
                     continue;
                 }
 #if DEBUG
-                Debug.WriteLine("--- Sample " + findx + "/" + frames + " ---");
+                Debug.WriteLine("[LOADING M64] --- Sample " + findx + "/" + frames + " ---");
 #endif
                 inputList.Add(br.ReadInt32());
                 findx++;
@@ -334,7 +338,6 @@ namespace MupenUtils
 
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
-            m64ThreadRunning = false; 
         }
 
         void WriteM64()
@@ -552,7 +555,7 @@ namespace MupenUtils
             Properties.Settings.Default.Save();
 
             if (rb_M64sel.Checked){
-                Thread m64load = new Thread ( () => ReadM64() );
+                m64load = new Thread ( () => ReadM64() );
                 m64load.Start();
                 }
             else if (rb_STsel.Checked){
@@ -561,13 +564,11 @@ namespace MupenUtils
         private void btn_Last_MouseClick(object sender, MouseEventArgs e)
         {
             Path = Properties.Settings.Default.LastPath;
-             if (rb_M64sel.Checked){
-                Thread m64load = new Thread ( () => ReadM64() );
-
-                m64load.Start();
-                }
-            else if (rb_STsel.Checked){
-                LoadST();}
+            if (rb_M64sel.Checked && ExtensionMethods.ValidPath(Path)){
+               m64load = new Thread ( () => ReadM64() );
+               m64load.Start();
+               }
+            else if (rb_STsel.Checked) LoadST();
         }
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
         {
@@ -660,13 +661,18 @@ namespace MupenUtils
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (m64ThreadRunning)
+            if (m64load != null && m64load.IsAlive)
             {
-                e.Cancel =
-                    MessageBox.Show("The m64 loading thread is still running. Are you sure you want to close the program? (might cause issues)",
-                    "Thread running",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning) == DialogResult.No;
+                bool exit;
+                exit = MessageBox.Show("The m64 loading thread is still running. Are you sure you want to close the program and attempt to kill the thread? (might cause issues)",
+                "Thread running",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning) == DialogResult.Yes;
+                if (exit)
+                    m64load.Abort();
+                e.Cancel = !exit;
+                
+
                 return;
             }
         }
