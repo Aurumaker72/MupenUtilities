@@ -20,7 +20,7 @@ namespace MupenUtils
         const string M64_SELECTED_TEXT = "Type: M64";
         const string ST_SELECTED_TEXT = "Type: ST";
 
-        string Path;
+        string Path, SavePath;
         bool FileLoaded = false;
         bool loopInputs = true;
         bool bypassTypeCheck = false;
@@ -337,10 +337,11 @@ namespace MupenUtils
         void WriteM64()
         {
             if (!FileLoaded) return;
-            File.Delete(Path + "-modified.m64");
-            FileStream fs = File.Open(Path+"-modified.m64", FileMode.OpenOrCreate);
+            SavePath = Path + "-modified.m64";
+            File.Delete(SavePath);
+            FileStream fs = File.Open(SavePath, FileMode.OpenOrCreate);
             BinaryWriter br = new BinaryWriter(fs);
-
+            ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
             Array.Clear(zeroar1, 0, zeroar1.Length); 
             Array.Clear(zeroar2, 0, zeroar2.Length);
@@ -412,7 +413,7 @@ namespace MupenUtils
             }
             br.Flush();
             br.Close();
-            MessageBox.Show("Finished");
+            ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
         }
 
         
