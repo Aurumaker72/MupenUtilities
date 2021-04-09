@@ -21,6 +21,7 @@ namespace MupenUtils
         const string ST_SELECTED_TEXT = "Type: ST";
 
         Thread m64load;
+        MoreForm moreForm = new MoreForm();
 
         string Path, SavePath;
         bool FileLoaded = false;
@@ -129,6 +130,11 @@ namespace MupenUtils
         #endregion
 
         #region UI
+
+        void ShowTipsForm()
+        {
+            moreForm.ShowDialog();
+        }
 
         void ShowStatus(string msg, ToolStripStatusLabel ctl)
         {
@@ -689,27 +695,26 @@ namespace MupenUtils
                 SetFrame(Int32.Parse(txt_Frame.Text));
             }
         }
-
+        void ParseXYTextbox()
+        {
+            if(ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text))
+                UpdateJoystickValues(RelativeToAbsolute(new Point(sbyte.Parse(txt_joyX.Text),sbyte.Parse(txt_joyY.Text))), false);
+        }
         private void txt_joyX_KeyDown(object sender, KeyEventArgs e)
         {
-            if(ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text) && e.KeyCode == Keys.Enter)
-            {
-                UpdateJoystickValues(RelativeToAbsolute(new Point(sbyte.Parse(txt_joyX.Text),sbyte.Parse(txt_joyY.Text))), false);
-            }
+            if(e.KeyCode == Keys.Enter) ParseXYTextbox();
+            if (e.KeyCode == Keys.Escape) this.ActiveControl = null;
         }
 
         private void txt_joyY_KeyDown(object sender, KeyEventArgs e)
         {
-            if(ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text) && e.KeyCode == Keys.Enter)
-            {
-                UpdateJoystickValues(RelativeToAbsolute(new Point(sbyte.Parse(txt_joyX.Text),sbyte.Parse(txt_joyY.Text))), false);
-            }
+            if(e.KeyCode == Keys.Enter) ParseXYTextbox();
+            if (e.KeyCode == Keys.Escape) this.ActiveControl = null;
         }
 
-        private void btn_Savem64_MouseClick(object sender, MouseEventArgs e)
-        {
-            WriteM64();
-        }
+        private void btn_Savem64_MouseClick(object sender, MouseEventArgs e) => WriteM64();
+        private void btn_Tips_Click(object sender, EventArgs e) => ShowTipsForm();
+
         void UpdateReadOnly()
         {
             readOnly = chk_readonly.Checked;
@@ -807,13 +812,13 @@ namespace MupenUtils
 
             pb_JoystickPic.Refresh();
         }
+
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
-
-        private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e)
+        private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
+        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
         {
-            JOY_mouseDown = JOY_followMouse;
+            if (JOY_mouseDown) UpdateJoystickValues(e.Location, true);
         }
-
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -841,10 +846,6 @@ namespace MupenUtils
 
         }
 
-        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (JOY_mouseDown) UpdateJoystickValues(e.Location,true);
-        }
 
         #endregion
     }

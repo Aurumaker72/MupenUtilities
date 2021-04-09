@@ -33,6 +33,7 @@ namespace MupenUtils
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
             this.gp_Path = new System.Windows.Forms.GroupBox();
+            this.btn_Tips = new System.Windows.Forms.Button();
             this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.btn_Override = new System.Windows.Forms.Button();
             this.rb_STsel = new System.Windows.Forms.RadioButton();
@@ -149,6 +150,7 @@ namespace MupenUtils
             // 
             // gp_Path
             // 
+            this.gp_Path.Controls.Add(this.btn_Tips);
             this.gp_Path.Controls.Add(this.chk_readonly);
             this.gp_Path.Controls.Add(this.btn_Override);
             this.gp_Path.Controls.Add(this.rb_STsel);
@@ -165,6 +167,17 @@ namespace MupenUtils
             this.gp_Path.TabIndex = 2;
             this.gp_Path.TabStop = false;
             this.gp_Path.Text = "Selection";
+            // 
+            // btn_Tips
+            // 
+            this.btn_Tips.Location = new System.Drawing.Point(310, 16);
+            this.btn_Tips.Name = "btn_Tips";
+            this.btn_Tips.Size = new System.Drawing.Size(45, 28);
+            this.btn_Tips.TabIndex = 0;
+            this.btn_Tips.TabStop = false;
+            this.btn_Tips.Text = "Tips";
+            this.btn_Tips.UseVisualStyleBackColor = true;
+            this.btn_Tips.Click += new System.EventHandler(this.btn_Tips_Click);
             // 
             // chk_readonly
             // 
@@ -195,6 +208,7 @@ namespace MupenUtils
             // rb_STsel
             // 
             this.rb_STsel.AutoSize = true;
+            this.rb_STsel.Enabled = false;
             this.rb_STsel.Location = new System.Drawing.Point(65, 60);
             this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_STsel.Name = "rb_STsel";
@@ -1245,6 +1259,7 @@ namespace MupenUtils
         private System.Windows.Forms.Button btn_Savem64;
         private System.Windows.Forms.CheckBox chk_readonly;
         private System.Windows.Forms.TrackBar tr_MovieScrub;
+        private System.Windows.Forms.Button btn_Tips;
     }
 }
 
