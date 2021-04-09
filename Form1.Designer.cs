@@ -277,7 +277,8 @@ namespace MupenUtils
             this.tr_MovieScrub.Location = new System.Drawing.Point(650, 385);
             this.tr_MovieScrub.Name = "tr_MovieScrub";
             this.tr_MovieScrub.Size = new System.Drawing.Size(175, 56);
-            this.tr_MovieScrub.TabIndex = 4;
+            this.tr_MovieScrub.TabIndex = 0;
+            this.tr_MovieScrub.TabStop = false;
             this.tr_MovieScrub.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tr_MovieScrub.Scroll += new System.EventHandler(this.tr_MovieScrub_Scroll);
             // 
