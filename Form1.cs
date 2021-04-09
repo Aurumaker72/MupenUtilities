@@ -22,6 +22,8 @@ namespace MupenUtils
 
         string Path, SavePath;
         bool FileLoaded = false;
+        bool ExpandedMenu = false;
+
         bool loopInputs = true;
         bool bypassTypeCheck = false;
         bool forwardsPlayback = true;
@@ -152,6 +154,7 @@ namespace MupenUtils
         void EnableM64View(bool flag, bool change)
         {
             Size s;
+            ExpandedMenu = flag;
             if(change) FileLoaded = flag;
 
             this.SuspendLayout();
@@ -580,8 +583,8 @@ namespace MupenUtils
         }
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
-            EnableM64View(!FileLoaded, false);
-            btn_Override.Text = FileLoaded ? "v" : "^";
+            EnableM64View(!ExpandedMenu, false);
+            btn_Override.Text = ExpandedMenu ? "v" : "^";
         }
         private void btn_FrameFront_Click(object sender, EventArgs e)
         {
