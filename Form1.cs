@@ -162,6 +162,15 @@ namespace MupenUtils
             st_Status.Visible = flag;
             this.MaximizeBox = flag;
             if (!flag) this.WindowState = FormWindowState.Normal;
+            btn_Loop.Enabled = FileLoaded;
+            btn_FrameBack.Enabled = FileLoaded;
+            btn_FrameBack2.Enabled = FileLoaded;
+            btn_FrameFront.Enabled = FileLoaded;
+            btn_FrameFront2.Enabled = FileLoaded;
+            btn_PlayDirection.Enabled = FileLoaded;
+            btn_PlayPause.Enabled = FileLoaded;
+            tr_MovieScrub.Enabled = FileLoaded;
+            txt_Frame.Enabled = FileLoaded;
             this.Size = s;
             this.ResumeLayout();
         }
@@ -183,6 +192,15 @@ namespace MupenUtils
             st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = flag));
             this.Invoke((MethodInvoker)(() => this.MaximizeBox = flag));
             if (!flag) this.Invoke((MethodInvoker)(() => this.WindowState = FormWindowState.Normal));
+            btn_FrameBack.Invoke((MethodInvoker)(() =>  btn_FrameBack.Enabled = flag));
+            btn_FrameBack2.Invoke((MethodInvoker)(() =>  btn_FrameBack2.Enabled = flag));
+            btn_FrameFront.Invoke((MethodInvoker)(() =>  btn_FrameFront.Enabled = flag));
+            btn_Loop.Invoke((MethodInvoker)(() =>  btn_Loop.Enabled = flag));
+            btn_FrameFront2.Invoke((MethodInvoker)(() =>  btn_FrameFront2.Enabled = flag));
+            btn_PlayDirection.Invoke((MethodInvoker)(() =>  btn_PlayDirection.Enabled = flag));
+            btn_PlayPause.Invoke((MethodInvoker)(() =>  btn_PlayPause.Enabled = flag));
+            tr_MovieScrub.Invoke((MethodInvoker)(() =>  tr_MovieScrub.Enabled = flag));
+            txt_Frame.Invoke((MethodInvoker)(() =>  txt_Frame.ReadOnly = flag));
             this.Invoke((MethodInvoker)(() => this.Size = s));
             
         }
@@ -512,7 +530,7 @@ namespace MupenUtils
 
         private void txt_GenericNumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
-        e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+          e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
@@ -700,7 +718,6 @@ namespace MupenUtils
                 txt.ReadOnly = readOnly;
                 }
             }
-
             // Joystick buttons + Joystick
             pb_JoystickPic.Enabled = !readOnly;
             txt_joyX.ReadOnly = readOnly;
