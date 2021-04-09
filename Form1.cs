@@ -306,6 +306,9 @@ namespace MupenUtils
             txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
+
             EnableM64View_ThreadSafe(true);
 
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
@@ -690,6 +693,12 @@ namespace MupenUtils
                 }
             }
         }
+
+        private void tr_MovieScrub_Scroll(object sender, EventArgs e)
+        {
+            SetFrame(tr_MovieScrub.Value);
+        }
+
         private void chk_readonly_CheckedChanged(object sender, EventArgs e)
         {
             UpdateReadOnly();

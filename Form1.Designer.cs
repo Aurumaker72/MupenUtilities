@@ -112,6 +112,7 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
+            this.tr_MovieScrub = new System.Windows.Forms.TrackBar();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -121,6 +122,7 @@ namespace MupenUtils
             this.gpRom.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_M64_misc.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -254,6 +256,7 @@ namespace MupenUtils
             // 
             // gp_M64
             // 
+            this.gp_M64.Controls.Add(this.tr_MovieScrub);
             this.gp_M64.Controls.Add(this.gp_input);
             this.gp_M64.Controls.Add(this.gp_User);
             this.gp_M64.Controls.Add(this.gpRom);
@@ -1104,6 +1107,15 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
+            // tr_MovieScrub
+            // 
+            this.tr_MovieScrub.Location = new System.Drawing.Point(650, 385);
+            this.tr_MovieScrub.Name = "tr_MovieScrub";
+            this.tr_MovieScrub.Size = new System.Drawing.Size(175, 56);
+            this.tr_MovieScrub.TabIndex = 4;
+            this.tr_MovieScrub.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tr_MovieScrub.Scroll += new System.EventHandler(this.tr_MovieScrub_Scroll);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1126,6 +1138,7 @@ namespace MupenUtils
             this.st_Status.ResumeLayout(false);
             this.st_Status.PerformLayout();
             this.gp_M64.ResumeLayout(false);
+            this.gp_M64.PerformLayout();
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
@@ -1137,6 +1150,7 @@ namespace MupenUtils
             this.gp_Plugins.PerformLayout();
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1226,6 +1240,7 @@ namespace MupenUtils
         private System.Windows.Forms.Button btn_LoadLatest;
         private System.Windows.Forms.Button btn_Savem64;
         private System.Windows.Forms.CheckBox chk_readonly;
+        private System.Windows.Forms.TrackBar tr_MovieScrub;
     }
 }
 
