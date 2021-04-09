@@ -429,7 +429,7 @@ namespace MupenUtils
             catch
             {
                 EnableM64View(false, false);
-                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.", "M64 corrupted");
+                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart. (Is your M64 corrupted?)", "M64 corrupted");
                 return;
             }
 
@@ -587,8 +587,11 @@ namespace MupenUtils
         {
             lbl_FrameSelected.Text = "Frame " + frame;
             lbl_FrameSelected.ForeColor = Color.Black;
+            chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
+            chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
+
             txt_Frame.Text = frame.ToString();
-            if(frame < tr_MovieScrub.Maximum)
+            if(frame < tr_MovieScrub.Maximum && frame > tr_MovieScrub.Minimum)
             tr_MovieScrub.Value = frame;
         }
         void AdvanceInputAuto(object obj, EventArgs e)
@@ -734,11 +737,11 @@ namespace MupenUtils
         private void InputChk_Changed(object sender, MouseEventArgs e)
         {
             // This fires when any input checkbox has been changed
-            if (readOnly || !FileLoaded){
-            MessageBox.Show("If this happens tell auru!!");
+            if (readOnly || !FileLoaded)
             return; 
-            }
+            
             SetInput(frame);
+            UpdateFrameControlUI();
         }
 
         void SnapJoystick()
