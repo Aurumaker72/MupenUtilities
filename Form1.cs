@@ -232,7 +232,7 @@ namespace MupenUtils
         {
             // Check for suspicious properties
             long len = new FileInfo(Path).Length;
-            if (!bypassTypeCheck && (/*len < 1028 || */!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)))
+            if (!bypassTypeCheck && (/*len < 1028 || */!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)) || !ExtensionMethods.ValidPath(Path))
             {
                 ErrorM64();
                 return;
@@ -564,10 +564,15 @@ namespace MupenUtils
         private void btn_Last_MouseClick(object sender, MouseEventArgs e)
         {
             Path = Properties.Settings.Default.LastPath;
+            if (!ExtensionMethods.ValidPath(Path))
+            {
+                ShowStatus(M64_FAILED_TEXT, st_Status1);
+                return;
+            }
             if (rb_M64sel.Checked && ExtensionMethods.ValidPath(Path)){
                m64load = new Thread ( () => ReadM64() );
                m64load.Start();
-               }
+            }
             else if (rb_STsel.Checked) LoadST();
         }
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
@@ -643,7 +648,7 @@ namespace MupenUtils
         {
             this.ActiveControl = null;
             loopInputs = !loopInputs;
-            btn_Loop.Text = loopInputs ? "➡️" : "🔁";
+            btn_Loop.Text = loopInputs ? "🔁" : "➡";
         }
         private void btn_PlayDirection_Click(object sender, EventArgs e)
         {
