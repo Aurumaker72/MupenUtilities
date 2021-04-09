@@ -510,6 +510,10 @@ namespace MupenUtils
 
         #region Event Handlers
 
+        private void txt_GenericNumberOnly_KeyPress(object sender, KeyPressEventArgs e)
+        {
+        e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
             ShowStatus("Selecting movie...",st_Status1);
@@ -777,6 +781,7 @@ namespace MupenUtils
         {
             JOY_mouseDown = JOY_followMouse;
         }
+
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

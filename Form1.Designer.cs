@@ -760,6 +760,7 @@ namespace MupenUtils
             this.txt_VIs.Size = new System.Drawing.Size(132, 22);
             this.txt_VIs.TabIndex = 0;
             this.txt_VIs.TabStop = false;
+            this.txt_VIs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
             // 
             // lb_VIs
             // 
@@ -779,6 +780,7 @@ namespace MupenUtils
             this.txt_RR.Size = new System.Drawing.Size(132, 22);
             this.txt_RR.TabIndex = 0;
             this.txt_RR.TabStop = false;
+            this.txt_RR.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
             // 
             // lbl_Desc
             // 
@@ -1095,6 +1097,7 @@ namespace MupenUtils
             this.txt_CTRLS.Size = new System.Drawing.Size(132, 22);
             this.txt_CTRLS.TabIndex = 0;
             this.txt_CTRLS.TabStop = false;
+            this.txt_CTRLS.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
             // 
             // lbl_Ctrls
             // 
