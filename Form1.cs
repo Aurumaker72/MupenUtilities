@@ -667,7 +667,8 @@ namespace MupenUtils
         {
             readOnly = chk_readonly.Checked;
             chk_readonly.Text = readOnly ? "Readonly" : "Readwrite";
-
+            if(!readOnly) ShowStatus("Read-Write mode: All changes will be flushed to a new file upon pressing \'Save File\'", st_Status1);
+            else ShowStatus("Read-only mode: You can only view M64 data", st_Status1);
             // Groupboxes + Child controls
             foreach (Control ctl in gp_User.Controls)
             {
