@@ -34,6 +34,7 @@ namespace MupenUtils
         string Path, SavePath;
         bool FileLoaded = false;
         bool ExpandedMenu = false;
+        bool Sticky = false;
 
         bool loopInputs = true;
         bool bypassTypeCheck = false;
@@ -67,6 +68,8 @@ namespace MupenUtils
         public CheckBox[] controllerButtonsChk;
         List<int> inputList = new List<int>();
         List<int> SAVE_inputList = new List<int>();
+        int lastValue;
+
         int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
 
@@ -479,7 +482,12 @@ namespace MupenUtils
             if (!FileLoaded) 
                 return;
             int value = 0xCC;
-            try{ value = inputList[frame]; } // get value at that frame. If this fails then m64 is corrupted 
+            try{
+                if (!Sticky)
+                    value = inputList[frame];
+                else
+                    value = lastValue;
+            } // get value at that frame. If this fails then m64 is corrupted 
             catch
             {
                 EnableM64View(false, false);
@@ -496,8 +504,8 @@ namespace MupenUtils
             joydata[2] = (byte)JOY_Rel.X;
             joydata[3] = (byte)JOY_Rel.Y;
 
-            value = BitConverter.ToInt32(joydata,0); 
-     
+            value = BitConverter.ToInt32(joydata,0);
+            lastValue = value;
             inputList[frame] = value;
             Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
             //GetInput(inputList[frame]); // also update visuals!
@@ -558,6 +566,7 @@ namespace MupenUtils
             frame = targetframe;
             UpdateFrameControlUI();
             if (!checkAllowedStep(targetframe)) return;
+            if(!Sticky)
             GetInput(inputList[frame]);
         }
         #endregion
@@ -573,6 +582,11 @@ namespace MupenUtils
             DumpInputsFile(false);
         }
         
+        private void tsmi_Input_Sticky_Click(object sender, EventArgs e)
+        {
+            Sticky = !Sticky;
+            tsmi_Input_Sticky.Checked = Sticky;
+        }
 
         private void txt_GenericNumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -848,6 +862,7 @@ namespace MupenUtils
         }
 
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
+
 
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)

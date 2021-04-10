@@ -118,6 +118,7 @@ namespace MupenUtils
             this.lb_starttype = new System.Windows.Forms.Label();
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -177,10 +178,10 @@ namespace MupenUtils
             // 
             this.btn_Tips.Location = new System.Drawing.Point(310, 16);
             this.btn_Tips.Name = "btn_Tips";
-            this.btn_Tips.Size = new System.Drawing.Size(50, 28);
+            this.btn_Tips.Size = new System.Drawing.Size(55, 28);
             this.btn_Tips.TabIndex = 0;
             this.btn_Tips.TabStop = false;
-            this.btn_Tips.Text = "More";
+            this.btn_Tips.Text = "About";
             this.btn_Tips.UseVisualStyleBackColor = true;
             this.btn_Tips.Click += new System.EventHandler(this.btn_Tips_Click);
             // 
@@ -350,7 +351,7 @@ namespace MupenUtils
             this.btn_Input_Debug.Size = new System.Drawing.Size(60, 30);
             this.btn_Input_Debug.TabIndex = 0;
             this.btn_Input_Debug.TabStop = false;
-            this.btn_Input_Debug.Text = "Debug";
+            this.btn_Input_Debug.Text = "More...";
             this.btn_Input_Debug.UseVisualStyleBackColor = true;
             this.btn_Input_Debug.Click += new System.EventHandler(this.btn_Input_Debug_Click);
             // 
@@ -1155,9 +1156,10 @@ namespace MupenUtils
             // 
             this.ctx_Input_Debug.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_Input_Debug_DumpData});
+            this.tsmi_Input_Debug_DumpData,
+            this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 56);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 80);
             // 
             // tsmi_Input_Debug_DumpData
             // 
@@ -1165,6 +1167,13 @@ namespace MupenUtils
             this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 24);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
+            // 
+            // tsmi_Input_Sticky
+            // 
+            this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_Sticky.Text = "Sticky";
+            this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
             // MainForm
             // 
@@ -1296,6 +1305,7 @@ namespace MupenUtils
         private System.Windows.Forms.Button btn_Input_Debug;
         private System.Windows.Forms.ContextMenuStrip ctx_Input_Debug;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Input_Debug_DumpData;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Input_Sticky;
     }
 }
 
