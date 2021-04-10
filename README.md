@@ -15,3 +15,10 @@ You can view and edit M64 Joystick Inputs on each frame in a clean, interactive 
 #### Frame Control
 You can seek back and forth, reverse playback, step frames and more intuitive controls.
 Playing the movie back in real-time (30 FPS) is also possible.
+
+#### Advanced
+You can dump a movie's raw input data to a file.
+
+
+## Other
+This program checks for updates
