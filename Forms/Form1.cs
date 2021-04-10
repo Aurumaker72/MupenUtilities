@@ -530,21 +530,26 @@ namespace MupenUtils
 
         bool checkAllowedStep(int stepAmount)
         {
-            if(frame >= frames || frame <= 0 || frame >= inputList.Count)
+            if(frame > frames || frame < 0)
             {
-                if(!loopInputs)
-                frame = (int)frames;
+                if (!loopInputs)
+                {
+                    if (frame > frames)
+                        frame = (int)frames;
+                    else if (frame < 0)
+                        frame = 0;
+                }
                 else
                 {
-                    if(frame >= frames)
+                    if (frame > frames)
                     {
                         frame = 0;
-                    }else if(frame <= 0)
+                    }
+                    else if (frame < 0)
                     {
-                        frame = (int)frames-1;
+                        frame = (int)frames - 1;
                     }
                 }
-                lbl_FrameSelected.Text = "Frame " + frame;
                 return false;
             }
             return true;
@@ -564,10 +569,10 @@ namespace MupenUtils
         void SetFrame(int targetframe)
         {
             frame = targetframe;
-            UpdateFrameControlUI();
             if (!checkAllowedStep(targetframe)) return;
             if(!Sticky)
             GetInput(inputList[frame]);
+            UpdateFrameControlUI();
         }
         #endregion
 
@@ -676,13 +681,12 @@ namespace MupenUtils
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
 
             txt_Frame.Text = frame.ToString();
-            if(frame < tr_MovieScrub.Maximum && frame > tr_MovieScrub.Minimum)
+            if(frame <= tr_MovieScrub.Maximum && frame >= tr_MovieScrub.Minimum)  
             tr_MovieScrub.Value = frame;
         }
         void AdvanceInputAuto(object obj, EventArgs e)
         {
             StepFrameAuto();
-            UpdateFrameControlUI();
         }
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
