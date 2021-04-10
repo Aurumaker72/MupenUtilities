@@ -29,6 +29,7 @@ namespace MupenUtils
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
@@ -45,6 +46,7 @@ namespace MupenUtils
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.tr_MovieScrub = new System.Windows.Forms.TrackBar();
             this.gp_input = new System.Windows.Forms.GroupBox();
+            this.btn_Input_Debug = new System.Windows.Forms.Button();
             this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.txt_Frame = new System.Windows.Forms.TextBox();
             this.lbl_XY = new System.Windows.Forms.Label();
@@ -114,6 +116,8 @@ namespace MupenUtils
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
+            this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -124,6 +128,7 @@ namespace MupenUtils
             this.gpRom.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_M64_misc.SuspendLayout();
+            this.ctx_Input_Debug.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -298,6 +303,7 @@ namespace MupenUtils
             // 
             // gp_input
             // 
+            this.gp_input.Controls.Add(this.btn_Input_Debug);
             this.gp_input.Controls.Add(this.pb_JoystickPic);
             this.gp_input.Controls.Add(this.txt_Frame);
             this.gp_input.Controls.Add(this.lbl_XY);
@@ -336,6 +342,17 @@ namespace MupenUtils
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input";
+            // 
+            // btn_Input_Debug
+            // 
+            this.btn_Input_Debug.Location = new System.Drawing.Point(300, 195);
+            this.btn_Input_Debug.Name = "btn_Input_Debug";
+            this.btn_Input_Debug.Size = new System.Drawing.Size(60, 30);
+            this.btn_Input_Debug.TabIndex = 0;
+            this.btn_Input_Debug.TabStop = false;
+            this.btn_Input_Debug.Text = "Debug";
+            this.btn_Input_Debug.UseVisualStyleBackColor = true;
+            this.btn_Input_Debug.Click += new System.EventHandler(this.btn_Input_Debug_Click);
             // 
             // pb_JoystickPic
             // 
@@ -1134,6 +1151,21 @@ namespace MupenUtils
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
             // 
+            // ctx_Input_Debug
+            // 
+            this.ctx_Input_Debug.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_Input_Debug_DumpData});
+            this.ctx_Input_Debug.Name = "ctx_Input_Debug";
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 56);
+            // 
+            // tsmi_Input_Debug_DumpData
+            // 
+            this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
+            this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1169,6 +1201,7 @@ namespace MupenUtils
             this.gp_Plugins.PerformLayout();
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
+            this.ctx_Input_Debug.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1260,6 +1293,9 @@ namespace MupenUtils
         private System.Windows.Forms.CheckBox chk_readonly;
         private System.Windows.Forms.TrackBar tr_MovieScrub;
         private System.Windows.Forms.Button btn_Tips;
+        private System.Windows.Forms.Button btn_Input_Debug;
+        private System.Windows.Forms.ContextMenuStrip ctx_Input_Debug;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Input_Debug_DumpData;
     }
 }
 

@@ -227,6 +227,20 @@ namespace MupenUtils
         #endregion
 
         #region I/O
+        void DumpInputsFile(bool plain)
+        {
+            FileStream fs = File.Open("inputs.bin", FileMode.OpenOrCreate);
+            BinaryWriter br = new BinaryWriter(fs);
+            if (!plain)
+            {
+                
+                for (int i = 0; i < SAVE_inputList.Count / 4; i++)
+                {
+                    br.Write(inputList[i]);
+                }
+                fs.Close(); br.Flush(); br.Close();
+            }
+        }
         void ErrorM64(){
           ShowStatus_ThreadSafe(M64_FAILED_TEXT);
           // set status
@@ -550,6 +564,16 @@ namespace MupenUtils
 
         #region Event Handlers
 
+        private void btn_Input_Debug_Click(object sender, EventArgs e)
+        {
+            ctx_Input_Debug.Show(Cursor.Position);
+        }
+        private void tsmi_Input_Debug_DumpData_Click(object sender, EventArgs e)
+        {
+            DumpInputsFile(false);
+        }
+        
+
         private void txt_GenericNumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
           e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
@@ -770,6 +794,7 @@ namespace MupenUtils
             UpdateReadOnly();
         }
 
+
         #endregion
 
 
@@ -823,6 +848,7 @@ namespace MupenUtils
         }
 
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
+
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
         {
