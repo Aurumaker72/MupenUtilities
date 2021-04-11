@@ -526,8 +526,9 @@ namespace MupenUtils
             }
             byte[] data = BitConverter.GetBytes(value);
             sbyte joystickX = (sbyte)data[2];
-            sbyte joystickY = (sbyte)data[3];
-
+            sbyte joystickY = (sbyte)-data[3];
+            ExtensionMethods.AdjustY(ref joystickX);
+           
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
             UpdateJoystickValues(RelativeToAbsolute(new Point(joystickX,joystickY)), false);
@@ -577,12 +578,10 @@ namespace MupenUtils
         {
             frame = targetframe;
             if (!checkAllowedStep(targetframe)) return;
-            if(frame > inputList.Count)
+            if(frame >= inputList.Count)
             {
-                EnableM64View(false, false);
-                stepFrameTimer.Enabled = false;
-               MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart. (Is your M64 corrupted or are you using a romhack)", "M64 corrupted");
-               UpdateFrameControlUI();
+               frame = inputList.Count;
+               stepFrameTimer.Enabled = false;
                return;
             }
             GetInput(inputList[frame]);

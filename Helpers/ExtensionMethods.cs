@@ -13,7 +13,10 @@ public static class ExtensionMethods
     public static int HighWord(this int number, int newValue) => (number & 0x0000FFFF) + (newValue << 16);
 
     public static int Clamp(int value, int min, int max) => (value < min) ? min : (value > max) ? max : value;
-
+    public static void AdjustY(ref sbyte value) {
+        if (value > -1) value--;
+        else value++;
+    }
     public static bool ValidStringInt(string str, int min, int max)
     {
         if(str.Length == 0||String.IsNullOrEmpty(str)||String.IsNullOrWhiteSpace(str))return false;
