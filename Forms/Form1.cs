@@ -179,7 +179,6 @@ namespace MupenUtils
             
             s = flag ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
-            st_Status.Visible = flag;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_Loop.Enabled = FileLoaded;
             btn_FrameBack.Enabled = FileLoaded;
@@ -195,6 +194,7 @@ namespace MupenUtils
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             this.MaximizeBox = flag;
             gp_M64.Visible = flag;
+            st_Status.Visible = flag;
             this.ResumeLayout();
         }
 
