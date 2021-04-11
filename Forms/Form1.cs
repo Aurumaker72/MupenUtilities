@@ -489,10 +489,10 @@ namespace MupenUtils
                 return;
             int value = 0xCC;
             try{
-                if (!Sticky)
-                    value = inputList[frame];
-                else
+                if (Sticky)
                     value = lastValue;
+                else
+                    value = inputList[frame];
             } // get value at that frame. If this fails then m64 is corrupted 
             catch
             {
@@ -528,9 +528,11 @@ namespace MupenUtils
             sbyte joystickX = (sbyte)data[2];
             sbyte joystickY = (sbyte)-data[3];
             ExtensionMethods.AdjustY(ref joystickX);
-           
+
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
+
+            SetInput(frame);
             UpdateJoystickValues(RelativeToAbsolute(new Point(joystickX,joystickY)), false);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
@@ -871,8 +873,9 @@ namespace MupenUtils
             JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif/2, pb_JoystickPic.Height - JOY_clampDif);
             JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -127, 127);
             JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
-
-
+            sbyte relYadj = (sbyte)-JOY_Rel.Y;
+            ExtensionMethods.AdjustY(ref relYadj);
+            JOY_Rel.Y = relYadj;
             if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
             if (user && !readOnly) SetInput(frame);
 
