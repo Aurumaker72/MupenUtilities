@@ -497,6 +497,7 @@ namespace MupenUtils
             catch
             {
                 EnableM64View(false, false);
+                stepFrameTimer.Enabled = false;
                 MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart. (Is your M64 corrupted?)", "M64 corrupted");
                 return;
             }
@@ -578,6 +579,8 @@ namespace MupenUtils
             if (!checkAllowedStep(targetframe)) return;
             if(frame > inputList.Count)
             {
+                EnableM64View(false, false);
+                stepFrameTimer.Enabled = false;
                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart. (Is your M64 corrupted or are you using a romhack)", "M64 corrupted");
                UpdateFrameControlUI();
                return;
