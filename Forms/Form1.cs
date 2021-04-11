@@ -176,13 +176,10 @@ namespace MupenUtils
             ExpandedMenu = flag;
             if(change) FileLoaded = flag;
 
-            this.SuspendLayout();
-            gp_M64.Visible = flag;
+            
             s = flag ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
-            this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             st_Status.Visible = flag;
-            this.MaximizeBox = flag;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_Loop.Enabled = FileLoaded;
             btn_FrameBack.Enabled = FileLoaded;
@@ -193,7 +190,11 @@ namespace MupenUtils
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
             txt_Frame.Enabled = FileLoaded;
+            this.SuspendLayout();
             this.Size = s;
+            this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
+            this.MaximizeBox = flag;
+            gp_M64.Visible = flag;
             this.ResumeLayout();
         }
 
