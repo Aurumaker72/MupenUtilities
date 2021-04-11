@@ -1,6 +1,4 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace MupenUtils
