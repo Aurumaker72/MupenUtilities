@@ -465,6 +465,8 @@ namespace MupenUtils
 
         #region Input & Frames
 
+        // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
+        
         int GetChkboxes()
         {
             int value = 0;
