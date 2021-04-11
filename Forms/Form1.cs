@@ -879,6 +879,8 @@ namespace MupenUtils
             if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
             if (user && !readOnly) SetInput(frame);
 
+            txt_joyX.Text = JOY_Rel.X.ToString();
+            txt_joyY.Text = relYadj.ToString();
             pb_JoystickPic.Refresh();
         }
 
