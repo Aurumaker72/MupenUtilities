@@ -1,5 +1,4 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace MupenUtils
 {
@@ -12,7 +11,7 @@ namespace MupenUtils
         // ---------------------
         // Parameters:
         // 0 - Boolean (file/folder)
-        public static object[] ShowFileDialog(bool dialogType, bool m64)
+        public static object[] ShowFileDialog(bool m64)
         {
             string path = string.Empty;
             string filter = "M64 Files (*.m64)|*.m64|All Files (*.*)|*.*";
@@ -22,10 +21,6 @@ namespace MupenUtils
                filter = "ST Files (*.st)|*.st|All Files (*.*)|*.*";
                title = "Select ST";
             }
-
-            if(dialogType)
-            {
-             
              OpenFileDialog openFileDialog = new OpenFileDialog
              {
                  InitialDirectory = "C:\\",
@@ -42,26 +37,7 @@ namespace MupenUtils
              else
              return new object[] {"FAIL", false};
 
-                openFileDialog.Dispose();
-            }
-            else
-            {
-             CommonOpenFileDialog openFileDialog = new CommonOpenFileDialog();
-             openFileDialog.Title = title;
-             openFileDialog.InitialDirectory = "C:\\";
-             openFileDialog.EnsureFileExists =
-             openFileDialog.EnsurePathExists =
-             openFileDialog.EnsureValidNames = 
-             openFileDialog.IsFolderPicker = true;
-             
-             if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
-             path = openFileDialog.FileName;
-             else
-             return new object[] {"FAIL", false};
-
-             openFileDialog.Dispose();
-            }
-
+            openFileDialog.Dispose();
             return new object[] { path, true };
         }
         

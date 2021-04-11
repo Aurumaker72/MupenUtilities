@@ -606,7 +606,7 @@ namespace MupenUtils
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
             ShowStatus("Selecting movie...",st_Status1);
-            object[] result = UIHelper.ShowFileDialog(true, rb_M64sel.Checked);
+            object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
             {
                 ShowStatus("Cancelled movie selection",st_Status1);
@@ -618,12 +618,13 @@ namespace MupenUtils
             Properties.Settings.Default.LastPath = Path;
             Properties.Settings.Default.Save();
 
-            if (rb_M64sel.Checked){
-                m64load = new Thread ( () => ReadM64() );
+            if (rb_M64sel.Checked)
+            {
+                m64load = new Thread(() => ReadM64());
                 m64load.Start();
-                }
-            else if (rb_STsel.Checked){
-                LoadST();}
+            }
+            else if (rb_STsel.Checked)
+                LoadST();
         }
         private void btn_Last_MouseClick(object sender, MouseEventArgs e)
         {
