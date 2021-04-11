@@ -576,7 +576,12 @@ namespace MupenUtils
         {
             frame = targetframe;
             if (!checkAllowedStep(targetframe)) return;
-            if(!Sticky)
+            if(frame > inputList.Count)
+            {
+               MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart. (Is your M64 corrupted or are you using a romhack)", "M64 corrupted");
+               UpdateFrameControlUI();
+               return;
+            }
             GetInput(inputList[frame]);
             UpdateFrameControlUI();
         }
