@@ -342,7 +342,7 @@ namespace MupenUtils
             this.gp_input.Size = new System.Drawing.Size(371, 364);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
-            this.gp_input.Text = "Input";
+            this.gp_input.Text = "Input - Controller 1";
             // 
             // btn_Input_Debug
             // 

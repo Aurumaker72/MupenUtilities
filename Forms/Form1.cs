@@ -188,7 +188,7 @@ namespace MupenUtils
             btn_PlayDirection.Enabled = FileLoaded;
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
-            txt_Frame.Enabled = FileLoaded;
+            txt_Frame.Enabled = FileLoaded; 
             this.SuspendLayout();
             this.Size = s;
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
@@ -369,6 +369,10 @@ namespace MupenUtils
 
             EnableM64View_ThreadSafe(true);
 
+            if(Controllers > 1)
+            {
+                MessageBox.Show("The movie has more than one controller enabled. The application might behave unexpectedly.", "M64 too many controllers!");
+            }
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
         }
