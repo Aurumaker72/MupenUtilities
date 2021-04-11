@@ -319,7 +319,7 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
             Debug.WriteLine("VI/s:" + VIs);
-            frames = VIs / 2;
+            frames = VIs;
             int findx = 0;
             while(findx <= frames)
             {
