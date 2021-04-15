@@ -369,7 +369,7 @@ namespace MupenUtils
             // 
             // txt_Frame
             // 
-            this.txt_Frame.Location = new System.Drawing.Point(325, 330);
+            this.txt_Frame.Location = new System.Drawing.Point(165, 300);
             this.txt_Frame.Name = "txt_Frame";
             this.txt_Frame.Size = new System.Drawing.Size(35, 22);
             this.txt_Frame.TabIndex = 0;
@@ -669,12 +669,12 @@ namespace MupenUtils
             // lbl_FrameSelected
             // 
             this.lbl_FrameSelected.AutoSize = true;
-            this.lbl_FrameSelected.Location = new System.Drawing.Point(139, 295);
+            this.lbl_FrameSelected.Location = new System.Drawing.Point(116, 302);
             this.lbl_FrameSelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_FrameSelected.Name = "lbl_FrameSelected";
-            this.lbl_FrameSelected.Size = new System.Drawing.Size(64, 17);
+            this.lbl_FrameSelected.Size = new System.Drawing.Size(48, 17);
             this.lbl_FrameSelected.TabIndex = 0;
-            this.lbl_FrameSelected.Text = "Frame: 0";
+            this.lbl_FrameSelected.Text = "Frame";
             // 
             // btn_FrameFront2
             // 

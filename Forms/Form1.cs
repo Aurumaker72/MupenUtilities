@@ -674,7 +674,6 @@ namespace MupenUtils
         }
         void UpdateFrameControlUI()
         {
-            lbl_FrameSelected.Text = "Frame " + frame;
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
 
@@ -868,7 +867,6 @@ namespace MupenUtils
         }
 
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
-
 
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e) {if (JOY_mouseDown) UpdateJoystickValues(e.Location, true);}
