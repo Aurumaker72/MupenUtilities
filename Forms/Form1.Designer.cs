@@ -214,7 +214,6 @@ namespace MupenUtils
             // rb_STsel
             // 
             this.rb_STsel.AutoSize = true;
-            this.rb_STsel.Enabled = false;
             this.rb_STsel.Location = new System.Drawing.Point(65, 60);
             this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_STsel.Name = "rb_STsel";

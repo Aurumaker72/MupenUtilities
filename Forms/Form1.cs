@@ -468,8 +468,6 @@ namespace MupenUtils
         #endregion
 
         #region Input & Frames
-
-        // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
         
         void WriteInput()
         {
@@ -873,10 +871,7 @@ namespace MupenUtils
 
 
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
-        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (JOY_mouseDown) UpdateJoystickValues(e.Location, true);
-        }
+        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e) {if (JOY_mouseDown) UpdateJoystickValues(e.Location, true);}
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
