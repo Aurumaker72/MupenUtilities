@@ -319,7 +319,7 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
             Debug.WriteLine("VI/s:" + VIs);
-            frames = VIs;
+            frames = VIs; // Caution!!! misleading name. for some reason VIs in this case mean frames?!?!
             int findx = 0;
             while(findx <= frames)
             {
@@ -364,7 +364,7 @@ namespace MupenUtils
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = inputList.Count));
 
             EnableM64View_ThreadSafe(true);
 
@@ -471,23 +471,13 @@ namespace MupenUtils
 
         // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
         
-        int GetChkboxes()
+        void WriteInput()
         {
-            int value = 0;
-            for (int i = 0; i < controllerButtonsChk.Length; i++)
-            {
-                if (controllerButtonsChk[i].Checked)
-                {
-                    value |= (int)Math.Pow(2, i);
-                }
-            }
-            return value;
-        }
-        void SetInput(int frame)
-        {
+            // Write input data at frame n and set visuals
+
             if (!FileLoaded) 
                 return;
-            int value = 0xCC;
+            int value;
             try{
                 if (Sticky)
                     value = lastValue;
@@ -504,7 +494,6 @@ namespace MupenUtils
 
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
-                Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | BUTTON: " + controllerButtonsChk[i].Text.ToString() + " | Checked: " + controllerButtonsChk[i].Checked.ToString());
                 ExtensionMethods.SetBit(ref value, controllerButtonsChk[i].Checked, i);
             }
             byte[] joydata = BitConverter.GetBytes(value);
@@ -514,11 +503,12 @@ namespace MupenUtils
             value = BitConverter.ToInt32(joydata,0);
             lastValue = value;
             inputList[frame] = value;
-            Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
-            //GetInput(inputList[frame]); // also update visuals!
         }
-        void GetInput(int value)
+
+        void ReadInput(int value)
         {
+            // Read input data at frame n and set visuals
+
             int numbuttons = controllerButtonsChk.Length;
             for (int i = 0; i < numbuttons; i++)
             {
@@ -532,63 +522,58 @@ namespace MupenUtils
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
 
-            SetInput(frame);
+            WriteInput();
+
             UpdateJoystickValues(RelativeToAbsolute(new Point(joystickX,joystickY)), false);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
 
-        bool checkAllowedStep(int stepAmount)
+        /*
+         Unreliable coding...
+         Length of input list might not be exactly the frames specified in m64 header if m64 is corrupted!
+         */
+        bool stepAllowed(int stepAmount)
         {
-            if(frame > frames || frame < 0)
-            {
-                if (!loopInputs)
-                {
-                    if (frame > frames)
-                        frame = (int)frames;
-                    else if (frame < 0)
-                        frame = 0;
-                }
-                else
-                {
-                    if (frame > frames)
-                    {
-                        frame = 0;
-                    }
-                    else if (frame < 0)
-                    {
-                        frame = (int)frames - 1;
-                    }
-                }
-                return false;
-            }
-            return true;
+            int resultFrame = frame + stepAmount;
+            return (resultFrame <= inputList.Count && resultFrame >= 0);
         }
-
+        bool movieAtEnd()
+        {
+            return frame == inputList.Count;
+        }
+        bool movieAtStart()
+        {
+            return frame == 0;
+        }
+        void loopMovie()
+        {
+            if (loopInputs)
+            {
+                if (movieAtEnd()) frame = 1;
+                if (movieAtStart()) frame = inputList.Count - 1;
+            }
+            else
+                frame = ExtensionMethods.Clamp(frame, 0, inputList.Count-1);
+        }
         void StepFrame(int stepAmount)
         {
-            //frame += stepAmount;
-            //if (!checkAllowedStep(stepAmount)) return;
-            //lbl_FrameSelected.Text = "Frame " + frame;
-            //lbl_FrameSelected.ForeColor = Color.Black;
-            //SetInput(inputList[frame]);
-
-
             SetFrame(frame + stepAmount);
         }
+
         void SetFrame(int targetframe)
         {
+            // Don't set frame first, wait until target frame is validated
+            if (!stepAllowed(targetframe-frame)) return; // If frame is out of bounds
+            
             frame = targetframe;
-            if (!checkAllowedStep(targetframe)) return;
-            if(frame >= inputList.Count)
-            {
-               frame = inputList.Count;
-               stepFrameTimer.Enabled = false;
-               return;
-            }
-            GetInput(inputList[frame]);
+
+            loopMovie(); // loop movie if needed
+
+            ReadInput(inputList[frame]);
             UpdateFrameControlUI();
         }
+
         #endregion
 
         #region Event Handlers
@@ -692,12 +677,10 @@ namespace MupenUtils
         void UpdateFrameControlUI()
         {
             lbl_FrameSelected.Text = "Frame " + frame;
-            lbl_FrameSelected.ForeColor = Color.Black;
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
 
             txt_Frame.Text = frame.ToString();
-            if(frame <= tr_MovieScrub.Maximum && frame >= tr_MovieScrub.Minimum)  
             tr_MovieScrub.Value = frame;
         }
         void AdvanceInputAuto(object obj, EventArgs e)
@@ -850,9 +833,11 @@ namespace MupenUtils
             return;
             
             UpdateFrameControlUI();
-            SetInput(frame);
+            WriteInput();
         }
 
+        // UNUSED:
+        // this is a cool QoL feature but causes inaccuracy
         void SnapJoystick()
         {
             if (JOY_Rel.X < 5 && JOY_Rel.X > -5)
@@ -876,8 +861,8 @@ namespace MupenUtils
             sbyte relYadj = (sbyte)-JOY_Rel.Y;
             ExtensionMethods.AdjustY(ref relYadj);
             JOY_Rel.Y = relYadj;
-            if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
-            if (user && !readOnly) SetInput(frame);
+
+            if (user && !readOnly) WriteInput();
 
             txt_joyX.Text = JOY_Rel.X.ToString();
             txt_joyY.Text = relYadj.ToString();
