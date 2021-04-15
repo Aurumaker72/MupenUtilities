@@ -466,6 +466,7 @@ namespace MupenUtils
             // 
             // btn_PlayPause
             // 
+            this.btn_PlayPause.Font = new System.Drawing.Font("Microsoft YaHei", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_PlayPause.Location = new System.Drawing.Point(149, 325);
             this.btn_PlayPause.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PlayPause.Name = "btn_PlayPause";
