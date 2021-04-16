@@ -229,7 +229,7 @@ namespace MupenUtils
             btn_PlayDirection.Invoke((MethodInvoker)(() =>  btn_PlayDirection.Enabled = flag));
             btn_PlayPause.Invoke((MethodInvoker)(() =>  btn_PlayPause.Enabled = flag));
             tr_MovieScrub.Invoke((MethodInvoker)(() =>  tr_MovieScrub.Enabled = flag));
-            txt_Frame.Invoke((MethodInvoker)(() =>  txt_Frame.ReadOnly = flag));
+            txt_Frame.Invoke((MethodInvoker)(() =>  txt_Frame.ReadOnly = !flag));
             this.Invoke((MethodInvoker)(() => this.Size = s));
             
         }
