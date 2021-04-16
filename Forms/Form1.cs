@@ -27,6 +27,11 @@ namespace MupenUtils
         public const byte UPDATE_EQUAL = 2;
         public const byte UPDATE_UNKNOWN = 255;
 
+        public const string URL_MUPENUTILITIES_REPOSITORY = "https://github.com/Aurumaker72/MupenUtilities";
+        public const string URL_MUPEN_REPOSITORY = "https://github.com/mkdasher/mupen64-rr-lua-/";
+        public const string URL_MUPEN_TASVIDEOS = "http://tasvideos.org/EmulatorResources/Mupen.html";
+        public const string URL_N64_RESOURCES = "https://www.reddit.com/r/SM64TAS/comments/9ek1o5/resources_master_thread/";
+        
         Thread m64load;
         MoreForm moreForm = new MoreForm();
 
