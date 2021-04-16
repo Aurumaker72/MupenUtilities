@@ -31,6 +31,7 @@ namespace MupenUtils
         {
             if (!internetConnected)
             {
+                // If we dont check for this the api request will eventually time out and octokit will throw a exception
                 MessageBox.Show("Cannot check for updates. Are you connected to the internet?", MainForm.PROGRAM_NAME + " - No Internet!");
                 return;
             }
