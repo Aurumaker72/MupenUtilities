@@ -846,6 +846,7 @@ namespace MupenUtils
                 JOY_Abs.Y = pb_JoystickPic.Height / 2;
             }
         }
+
         void InternalUpdateJoystickValues(Point e, bool user, bool adjust){
             JOY_Abs.X = ExtensionMethods.Clamp(e.X, JOY_clampDif / 2, pb_JoystickPic.Width - JOY_clampDif);
             JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif / 2, pb_JoystickPic.Height - JOY_clampDif);

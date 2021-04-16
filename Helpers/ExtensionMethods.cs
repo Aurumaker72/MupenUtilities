@@ -86,4 +86,13 @@ public static class ExtensionMethods
     
         return isValid;
     }
+    public static string ArrStrFormatted(string[] arr)
+    {
+        StringBuilder strb = new StringBuilder();
+
+        for (int i = 0; i < arr.Length; i++)
+            strb.Append("[" + i + "] " + (string)arr[i] + '\n');
+
+        return strb.ToString();
+    }
 }

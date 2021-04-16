@@ -2,6 +2,7 @@
 using MupenUtils.Networking;
 using System;
 using System.Diagnostics;
+using System.Text;
 using System.Windows.Forms;
 
 namespace MupenUtils
@@ -10,6 +11,7 @@ namespace MupenUtils
     {
         UpdateNotifier updateNotifier = new UpdateNotifier();
         public byte versionResult = MainForm.UPDATE_UNKNOWN;
+        public static string allTips = string.Empty;
 
         public MoreForm()
         {
@@ -59,6 +61,21 @@ namespace MupenUtils
         private void event_NewTip(object sender, MouseEventArgs e)
         {
            lbl_More_Tip.Text = TipProvider.GetRandomTip();
+        }
+
+        private void event_AllTips(object sender, MouseEventArgs e)
+        {
+            if (allTips == string.Empty)
+            {
+                allTips = ExtensionMethods.ArrStrFormatted(TipProvider.tips);
+            }
+
+            MessageBox.Show(allTips, MainForm.PROGRAM_NAME + " - All tips");
+        }
+
+        private void lbl_More_Tip_MouseDown(object sender, MouseEventArgs e)
+        {
+            System.Windows.Clipboard.SetText(lbl_More_Tip.Text);
         }
     }
 }
