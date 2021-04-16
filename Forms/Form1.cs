@@ -752,7 +752,6 @@ namespace MupenUtils
             if(e.KeyCode == Keys.Enter) ParseXYTextbox();
             if (e.KeyCode == Keys.Escape) this.ActiveControl = null;
         }
-
         private void txt_joyY_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter) ParseXYTextbox();
@@ -822,7 +821,6 @@ namespace MupenUtils
         {
             return new Point(rel.X+82,rel.Y+72);
         }
-        
         private void InputChk_Changed(object sender, MouseEventArgs e)
         {
             // This fires when any input checkbox has been changed
@@ -848,29 +846,36 @@ namespace MupenUtils
                 JOY_Abs.Y = pb_JoystickPic.Height / 2;
             }
         }
-
-        void UpdateJoystickValues(Point e, bool user)
-        {
-            JOY_Abs.X = ExtensionMethods.Clamp(e.X, JOY_clampDif/2, pb_JoystickPic.Width - JOY_clampDif);
-            JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif/2, pb_JoystickPic.Height - JOY_clampDif);
+        void InternalUpdateJoystickValues(Point e, bool user, bool adjust){
+            JOY_Abs.X = ExtensionMethods.Clamp(e.X, JOY_clampDif / 2, pb_JoystickPic.Width - JOY_clampDif);
+            JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif / 2, pb_JoystickPic.Height - JOY_clampDif);
             JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -127, 127);
             JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
-            sbyte relYadj = (sbyte)-JOY_Rel.Y;
-            ExtensionMethods.AdjustY(ref relYadj);
-            JOY_Rel.Y = relYadj;
 
+            if (adjust)
+            {
+                sbyte relYadj = (sbyte)-JOY_Rel.Y;
+                ExtensionMethods.AdjustY(ref relYadj);
+                JOY_Rel.Y = relYadj;
+            }
             if (user && !readOnly) WriteInput();
 
             txt_joyX.Text = JOY_Rel.X.ToString();
-            txt_joyY.Text = relYadj.ToString();
+            txt_joyY.Text = JOY_Rel.Y.ToString();
             pb_JoystickPic.Refresh();
+        }
+
+        void UpdateJoystickValues(Point e, bool user)
+        {
+            InternalUpdateJoystickValues(e, user, true);
         }
 
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
 
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e) {if (JOY_mouseDown) UpdateJoystickValues(e.Location, true);}
-
+        private void pb_JoystickPic_MouseWheel(object sender, MouseEventArgs e) => InternalUpdateJoystickValues(RelativeToAbsolute(new Point(JOY_Rel.X, JOY_Rel.Y - Math.Sign(e.Delta))), false, false);
+        
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
             JOY_followMouse = e.Button != MouseButtons.Right || !JOY_followMouse;

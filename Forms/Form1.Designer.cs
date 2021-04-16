@@ -366,6 +366,7 @@ namespace MupenUtils
             this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
             this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
             this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
+            this.pb_JoystickPic.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseWheel);
             // 
             // txt_Frame
             // 
