@@ -139,6 +139,8 @@ namespace MupenUtils
             JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
             this.KeyPreview = true;
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
+            txt_Path.Text = Properties.Settings.Default.LastPath;
+            Debug.WriteLineIf(!ExtensionMethods.ValidPath(Properties.Settings.Default.LastPath), "Settings: Invalid path!??!!");
             UpdateReadOnly();
             EnableM64View(false,true);
         }
@@ -246,9 +248,10 @@ namespace MupenUtils
                 {
                     br.Write(inputList[i]);
                 }
-                fs.Close(); br.Flush(); br.Close();
+                br.Flush(); br.Close(); fs.Close();
             }
         }
+
         void ErrorM64(){
           ShowStatus_ThreadSafe(M64_FAILED_TEXT);
           // set status
@@ -371,12 +374,15 @@ namespace MupenUtils
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = inputList.Count));
 
+            txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
+
             EnableM64View_ThreadSafe(true);
 
             if(Controllers > 1)
             {
                 MessageBox.Show("The movie has more than one controller enabled. The application might behave unexpectedly.", "M64 too many controllers!");
             }
+
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
         }
