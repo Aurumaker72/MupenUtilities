@@ -1,7 +1,7 @@
 # MupenUtilities
 ![MupenUtilities](https://github.com/Aurumaker72/MupenUtilities/blob/main/logo.png "Mupen64 Utilities")<br>
 [Discord Server](https://discord.gg/KDdWP3rN3T)<br>
-[**Download Latest**]
+[**Download Latest**](https://github.com/Aurumaker72/MupenUtilities/zipball/main)<br>
 WIP utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)<br>
 This can be seen as a continuation of the M64 Editor by [mkdasher](https://github.com/mkdasher/)
 
