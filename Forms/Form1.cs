@@ -390,7 +390,14 @@ namespace MupenUtils
         void WriteM64()
         {
             if (!FileLoaded) return;
-            SavePath = Path + "-modified.m64";
+            object[] arrres = UIHelper.ShowFileDialog(true, true);
+            if ((bool)arrres[1])
+                SavePath = (string)arrres[0];
+            else
+            {
+                MessageBox.Show("Something went wrong while selecting M64 save path.","Invalid file selection?");
+                return;
+            }
             File.Delete(SavePath);
             FileStream fs = File.Open(SavePath, FileMode.OpenOrCreate);
             BinaryWriter br = new BinaryWriter(fs);
@@ -609,7 +616,7 @@ namespace MupenUtils
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
             ShowStatus("Selecting movie...",st_Status1);
-            object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked);
+            object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked,false);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
             {
                 ShowStatus("Cancelled movie selection",st_Status1);
