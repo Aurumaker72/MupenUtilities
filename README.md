@@ -5,6 +5,7 @@ This can be seen as a continuation of the M64 Editor by [mkdasher](https://githu
 
 ## M64
 The data of any M64 file is presented in a simple interface.
+The edited input/header data can be saved to a new M64.
 
 #### Header
 You can view and edit all meaningful M64 Header data.
