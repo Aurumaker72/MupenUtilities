@@ -33,6 +33,7 @@ namespace MupenUtils
             this.gp_More_Tips = new System.Windows.Forms.GroupBox();
             this.lbl_More_TipInfo = new System.Windows.Forms.Label();
             this.lbl_More_Tip = new System.Windows.Forms.Label();
+            this.btn_More_AllTips = new System.Windows.Forms.Button();
             this.btn_More_NewTip = new System.Windows.Forms.Button();
             this.gp_More_About = new System.Windows.Forms.GroupBox();
             this.btn_More_CheckUpdates = new System.Windows.Forms.Button();
@@ -43,7 +44,6 @@ namespace MupenUtils
             this.Llbl_More_Mupen = new System.Windows.Forms.LinkLabel();
             this.txt_More_Info = new System.Windows.Forms.TextBox();
             this.pb_More_Logo = new System.Windows.Forms.PictureBox();
-            this.btn_More_AllTips = new System.Windows.Forms.Button();
             this.gp_More_Tips.SuspendLayout();
             this.gp_More_About.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_More_Logo)).BeginInit();
@@ -83,6 +83,17 @@ namespace MupenUtils
             this.lbl_More_Tip.TabIndex = 0;
             this.lbl_More_Tip.Text = "Press the \"New Tip\" button or \"Tip\" text to show a tip";
             this.lbl_More_Tip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbl_More_Tip_MouseDown);
+            // 
+            // btn_More_AllTips
+            // 
+            this.btn_More_AllTips.Location = new System.Drawing.Point(368, 104);
+            this.btn_More_AllTips.Name = "btn_More_AllTips";
+            this.btn_More_AllTips.Size = new System.Drawing.Size(75, 31);
+            this.btn_More_AllTips.TabIndex = 0;
+            this.btn_More_AllTips.TabStop = false;
+            this.btn_More_AllTips.Text = "All Tips";
+            this.btn_More_AllTips.UseVisualStyleBackColor = true;
+            this.btn_More_AllTips.MouseDown += new System.Windows.Forms.MouseEventHandler(this.event_AllTips);
             // 
             // btn_More_NewTip
             // 
@@ -186,39 +197,28 @@ namespace MupenUtils
             // 
             // txt_More_Info
             // 
-            this.txt_More_Info.Location = new System.Drawing.Point(112, 32);
+            this.txt_More_Info.Location = new System.Drawing.Point(104, 32);
             this.txt_More_Info.Multiline = true;
             this.txt_More_Info.Name = "txt_More_Info";
             this.txt_More_Info.ReadOnly = true;
             this.txt_More_Info.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_More_Info.Size = new System.Drawing.Size(408, 80);
+            this.txt_More_Info.Size = new System.Drawing.Size(416, 80);
             this.txt_More_Info.TabIndex = 0;
             this.txt_More_Info.TabStop = false;
             this.txt_More_Info.Text = resources.GetString("txt_More_Info.Text");
             // 
             // pb_More_Logo
             // 
-            this.pb_More_Logo.BackgroundImage = global::MupenUtils.Properties.Resources.logo;
+            this.pb_More_Logo.BackgroundImage = global::MupenUtils.Properties.Resources.logoPng;
             this.pb_More_Logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pb_More_Logo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pb_More_Logo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_More_Logo.Location = new System.Drawing.Point(16, 32);
             this.pb_More_Logo.Name = "pb_More_Logo";
-            this.pb_More_Logo.Size = new System.Drawing.Size(88, 80);
+            this.pb_More_Logo.Size = new System.Drawing.Size(80, 80);
             this.pb_More_Logo.TabIndex = 0;
             this.pb_More_Logo.TabStop = false;
             this.pb_More_Logo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_More_Logo_MouseDown);
-            // 
-            // btn_More_AllTips
-            // 
-            this.btn_More_AllTips.Location = new System.Drawing.Point(368, 104);
-            this.btn_More_AllTips.Name = "btn_More_AllTips";
-            this.btn_More_AllTips.Size = new System.Drawing.Size(75, 31);
-            this.btn_More_AllTips.TabIndex = 0;
-            this.btn_More_AllTips.TabStop = false;
-            this.btn_More_AllTips.Text = "All Tips";
-            this.btn_More_AllTips.UseVisualStyleBackColor = true;
-            this.btn_More_AllTips.MouseDown += new System.Windows.Forms.MouseEventHandler(this.event_AllTips);
             // 
             // MoreForm
             // 

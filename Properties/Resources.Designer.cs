@@ -63,9 +63,9 @@ namespace MupenUtils.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo {
+        internal static System.Drawing.Bitmap logoPng {
             get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                object obj = ResourceManager.GetObject("logoPng", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
