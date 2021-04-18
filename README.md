@@ -1,4 +1,5 @@
 # MupenUtilities
+![Downloads](https://img.shields.io/github/downloads/Aurumaker72/MupenUtilities/total)<br>
 ![MupenUtilities](https://github.com/Aurumaker72/MupenUtilities/blob/main/logo.png "Mupen64 Utilities")   
 [**__Download Latest__**](https://github.com/Aurumaker72/MupenUtilities/zipball/main)<br>
 [Discord Server](https://discord.gg/KDdWP3rN3T)
