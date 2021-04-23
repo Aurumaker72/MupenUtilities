@@ -813,6 +813,7 @@ namespace MupenUtils
                 chk.Enabled = !readOnly;
                 }
             }
+            btn_Savem64.Enabled = !readOnly;
         }
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
