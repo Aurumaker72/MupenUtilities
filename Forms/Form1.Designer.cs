@@ -214,7 +214,6 @@ namespace MupenUtils
             // rb_STsel
             // 
             this.rb_STsel.AutoSize = true;
-            this.rb_STsel.Enabled = false;
             this.rb_STsel.Location = new System.Drawing.Point(65, 60);
             this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_STsel.Name = "rb_STsel";
@@ -367,10 +366,11 @@ namespace MupenUtils
             this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
             this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
             this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
+            this.pb_JoystickPic.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseWheel);
             // 
             // txt_Frame
             // 
-            this.txt_Frame.Location = new System.Drawing.Point(325, 330);
+            this.txt_Frame.Location = new System.Drawing.Point(165, 300);
             this.txt_Frame.Name = "txt_Frame";
             this.txt_Frame.Size = new System.Drawing.Size(35, 22);
             this.txt_Frame.TabIndex = 0;
@@ -467,6 +467,7 @@ namespace MupenUtils
             // 
             // btn_PlayPause
             // 
+            this.btn_PlayPause.Font = new System.Drawing.Font("Microsoft YaHei", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_PlayPause.Location = new System.Drawing.Point(149, 325);
             this.btn_PlayPause.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PlayPause.Name = "btn_PlayPause";
@@ -670,12 +671,12 @@ namespace MupenUtils
             // lbl_FrameSelected
             // 
             this.lbl_FrameSelected.AutoSize = true;
-            this.lbl_FrameSelected.Location = new System.Drawing.Point(139, 295);
+            this.lbl_FrameSelected.Location = new System.Drawing.Point(116, 302);
             this.lbl_FrameSelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_FrameSelected.Name = "lbl_FrameSelected";
-            this.lbl_FrameSelected.Size = new System.Drawing.Size(64, 17);
+            this.lbl_FrameSelected.Size = new System.Drawing.Size(48, 17);
             this.lbl_FrameSelected.TabIndex = 0;
-            this.lbl_FrameSelected.Text = "Frame: 0";
+            this.lbl_FrameSelected.Text = "Frame";
             // 
             // btn_FrameFront2
             // 

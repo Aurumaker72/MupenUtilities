@@ -27,6 +27,11 @@ namespace MupenUtils
         public const byte UPDATE_EQUAL = 2;
         public const byte UPDATE_UNKNOWN = 255;
 
+        public const string URL_MUPENUTILITIES_REPOSITORY = "https://github.com/Aurumaker72/MupenUtilities";
+        public const string URL_MUPEN_REPOSITORY = "https://github.com/mkdasher/mupen64-rr-lua-/";
+        public const string URL_MUPEN_TASVIDEOS = "http://tasvideos.org/EmulatorResources/Mupen.html";
+        public const string URL_N64_RESOURCES = "https://www.reddit.com/r/SM64TAS/comments/9ek1o5/resources_master_thread/";
+        
         Thread m64load;
         MoreForm moreForm = new MoreForm();
 
@@ -134,6 +139,8 @@ namespace MupenUtils
             JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
             this.KeyPreview = true;
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
+            txt_Path.Text = Properties.Settings.Default.LastPath;
+            Debug.WriteLineIf(!ExtensionMethods.ValidPath(Properties.Settings.Default.LastPath), "Settings: Invalid path!??!!");
             UpdateReadOnly();
             EnableM64View(false,true);
         }
@@ -222,7 +229,7 @@ namespace MupenUtils
             btn_PlayDirection.Invoke((MethodInvoker)(() =>  btn_PlayDirection.Enabled = flag));
             btn_PlayPause.Invoke((MethodInvoker)(() =>  btn_PlayPause.Enabled = flag));
             tr_MovieScrub.Invoke((MethodInvoker)(() =>  tr_MovieScrub.Enabled = flag));
-            txt_Frame.Invoke((MethodInvoker)(() =>  txt_Frame.ReadOnly = flag));
+            txt_Frame.Invoke((MethodInvoker)(() =>  txt_Frame.ReadOnly = !flag));
             this.Invoke((MethodInvoker)(() => this.Size = s));
             
         }
@@ -241,9 +248,10 @@ namespace MupenUtils
                 {
                     br.Write(inputList[i]);
                 }
-                fs.Close(); br.Flush(); br.Close();
+                br.Flush(); br.Close(); fs.Close();
             }
         }
+
         void ErrorM64(){
           ShowStatus_ThreadSafe(M64_FAILED_TEXT);
           // set status
@@ -319,7 +327,7 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
             Debug.WriteLine("VI/s:" + VIs);
-            frames = VIs;
+            frames = VIs; // Caution!!! misleading name. for some reason VIs in this case mean frames?!?!
             int findx = 0;
             while(findx <= frames)
             {
@@ -364,7 +372,9 @@ namespace MupenUtils
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = inputList.Count));
+
+            txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
 
             EnableM64View_ThreadSafe(true);
 
@@ -372,6 +382,7 @@ namespace MupenUtils
             {
                 MessageBox.Show("The movie has more than one controller enabled. The application might behave unexpectedly.", "M64 too many controllers!");
             }
+
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
         }
@@ -379,7 +390,14 @@ namespace MupenUtils
         void WriteM64()
         {
             if (!FileLoaded) return;
-            SavePath = Path + "-modified.m64";
+            object[] arrres = UIHelper.ShowFileDialog(true, true);
+            if ((bool)arrres[1])
+                SavePath = (string)arrres[0];
+            else
+            {
+                MessageBox.Show("Something went wrong while selecting M64 save path.","Invalid file selection?");
+                return;
+            }
             File.Delete(SavePath);
             FileStream fs = File.Open(SavePath, FileMode.OpenOrCreate);
             BinaryWriter br = new BinaryWriter(fs);
@@ -468,26 +486,14 @@ namespace MupenUtils
         #endregion
 
         #region Input & Frames
-
-        // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
         
-        int GetChkboxes()
+        void WriteInput()
         {
-            int value = 0;
-            for (int i = 0; i < controllerButtonsChk.Length; i++)
-            {
-                if (controllerButtonsChk[i].Checked)
-                {
-                    value |= (int)Math.Pow(2, i);
-                }
-            }
-            return value;
-        }
-        void SetInput(int frame)
-        {
+            // Write input data at frame n and set visuals
+
             if (!FileLoaded) 
                 return;
-            int value = 0xCC;
+            int value;
             try{
                 if (Sticky)
                     value = lastValue;
@@ -504,7 +510,6 @@ namespace MupenUtils
 
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
-                Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | BUTTON: " + controllerButtonsChk[i].Text.ToString() + " | Checked: " + controllerButtonsChk[i].Checked.ToString());
                 ExtensionMethods.SetBit(ref value, controllerButtonsChk[i].Checked, i);
             }
             byte[] joydata = BitConverter.GetBytes(value);
@@ -514,11 +519,12 @@ namespace MupenUtils
             value = BitConverter.ToInt32(joydata,0);
             lastValue = value;
             inputList[frame] = value;
-            Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
-            //GetInput(inputList[frame]); // also update visuals!
         }
-        void GetInput(int value)
+
+        void ReadInput(int value)
         {
+            // Read input data at frame n and set visuals
+
             int numbuttons = controllerButtonsChk.Length;
             for (int i = 0; i < numbuttons; i++)
             {
@@ -532,63 +538,58 @@ namespace MupenUtils
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
 
-            SetInput(frame);
+            WriteInput();
+
             UpdateJoystickValues(RelativeToAbsolute(new Point(joystickX,joystickY)), false);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
 
-        bool checkAllowedStep(int stepAmount)
+        /*
+         Unreliable coding...
+         Length of input list might not be exactly the frames specified in m64 header if m64 is corrupted!
+         */
+        bool stepAllowed(int stepAmount)
         {
-            if(frame > frames || frame < 0)
-            {
-                if (!loopInputs)
-                {
-                    if (frame > frames)
-                        frame = (int)frames;
-                    else if (frame < 0)
-                        frame = 0;
-                }
-                else
-                {
-                    if (frame > frames)
-                    {
-                        frame = 0;
-                    }
-                    else if (frame < 0)
-                    {
-                        frame = (int)frames - 1;
-                    }
-                }
-                return false;
-            }
-            return true;
+            int resultFrame = frame + stepAmount;
+            return (resultFrame <= inputList.Count && resultFrame >= 0);
         }
-
+        bool movieAtEnd()
+        {
+            return frame == inputList.Count;
+        }
+        bool movieAtStart()
+        {
+            return frame == 0;
+        }
+        void loopMovie()
+        {
+            if (loopInputs)
+            {
+                if (movieAtEnd()) frame = 1;
+                if (movieAtStart()) frame = inputList.Count - 1;
+            }
+            else
+                frame = ExtensionMethods.Clamp(frame, 0, inputList.Count-1);
+        }
         void StepFrame(int stepAmount)
         {
-            //frame += stepAmount;
-            //if (!checkAllowedStep(stepAmount)) return;
-            //lbl_FrameSelected.Text = "Frame " + frame;
-            //lbl_FrameSelected.ForeColor = Color.Black;
-            //SetInput(inputList[frame]);
-
-
             SetFrame(frame + stepAmount);
         }
+
         void SetFrame(int targetframe)
         {
+            // Don't set frame first, wait until target frame is validated
+            if (!stepAllowed(targetframe-frame)) return; // If frame is out of bounds
+            
             frame = targetframe;
-            if (!checkAllowedStep(targetframe)) return;
-            if(frame >= inputList.Count)
-            {
-               frame = inputList.Count;
-               stepFrameTimer.Enabled = false;
-               return;
-            }
-            GetInput(inputList[frame]);
+
+            loopMovie(); // loop movie if needed
+
+            ReadInput(inputList[frame]);
             UpdateFrameControlUI();
         }
+
         #endregion
 
         #region Event Handlers
@@ -615,7 +616,7 @@ namespace MupenUtils
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
             ShowStatus("Selecting movie...",st_Status1);
-            object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked);
+            object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked,false);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
             {
                 ShowStatus("Cancelled movie selection",st_Status1);
@@ -691,13 +692,10 @@ namespace MupenUtils
         }
         void UpdateFrameControlUI()
         {
-            lbl_FrameSelected.Text = "Frame " + frame;
-            lbl_FrameSelected.ForeColor = Color.Black;
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
 
             txt_Frame.Text = frame.ToString();
-            if(frame <= tr_MovieScrub.Maximum && frame >= tr_MovieScrub.Minimum)  
             tr_MovieScrub.Value = frame;
         }
         void AdvanceInputAuto(object obj, EventArgs e)
@@ -772,7 +770,6 @@ namespace MupenUtils
             if(e.KeyCode == Keys.Enter) ParseXYTextbox();
             if (e.KeyCode == Keys.Escape) this.ActiveControl = null;
         }
-
         private void txt_joyY_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter) ParseXYTextbox();
@@ -816,6 +813,7 @@ namespace MupenUtils
                 chk.Enabled = !readOnly;
                 }
             }
+            btn_Savem64.Enabled = !readOnly;
         }
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
@@ -842,7 +840,6 @@ namespace MupenUtils
         {
             return new Point(rel.X+82,rel.Y+72);
         }
-        
         private void InputChk_Changed(object sender, MouseEventArgs e)
         {
             // This fires when any input checkbox has been changed
@@ -850,9 +847,11 @@ namespace MupenUtils
             return;
             
             UpdateFrameControlUI();
-            SetInput(frame);
+            WriteInput();
         }
 
+        // UNUSED:
+        // this is a cool QoL feature but causes inaccuracy
         void SnapJoystick()
         {
             if (JOY_Rel.X < 5 && JOY_Rel.X > -5)
@@ -867,32 +866,36 @@ namespace MupenUtils
             }
         }
 
-        void UpdateJoystickValues(Point e, bool user)
-        {
-            JOY_Abs.X = ExtensionMethods.Clamp(e.X, JOY_clampDif/2, pb_JoystickPic.Width - JOY_clampDif);
-            JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif/2, pb_JoystickPic.Height - JOY_clampDif);
+        void InternalUpdateJoystickValues(Point e, bool user, bool adjust){
+            JOY_Abs.X = ExtensionMethods.Clamp(e.X, JOY_clampDif / 2, pb_JoystickPic.Width - JOY_clampDif);
+            JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif / 2, pb_JoystickPic.Height - JOY_clampDif);
             JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -127, 127);
             JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
-            sbyte relYadj = (sbyte)-JOY_Rel.Y;
-            ExtensionMethods.AdjustY(ref relYadj);
-            JOY_Rel.Y = relYadj;
-            if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
-            if (user && !readOnly) SetInput(frame);
+
+            if (adjust)
+            {
+                sbyte relYadj = (sbyte)-JOY_Rel.Y;
+                ExtensionMethods.AdjustY(ref relYadj);
+                JOY_Rel.Y = relYadj;
+            }
+            if (user && !readOnly) WriteInput();
 
             txt_joyX.Text = JOY_Rel.X.ToString();
-            txt_joyY.Text = relYadj.ToString();
+            txt_joyY.Text = JOY_Rel.Y.ToString();
             pb_JoystickPic.Refresh();
+        }
+
+        void UpdateJoystickValues(Point e, bool user)
+        {
+            InternalUpdateJoystickValues(e, user, true);
         }
 
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
 
-
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
-        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (JOY_mouseDown) UpdateJoystickValues(e.Location, true);
-        }
-
+        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e) {if (JOY_mouseDown) UpdateJoystickValues(e.Location, true);}
+        private void pb_JoystickPic_MouseWheel(object sender, MouseEventArgs e) => InternalUpdateJoystickValues(RelativeToAbsolute(new Point(JOY_Rel.X, JOY_Rel.Y - Math.Sign(e.Delta))), false, false);
+        
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
             JOY_followMouse = e.Button != MouseButtons.Right || !JOY_followMouse;

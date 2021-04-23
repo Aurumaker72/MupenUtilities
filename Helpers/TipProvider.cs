@@ -15,7 +15,13 @@ namespace MupenUtils.Helpers
             "\'Dump Inputs\' will dump all input data to a file",
             "Try pressing \'Page up\' and \'Page down\' on the trackbar",
             "Check for updates with the button below",
-            "You are on version " + MainForm.PROGRAM_VERSION
+            "You are on version " + MainForm.PROGRAM_VERSION,
+            "Scrolling on the joystick will move it",
+            "You can\'t write letters in some textboxes",
+            "Clicking on the Mupen Utilities logo will open the repo in your browser",
+            "If the Mupen Utilities window turns gray\nand all controls are hidden your input file is corrupted",
+            "Press this text to copy the current tip",
+            "Press \'All tips\' to show all tips"
         };
         public static string GetRandomTip()
         {
