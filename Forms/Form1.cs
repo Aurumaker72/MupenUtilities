@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -370,7 +371,7 @@ namespace MupenUtils
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
 
 
-            this.Invoke(new Action(() => PreloadTASStudio()));
+            
             // hack to get it on main thread
             EnableM64View_ThreadSafe(true);
 
@@ -381,6 +382,7 @@ namespace MupenUtils
             }
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
+            this.Invoke(new Action(() => PreloadTASStudio()));
         }
 
         void WriteM64()
@@ -486,6 +488,7 @@ namespace MupenUtils
             dgv_Main.Refresh();
 
 
+            dgv_Main.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(dgv_Main, true, null);
             dgv_Main.ColumnCount = 18; // 16 buttons + joystick X Y
             dgv_Main.ColumnHeadersVisible = true;
 
@@ -496,19 +499,18 @@ namespace MupenUtils
                 dgv_Main.Columns[i].Name = inputStructNames[i];
                 dgv_Main.Columns[i].Width = 45; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
             }
-            
+
             
             // populate with input data (this is cringe and painful and slow i dont care)
-            for (int i = 0; i < frames; i++)
+            for (int i = 0; i < inputList.Count; i++)
             {
                 // for each frame
                 for (int j = 0; j < inputStructNames.Length; j++)
                 {
                     // for each button
                     dgv_Main.Rows.Add();
-                    dgv_Main.Rows[i].Cells[j].Value = inputList[j].ToString("X"); // wip and broken lmao... for now just raw data
-                }
-                
+                    dgv_Main.Rows[i].Cells[j].Value = inputList[i].ToString(); // wip and broken lmao... for now just raw data
+                } 
             }
         }
 
