@@ -96,5 +96,6 @@ namespace MupenUtils
 	        }
             return code;
         }
+
     }
 }

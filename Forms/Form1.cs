@@ -15,7 +15,7 @@ namespace MupenUtils
 
         public const string PROGRAM_VERSION = "1.1.1";
         public const string PROGRAM_NAME = "Mupen Utilities";
-         
+
         public const string M64_LOADED_TEXT = "M64 Loaded";
         public const string M64_LOADING_TEXT = "M64 Loading";
         public const string M64_FAILED_TEXT = "M64 Invalid";
@@ -27,6 +27,9 @@ namespace MupenUtils
         public const byte UPDATE_EQUAL = 2;
         public const byte UPDATE_UNKNOWN = 255;
 
+        // [] means reserved, <^>v is direction
+        public string[] inputStructNames = { "Right", "Left", "Down", "Up", "Start","Z","B","A","C>","C<","Cv","C^","R","L","[1]","[2]","X","Y"};
+        
         Thread m64load;
         MoreForm moreForm = new MoreForm();
 
@@ -89,7 +92,7 @@ namespace MupenUtils
             InitUI();
         }
 
-       
+
         void InitController()
         {
             controllerButtonsChk = new CheckBox[] {
@@ -122,7 +125,7 @@ namespace MupenUtils
             JOY_middle.X = pb_JoystickPic.Width / 2;
             JOY_middle.Y = pb_JoystickPic.Height / 2;
         }
-        
+
         void InitUI()
         {
             st_Status1.Text = st_Status2.Text = "";
@@ -135,7 +138,7 @@ namespace MupenUtils
             this.KeyPreview = true;
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
             UpdateReadOnly();
-            EnableM64View(false,true);
+            EnableM64View(false, true);
         }
 
         #endregion
@@ -152,9 +155,9 @@ namespace MupenUtils
             ctl.Text = msg;
             new Thread(() =>
                {
-               Thread.Sleep(1000);
-               if(ctl.GetCurrentParent()!=null)
-               ctl.GetCurrentParent().Invoke((MethodInvoker)(() => ctl.Text = string.Empty));
+                   Thread.Sleep(1000);
+                   if (ctl.GetCurrentParent() != null)
+                       ctl.GetCurrentParent().Invoke((MethodInvoker)(() => ctl.Text = string.Empty));
                }).Start();
         }
 
@@ -164,8 +167,8 @@ namespace MupenUtils
             ctrl.ForeColor = Color.Red;
             new Thread(() =>
                {
-               Thread.Sleep(1000);
-               ctrl.ForeColor = tempcolor;
+                   Thread.Sleep(1000);
+                   ctrl.ForeColor = tempcolor;
                }).Start();
         }
 
@@ -173,10 +176,10 @@ namespace MupenUtils
         {
             Size s;
             ExpandedMenu = flag;
-            if(change) FileLoaded = flag;
+            if (change) FileLoaded = flag;
 
-            
-            s = flag ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
+
+            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_Loop.Enabled = FileLoaded;
@@ -187,7 +190,7 @@ namespace MupenUtils
             btn_PlayDirection.Enabled = FileLoaded;
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
-            txt_Frame.Enabled = FileLoaded; 
+            txt_Frame.Enabled = FileLoaded;
             this.SuspendLayout();
             this.Size = s;
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
@@ -208,23 +211,23 @@ namespace MupenUtils
             Size s;
             FileLoaded = flag;
             gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
-            s = flag ? new Size(1005, 580) : new Size(360 + btn_Override.Width + 20, 150);
+            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + 20, 150);
             this.Invoke((MethodInvoker)(() => this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
             gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill));
             st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = flag));
             this.Invoke((MethodInvoker)(() => this.MaximizeBox = flag));
             if (!flag) this.Invoke((MethodInvoker)(() => this.WindowState = FormWindowState.Normal));
-            btn_FrameBack.Invoke((MethodInvoker)(() =>  btn_FrameBack.Enabled = flag));
-            btn_FrameBack2.Invoke((MethodInvoker)(() =>  btn_FrameBack2.Enabled = flag));
-            btn_FrameFront.Invoke((MethodInvoker)(() =>  btn_FrameFront.Enabled = flag));
-            btn_Loop.Invoke((MethodInvoker)(() =>  btn_Loop.Enabled = flag));
-            btn_FrameFront2.Invoke((MethodInvoker)(() =>  btn_FrameFront2.Enabled = flag));
-            btn_PlayDirection.Invoke((MethodInvoker)(() =>  btn_PlayDirection.Enabled = flag));
-            btn_PlayPause.Invoke((MethodInvoker)(() =>  btn_PlayPause.Enabled = flag));
-            tr_MovieScrub.Invoke((MethodInvoker)(() =>  tr_MovieScrub.Enabled = flag));
-            txt_Frame.Invoke((MethodInvoker)(() =>  txt_Frame.ReadOnly = flag));
+            btn_FrameBack.Invoke((MethodInvoker)(() => btn_FrameBack.Enabled = flag));
+            btn_FrameBack2.Invoke((MethodInvoker)(() => btn_FrameBack2.Enabled = flag));
+            btn_FrameFront.Invoke((MethodInvoker)(() => btn_FrameFront.Enabled = flag));
+            btn_Loop.Invoke((MethodInvoker)(() => btn_Loop.Enabled = flag));
+            btn_FrameFront2.Invoke((MethodInvoker)(() => btn_FrameFront2.Enabled = flag));
+            btn_PlayDirection.Invoke((MethodInvoker)(() => btn_PlayDirection.Enabled = flag));
+            btn_PlayPause.Invoke((MethodInvoker)(() => btn_PlayPause.Enabled = flag));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = flag));
+            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.ReadOnly = flag));
             this.Invoke((MethodInvoker)(() => this.Size = s));
-            
+
         }
 
         #endregion
@@ -236,7 +239,7 @@ namespace MupenUtils
             BinaryWriter br = new BinaryWriter(fs);
             if (!plain)
             {
-                
+
                 for (int i = 0; i < SAVE_inputList.Count / 4; i++)
                 {
                     br.Write(inputList[i]);
@@ -244,21 +247,21 @@ namespace MupenUtils
                 fs.Close(); br.Flush(); br.Close();
             }
         }
-        void ErrorM64(){
-          ShowStatus_ThreadSafe(M64_FAILED_TEXT);
-          // set status
+        void ErrorM64() {
+            ShowStatus_ThreadSafe(M64_FAILED_TEXT);
+            // set status
 
-          txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
-          // clear path textbox
+            txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
+            // clear path textbox
 
-          this.Invoke((MethodInvoker)(() => this.ActiveControl = null));
-          // clear active control
+            this.Invoke((MethodInvoker)(() => this.ActiveControl = null));
+            // clear active control
 
 
-          EnableM64View_ThreadSafe(false);
-          // set m64 style
+            EnableM64View_ThreadSafe(false);
+            // set m64 style
 
-          m64load.Abort(); // try kill thread
+            m64load.Abort(); // try kill thread
         }
         void ReadM64()
         {
@@ -272,8 +275,8 @@ namespace MupenUtils
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
             FileStream fs;
-            try{fs = File.Open(Path, FileMode.Open);}
-            catch{ErrorM64();return; }
+            try { fs = File.Open(Path, FileMode.Open); }
+            catch { ErrorM64(); return; }
             BinaryReader br = new BinaryReader(fs);
 
 
@@ -321,7 +324,7 @@ namespace MupenUtils
             Debug.WriteLine("VI/s:" + VIs);
             frames = VIs;
             int findx = 0;
-            while(findx <= frames)
+            while (findx <= frames)
             {
                 if (br.BaseStream.Position + 4 > fs.Length) {
                     findx++;
@@ -366,9 +369,13 @@ namespace MupenUtils
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
 
+
+            this.Invoke(new Action(() => PreloadTASStudio()));
+            // hack to get it on main thread
             EnableM64View_ThreadSafe(true);
 
-            if(Controllers > 1)
+
+            if (Controllers > 1)
             {
                 MessageBox.Show("The movie has more than one controller enabled. The application might behave unexpectedly.", "M64 too many controllers!");
             }
@@ -385,7 +392,7 @@ namespace MupenUtils
             BinaryWriter br = new BinaryWriter(fs);
             ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
-            Array.Clear(zeroar1, 0, zeroar1.Length); 
+            Array.Clear(zeroar1, 0, zeroar1.Length);
             Array.Clear(zeroar2, 0, zeroar2.Length);
 
             UID = Int32.Parse(txt_misc_UID.Text);
@@ -412,65 +419,101 @@ namespace MupenUtils
             br.Write(StartType); // UInt16 - Movie start type
             br.Write((Int16)0); // 2 bytes - RESERVED
             br.Write(ControllerFlags); // UInt32 - Controller Flags
-            br.Write(zeroar1,0,zeroar1.Length); // 160 bytes - RESERVED
+            br.Write(zeroar1, 0, zeroar1.Length); // 160 bytes - RESERVED
             byte[] romname = new byte[32];
             romname = ASCIIEncoding.ASCII.GetBytes(RomName);
             Array.Resize(ref romname, 32);
             br.Write(romname, 0, 32);
             br.Write(Crc32);
             br.Write(RomCountry);
-            br.Write(zeroar2,0,zeroar2.Length); // 56 bytes - RESERVED
+            br.Write(zeroar2, 0, zeroar2.Length); // 56 bytes - RESERVED
 
-            
+
             byte[] gfx = new byte[64];
             byte[] audio = new byte[64];
             byte[] input = new byte[64];
             byte[] rsp = new byte[64];
             byte[] author = new byte[222];
             byte[] desc = new byte[256];
-            
-            gfx =    ASCIIEncoding.ASCII.GetBytes(VideoPlugin);
-            audio =  ASCIIEncoding.ASCII.GetBytes(AudioPlugin);
-            input =  ASCIIEncoding.ASCII.GetBytes(InputPlugin);
-            rsp =    ASCIIEncoding.ASCII.GetBytes(RSPPlugin);
+
+            gfx = ASCIIEncoding.ASCII.GetBytes(VideoPlugin);
+            audio = ASCIIEncoding.ASCII.GetBytes(AudioPlugin);
+            input = ASCIIEncoding.ASCII.GetBytes(InputPlugin);
+            rsp = ASCIIEncoding.ASCII.GetBytes(RSPPlugin);
             author = ASCIIEncoding.ASCII.GetBytes(Author);
-            desc =   ASCIIEncoding.ASCII.GetBytes(Description);
-            
+            desc = ASCIIEncoding.ASCII.GetBytes(Description);
+
             Array.Resize(ref gfx, 64);
             Array.Resize(ref audio, 64);
             Array.Resize(ref input, 64);
             Array.Resize(ref rsp, 64);
             Array.Resize(ref author, 222);
             Array.Resize(ref desc, 256);
-            
-            br.Write(gfx,0,64);
-            br.Write(audio,0,64);
-            br.Write(input,0,64);
-            br.Write(rsp,0,64);
-            br.Write(author,0,222);
-            br.Write(desc,0,256);
-            for (int i = 0; i < SAVE_inputList.Count/4; i++)
+
+            br.Write(gfx, 0, 64);
+            br.Write(audio, 0, 64);
+            br.Write(input, 0, 64);
+            br.Write(rsp, 0, 64);
+            br.Write(author, 0, 222);
+            br.Write(desc, 0, 256);
+            for (int i = 0; i < SAVE_inputList.Count / 4; i++)
             {
-            br.Write(inputList[i]);
+                br.Write(inputList[i]);
             }
             br.Flush();
             br.Close();
             ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
         }
 
-        
+
 
         void LoadST()
         {
             // WIP...
-            ShowStatus("ST Loading not implemented yet",st_Status1);
+            ShowStatus("ST Loading not implemented yet", st_Status1);
         }
         #endregion
 
         #region Input & Frames
 
         // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
-        
+
+        void PreloadTASStudio()
+        {
+            // nuke data
+            dgv_Main.Rows.Clear();
+            dgv_Main.Columns.Clear();
+            dgv_Main.Refresh();
+
+
+            dgv_Main.ColumnCount = 18; // 16 buttons + joystick X Y
+            dgv_Main.ColumnHeadersVisible = true;
+
+            DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
+
+            for (byte i = 0; i < inputStructNames.Length; i++)
+            {
+                dgv_Main.Columns[i].Name = inputStructNames[i];
+                dgv_Main.Columns[i].Width = 45; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
+            }
+            
+            
+            // populate with input data (this is cringe and painful and slow i dont care)
+            for (int i = 0; i < frames; i++)
+            {
+                // for each frame
+                for (int j = 0; j < inputStructNames.Length; j++)
+                {
+                    // for each button
+                    dgv_Main.Rows.Add();
+                    dgv_Main.Rows[i].Cells[j].Value = inputList[j].ToString("X"); // wip and broken lmao... for now just raw data
+                }
+                
+            }
+        }
+
+    
+
         int GetChkboxes()
         {
             int value = 0;
