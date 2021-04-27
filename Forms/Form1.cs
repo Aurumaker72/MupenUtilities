@@ -781,6 +781,7 @@ namespace MupenUtils
 
         void UpdateReadOnly()
         {
+            // sets read only state and updates controls
             readOnly = chk_readonly.Checked;
             chk_readonly.Text = readOnly ? "Readonly" : "Readwrite";
             if(!readOnly) ShowStatus("Read-Write mode: All changes will be flushed to a new file upon pressing \'Save File\'", st_Status1);
