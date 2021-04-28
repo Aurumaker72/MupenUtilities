@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MupenUtils.Networking;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -14,7 +15,7 @@ namespace MupenUtils
     {
         #region Vars
 
-        public const string PROGRAM_VERSION = "1.1.1";
+        public const string PROGRAM_VERSION = "1.2";
         public const string PROGRAM_NAME = "Mupen Utilities";
 
         public const string M64_LOADED_TEXT = "M64 Loaded";
@@ -82,6 +83,8 @@ namespace MupenUtils
         bool JOY_mouseDown, JOY_followMouse;
         const int JOY_clampDif = 4;
 
+        UpdateNotifier updateNotifier = new UpdateNotifier();
+
         #endregion
 
         #region Setup
@@ -91,6 +94,9 @@ namespace MupenUtils
             InitializeComponent();
             InitController();
             InitUI();
+            // check for updates
+            if (updateNotifier.CheckForInternetConnection())
+                updateNotifier.CheckForUpdates(UPDATE_UNKNOWN, true);
         }
 
 
@@ -149,17 +155,6 @@ namespace MupenUtils
         void ShowTipsForm()
         {
             moreForm.ShowDialog();
-        }
-
-        void ShowStatus(string msg, ToolStripStatusLabel ctl)
-        {
-            ctl.Text = msg;
-            new Thread(() =>
-               {
-                   Thread.Sleep(1000);
-                   if (ctl.GetCurrentParent() != null)
-                       ctl.GetCurrentParent().Invoke((MethodInvoker)(() => ctl.Text = string.Empty));
-               }).Start();
         }
 
         void RedControl(Control ctrl)
@@ -392,7 +387,7 @@ namespace MupenUtils
             File.Delete(SavePath);
             FileStream fs = File.Open(SavePath, FileMode.OpenOrCreate);
             BinaryWriter br = new BinaryWriter(fs);
-            ShowStatus("Saving M64...", st_Status1);
+            //ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
             Array.Clear(zeroar1, 0, zeroar1.Length);
             Array.Clear(zeroar2, 0, zeroar2.Length);
@@ -442,8 +437,8 @@ namespace MupenUtils
             audio = ASCIIEncoding.ASCII.GetBytes(AudioPlugin);
             input = ASCIIEncoding.ASCII.GetBytes(InputPlugin);
             rsp = ASCIIEncoding.ASCII.GetBytes(RSPPlugin);
-            author = ASCIIEncoding.ASCII.GetBytes(Author);
-            desc = ASCIIEncoding.ASCII.GetBytes(Description);
+            author = ASCIIEncoding.UTF8.GetBytes(Author);
+            desc = ASCIIEncoding.UTF8.GetBytes(Description);
 
             Array.Resize(ref gfx, 64);
             Array.Resize(ref audio, 64);
@@ -464,7 +459,7 @@ namespace MupenUtils
             }
             br.Flush();
             br.Close();
-            ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
+            //ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
         }
 
 
@@ -472,7 +467,7 @@ namespace MupenUtils
         void LoadST()
         {
             // WIP...
-            ShowStatus("ST Loading not implemented yet", st_Status1);
+            //ShowStatus("ST Loading not implemented yet", st_Status1);
         }
         #endregion
 
@@ -659,11 +654,11 @@ namespace MupenUtils
         }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
-            ShowStatus("Selecting movie...",st_Status1);
+            //ShowStatus("Selecting movie...",st_Status1);
             object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
             {
-                ShowStatus("Cancelled movie selection",st_Status1);
+                //ShowStatus("Cancelled movie selection",st_Status1);
                 return;
             }
 
@@ -685,7 +680,7 @@ namespace MupenUtils
             Path = Properties.Settings.Default.LastPath;
             if (!ExtensionMethods.ValidPath(Path))
             {
-                ShowStatus(M64_FAILED_TEXT, st_Status1);
+                //ShowStatus(M64_FAILED_TEXT, st_Status1);
                 return;
             }
             if (rb_M64sel.Checked && ExtensionMethods.ValidPath(Path)){
@@ -831,8 +826,8 @@ namespace MupenUtils
         {
             readOnly = chk_readonly.Checked;
             chk_readonly.Text = readOnly ? "Readonly" : "Readwrite";
-            if(!readOnly) ShowStatus("Read-Write mode: All changes will be flushed to a new file upon pressing \'Save File\'", st_Status1);
-            else ShowStatus("Read-only mode: You can only view M64 data", st_Status1);
+            //if(!readOnly) ShowStatus("Read-Write mode: All changes will be flushed to a new file upon pressing \'Save File\'", st_Status1);
+            //else ShowStatus("Read-only mode: You can only view M64 data", st_Status1);
             // Groupboxes + Child controls
             foreach (Control ctl in gp_User.Controls)
             {

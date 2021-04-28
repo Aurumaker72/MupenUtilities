@@ -45,15 +45,7 @@ namespace MupenUtils
 
         private void btn_More_CheckUpdates_Click(object sender, EventArgs e)
         {
-            if (versionResult == MainForm.UPDATE_UNKNOWN)
-            versionResult = updateNotifier.GetGithubVersion();
-            if (versionResult == MainForm.UPDATE_CLIENT_AHEAD || versionResult == MainForm.UPDATE_EQUAL)
-            {
-                MessageBox.Show("You are up to date!",MainForm.PROGRAM_NAME + " - Up to date");
-            }else if (versionResult == MainForm.UPDATE_CLIENT_OUTDATED && MessageBox.Show("Your " + MainForm.PROGRAM_NAME + " is outdated. Do you want to download the latest release?", MainForm.PROGRAM_NAME + " - Outdated!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            {
-                Process.Start("https://github.com/Aurumaker72/MupenUtilities/zipball/main");
-            }
+            updateNotifier.CheckForUpdates(versionResult, false);
         }
 
         private void event_NewTip(object sender, MouseEventArgs e)
