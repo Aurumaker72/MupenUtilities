@@ -143,7 +143,9 @@ namespace MupenUtils
             gp_Path.Dock = DockStyle.Fill;
             JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
             this.KeyPreview = true;
-            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
+            string bitarh;
+            bitarh = IntPtr.Size == 4 ? "(32 bit)" : "(64 bit)";
+            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
             UpdateReadOnly();
             EnableM64View(false, true);
         }
