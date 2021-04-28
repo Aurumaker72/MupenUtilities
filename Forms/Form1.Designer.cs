@@ -46,6 +46,8 @@ namespace MupenUtils
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.tr_MovieScrub = new System.Windows.Forms.TrackBar();
             this.gp_input = new System.Windows.Forms.GroupBox();
+            this.gp_TASStudio = new System.Windows.Forms.GroupBox();
+            this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.btn_Input_Debug = new System.Windows.Forms.Button();
             this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.txt_Frame = new System.Windows.Forms.TextBox();
@@ -119,21 +121,19 @@ namespace MupenUtils
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
-            this.gp_TASStudio = new System.Windows.Forms.GroupBox();
-            this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
             this.gp_input.SuspendLayout();
+            this.gp_TASStudio.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_M64_misc.SuspendLayout();
             this.ctx_Input_Debug.SuspendLayout();
-            this.gp_TASStudio.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -242,10 +242,10 @@ namespace MupenUtils
             // 
             // btn_LoadLatest
             // 
-            this.btn_LoadLatest.Location = new System.Drawing.Point(210, 45);
+            this.btn_LoadLatest.Location = new System.Drawing.Point(208, 45);
             this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
             this.btn_LoadLatest.Name = "btn_LoadLatest";
-            this.btn_LoadLatest.Size = new System.Drawing.Size(56, 28);
+            this.btn_LoadLatest.Size = new System.Drawing.Size(62, 28);
             this.btn_LoadLatest.TabIndex = 0;
             this.btn_LoadLatest.TabStop = false;
             this.btn_LoadLatest.Text = "Last";
@@ -348,6 +348,29 @@ namespace MupenUtils
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input - Controller 1";
+            // 
+            // gp_TASStudio
+            // 
+            this.gp_TASStudio.Controls.Add(this.dgv_Main);
+            this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gp_TASStudio.Location = new System.Drawing.Point(370, 19);
+            this.gp_TASStudio.Name = "gp_TASStudio";
+            this.gp_TASStudio.Size = new System.Drawing.Size(286, 341);
+            this.gp_TASStudio.TabIndex = 0;
+            this.gp_TASStudio.TabStop = false;
+            this.gp_TASStudio.Text = "TAS Studio";
+            // 
+            // dgv_Main
+            // 
+            this.dgv_Main.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dgv_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Main.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_Main.Location = new System.Drawing.Point(3, 18);
+            this.dgv_Main.Name = "dgv_Main";
+            this.dgv_Main.RowHeadersWidth = 51;
+            this.dgv_Main.RowTemplate.Height = 24;
+            this.dgv_Main.Size = new System.Drawing.Size(280, 320);
+            this.dgv_Main.TabIndex = 0;
             // 
             // btn_Input_Debug
             // 
@@ -1180,29 +1203,6 @@ namespace MupenUtils
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
-            // gp_TASStudio
-            // 
-            this.gp_TASStudio.Controls.Add(this.dgv_Main);
-            this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_TASStudio.Location = new System.Drawing.Point(370, 19);
-            this.gp_TASStudio.Name = "gp_TASStudio";
-            this.gp_TASStudio.Size = new System.Drawing.Size(286, 341);
-            this.gp_TASStudio.TabIndex = 0;
-            this.gp_TASStudio.TabStop = false;
-            this.gp_TASStudio.Text = "TAS Studio";
-            // 
-            // dgv_Main
-            // 
-            this.dgv_Main.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dgv_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_Main.Location = new System.Drawing.Point(3, 18);
-            this.dgv_Main.Name = "dgv_Main";
-            this.dgv_Main.RowHeadersWidth = 51;
-            this.dgv_Main.RowTemplate.Height = 24;
-            this.dgv_Main.Size = new System.Drawing.Size(280, 320);
-            this.dgv_Main.TabIndex = 0;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1229,6 +1229,8 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
+            this.gp_TASStudio.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.gp_User.ResumeLayout(false);
             this.gp_User.PerformLayout();
@@ -1239,8 +1241,6 @@ namespace MupenUtils
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
             this.ctx_Input_Debug.ResumeLayout(false);
-            this.gp_TASStudio.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

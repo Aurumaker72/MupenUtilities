@@ -470,6 +470,7 @@ namespace MupenUtils
         {
             // WIP...
             //ShowStatus("ST Loading not implemented yet", st_Status1);
+            MessageBox.Show("ST Parsing not implemented");
         }
         #endregion
 
@@ -682,8 +683,9 @@ namespace MupenUtils
             Path = Properties.Settings.Default.LastPath;
             if (!ExtensionMethods.ValidPath(Path))
             {
-                //ShowStatus(M64_FAILED_TEXT, st_Status1);
-                return;
+              //ShowStatus(M64_FAILED_TEXT, st_Status1);
+              MessageBox.Show(M64_FAILED_TEXT);
+              return;
             }
             if (rb_M64sel.Checked && ExtensionMethods.ValidPath(Path)){
                m64load = new Thread ( () => ReadM64() );
