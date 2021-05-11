@@ -143,9 +143,8 @@ namespace MupenUtils
             gp_Path.Dock = DockStyle.Fill;
             JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
             this.KeyPreview = true;
-            string bitarh;
-            bitarh = IntPtr.Size == 4 ? "(32 bit)" : "(64 bit)";
-            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
+            ResetTitle();
+            this.AllowDrop = true;
             UpdateReadOnly();
             EnableM64View(false, true);
         }
@@ -153,6 +152,13 @@ namespace MupenUtils
         #endregion
 
         #region UI
+
+        void ResetTitle()
+        {
+            string bitarh;
+            bitarh = IntPtr.Size == 4 ? "(32 bit)" : "(64 bit)";
+            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
+        }
 
         void ShowTipsForm()
         {
@@ -190,11 +196,13 @@ namespace MupenUtils
             tr_MovieScrub.Enabled = FileLoaded;
             txt_Frame.Enabled = FileLoaded;
             this.SuspendLayout();
+            this.MinimumSize = flag ? gp_M64.Size : new Size(1,1);
             this.Size = s;
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             this.MaximizeBox = flag;
             gp_M64.Visible = flag;
             st_Status.Visible = flag;
+            
             this.ResumeLayout();
         }
 
@@ -224,7 +232,10 @@ namespace MupenUtils
             btn_PlayPause.Invoke((MethodInvoker)(() => btn_PlayPause.Enabled = flag));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = flag));
             txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.ReadOnly = flag));
+            this.Invoke((MethodInvoker)(() => this.MinimumSize = flag ? gp_M64.Size : new Size(1,1)));
             this.Invoke((MethodInvoker)(() => this.Size = s));
+            
+            
 
         }
 
@@ -480,6 +491,7 @@ namespace MupenUtils
 
         void PreloadTASStudio()
         {
+            
             // nuke data
             dgv_Main.Rows.Clear();
             dgv_Main.Columns.Clear();
@@ -492,24 +504,32 @@ namespace MupenUtils
 
             DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
 
-            for (byte i = 0; i < inputStructNames.Length; i++)
-            {
-                dgv_Main.Columns[i].Name = inputStructNames[i];
-                dgv_Main.Columns[i].Width = 45; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
-            }
+            this.Text = "Loading TASStudio...";
+
+            //for (byte i = 0; i < inputStructNames.Length; i++)
+            //{
+            //    dgv_Main.Columns[i].Name = inputStructNames[i];
+            //    dgv_Main.Columns[i].Width = 45; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
+            //}
 
             
             // populate with input data (this is cringe and painful and slow i dont care)
-            for (int i = 0; i < inputList.Count; i++)
+            new Thread (() =>
             {
-                // for each frame
-                for (int j = 0; j < inputStructNames.Length; j++)
+                for (int i = 0; i < inputList.Count; i++)
                 {
-                    // for each button
-                    dgv_Main.Rows.Add();
-                    dgv_Main.Rows[i].Cells[j].Value = inputList[i].ToString(); // wip and broken lmao... for now just raw data
-                } 
-            }
+                    // for each frame
+                    for (int j = 0; j < inputStructNames.Length; j++)
+                    {
+                        // for each button
+                        dgv_Main.Invoke((MethodInvoker)(() =>  dgv_Main.Rows.Add()));
+                        dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[i].Cells[j].Value = inputList[i].ToString()));
+                         // wip and broken lmao... for now just raw data
+                    }
+                }
+            }).Start();
+          
+            ResetTitle();
         }
 
     
@@ -635,6 +655,33 @@ namespace MupenUtils
         #endregion
 
         #region Event Handlers
+        
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+           if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Move;
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string file = files[0];
+            if(files.Length > 1)
+            {
+                MessageBox.Show("You are attempting to load more than one m64, picking first one from list...", PROGRAM_NAME + " - Too much data");
+            }
+
+            if (!ExtensionMethods.ValidPath(file)) return;
+            Path = txt_Path.Text = file;
+
+            Properties.Settings.Default.LastPath = Path;
+            Properties.Settings.Default.Save();
+
+            if (rb_M64sel.Checked)
+            {
+                m64load = new Thread(() => ReadM64());
+                m64load.Start();
+            }
+        }
 
         private void btn_Input_Debug_Click(object sender, EventArgs e)
         {
@@ -885,6 +932,7 @@ namespace MupenUtils
         Point RelativeToAbsolute(Point rel)
         {
             return new Point(rel.X+82,rel.Y+72);
+            //return PointToScreen(rel);
         }
         
         private void InputChk_Changed(object sender, MouseEventArgs e)
@@ -920,7 +968,7 @@ namespace MupenUtils
             sbyte relYadj = (sbyte)-JOY_Rel.Y;
             ExtensionMethods.AdjustY(ref relYadj);
             JOY_Rel.Y = relYadj;
-            if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
+            //if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
             if (user && !readOnly) SetInput(frame);
 
             txt_joyX.Text = JOY_Rel.X.ToString();
@@ -929,7 +977,6 @@ namespace MupenUtils
         }
 
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
-
 
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
