@@ -8,6 +8,26 @@ namespace MupenUtils
 {
     public static class DataHelper
     {
+        public static short GetMovieStartupTypeIndex(string stype)
+        {
+            short type;
+            switch (stype)
+            {
+                case "Snapshot":
+                    type = 1;
+                    break;
+                case "Power on":
+                    type = 2;
+                    break;
+                case "EEPROM":
+                    type = 4;
+                    break;
+                default:
+                    type = short.MaxValue;
+                    break;
+            }
+            return type;
+        }
         public static string GetMovieStartupType(short stype)
         {
             string type;

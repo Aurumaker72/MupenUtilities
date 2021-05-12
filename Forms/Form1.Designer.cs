@@ -114,13 +114,13 @@ namespace MupenUtils
             this.lbl_misc_uid = new System.Windows.Forms.Label();
             this.lbl_misc_version = new System.Windows.Forms.Label();
             this.lbl_misc_Magic = new System.Windows.Forms.Label();
-            this.txt_StartType = new System.Windows.Forms.TextBox();
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbox_startType = new System.Windows.Forms.ComboBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -1061,13 +1061,13 @@ namespace MupenUtils
             // gp_M64_misc
             // 
             this.gp_M64_misc.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.gp_M64_misc.Controls.Add(this.cbox_startType);
             this.gp_M64_misc.Controls.Add(this.txt_misc_UID);
             this.gp_M64_misc.Controls.Add(this.txt_misc_Version);
             this.gp_M64_misc.Controls.Add(this.txt_misc_Magic);
             this.gp_M64_misc.Controls.Add(this.lbl_misc_uid);
             this.gp_M64_misc.Controls.Add(this.lbl_misc_version);
             this.gp_M64_misc.Controls.Add(this.lbl_misc_Magic);
-            this.gp_M64_misc.Controls.Add(this.txt_StartType);
             this.gp_M64_misc.Controls.Add(this.txt_CTRLS);
             this.gp_M64_misc.Controls.Add(this.lbl_Ctrls);
             this.gp_M64_misc.Controls.Add(this.lb_starttype);
@@ -1140,16 +1140,6 @@ namespace MupenUtils
             this.lbl_misc_Magic.TabIndex = 0;
             this.lbl_misc_Magic.Text = "Magic";
             // 
-            // txt_StartType
-            // 
-            this.txt_StartType.Location = new System.Drawing.Point(117, 148);
-            this.txt_StartType.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_StartType.Name = "txt_StartType";
-            this.txt_StartType.ReadOnly = true;
-            this.txt_StartType.Size = new System.Drawing.Size(132, 22);
-            this.txt_StartType.TabIndex = 0;
-            this.txt_StartType.TabStop = false;
-            // 
             // txt_CTRLS
             // 
             this.txt_CTRLS.Location = new System.Drawing.Point(117, 118);
@@ -1202,6 +1192,14 @@ namespace MupenUtils
             this.tsmi_Input_Sticky.Size = new System.Drawing.Size(155, 24);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
+            // 
+            // cbox_startType
+            // 
+            this.cbox_startType.FormattingEnabled = true;
+            this.cbox_startType.Location = new System.Drawing.Point(115, 150);
+            this.cbox_startType.Name = "cbox_startType";
+            this.cbox_startType.Size = new System.Drawing.Size(132, 24);
+            this.cbox_startType.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -1274,7 +1272,6 @@ namespace MupenUtils
         private System.Windows.Forms.Label lb_starttype;
         private System.Windows.Forms.TextBox txt_inputplugin;
         private System.Windows.Forms.TextBox txt_videoplugin;
-        private System.Windows.Forms.TextBox txt_StartType;
         private System.Windows.Forms.Label lbl_RSP;
         private System.Windows.Forms.Label lbl_Audio;
         private System.Windows.Forms.TextBox txt_Rsp;
@@ -1340,6 +1337,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_Input_Sticky;
         private System.Windows.Forms.GroupBox gp_TASStudio;
         private System.Windows.Forms.DataGridView dgv_Main;
+        private System.Windows.Forms.ComboBox cbox_startType;
     }
 }
 

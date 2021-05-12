@@ -145,6 +145,12 @@ namespace MupenUtils
             this.KeyPreview = true;
             ResetTitle();
             this.AllowDrop = true;
+
+            cbox_startType.Items.Add("Snapshot");
+            cbox_startType.Items.Add("Power on");
+            cbox_startType.Items.Add("EEPROM");
+            cbox_startType.Items.Add("Unknown");
+
             UpdateReadOnly();
             EnableM64View(false, true);
         }
@@ -360,7 +366,10 @@ namespace MupenUtils
             txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = VIs.ToString()));
             txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = RRs.ToString()));
             txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = Controllers.ToString()));
-            txt_StartType.Invoke((MethodInvoker)(() => txt_StartType.Text = DataHelper.GetMovieStartupType(StartType)));
+
+
+
+            cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.SelectedItem = DataHelper.GetMovieStartupType(StartType)));
 
             txt_videoplugin.Invoke((MethodInvoker)(() => txt_videoplugin.Text = VideoPlugin));
             txt_inputplugin.Invoke((MethodInvoker)(() => txt_inputplugin.Text = InputPlugin));
@@ -426,7 +435,8 @@ namespace MupenUtils
             br.Write(Controllers); // Byte - Controllers
             br.Write((Int16)0); // 2 Bytes - RESERVED
             br.Write(Samples); // UInt32 - Input Samples
-            br.Write(StartType); // UInt16 - Movie start type
+
+            br.Write((UInt16)DataHelper.GetMovieStartupTypeIndex(cbox_startType.SelectedItem.ToString())); // UInt16 - Movie start type
             br.Write((Int16)0); // 2 bytes - RESERVED
             br.Write(ControllerFlags); // UInt32 - Controller Flags
             br.Write(zeroar1, 0, zeroar1.Length); // 160 bytes - RESERVED
