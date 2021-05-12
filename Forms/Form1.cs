@@ -45,6 +45,8 @@ namespace MupenUtils
         bool forwardsPlayback = true;
         bool readOnly = true;
 
+        bool knowWhatImDoing = false;
+
         // M64 Data as Strings
         string Magic;
         string Version;
@@ -920,6 +922,7 @@ namespace MupenUtils
             }
             txt_Rom.ReadOnly = readOnly;
             txt_CTRLS.ReadOnly = readOnly;
+            cbox_startType.Enabled = !readOnly;
             foreach (Control ctl in gp_Plugins.Controls)
             {
                 if(ctl is TextBox){
@@ -948,6 +951,11 @@ namespace MupenUtils
         private void chk_readonly_CheckedChanged(object sender, EventArgs e)
         {
             UpdateReadOnly();
+        }
+        
+        private void generic_ClickDisallowedProperty(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("This property is vital for the emulator to play back the movie correctly. You cannot change this in the simple GUI.", PROGRAM_NAME);
         }
 
 

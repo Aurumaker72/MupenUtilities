@@ -108,6 +108,7 @@ namespace MupenUtils
             this.lbl_Input = new System.Windows.Forms.Label();
             this.txt_Rsp = new System.Windows.Forms.TextBox();
             this.gp_M64_misc = new System.Windows.Forms.GroupBox();
+            this.cbox_startType = new System.Windows.Forms.ComboBox();
             this.txt_misc_UID = new System.Windows.Forms.TextBox();
             this.txt_misc_Version = new System.Windows.Forms.TextBox();
             this.txt_misc_Magic = new System.Windows.Forms.TextBox();
@@ -120,7 +121,6 @@ namespace MupenUtils
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
-            this.cbox_startType = new System.Windows.Forms.ComboBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -194,7 +194,7 @@ namespace MupenUtils
             this.chk_readonly.AutoSize = true;
             this.chk_readonly.Checked = true;
             this.chk_readonly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_readonly.Location = new System.Drawing.Point(115, 60);
+            this.chk_readonly.Location = new System.Drawing.Point(115, 50);
             this.chk_readonly.Name = "chk_readonly";
             this.chk_readonly.Size = new System.Drawing.Size(90, 21);
             this.chk_readonly.TabIndex = 0;
@@ -219,7 +219,7 @@ namespace MupenUtils
             // 
             this.rb_STsel.AutoSize = true;
             this.rb_STsel.Enabled = false;
-            this.rb_STsel.Location = new System.Drawing.Point(65, 60);
+            this.rb_STsel.Location = new System.Drawing.Point(65, 50);
             this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_STsel.Name = "rb_STsel";
             this.rb_STsel.Size = new System.Drawing.Size(47, 21);
@@ -231,7 +231,7 @@ namespace MupenUtils
             // rb_M64sel
             // 
             this.rb_M64sel.AutoSize = true;
-            this.rb_M64sel.Location = new System.Drawing.Point(11, 59);
+            this.rb_M64sel.Location = new System.Drawing.Point(11, 49);
             this.rb_M64sel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_M64sel.Name = "rb_M64sel";
             this.rb_M64sel.Size = new System.Drawing.Size(56, 21);
@@ -1080,6 +1080,14 @@ namespace MupenUtils
             this.gp_M64_misc.TabStop = false;
             this.gp_M64_misc.Text = "Miscellaneous";
             // 
+            // cbox_startType
+            // 
+            this.cbox_startType.FormattingEnabled = true;
+            this.cbox_startType.Location = new System.Drawing.Point(117, 145);
+            this.cbox_startType.Name = "cbox_startType";
+            this.cbox_startType.Size = new System.Drawing.Size(132, 24);
+            this.cbox_startType.TabIndex = 1;
+            // 
             // txt_misc_UID
             // 
             this.txt_misc_UID.Location = new System.Drawing.Point(117, 89);
@@ -1089,6 +1097,7 @@ namespace MupenUtils
             this.txt_misc_UID.Size = new System.Drawing.Size(132, 22);
             this.txt_misc_UID.TabIndex = 0;
             this.txt_misc_UID.TabStop = false;
+            this.txt_misc_UID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
             // 
             // txt_misc_Version
             // 
@@ -1099,6 +1108,7 @@ namespace MupenUtils
             this.txt_misc_Version.Size = new System.Drawing.Size(132, 22);
             this.txt_misc_Version.TabIndex = 0;
             this.txt_misc_Version.TabStop = false;
+            this.txt_misc_Version.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
             // 
             // txt_misc_Magic
             // 
@@ -1109,6 +1119,7 @@ namespace MupenUtils
             this.txt_misc_Magic.Size = new System.Drawing.Size(132, 22);
             this.txt_misc_Magic.TabIndex = 0;
             this.txt_misc_Magic.TabStop = false;
+            this.txt_misc_Magic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
             // 
             // lbl_misc_uid
             // 
@@ -1192,14 +1203,6 @@ namespace MupenUtils
             this.tsmi_Input_Sticky.Size = new System.Drawing.Size(155, 24);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
-            // 
-            // cbox_startType
-            // 
-            this.cbox_startType.FormattingEnabled = true;
-            this.cbox_startType.Location = new System.Drawing.Point(115, 150);
-            this.cbox_startType.Name = "cbox_startType";
-            this.cbox_startType.Size = new System.Drawing.Size(132, 24);
-            this.cbox_startType.TabIndex = 1;
             // 
             // MainForm
             // 
