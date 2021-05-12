@@ -121,6 +121,7 @@ namespace MupenUtils
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -1186,23 +1187,31 @@ namespace MupenUtils
             this.ctx_Input_Debug.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmi_Input_Debug_DumpData,
-            this.tsmi_Input_Sticky});
+            this.tsmi_Input_Sticky,
+            this.tsmi_Input_SetInput});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(156, 52);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 104);
             // 
             // tsmi_Input_Debug_DumpData
             // 
             this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(155, 24);
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 24);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(155, 24);
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 24);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
+            // 
+            // tsmi_Input_SetInput
+            // 
+            this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_SetInput.Text = "Set Input";
+            this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
             // MainForm
             // 
@@ -1341,6 +1350,7 @@ namespace MupenUtils
         private System.Windows.Forms.GroupBox gp_TASStudio;
         private System.Windows.Forms.DataGridView dgv_Main;
         private System.Windows.Forms.ComboBox cbox_startType;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Input_SetInput;
     }
 }
 

@@ -78,6 +78,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AdvancedDebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdvancedDebugForm.Designer.cs">
+      <DependentUpon>AdvancedDebugForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DataHelper.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Forms\Form1.cs">
@@ -97,6 +103,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UIHelper.cs" />
+    <EmbeddedResource Include="Forms\AdvancedDebugForm.resx">
+      <DependentUpon>AdvancedDebugForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

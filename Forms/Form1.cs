@@ -1,4 +1,5 @@
-﻿using MupenUtils.Networking;
+﻿using MupenUtils.Forms;
+using MupenUtils.Networking;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,6 +35,7 @@ namespace MupenUtils
         
         Thread m64load;
         MoreForm moreForm = new MoreForm();
+        AdvancedDebugForm debugForm = new AdvancedDebugForm();
 
         string Path, SavePath;
         bool FileLoaded = false;
@@ -72,11 +74,11 @@ namespace MupenUtils
         string Description;
 
         public CheckBox[] controllerButtonsChk;
-        List<int> inputList = new List<int>();
-        List<int> SAVE_inputList = new List<int>();
+        public static List<int> inputList = new List<int>();
+        public static List<int> SAVE_inputList = new List<int>();
         int lastValue;
 
-        int frame;
+        public static int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
 
         // Joystick input
@@ -86,7 +88,7 @@ namespace MupenUtils
         const int JOY_clampDif = 4;
 
         UpdateNotifier updateNotifier = new UpdateNotifier();
-
+        
         #endregion
 
         #region Setup
@@ -730,6 +732,12 @@ namespace MupenUtils
             Sticky = !Sticky;
             tsmi_Input_Sticky.Checked = Sticky;
         }
+        
+        private void tsmi_Input_SetInput_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("If you desync/corrupt/crash something with this feature do not report it as a bug.");
+            debugForm.ShowDialog();
+        }
 
         private void txt_GenericNumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -1016,6 +1024,7 @@ namespace MupenUtils
         }
 
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
+
 
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
