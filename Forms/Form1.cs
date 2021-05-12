@@ -501,35 +501,56 @@ namespace MupenUtils
             dgv_Main.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(dgv_Main, true, null);
             dgv_Main.ColumnCount = 18; // 16 buttons + joystick X Y
             dgv_Main.ColumnHeadersVisible = true;
+            dgv_Main.ReadOnly = true; // lol 
 
-            DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
-
-            this.Text = "Loading TASStudio...";
-
-            //for (byte i = 0; i < inputStructNames.Length; i++)
-            //{
-            //    dgv_Main.Columns[i].Name = inputStructNames[i];
-            //    dgv_Main.Columns[i].Width = 45; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
-            //}
-
+            
+            for (byte i = 0; i < inputStructNames.Length; i++)
+            {
+                dgv_Main.Columns[i].Name = inputStructNames[i];
+                dgv_Main.Columns[i].Width = 50; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
+            }
+            
             
             // populate with input data (this is cringe and painful and slow i dont care)
             new Thread (() =>
             {
-                for (int i = 0; i < inputList.Count; i++)
+                for (int y = 0; y < inputList.Count; y++)
                 {
                     // for each frame
-                    for (int j = 0; j < inputStructNames.Length; j++)
+                    for (int x = 0; x < inputStructNames.Length; x++)
                     {
                         // for each button
                         dgv_Main.Invoke((MethodInvoker)(() =>  dgv_Main.Rows.Add()));
-                        dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[i].Cells[j].Value = inputList[i].ToString()));
-                         // wip and broken lmao... for now just raw data
+                        //dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[i].Cells[j].Value = inputList[i].ToString()));
+
+                        // kind of stupid implementation
+                        // this is easily done faster but do i care?
+
+                        string cellValue = "";
+
+                        if (x < 15)
+                        {
+                            if ((inputList[y] & (int)Math.Pow(2, x)) != 0)
+                                cellValue = inputStructNames[x];
+                        }
+                        else
+                        {
+                            byte[] a = BitConverter.GetBytes(inputList[y]);
+
+                            if(x == 15)
+                            cellValue = a[2].ToString();
+                            if(y == 16)
+                            cellValue = a[3].ToString();
+                           
+                        }
+                        
+
+                        dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
+                        
                     }
                 }
             }).Start();
           
-            ResetTitle();
         }
 
     
