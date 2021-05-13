@@ -30,16 +30,18 @@ namespace MupenUtils.Forms
         private void InitializeComponent()
         {
             this.gp_TasStudio_Help = new System.Windows.Forms.GroupBox();
+            this.btn_TasStudio_EasterEggObunga = new System.Windows.Forms.Button();
+            this.txt_TasStudio_Frame = new System.Windows.Forms.TextBox();
+            this.gp_TasStudio_Goto = new System.Windows.Forms.GroupBox();
             this.btn_TasStudio_Goto = new System.Windows.Forms.Button();
             this.lbl_TasStudio_Frame = new System.Windows.Forms.Label();
-            this.gp_TasStudio_Goto = new System.Windows.Forms.GroupBox();
-            this.txt_TasStudio_Frame = new System.Windows.Forms.TextBox();
             this.gp_TasStudio_Help.SuspendLayout();
             this.gp_TasStudio_Goto.SuspendLayout();
             this.SuspendLayout();
             // 
             // gp_TasStudio_Help
             // 
+            this.gp_TasStudio_Help.Controls.Add(this.btn_TasStudio_EasterEggObunga);
             this.gp_TasStudio_Help.Controls.Add(this.txt_TasStudio_Frame);
             this.gp_TasStudio_Help.Controls.Add(this.gp_TasStudio_Goto);
             this.gp_TasStudio_Help.Controls.Add(this.lbl_TasStudio_Frame);
@@ -50,6 +52,37 @@ namespace MupenUtils.Forms
             this.gp_TasStudio_Help.TabIndex = 0;
             this.gp_TasStudio_Help.TabStop = false;
             this.gp_TasStudio_Help.Text = "TAS Studio Commands";
+            // 
+            // btn_TasStudio_EasterEggObunga
+            // 
+            this.btn_TasStudio_EasterEggObunga.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_TasStudio_EasterEggObunga.FlatAppearance.BorderSize = 0;
+            this.btn_TasStudio_EasterEggObunga.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_TasStudio_EasterEggObunga.Location = new System.Drawing.Point(488, 312);
+            this.btn_TasStudio_EasterEggObunga.Name = "btn_TasStudio_EasterEggObunga";
+            this.btn_TasStudio_EasterEggObunga.Size = new System.Drawing.Size(35, 23);
+            this.btn_TasStudio_EasterEggObunga.TabIndex = 0;
+            this.btn_TasStudio_EasterEggObunga.TabStop = false;
+            this.btn_TasStudio_EasterEggObunga.UseVisualStyleBackColor = false;
+            this.btn_TasStudio_EasterEggObunga.Click += new System.EventHandler(this.btn_TasStudio_EasterEggObunga_Click);
+            // 
+            // txt_TasStudio_Frame
+            // 
+            this.txt_TasStudio_Frame.Location = new System.Drawing.Point(112, 32);
+            this.txt_TasStudio_Frame.Name = "txt_TasStudio_Frame";
+            this.txt_TasStudio_Frame.Size = new System.Drawing.Size(160, 22);
+            this.txt_TasStudio_Frame.TabIndex = 3;
+            this.txt_TasStudio_Frame.TextChanged += new System.EventHandler(this.txt_TasStudio_Frame_TextChanged);
+            // 
+            // gp_TasStudio_Goto
+            // 
+            this.gp_TasStudio_Goto.Controls.Add(this.btn_TasStudio_Goto);
+            this.gp_TasStudio_Goto.Location = new System.Drawing.Point(16, 64);
+            this.gp_TasStudio_Goto.Name = "gp_TasStudio_Goto";
+            this.gp_TasStudio_Goto.Size = new System.Drawing.Size(256, 64);
+            this.gp_TasStudio_Goto.TabIndex = 2;
+            this.gp_TasStudio_Goto.TabStop = false;
+            this.gp_TasStudio_Goto.Text = "GOTO";
             // 
             // btn_TasStudio_Goto
             // 
@@ -69,24 +102,6 @@ namespace MupenUtils.Forms
             this.lbl_TasStudio_Frame.Size = new System.Drawing.Size(94, 17);
             this.lbl_TasStudio_Frame.TabIndex = 1;
             this.lbl_TasStudio_Frame.Text = "Target Frame";
-            // 
-            // gp_TasStudio_Goto
-            // 
-            this.gp_TasStudio_Goto.Controls.Add(this.btn_TasStudio_Goto);
-            this.gp_TasStudio_Goto.Location = new System.Drawing.Point(16, 64);
-            this.gp_TasStudio_Goto.Name = "gp_TasStudio_Goto";
-            this.gp_TasStudio_Goto.Size = new System.Drawing.Size(256, 64);
-            this.gp_TasStudio_Goto.TabIndex = 2;
-            this.gp_TasStudio_Goto.TabStop = false;
-            this.gp_TasStudio_Goto.Text = "GOTO";
-            // 
-            // txt_TasStudio_Frame
-            // 
-            this.txt_TasStudio_Frame.Location = new System.Drawing.Point(112, 32);
-            this.txt_TasStudio_Frame.Name = "txt_TasStudio_Frame";
-            this.txt_TasStudio_Frame.Size = new System.Drawing.Size(160, 22);
-            this.txt_TasStudio_Frame.TabIndex = 3;
-            this.txt_TasStudio_Frame.TextChanged += new System.EventHandler(this.txt_TasStudio_Frame_TextChanged);
             // 
             // TASStudioMoreForm
             // 
@@ -115,5 +130,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Button btn_TasStudio_Goto;
         private System.Windows.Forms.Label lbl_TasStudio_Frame;
         private System.Windows.Forms.TextBox txt_TasStudio_Frame;
+        private System.Windows.Forms.Button btn_TasStudio_EasterEggObunga;
     }
 }

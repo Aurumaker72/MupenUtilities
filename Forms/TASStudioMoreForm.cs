@@ -18,6 +18,10 @@ namespace MupenUtils.Forms
         {
             InitializeComponent();
             this.Text = "TAS Studio - Commands";
+
+
+            btn_TasStudio_EasterEggObunga.BackColor = btn_TasStudio_EasterEggObunga.ForeColor = Color.FromKnownColor(KnownColor.Control);
+
         }
 
         private void TASStudioMoreForm_Shown(object sender, EventArgs e)
@@ -37,7 +41,7 @@ namespace MupenUtils.Forms
                 selectedFrame = Int32.Parse(txt);
             else
                 txt = "Invalid";
-
+            
             txt_TasStudio_Frame.Text = txt;
 
 
@@ -49,5 +53,17 @@ namespace MupenUtils.Forms
             MainForm.markedGoToFrame = selectedFrame;
         }
 
+        private void btn_TasStudio_EasterEggObunga_Click(object sender, EventArgs e)
+        {
+
+            foreach (Control ctl in this.Controls)
+            {
+                ctl.BackgroundImage = Properties.Resources.obunga;
+                ctl.Text = "Obunga";
+            }
+            this.WindowState = FormWindowState.Maximized;
+            for (int i = 0; i < 50; i++)
+            this.Text = this.Text + "Obunga";
+        }
     }
 }
