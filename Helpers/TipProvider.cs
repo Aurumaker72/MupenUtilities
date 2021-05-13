@@ -15,7 +15,12 @@ namespace MupenUtils.Helpers
             "\'Dump Inputs\' will dump all input data to a file",
             "Try pressing \'Page up\' and \'Page down\' on the trackbar",
             "Check for updates with the button below",
-            "You are on version " + MainForm.PROGRAM_VERSION
+            "You are on version " + MainForm.PROGRAM_VERSION,
+            "Labels will turn red if the program deems the property incompatible",
+            "\'Set Input\' will allow you to set the raw input data for a frame",
+            "Right click TAS Studio to get a useful menu",
+            "CTRL+H on TAS Studio to get a useful menu",
+            "Some dialogs are disabled until loading a m64"
         };
         public static string GetRandomTip()
         {

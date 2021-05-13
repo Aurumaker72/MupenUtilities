@@ -122,6 +122,8 @@ namespace MupenUtils
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -135,6 +137,7 @@ namespace MupenUtils
             this.gp_Plugins.SuspendLayout();
             this.gp_M64_misc.SuspendLayout();
             this.ctx_Input_Debug.SuspendLayout();
+            this.ctx_TasStudio.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -373,6 +376,8 @@ namespace MupenUtils
             this.dgv_Main.Size = new System.Drawing.Size(280, 320);
             this.dgv_Main.TabIndex = 0;
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
+            this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_Main_KeyDown);
+            this.dgv_Main.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_Main_MouseClick);
             // 
             // btn_Input_Debug
             // 
@@ -1191,28 +1196,43 @@ namespace MupenUtils
             this.tsmi_Input_Sticky,
             this.tsmi_Input_SetInput});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 104);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(156, 76);
             // 
             // tsmi_Input_Debug_DumpData
             // 
             this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(155, 24);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(155, 24);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
             // tsmi_Input_SetInput
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
-            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(155, 24);
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
+            // 
+            // ctx_TasStudio
+            // 
+            this.ctx_TasStudio.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ctx_TasStudio.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.utilityToolStripMenuItem});
+            this.ctx_TasStudio.Name = "ctx_TasStudio";
+            this.ctx_TasStudio.Size = new System.Drawing.Size(118, 28);
+            // 
+            // utilityToolStripMenuItem
+            // 
+            this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.utilityToolStripMenuItem.Text = "Utility";
+            this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1228,9 +1248,11 @@ namespace MupenUtils
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mupen Utilities ";
+            this.Activated += new System.EventHandler(this.MainForm_Focus);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
+            this.GotFocus += new System.EventHandler(this.MainForm_Focus);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.gp_Path.ResumeLayout(false);
@@ -1254,6 +1276,7 @@ namespace MupenUtils
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
             this.ctx_Input_Debug.ResumeLayout(false);
+            this.ctx_TasStudio.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1349,9 +1372,11 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_Input_Debug_DumpData;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Input_Sticky;
         private System.Windows.Forms.GroupBox gp_TASStudio;
-        private System.Windows.Forms.DataGridView dgv_Main;
         private System.Windows.Forms.ComboBox cbox_startType;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Input_SetInput;
+        public System.Windows.Forms.DataGridView dgv_Main;
+        private System.Windows.Forms.ContextMenuStrip ctx_TasStudio;
+        private System.Windows.Forms.ToolStripMenuItem utilityToolStripMenuItem;
     }
 }
 

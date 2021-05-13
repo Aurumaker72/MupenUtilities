@@ -84,6 +84,12 @@
     <Compile Include="Forms\AdvancedDebugForm.Designer.cs">
       <DependentUpon>AdvancedDebugForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TASStudioMoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TASStudioMoreForm.Designer.cs">
+      <DependentUpon>TASStudioMoreForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DataHelper.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Forms\Form1.cs">
@@ -111,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MoreForm.resx">
       <DependentUpon>MoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TASStudioMoreForm.resx">
+      <DependentUpon>TASStudioMoreForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -36,9 +36,10 @@ namespace MupenUtils
         Thread m64load;
         MoreForm moreForm = new MoreForm();
         AdvancedDebugForm debugForm = new AdvancedDebugForm();
+        TASStudioMoreForm tasStudioForm = new TASStudioMoreForm();
 
         string Path, SavePath;
-        bool FileLoaded = false;
+        public static bool FileLoaded = false;
         bool ExpandedMenu = false;
         bool Sticky = false;
 
@@ -46,6 +47,9 @@ namespace MupenUtils
         bool bypassTypeCheck = false;
         bool forwardsPlayback = true;
         bool readOnly = true;
+
+        public static int markedGoToFrame = 0;
+        public static bool forceGoto = false;
 
         bool knowWhatImDoing = false;
 
@@ -566,10 +570,9 @@ namespace MupenUtils
             // populate with input data (this is cringe and painful and slow i dont care)
             new Thread (() =>
             {
-                
                 while (dgv_Main.RecreatingHandle) ; // spin until handle is created
                 
-                for (int y = 0; y < inputList.Count-1; y++)
+                for (int y = 0; y < inputList.Count; y++)
                 {
                     // for each frame
                     dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Add()));
@@ -625,7 +628,7 @@ namespace MupenUtils
         {
             if (!FileLoaded) 
                 return;
-            int value = 0xCC;
+            int value = 0XDD;
             try{
                 if (Sticky)
                     value = lastValue;
@@ -762,6 +765,13 @@ namespace MupenUtils
         {
             ctx_Input_Debug.Show(Cursor.Position);
         }
+        
+        private void dgv_Main_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            ctx_TasStudio.Show(Cursor.Position);
+        }
+
         private void tsmi_Input_Debug_DumpData_Click(object sender, EventArgs e)
         {
             DumpInputsFile(false);
@@ -785,6 +795,31 @@ namespace MupenUtils
                 e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
             }
         }
+        private void dgv_Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.H && e.Modifiers == Keys.Control)
+                tasStudioForm.ShowDialog();
+            
+        }
+
+        private void MainForm_Focus(object sender, EventArgs e)
+        {
+            if (forceGoto)
+            {
+                dgv_Main.CurrentCell = dgv_Main.Rows[markedGoToFrame].Cells[0];
+                dgv_Main.Rows[markedGoToFrame].Selected = true;
+                
+                forceGoto = false;
+            }
+            
+        }
+
+        private void utilityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+           tasStudioForm.ShowDialog();
+        }
+
         private void txt_GenericNumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
           e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
@@ -1070,7 +1105,6 @@ namespace MupenUtils
         }
 
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
-
 
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)

@@ -80,6 +80,7 @@ namespace MupenUtils.Forms
             this.Controls.Add(this.txt_Debug_Uvalue);
             this.Name = "AdvancedDebugForm";
             this.Text = "Debug";
+            this.Shown += new System.EventHandler(this.AdvancedDebugForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
