@@ -372,6 +372,7 @@ namespace MupenUtils
             this.dgv_Main.RowTemplate.Height = 24;
             this.dgv_Main.Size = new System.Drawing.Size(280, 320);
             this.dgv_Main.TabIndex = 0;
+            this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
             // 
             // btn_Input_Debug
             // 

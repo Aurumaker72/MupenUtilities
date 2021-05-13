@@ -249,21 +249,48 @@ namespace MupenUtils
 
         }
 
+        void ResetLblColors()
+        {
+            
+            for (int i = 0; i < gp_User.Controls.Count; i++)
+            {
+                if(gp_User.Controls[i] is Label){
+                 Label lbl = gp_User.Controls[i] as Label;
+                 lbl.Invoke((MethodInvoker)(() => lbl.ForeColor = Color.Black));
+                }
+            }
+            for (int i = 0; i < gp_M64.Controls.Count; i++)
+            {
+                if(gp_User.Controls[i] is Label){
+                 Label lbl = gp_User.Controls[i] as Label;
+                 lbl.Invoke((MethodInvoker)(() => lbl.ForeColor = Color.Black));
+                }
+            }
+        }
+
         #endregion
 
         #region I/O
         void DumpInputsFile(bool plain)
         {
-            FileStream fs = File.Open("inputs.bin", FileMode.OpenOrCreate);
-            BinaryWriter br = new BinaryWriter(fs);
+            FileStream fs;
+            BinaryWriter br;
+            try
+            {
+                fs = File.Open("inputs.bin", FileMode.Create);
+                br = new BinaryWriter(fs);
+
+            }catch { return; }
             if (!plain)
             {
-
-                for (int i = 0; i < SAVE_inputList.Count / 4; i++)
-                {
+                for (int i = 0; i < inputList.Count; i++)
                     br.Write(inputList[i]);
-                }
-                fs.Close(); br.Flush(); br.Close();
+
+                 br.Flush(); br.Close();
+
+                MessageBox.Show(String.Format("Dumped {0} input samples to {1}", inputList.Count, fs.Name));
+
+                fs.Close();
             }
         }
         void ErrorM64() {
@@ -396,13 +423,19 @@ namespace MupenUtils
             // hack to get it on main thread
             EnableM64View_ThreadSafe(true);
 
-
+            ResetLblColors();
+            
             if (Controllers > 1)
             {
                 MessageBox.Show("The movie has more than one controller enabled. The application might behave unexpectedly.", "M64 too many controllers!");
             }
+            if(Crc32 != 4281031267)
+            {
+                lbl_ROMCRC.ForeColor = Color.Red;
+                //MessageBox.Show("The movie was recorded on a untested rom. The application might behave unexpectedly.", "M64 weird rom!");
+            }
             ShowStatus_ThreadSafe(M64_LOADED_TEXT);
-
+            
             this.Invoke(new Action(() => PreloadTASStudio()));
         }
 
@@ -505,10 +538,14 @@ namespace MupenUtils
 
         void PreloadTASStudio()
         {
-            
+
             // nuke data
+            // this crashes for some reason after the 2nd time
+            
+
             dgv_Main.Rows.Clear();
             dgv_Main.Columns.Clear();
+            dgv_Main.ClearSelection();
             dgv_Main.Refresh();
 
 
@@ -523,25 +560,30 @@ namespace MupenUtils
                 dgv_Main.Columns[i].Name = inputStructNames[i];
                 dgv_Main.Columns[i].Width = 50; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
             }
+
             
-            
+            gp_TASStudio.Text = "TAS Studio - Loading " + inputList.Count + " samples";
             // populate with input data (this is cringe and painful and slow i dont care)
             new Thread (() =>
             {
-                for (int y = 0; y < inputList.Count; y++)
+                
+                while (dgv_Main.RecreatingHandle) ; // spin until handle is created
+                
+                for (int y = 0; y < inputList.Count-1; y++)
                 {
                     // for each frame
+                    dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Add()));
+
                     for (int x = 0; x < inputStructNames.Length; x++)
                     {
                         // for each button
-                        dgv_Main.Invoke((MethodInvoker)(() =>  dgv_Main.Rows.Add()));
-                        //dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[i].Cells[j].Value = inputList[i].ToString()));
+                        
 
                         // kind of stupid implementation
                         // this is easily done faster but do i care?
 
                         string cellValue = "";
-
+                        
                         if (x < 15)
                         {
                             if ((inputList[y] & (int)Math.Pow(2, x)) != 0)
@@ -549,22 +591,20 @@ namespace MupenUtils
                         }
                         else
                         {
+                            
                             byte[] a = BitConverter.GetBytes(inputList[y]);
 
                             if(x == 15)
                             cellValue = a[2].ToString();
-                            if(y == 16)
+                            if(y == 17)
                             cellValue = a[3].ToString();
-                           
-                        }
-                        
 
-                        dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
-                        
+
+                        }
                     }
                 }
             }).Start();
-          
+           gp_TASStudio.Text = "TAS Studio";
         }
 
     
@@ -738,7 +778,13 @@ namespace MupenUtils
             MessageBox.Show("If you desync/corrupt/crash something with this feature do not report it as a bug.");
             debugForm.ShowDialog();
         }
-
+        private void dgv_Main_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            using (SolidBrush b = new SolidBrush(dgv_Main.RowHeadersDefaultCellStyle.ForeColor))
+            {
+                e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
+            }
+        }
         private void txt_GenericNumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
           e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
