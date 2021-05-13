@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace MupenUtils.Helpers
 {
@@ -22,6 +23,13 @@ namespace MupenUtils.Helpers
             "\'CTRL+H\' on TAS Studio to get a useful menu",
             "Some dialogs are disabled until loading a m64",
             "\'F11\' and \'ALT+ENTER\' will toggle fullscreen mode",
+            "Running this and Mupen64 will show a warning",
+            "There is an easter egg in the TAS Studio Utility dialog",
+            "Debug target builds will print information to console",
+            "The bit arhitecture is displayed in status bar",
+            "This app has been running since " + Process.GetCurrentProcess().StartTime.ToUniversalTime(),
+            "Non-plaintext values are displayed in hexadecimal",
+            "Some values are unmodifiable"
         };
         public static string GetRandomTip()
         {
