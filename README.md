@@ -21,6 +21,7 @@ You can view all inputs in a neatly arranged grid
 
 #### Advanced
 You can dump a movie's raw input data to a file.
+You can change the raw input value at a frame using a unsafe debug menu.
 
 ## Other
 This program checks for updates
