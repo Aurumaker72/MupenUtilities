@@ -12,6 +12,8 @@ namespace MupenUtils.Forms
 {
     public partial class AdvancedDebugForm : Form
     {
+        int selectedFrame = 0;
+
         public AdvancedDebugForm()
         {
             InitializeComponent();
@@ -19,7 +21,13 @@ namespace MupenUtils.Forms
 
         private void txt_Debug_Uvalue_TextChanged(object sender, EventArgs e)
         {
-            MainForm.inputList[MainForm.frame] = Int32.Parse(txt_Debug_Uvalue.Text);
+            MainForm.inputList[selectedFrame] = Int32.Parse(txt_Debug_Uvalue.Text);
+        }
+
+        private void txt_Debug_Frame_TextChanged(object sender, EventArgs e)
+        {
+            if (ExtensionMethods.ValidStringInt(txt_Debug_Frame.Text, 0, MainForm.inputList.Count))
+                selectedFrame = Int32.Parse(txt_Debug_Frame.Text);
         }
     }
 }

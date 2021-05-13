@@ -16,7 +16,7 @@ namespace MupenUtils
     {
         #region Vars
 
-        public const string PROGRAM_VERSION = "1.2";
+        public const string PROGRAM_VERSION = "1.3";
         public const string PROGRAM_NAME = "Mupen Utilities";
 
         public const string M64_LOADED_TEXT = "M64 Loaded";

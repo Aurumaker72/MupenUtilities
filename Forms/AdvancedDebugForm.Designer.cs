@@ -31,6 +31,8 @@ namespace MupenUtils.Forms
         {
             this.txt_Debug_Uvalue = new System.Windows.Forms.TextBox();
             this.lbl_Debug_InputValue = new System.Windows.Forms.Label();
+            this.txt_Debug_Frame = new System.Windows.Forms.TextBox();
+            this.lbl_Debug_Frame = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txt_Debug_Uvalue
@@ -50,11 +52,30 @@ namespace MupenUtils.Forms
             this.lbl_Debug_InputValue.TabIndex = 1;
             this.lbl_Debug_InputValue.Text = "Input Value";
             // 
+            // txt_Debug_Frame
+            // 
+            this.txt_Debug_Frame.Location = new System.Drawing.Point(72, 120);
+            this.txt_Debug_Frame.Name = "txt_Debug_Frame";
+            this.txt_Debug_Frame.Size = new System.Drawing.Size(100, 22);
+            this.txt_Debug_Frame.TabIndex = 2;
+            this.txt_Debug_Frame.TextChanged += new System.EventHandler(this.txt_Debug_Frame_TextChanged);
+            // 
+            // lbl_Debug_Frame
+            // 
+            this.lbl_Debug_Frame.AutoSize = true;
+            this.lbl_Debug_Frame.Location = new System.Drawing.Point(16, 120);
+            this.lbl_Debug_Frame.Name = "lbl_Debug_Frame";
+            this.lbl_Debug_Frame.Size = new System.Drawing.Size(48, 17);
+            this.lbl_Debug_Frame.TabIndex = 1;
+            this.lbl_Debug_Frame.Text = "Frame";
+            // 
             // AdvancedDebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(374, 154);
+            this.Controls.Add(this.txt_Debug_Frame);
+            this.Controls.Add(this.lbl_Debug_Frame);
             this.Controls.Add(this.lbl_Debug_InputValue);
             this.Controls.Add(this.txt_Debug_Uvalue);
             this.Name = "AdvancedDebugForm";
@@ -68,5 +89,7 @@ namespace MupenUtils.Forms
 
         private System.Windows.Forms.TextBox txt_Debug_Uvalue;
         private System.Windows.Forms.Label lbl_Debug_InputValue;
+        private System.Windows.Forms.TextBox txt_Debug_Frame;
+        private System.Windows.Forms.Label lbl_Debug_Frame;
     }
 }
