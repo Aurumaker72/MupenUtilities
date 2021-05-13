@@ -50,6 +50,7 @@ namespace MupenUtils.Forms
         private void btn_TasStudio_Goto_Click(object sender, EventArgs e)
         {
             MainForm.forceGoto = true;
+            selectedFrame = ExtensionMethods.Clamp(selectedFrame - 1, 0, MainForm.inputList.Count);
             MainForm.markedGoToFrame = selectedFrame;
         }
 
