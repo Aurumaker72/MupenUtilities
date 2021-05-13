@@ -40,8 +40,7 @@ namespace MupenUtils.Forms
 
         private void AdvancedDebugForm_Shown(object sender, EventArgs e)
         {
-            foreach (Control ctl in this.Controls)
-                ctl.Enabled = MainForm.FileLoaded;
+
         }
     }
 }

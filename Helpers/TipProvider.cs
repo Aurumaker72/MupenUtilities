@@ -19,8 +19,9 @@ namespace MupenUtils.Helpers
             "Labels will turn red if the program deems the property incompatible",
             "\'Set Input\' will allow you to set the raw input data for a frame",
             "Right click TAS Studio to get a useful menu",
-            "CTRL+H on TAS Studio to get a useful menu",
-            "Some dialogs are disabled until loading a m64"
+            "\'CTRL+H\' on TAS Studio to get a useful menu",
+            "Some dialogs are disabled until loading a m64",
+            "\'F11\' and \'ALT+ENTER\' will toggle fullscreen mode",
         };
         public static string GetRandomTip()
         {

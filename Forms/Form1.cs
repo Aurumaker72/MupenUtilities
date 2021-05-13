@@ -31,7 +31,7 @@ namespace MupenUtils
         public const byte UPDATE_UNKNOWN = 255;
 
         // [] means reserved, <^>v is direction
-        public string[] inputStructNames = { "Right", "Left", "Down", "Up", "Start","Z","B","A","C>","C<","Cv","C^","R","L","[1]","[2]","X","Y"};
+        public string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start","Z","B","A","C>","C<","Cv","C^","R","L","[1]","[2]","X","Y"};
         
         Thread m64load;
         MoreForm moreForm = new MoreForm();
@@ -106,7 +106,6 @@ namespace MupenUtils
             if (updateNotifier.CheckForInternetConnection())
                 updateNotifier.CheckForUpdates(UPDATE_UNKNOWN, true);
         }
-
 
         void InitController()
         {
@@ -919,9 +918,13 @@ namespace MupenUtils
         }
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Oem5) //  (\ or |)
+            if (e.KeyCode == Keys.Oem5) //  (\ or |)
             {
                 StepFrameAuto();
+            }
+            else if ((e.KeyCode == Keys.Enter && e.Modifiers == Keys.Alt) || e.KeyCode == Keys.F11)
+            {
+                ExtensionMethods.FullScreen(this);
             }
         }
         private void btn_PlayPause_Click(object sender, EventArgs e)

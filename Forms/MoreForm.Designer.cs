@@ -35,6 +35,7 @@ namespace MupenUtils
             this.lbl_More_Tip = new System.Windows.Forms.Label();
             this.btn_More_NewTip = new System.Windows.Forms.Button();
             this.gp_More_About = new System.Windows.Forms.GroupBox();
+            this.btn_More_CheckUpdates = new System.Windows.Forms.Button();
             this.lbl_More_Related2 = new System.Windows.Forms.Label();
             this.lbl_More_Related = new System.Windows.Forms.Label();
             this.Llbl_More_MupenCringe = new System.Windows.Forms.LinkLabel();
@@ -42,7 +43,6 @@ namespace MupenUtils
             this.Llbl_More_Mupen = new System.Windows.Forms.LinkLabel();
             this.txt_More_Info = new System.Windows.Forms.TextBox();
             this.pb_More_Logo = new System.Windows.Forms.PictureBox();
-            this.btn_More_CheckUpdates = new System.Windows.Forms.Button();
             this.gp_More_Tips.SuspendLayout();
             this.gp_More_About.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_More_Logo)).BeginInit();
@@ -109,6 +109,17 @@ namespace MupenUtils
             this.gp_More_About.TabIndex = 0;
             this.gp_More_About.TabStop = false;
             this.gp_More_About.Text = "About";
+            // 
+            // btn_More_CheckUpdates
+            // 
+            this.btn_More_CheckUpdates.Location = new System.Drawing.Point(384, 224);
+            this.btn_More_CheckUpdates.Name = "btn_More_CheckUpdates";
+            this.btn_More_CheckUpdates.Size = new System.Drawing.Size(139, 31);
+            this.btn_More_CheckUpdates.TabIndex = 0;
+            this.btn_More_CheckUpdates.TabStop = false;
+            this.btn_More_CheckUpdates.Text = "Check for Updates";
+            this.btn_More_CheckUpdates.UseVisualStyleBackColor = true;
+            this.btn_More_CheckUpdates.Click += new System.EventHandler(this.btn_More_CheckUpdates_Click);
             // 
             // lbl_More_Related2
             // 
@@ -185,7 +196,7 @@ namespace MupenUtils
             // pb_More_Logo
             // 
             this.pb_More_Logo.BackgroundImage = global::MupenUtils.Properties.Resources.logo;
-            this.pb_More_Logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pb_More_Logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pb_More_Logo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pb_More_Logo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_More_Logo.Location = new System.Drawing.Point(16, 32);
@@ -194,17 +205,6 @@ namespace MupenUtils
             this.pb_More_Logo.TabIndex = 0;
             this.pb_More_Logo.TabStop = false;
             this.pb_More_Logo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_More_Logo_MouseDown);
-            // 
-            // btn_More_CheckUpdates
-            // 
-            this.btn_More_CheckUpdates.Location = new System.Drawing.Point(384, 224);
-            this.btn_More_CheckUpdates.Name = "btn_More_CheckUpdates";
-            this.btn_More_CheckUpdates.Size = new System.Drawing.Size(139, 31);
-            this.btn_More_CheckUpdates.TabIndex = 0;
-            this.btn_More_CheckUpdates.TabStop = false;
-            this.btn_More_CheckUpdates.Text = "Check for Updates";
-            this.btn_More_CheckUpdates.UseVisualStyleBackColor = true;
-            this.btn_More_CheckUpdates.Click += new System.EventHandler(this.btn_More_CheckUpdates_Click);
             // 
             // MoreForm
             // 

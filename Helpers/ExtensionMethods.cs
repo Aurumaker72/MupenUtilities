@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 public static class ExtensionMethods
 {
@@ -85,4 +86,21 @@ public static class ExtensionMethods
     
         return isValid;
     }
+
+    public static void FullScreen(Form form)
+    {
+        if (form.FormBorderStyle == FormBorderStyle.Sizable)
+        {
+            form.WindowState = FormWindowState.Normal;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.WindowState = FormWindowState.Maximized;
+        }
+        else
+        {
+            form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            form.WindowState = FormWindowState.Normal;
+        }
+    }
+
+
 }
