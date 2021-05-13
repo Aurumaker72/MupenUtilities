@@ -451,6 +451,12 @@ namespace MupenUtils
             BinaryWriter br = new BinaryWriter(fs);
             //ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
+            byte[] magic = new byte[5];
+            magic[0] = 0x4D;
+            magic[1] = 0x36;
+            magic[2] = 0x34;
+            magic[3] = 0x1A;
+            magic[4] = 0x03;
             Array.Clear(zeroar1, 0, zeroar1.Length);
             Array.Clear(zeroar2, 0, zeroar2.Length);
 
@@ -466,7 +472,7 @@ namespace MupenUtils
             Author = txt_Author.Text;
             Description = txt_Desc.Text;
 
-            br.Write((Int32)1295397914); // Int32 - Magic (4D36341A)
+            br.Write(BitConverter.ToInt32(magic,0)); // Int32 - Magic (4D36341A)
             br.Write((UInt32)3); // UInt32 - Version number (3)
             br.Write(UID); // UInt32 - UID
             br.Write((UInt32)VIs); // UInt32 - VIs
@@ -516,7 +522,7 @@ namespace MupenUtils
             br.Write(rsp, 0, 64);
             br.Write(author, 0, 222);
             br.Write(desc, 0, 256);
-            for (int i = 0; i < SAVE_inputList.Count / 4; i++)
+            for (int i = 0; i < inputList.Count; i++)
             {
                 br.Write(inputList[i]);
             }
@@ -927,6 +933,13 @@ namespace MupenUtils
                 ExtensionMethods.FullScreen(this);
             }   
         }
+        
+        private void cbox_startType_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+
         private void btn_PlayPause_Click(object sender, EventArgs e)
         {
             // Toggle timer
