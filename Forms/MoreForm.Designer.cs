@@ -83,9 +83,9 @@ namespace MupenUtils
             // 
             // btn_More_NewTip
             // 
-            this.btn_More_NewTip.Location = new System.Drawing.Point(448, 112);
+            this.btn_More_NewTip.Location = new System.Drawing.Point(448, 104);
             this.btn_More_NewTip.Name = "btn_More_NewTip";
-            this.btn_More_NewTip.Size = new System.Drawing.Size(75, 23);
+            this.btn_More_NewTip.Size = new System.Drawing.Size(75, 31);
             this.btn_More_NewTip.TabIndex = 0;
             this.btn_More_NewTip.TabStop = false;
             this.btn_More_NewTip.Text = "New Tip";
