@@ -1,4 +1,4 @@
-﻿using MupenUtils.Forms;
+﻿    using MupenUtils.Forms;
 using MupenUtils.Networking;
 using System;
 using System.Collections.Generic;
@@ -161,7 +161,7 @@ namespace MupenUtils
             if (!BitConverter.IsLittleEndian)
             {
                 // incompatible because this program is somewhat endian dependent
-                this.Text = this.Text + " - Unsupported";
+                this.Text += " - Unsupported";
                 MessageBox.Show("Your system is big-endian and this program might not work properly!");
             }
             UpdateReadOnly();
@@ -327,6 +327,19 @@ namespace MupenUtils
                 ErrorM64();
                 return;
             }
+
+            foreach(Process procarr in Process.GetProcesses())
+            {
+                if(String.Equals(procarr.ProcessName, "mupen64", StringComparison.InvariantCultureIgnoreCase) || procarr.ProcessName.Contains("mupen64"))
+                {
+                st_Status.Invoke((MethodInvoker)(() => st_Status.Visible = true));
+                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Visible = true));
+                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.ForeColor = Color.Red));
+                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = "Mupen64 is running, this might cause file access issues"));
+                    break;
+                }
+            }
+
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
             FileStream fs;
@@ -443,7 +456,7 @@ namespace MupenUtils
                 lbl_ROMCRC.ForeColor = Color.Red;
                 //MessageBox.Show("The movie was recorded on a untested rom. The application might behave unexpectedly.", "M64 weird rom!");
             }
-            ShowStatus_ThreadSafe(M64_LOADED_TEXT);
+            //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
             
             this.Invoke(new Action(() => PreloadTASStudio()));
         }
