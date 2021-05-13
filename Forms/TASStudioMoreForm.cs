@@ -17,6 +17,7 @@ namespace MupenUtils.Forms
         public TASStudioMoreForm()
         {
             InitializeComponent();
+            this.Text = "TAS Studio - Commands";
         }
 
         private void TASStudioMoreForm_Shown(object sender, EventArgs e)

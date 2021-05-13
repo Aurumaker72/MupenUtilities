@@ -430,7 +430,7 @@ namespace MupenUtils
             
             if (Controllers > 1)
             {
-                MessageBox.Show("The movie has more than one controller enabled. The application might behave unexpectedly.", "M64 too many controllers!");
+                lbl_Ctrls.ForeColor = Color.Red;
             }
             if(Crc32 != 4281031267)
             {
@@ -925,7 +925,7 @@ namespace MupenUtils
             else if ((e.KeyCode == Keys.Enter && e.Modifiers == Keys.Alt) || e.KeyCode == Keys.F11)
             {
                 ExtensionMethods.FullScreen(this);
-            }
+            }   
         }
         private void btn_PlayPause_Click(object sender, EventArgs e)
         {

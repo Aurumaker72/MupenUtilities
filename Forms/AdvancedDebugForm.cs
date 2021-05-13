@@ -17,6 +17,8 @@ namespace MupenUtils.Forms
         public AdvancedDebugForm()
         {
             InitializeComponent();
+            this.Text = MainForm.PROGRAM_NAME + " - Debug Set Input";
+
         }
 
         private void txt_Debug_Uvalue_TextChanged(object sender, EventArgs e)
