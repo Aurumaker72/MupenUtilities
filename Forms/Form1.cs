@@ -158,6 +158,12 @@ namespace MupenUtils
             cbox_startType.Items.Add("EEPROM");
             cbox_startType.Items.Add("Unknown");
 
+            if (!BitConverter.IsLittleEndian)
+            {
+                // incompatible because this program is somewhat endian dependent
+                this.Text = this.Text + " - Unsupported";
+                MessageBox.Show("Your system is big-endian and this program might not work properly!");
+            }
             UpdateReadOnly();
             EnableM64View(false, true);
         }
