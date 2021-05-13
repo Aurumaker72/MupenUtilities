@@ -444,10 +444,32 @@ namespace MupenUtils
 
         void WriteM64()
         {
-            if (!FileLoaded) return;
-            SavePath = Path + "-modified.m64";
+            Debug.WriteLine(String.Format("Begin Save M64: File loaded: {0}", FileLoaded));
+            
+            if (!FileLoaded)
+            {
+                RedControl(btn_PathSel);
+                return;
+            }
+
+            string tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
+            
+            while (File.Exists(tmpPath))
+            {
+            
+                Debug.WriteLine("File already exists, trying " + tmpPath);
+                tmpPath = tmpPath + "-modified";
+            }
+            
+            tmpPath = tmpPath + ".m64";
+
+            SavePath = tmpPath;
+
+            Debug.WriteLine(tmpPath);
+
             File.Delete(SavePath);
-            FileStream fs = File.Open(SavePath, FileMode.OpenOrCreate);
+
+            FileStream fs = File.Open(SavePath, FileMode.Create);
             BinaryWriter br = new BinaryWriter(fs);
             //ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
@@ -528,6 +550,7 @@ namespace MupenUtils
             }
             br.Flush();
             br.Close();
+            fs.Close();
             //ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
         }
 
