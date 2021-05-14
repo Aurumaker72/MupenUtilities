@@ -1245,8 +1245,8 @@ namespace MupenUtils
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
                         
-            int x = pb_JoystickPic.ClientRectangle.Left + ( JOY_Rel.X+128)*(pb_JoystickPic.ClientRectangle.Right-pb_JoystickPic.ClientRectangle.Left)/256;
-		    int y = pb_JoystickPic.ClientRectangle.Top  + (-JOY_Rel.Y+128)*(pb_JoystickPic.ClientRectangle.Bottom-pb_JoystickPic.ClientRectangle.Top)/256;
+            int x = pb_JoystickPic.ClientRectangle.Left + (JOY_Rel.X+128)*(pb_JoystickPic.ClientRectangle.Right-pb_JoystickPic.ClientRectangle.Left)/256;
+		    int y = pb_JoystickPic.ClientRectangle.Top  + (JOY_Rel.Y+128)*(pb_JoystickPic.ClientRectangle.Bottom-pb_JoystickPic.ClientRectangle.Top)/256;
             Point xy = new Point(x,y);
 
             e.Graphics.DrawLine(linepen, JOY_middle, xy);
