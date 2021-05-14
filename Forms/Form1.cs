@@ -1172,7 +1172,7 @@ namespace MupenUtils
         }
         Point RelativeToAbsolute(Point rel)
         {
-            return new Point(rel.X+82,rel.Y+62);
+            return new Point(rel.X+82,rel.Y+62); // or 72??
             //return PointToScreen(rel);
         }
         
@@ -1204,10 +1204,10 @@ namespace MupenUtils
         {
             JOY_Abs.X = ExtensionMethods.Clamp(e.X, JOY_clampDif/2, pb_JoystickPic.Width - JOY_clampDif);
             JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif/2, pb_JoystickPic.Height - JOY_clampDif);
-            JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -127, 127);
-            JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
+            JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -128, 127);
+            JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 128);
             JOY_Rel.Y = -JOY_Rel.Y;
-
+            
             //if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
             if (user && !readOnly) SetInput(frame);
 
