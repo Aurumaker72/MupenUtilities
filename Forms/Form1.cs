@@ -17,7 +17,7 @@ namespace MupenUtils
     {
         #region Vars
 
-        public const string PROGRAM_VERSION = "1.3";
+        public const string PROGRAM_VERSION = "1.4";
         public const string PROGRAM_NAME = "Mupen Utilities";
 
         public const string M64_LOADED_TEXT = "M64 Loaded";
@@ -1172,7 +1172,7 @@ namespace MupenUtils
         }
         Point RelativeToAbsolute(Point rel)
         {
-            return new Point(rel.X+82,rel.Y+72);
+            return new Point(rel.X+82,rel.Y+62);
             //return PointToScreen(rel);
         }
         
