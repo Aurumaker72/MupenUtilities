@@ -31,6 +31,9 @@ namespace MupenUtils
         public const byte UPDATE_EQUAL = 2;
         public const byte UPDATE_UNKNOWN = 255;
 
+        public const bool RELATIVE = false;
+        public const bool ABSOLUTE = true;
+
         // [] means reserved, <^>v is direction
         public string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start","Z","B","A","C>","C<","Cv","C^","R","L","[1]","[2]","X","Y"};
         
@@ -776,7 +779,7 @@ namespace MupenUtils
             txt_joyY.Text = joystickY.ToString();
 
             SetInput(frame);
-            SetJoystickValue(new Point(joystickX,joystickY), false, false);
+            SetJoystickValue(new Point(joystickX,joystickY), RELATIVE, false);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
@@ -1091,7 +1094,7 @@ namespace MupenUtils
         void ParseXYTextbox()
         {
             if(ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text))
-                SetJoystickValue(new Point( sbyte.Parse(txt_joyX.Text), sbyte.Parse(txt_joyY.Text)), false, false);
+                SetJoystickValue(new Point( sbyte.Parse(txt_joyX.Text), sbyte.Parse(txt_joyY.Text)), RELATIVE, false);
         }
         private void txt_joyX_KeyDown(object sender, KeyEventArgs e)
         {
@@ -1192,7 +1195,7 @@ namespace MupenUtils
         }
         void SetJoystickValue(Point pos, bool abs, bool user)
         {
-            if (abs)
+            if (abs == ABSOLUTE)
             {
                 // Point pos is absolute control location
                 JOY_Abs.X = pos.X;
@@ -1222,7 +1225,7 @@ namespace MupenUtils
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
         {
-            if (JOY_mouseDown) SetJoystickValue(e.Location, true, true);
+            if (JOY_mouseDown) SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
@@ -1233,19 +1236,22 @@ namespace MupenUtils
                 JOY_followMouse = false;
             }
             JOY_mouseDown = true;
-            SetJoystickValue(e.Location, true, true);
+            SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
         private void DrawJoystick(PaintEventArgs e)
         {
             Pen linepen = new Pen(Color.Blue, 3);
 
-            Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
+            //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
+                        
+            int x = pb_JoystickPic.ClientRectangle.Left + ( JOY_Rel.X+128)*(pb_JoystickPic.ClientRectangle.Right-pb_JoystickPic.ClientRectangle.Left)/256;
+		    int y = pb_JoystickPic.ClientRectangle.Top  + (-JOY_Rel.Y+128)*(pb_JoystickPic.ClientRectangle.Bottom-pb_JoystickPic.ClientRectangle.Top)/256;
+            Point xy = new Point(x,y);
 
-            e.Graphics.DrawLine(linepen, JOY_middle, JOY_Abs);
-
+            e.Graphics.DrawLine(linepen, JOY_middle, xy);
             e.Graphics.DrawRectangle(Pens.Black, 0,0,pb_JoystickPic.Width-1,pb_JoystickPic.Height-1);
-            e.Graphics.FillEllipse(Brushes.Red, JOY_Abs.X - 4, JOY_Abs.Y - 4, 8, 8);
+            e.Graphics.FillEllipse(Brushes.Red, x - 4, y - 4, 8, 8);
             e.Graphics.DrawEllipse(Pens.Black, 1,1, pb_JoystickPic.Width-3, pb_JoystickPic.Height-3);
             e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, 0, JOY_middle.Y);
             e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, JOY_middle.X, pb_JoystickPic.Height);
