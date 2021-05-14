@@ -1090,11 +1090,11 @@ namespace MupenUtils
             // cbox_startType
             // 
             this.cbox_startType.FormattingEnabled = true;
+            this.cbox_startType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbox_startType.Location = new System.Drawing.Point(117, 145);
             this.cbox_startType.Name = "cbox_startType";
             this.cbox_startType.Size = new System.Drawing.Size(132, 24);
             this.cbox_startType.TabIndex = 1;
-            this.cbox_startType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbox_startType_KeyDown);
             // 
             // txt_misc_UID
             // 

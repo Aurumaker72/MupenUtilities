@@ -1028,11 +1028,6 @@ namespace MupenUtils
                 ExtensionMethods.FullScreen(this);
             }   
         }
-        
-        private void cbox_startType_KeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = true;
-        }
 
 
         private void btn_PlayPause_Click(object sender, EventArgs e)
