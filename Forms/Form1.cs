@@ -38,6 +38,7 @@ namespace MupenUtils
         MoreForm moreForm = new MoreForm();
         AdvancedDebugForm debugForm = new AdvancedDebugForm();
         TASStudioMoreForm tasStudioForm = new TASStudioMoreForm();
+        ReplacementForm replacementForm = new ReplacementForm();
 
         string Path, SavePath;
         public static bool FileLoaded = false;
@@ -444,6 +445,7 @@ namespace MupenUtils
             Debug.WriteLine("VI/s:" + VIs);
             frames = VIs;
             int findx = 0;
+            // position 1024
             while (findx <= frames)
             {
                 if (br.BaseStream.Position + 4 > fs.Length) {
@@ -900,6 +902,11 @@ namespace MupenUtils
             if(e.KeyCode == Keys.H && e.Modifiers == Keys.Control)
                 tasStudioForm.ShowDialog();
             
+        }
+        
+        private void replacementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            replacementForm.ShowDialog();
         }
 
         private void MainForm_Focus(object sender, EventArgs e)

@@ -66,5 +66,6 @@ namespace MupenUtils.Forms
             for (int i = 0; i < 50; i++)
             this.Text = this.Text + "Obunga";
         }
+
     }
 }

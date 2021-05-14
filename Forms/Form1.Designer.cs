@@ -124,6 +124,7 @@ namespace MupenUtils
             this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replacementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -1089,8 +1090,8 @@ namespace MupenUtils
             // 
             // cbox_startType
             // 
-            this.cbox_startType.FormattingEnabled = true;
             this.cbox_startType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox_startType.FormattingEnabled = true;
             this.cbox_startType.Location = new System.Drawing.Point(117, 145);
             this.cbox_startType.Name = "cbox_startType";
             this.cbox_startType.Size = new System.Drawing.Size(132, 24);
@@ -1195,28 +1196,29 @@ namespace MupenUtils
             this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky,
-            this.tsmi_Input_SetInput});
+            this.tsmi_Input_SetInput,
+            this.replacementToolStripMenuItem});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(156, 76);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 128);
             // 
             // tsmi_Input_Debug_DumpData
             // 
             this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(155, 24);
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 24);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(155, 24);
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 24);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
             // tsmi_Input_SetInput
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
-            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(155, 24);
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 24);
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
@@ -1234,6 +1236,13 @@ namespace MupenUtils
             this.utilityToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
+            // 
+            // replacementToolStripMenuItem
+            // 
+            this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
+            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.replacementToolStripMenuItem.Text = "Replacement";
+            this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1378,6 +1387,7 @@ namespace MupenUtils
         public System.Windows.Forms.DataGridView dgv_Main;
         private System.Windows.Forms.ContextMenuStrip ctx_TasStudio;
         private System.Windows.Forms.ToolStripMenuItem utilityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem replacementToolStripMenuItem;
     }
 }
 
