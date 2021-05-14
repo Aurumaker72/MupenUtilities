@@ -18,6 +18,8 @@ namespace MupenUtils.Forms
         string pathTarget = string.Empty;
         public static List<int> inputSrc = new List<int>();
 
+        bool generateNew = false;
+
         public ReplacementForm()
         {
             InitializeComponent();
@@ -47,6 +49,9 @@ namespace MupenUtils.Forms
             lbl_Repl_Status.Text = "Idle";
             Properties.Settings.Default.LastPathReplaceSrc = pathSource;
             Properties.Settings.Default.Save();
+
+            if (pathSource == pathTarget)
+                lbl_Repl_Status.Text = "Identical paths";
         }
 
         private void btn_Repl_BrowseTrg_Click(object sender, EventArgs e)
@@ -61,7 +66,16 @@ namespace MupenUtils.Forms
             lbl_Repl_Status.Text = "Idle";
             Properties.Settings.Default.LastPathReplaceTrg = pathTarget;
             Properties.Settings.Default.Save();
+
+             if (pathSource == pathTarget)
+                lbl_Repl_Status.Text = "Identical paths";
         }
+        
+        private void chk_Repl_Trg_CheckedChanged(object sender, EventArgs e)
+        {
+            btn_Repl_BrowseTrg.Enabled = txt_Repl_Trg.Enabled = generateNew = chk_Repl_Trg.Checked;
+        }
+
         private void btn_Repl_Go_Click(object sender, EventArgs e)
         {
             Replace();
@@ -115,14 +129,13 @@ namespace MupenUtils.Forms
             if (chk_Repl_All.Checked)
             {
                 from = 0;
-                to = src.Length / 4 - 1024;
+                to = src.Length / 4 - basePosition;
             }
             
-            for (int i = 1024+from; i < to; i++)
+            for (int i = basePosition+from; i < to; i++)
             {
                 lbl_Repl_Status.Text = "Copying " + i;
                 trg[i] = src[i];
-                Thread.Sleep(100);
             }
 
             lbl_Repl_Status.Text = "Idle";
@@ -139,5 +152,7 @@ namespace MupenUtils.Forms
         {
             lbl_Repl_FFrom.Enabled = lbl_Repl_Fto.Enabled = txt_Repl_FFrom.Enabled = txt_Repl_Fto.Enabled = !chk_Repl_All.Checked;
         }
+
+
     }
 }

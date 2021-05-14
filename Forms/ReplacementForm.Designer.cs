@@ -45,6 +45,7 @@ namespace MupenUtils.Forms
             this.btn_Repl_Go = new System.Windows.Forms.Button();
             this.lbl_Repl_Status = new System.Windows.Forms.Label();
             this.chk_Repl_All = new System.Windows.Forms.CheckBox();
+            this.chk_Repl_Trg = new System.Windows.Forms.CheckBox();
             this.gpBox_Repl_Replacement.SuspendLayout();
             this.gp_Repl_Commands.SuspendLayout();
             this.gp_Repl_File.SuspendLayout();
@@ -57,7 +58,7 @@ namespace MupenUtils.Forms
             this.gpBox_Repl_Replacement.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gpBox_Repl_Replacement.Location = new System.Drawing.Point(0, 0);
             this.gpBox_Repl_Replacement.Name = "gpBox_Repl_Replacement";
-            this.gpBox_Repl_Replacement.Size = new System.Drawing.Size(521, 237);
+            this.gpBox_Repl_Replacement.Size = new System.Drawing.Size(544, 237);
             this.gpBox_Repl_Replacement.TabIndex = 0;
             this.gpBox_Repl_Replacement.TabStop = false;
             this.gpBox_Repl_Replacement.Text = "Replacement";
@@ -71,7 +72,7 @@ namespace MupenUtils.Forms
             this.gp_Repl_Commands.Controls.Add(this.lbl_Repl_FFrom);
             this.gp_Repl_Commands.Controls.Add(this.txt_Repl_FFrom);
             this.gp_Repl_Commands.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_Repl_Commands.Location = new System.Drawing.Point(309, 18);
+            this.gp_Repl_Commands.Location = new System.Drawing.Point(332, 18);
             this.gp_Repl_Commands.Name = "gp_Repl_Commands";
             this.gp_Repl_Commands.Size = new System.Drawing.Size(209, 216);
             this.gp_Repl_Commands.TabIndex = 0;
@@ -114,6 +115,7 @@ namespace MupenUtils.Forms
             // 
             // gp_Repl_File
             // 
+            this.gp_Repl_File.Controls.Add(this.chk_Repl_Trg);
             this.gp_Repl_File.Controls.Add(this.lbl_Repl_Status);
             this.gp_Repl_File.Controls.Add(this.btn_Repl_BrowseTrg);
             this.gp_Repl_File.Controls.Add(this.btn_Repl_BrowseSrc);
@@ -124,7 +126,7 @@ namespace MupenUtils.Forms
             this.gp_Repl_File.Dock = System.Windows.Forms.DockStyle.Left;
             this.gp_Repl_File.Location = new System.Drawing.Point(3, 18);
             this.gp_Repl_File.Name = "gp_Repl_File";
-            this.gp_Repl_File.Size = new System.Drawing.Size(293, 216);
+            this.gp_Repl_File.Size = new System.Drawing.Size(317, 216);
             this.gp_Repl_File.TabIndex = 0;
             this.gp_Repl_File.TabStop = false;
             this.gp_Repl_File.Text = "File";
@@ -217,11 +219,24 @@ namespace MupenUtils.Forms
             this.chk_Repl_All.UseVisualStyleBackColor = true;
             this.chk_Repl_All.CheckedChanged += new System.EventHandler(this.chk_Repl_All_CheckedChanged);
             // 
+            // chk_Repl_Trg
+            // 
+            this.chk_Repl_Trg.AutoSize = true;
+            this.chk_Repl_Trg.Checked = true;
+            this.chk_Repl_Trg.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_Repl_Trg.Location = new System.Drawing.Point(280, 84);
+            this.chk_Repl_Trg.Name = "chk_Repl_Trg";
+            this.chk_Repl_Trg.Size = new System.Drawing.Size(18, 17);
+            this.chk_Repl_Trg.TabIndex = 0;
+            this.chk_Repl_Trg.TabStop = false;
+            this.chk_Repl_Trg.UseVisualStyleBackColor = true;
+            this.chk_Repl_Trg.CheckedChanged += new System.EventHandler(this.chk_Repl_Trg_CheckedChanged);
+            // 
             // ReplacementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(521, 237);
+            this.ClientSize = new System.Drawing.Size(544, 237);
             this.Controls.Add(this.gpBox_Repl_Replacement);
             this.MaximizeBox = false;
             this.Name = "ReplacementForm";
@@ -256,5 +271,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Button btn_Repl_Go;
         private System.Windows.Forms.Label lbl_Repl_Status;
         private System.Windows.Forms.CheckBox chk_Repl_All;
+        private System.Windows.Forms.CheckBox chk_Repl_Trg;
     }
 }
