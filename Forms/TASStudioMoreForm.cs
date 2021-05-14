@@ -18,7 +18,7 @@ namespace MupenUtils.Forms
         {
             InitializeComponent();
             this.Text = "TAS Studio - Commands";
-
+            this.MinimumSize = gp_TasStudio_Help.Size;
 
             btn_TasStudio_EasterEggObunga.BackColor = btn_TasStudio_EasterEggObunga.ForeColor = Color.FromKnownColor(KnownColor.Control);
 

@@ -29,7 +29,8 @@ namespace MupenUtils.Helpers
             "The bit arhitecture is displayed in status bar",
             "This app has been running since " + Process.GetCurrentProcess().StartTime.ToUniversalTime(),
             "Non-plaintext values are displayed in hexadecimal",
-            "Some values are unmodifiable"
+            "Some values are unmodifiable",
+            "The \"More\" button has useful dialogs"
         };
         public static string GetRandomTip()
         {

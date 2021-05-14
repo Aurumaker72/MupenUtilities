@@ -122,9 +122,10 @@ namespace MupenUtils
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.replacementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.replacementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -1194,33 +1195,41 @@ namespace MupenUtils
             // 
             this.ctx_Input_Debug.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.replacementToolStripMenuItem,
+            this.toolStripSeparator1,
             this.tsmi_Input_Debug_DumpData,
-            this.tsmi_Input_Sticky,
             this.tsmi_Input_SetInput,
-            this.replacementToolStripMenuItem});
+            this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 128);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(166, 106);
             // 
             // tsmi_Input_Debug_DumpData
             // 
             this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(165, 24);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(165, 24);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
             // tsmi_Input_SetInput
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
-            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(165, 24);
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
+            // 
+            // replacementToolStripMenuItem
+            // 
+            this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
+            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.replacementToolStripMenuItem.Text = "Replacement";
+            this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
             // 
             // ctx_TasStudio
             // 
@@ -1237,12 +1246,10 @@ namespace MupenUtils
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
-            // replacementToolStripMenuItem
+            // toolStripSeparator1
             // 
-            this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
-            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
-            this.replacementToolStripMenuItem.Text = "Replacement";
-            this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(162, 6);
             // 
             // MainForm
             // 
@@ -1388,6 +1395,7 @@ namespace MupenUtils
         private System.Windows.Forms.ContextMenuStrip ctx_TasStudio;
         private System.Windows.Forms.ToolStripMenuItem utilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replacementToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 
