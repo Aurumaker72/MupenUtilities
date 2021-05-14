@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace MupenUtils
 {
@@ -52,6 +53,7 @@ namespace MupenUtils
         public static bool forceGoto = false;
 
         bool knowWhatImDoing = false;
+        public static bool mupenRunning = false;
 
         // M64 Data as Strings
         string Magic;
@@ -80,6 +82,47 @@ namespace MupenUtils
         public CheckBox[] controllerButtonsChk;
         public static List<int> inputList = new List<int>();
         public static List<int> SAVE_inputList = new List<int>();
+        public static UInt32[] validCrcs = { 
+            0x03048DE6,
+            0x11FB579B,
+            0xDD801954,
+            0x5CF7952A,
+            0xA1E15117,
+            0xBC9FF5F2,
+            0x3CE60709,
+            0x42C43204,
+            0x587DD983,
+            0x2AF50883,
+            0x6395C475,
+            0xA2DCF689,
+            0x7FE024C9,
+            0x4246EE14,
+            0x7FF42FD0,
+            0xC0345565,
+            0x3B53519F,
+            0x35958F55,
+            0x08287CC8,
+            0xF42BB75F,
+            0xCDF26D67,
+            0x356736C7,
+            0xE96779FA,
+            0xB2F04090,
+            0x45A91CB1,
+            0x7976248C,
+            0xEB97929E,
+            0xDD2DF6D9,
+            0xFAA6B083,
+            0x6787E212,
+            0x0248F6C3,
+            0x032625B0,
+            0x5D9696DF,
+            0x4711A9DC,
+            0x6CED6472,
+            0x26450AAB,
+            0x434389C1,
+            0x2BCEE11C,
+            0xDA98A5D3
+            };
         int lastValue;
 
         public static int frame;
@@ -92,14 +135,20 @@ namespace MupenUtils
         const int JOY_clampDif = 4;
 
         UpdateNotifier updateNotifier = new UpdateNotifier();
-        
+
         #endregion
 
         #region Setup
 
         public MainForm()
         {
+            // must do this before anything else
+            #if !DEBUG
+            Application.ThreadException += applicationThreadException;
+            AppDomain.CurrentDomain.UnhandledException += currentDomainUnhandledException;
+            #endif
             InitializeComponent();
+
             InitController();
             InitUI();
             // check for updates
@@ -168,9 +217,9 @@ namespace MupenUtils
             EnableM64View(false, true);
         }
 
-        #endregion
+#endregion
 
-        #region UI
+#region UI
 
         void ResetTitle()
         {
@@ -277,11 +326,13 @@ namespace MupenUtils
             }
         }
 
-        #endregion
+#endregion
 
-        #region I/O
+#region I/O
         void DumpInputsFile(bool plain)
         {
+            throw new ArgumentException("test exception");
+
             FileStream fs;
             BinaryWriter br;
             try
@@ -336,6 +387,7 @@ namespace MupenUtils
                 st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Visible = true));
                 st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.ForeColor = Color.Red));
                 st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = "Mupen64 is running, this might cause file access issues"));
+                    mupenRunning = true;
                     break;
                 }
             }
@@ -451,10 +503,12 @@ namespace MupenUtils
             {
                 lbl_Ctrls.ForeColor = Color.Red;
             }
-            if(Crc32 != 4281031267)
+
+            // check if crc is some widespread game like sm64, ssb64, kario mart, etc...
+            foreach (var _ in validCrcs.Where(crc=>Crc32!=crc).Select(crc=>new{}))
             {
                 lbl_ROMCRC.ForeColor = Color.Red;
-                //MessageBox.Show("The movie was recorded on a untested rom. The application might behave unexpectedly.", "M64 weird rom!");
+                break;
             }
             //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
             
@@ -581,9 +635,9 @@ namespace MupenUtils
             //ShowStatus("ST Loading not implemented yet", st_Status1);
             MessageBox.Show("ST Parsing not implemented");
         }
-        #endregion
+#endregion
 
-        #region Input & Frames
+#region Input & Frames
 
         // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
 
@@ -715,7 +769,6 @@ namespace MupenUtils
             byte[] data = BitConverter.GetBytes(value);
             sbyte joystickX = (sbyte)data[2];
             sbyte joystickY = (sbyte)-data[3];
-            ExtensionMethods.AdjustY(ref joystickX);
 
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
@@ -777,9 +830,9 @@ namespace MupenUtils
             GetInput(inputList[frame]);
             UpdateFrameControlUI();
         }
-        #endregion
+#endregion
 
-        #region Event Handlers
+#region Event Handlers
         
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
@@ -1106,10 +1159,10 @@ namespace MupenUtils
         }
 
 
-        #endregion
+#endregion
 
 
-        #region Joystick Drawing, Events, etc...
+#region Joystick Drawing, Events, etc...
 
         Point AbsoluteToRelative(Point abs)
         {
@@ -1151,14 +1204,13 @@ namespace MupenUtils
             JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif/2, pb_JoystickPic.Height - JOY_clampDif);
             JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -127, 127);
             JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
-            sbyte relYadj = (sbyte)-JOY_Rel.Y;
-            ExtensionMethods.AdjustY(ref relYadj);
-            JOY_Rel.Y = relYadj;
+            JOY_Rel.Y = -JOY_Rel.Y;
+
             //if(user) SnapJoystick(); // Snap only if joystick moved by user! Otherwise there would be a desync and inaccuracy issue 
             if (user && !readOnly) SetInput(frame);
 
             txt_joyX.Text = JOY_Rel.X.ToString();
-            txt_joyY.Text = relYadj.ToString();
+            txt_joyY.Text = JOY_Rel.Y.ToString();
             pb_JoystickPic.Refresh();
         }
 
@@ -1197,6 +1249,33 @@ namespace MupenUtils
         }
 
 
-        #endregion
+#endregion
+
+#region Special
+        private static void currentDomainUnhandledException(object sender,UnhandledExceptionEventArgs e)
+        {
+            MExcept(e.ExceptionObject as Exception);
+
+        }
+        private static void applicationThreadException(object sender,ThreadExceptionEventArgs e)
+        {
+            MExcept(e.Exception);
+
+        }
+
+        static void MExcept(Exception ex)
+        {
+            if(MessageBox.Show("Exception occured. The program will attempt to continue. Do you want to dump relevant data to a crash log?", PROGRAM_NAME + " - Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+            {
+                string exStr = "";
+                exStr += "message: " + ex.Message + "\n";
+                exStr += "stack trace: " + ex.StackTrace + "\n";
+                exStr += "file loaded: " + FileLoaded.ToString() + "\n";
+                exStr += "mupen running: " + mupenRunning.ToString() + "\n";
+                File.WriteAllText(@"lastexception.log", exStr);
+            }
+        }
+
+#endregion
     }
 }
