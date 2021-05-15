@@ -403,9 +403,18 @@ namespace MupenUtils
             catch { ErrorM64(); return; }
             BinaryReader br = new BinaryReader(fs);
 
+            // Reset
+            inputList.Clear();
+            frame = 0;
+            lbl_FrameSelected.Text = "0";
+            txt_Frame.Text = "0";
+            tr_MovieScrub.Value = 0;
+            tr_MovieScrub.Minimum = 0;
+            ResetLblColors();
 
             // Read header
-            Magic = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            Int32 magic_Raw = br.ReadInt32();
+            Magic = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(magic_Raw));
             Version = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             UID = br.ReadInt32();
             VIs = br.ReadUInt32();//ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
@@ -499,15 +508,19 @@ namespace MupenUtils
 
 
             
-            // hack to get it on main thread
             EnableM64View_ThreadSafe(true);
 
-            ResetLblColors();
-            
-            if (Controllers > 1)
-            {
+            if (Controllers != 1)
                 lbl_Ctrls.ForeColor = Color.Red;
-            }
+
+            if (txt_RomCountry.Text.Contains("Unknown"))
+                lbl_RomCountry.ForeColor = Color.Red;
+
+            if(StartType > 4 || StartType < 1)
+                lb_starttype.ForeColor = Color.Red;
+
+            if(magic_Raw != 439629389)
+                lbl_misc_Magic.ForeColor = Color.Red;
 
             // check if crc is some widespread game like sm64, ssb64, kario mart, etc...
             foreach (var _ in validCrcs.Where(crc=>Crc32!=crc).Select(crc=>new{}))
