@@ -22,7 +22,7 @@ namespace MupenUtils
 
         public const string M64_LOADED_TEXT = "M64 Loaded";
         public const string M64_LOADING_TEXT = "M64 Loading";
-        public const string M64_FAILED_TEXT = "M64 Invalid";
+        public const string M64_FAILED_TEXT = "Failed to load M64.";
         public const string M64_SELECTED_TEXT = "Type: M64";
         public const string ST_SELECTED_TEXT = "Type: ST";
 
@@ -357,20 +357,11 @@ namespace MupenUtils
             }
         }
         void ErrorM64() {
-            ShowStatus_ThreadSafe(M64_FAILED_TEXT);
-            // set status
+
+            MessageBox.Show(M64_FAILED_TEXT + " Are you loading a real M64?", PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
-            // clear path textbox
 
-            this.Invoke((MethodInvoker)(() => this.ActiveControl = null));
-            // clear active control
-
-
-            EnableM64View_ThreadSafe(false);
-            // set m64 style
-
-            m64load.Abort(); // try kill thread
         }
         void ReadM64()
         {
@@ -399,7 +390,9 @@ namespace MupenUtils
             UTF8Encoding utf8 = new UTF8Encoding();
             FileStream fs;
             try { fs = File.Open(Path, FileMode.Open); }
-            catch { ErrorM64(); return; }
+            catch { 
+                ErrorM64(); 
+                return; }
             BinaryReader br = new BinaryReader(fs);
 
             // Reset
