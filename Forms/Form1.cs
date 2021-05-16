@@ -335,7 +335,6 @@ namespace MupenUtils
 #region I/O
         void DumpInputsFile(bool plain)
         {
-            throw new ArgumentException("test exception");
 
             FileStream fs;
             BinaryWriter br;
