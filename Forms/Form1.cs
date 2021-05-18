@@ -446,6 +446,13 @@ namespace MupenUtils
 
             // Load inputs
             // We need a buffer to check if end of file reached
+
+             // rant time:
+            // tasstudio docs about mupen are fucking retarded and apparently the person who wrote it doesnt know what the difference
+            // between a frame and a VI is...
+            // to quote: "00C 4-byte little-endian unsigned int: number of frames (vertical interrupts)"
+            // WHATTT???? 
+
             Debug.WriteLine("VI/s:" + VIs);
             frames = VIs;
             int findx = 0;
