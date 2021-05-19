@@ -43,7 +43,7 @@ namespace MupenUtils
         TASStudioMoreForm tasStudioForm = new TASStudioMoreForm();
         ReplacementForm replacementForm = new ReplacementForm();
 
-        string Path, SavePath;
+        public static string Path, SavePath;
         public static bool FileLoaded = false;
         bool ExpandedMenu = false;
         bool Sticky = false;
@@ -398,10 +398,10 @@ namespace MupenUtils
             // Reset
             inputList.Clear();
             frame = 0;
-            lbl_FrameSelected.Text = "0";
-            txt_Frame.Text = "0";
-            tr_MovieScrub.Value = 0;
-            tr_MovieScrub.Minimum = 0;
+            lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "0"));
+            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = "0"));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = 0));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
             ResetLblColors();
 
             // Read header
@@ -902,7 +902,6 @@ namespace MupenUtils
         
         private void tsmi_Input_SetInput_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("If you desync/corrupt/crash something with this feature do not report it as a bug.");
             debugForm.ShowDialog();
         }
         private void dgv_Main_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
