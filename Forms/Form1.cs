@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Linq;
+using System.Drawing.Drawing2D;
 
 namespace MupenUtils
 {
@@ -139,6 +140,7 @@ namespace MupenUtils
         const int JOY_clampDif = 4;
 
         UpdateNotifier updateNotifier = new UpdateNotifier();
+        SmoothingMode JOY_SmoothingMode = SmoothingMode.HighQuality;
 
         #endregion
 
@@ -1076,6 +1078,14 @@ namespace MupenUtils
             tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
             tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
         }
+        
+        private void tsmi_AAJoystick_Click(object sender, EventArgs e)
+        {
+            JOY_SmoothingMode = JOY_SmoothingMode == SmoothingMode.HighQuality ? SmoothingMode.None : SmoothingMode.HighQuality;
+            tsmi_AAJoystick.Checked = JOY_SmoothingMode == SmoothingMode.HighQuality;
+            pb_JoystickPic.Invalidate();
+        }
+
         private void MainForm_Resize(object sender, EventArgs e)
         {
 #if DEBUG
@@ -1257,10 +1267,10 @@ namespace MupenUtils
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
-       
-
         private void DrawJoystick(PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = JOY_SmoothingMode;
+
             Pen linepen = new Pen(Color.Blue, 3);
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
