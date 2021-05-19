@@ -79,5 +79,10 @@ namespace MupenUtils.Forms
         {
             
         }
+
+        private void gp_Debug_Hex_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

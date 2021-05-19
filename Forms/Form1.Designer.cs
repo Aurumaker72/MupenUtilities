@@ -119,13 +119,14 @@ namespace MupenUtils
             this.lbl_Ctrls = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.replacementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -371,6 +372,7 @@ namespace MupenUtils
             this.dgv_Main.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dgv_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_Main.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_Main.GridColor = System.Drawing.SystemColors.Control;
             this.dgv_Main.Location = new System.Drawing.Point(3, 18);
             this.dgv_Main.Name = "dgv_Main";
             this.dgv_Main.RowHeadersWidth = 51;
@@ -1203,19 +1205,24 @@ namespace MupenUtils
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
             this.ctx_Input_Debug.Size = new System.Drawing.Size(166, 106);
             // 
+            // replacementToolStripMenuItem
+            // 
+            this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
+            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
+            this.replacementToolStripMenuItem.Text = "Replacement";
+            this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(162, 6);
+            // 
             // tsmi_Input_Debug_DumpData
             // 
             this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
             this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(165, 24);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
-            // 
-            // tsmi_Input_Sticky
-            // 
-            this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(165, 24);
-            this.tsmi_Input_Sticky.Text = "Sticky";
-            this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
             // tsmi_Input_SetInput
             // 
@@ -1224,32 +1231,35 @@ namespace MupenUtils
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
-            // replacementToolStripMenuItem
+            // tsmi_Input_Sticky
             // 
-            this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
-            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(165, 24);
-            this.replacementToolStripMenuItem.Text = "Replacement";
-            this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
+            this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(165, 24);
+            this.tsmi_Input_Sticky.Text = "Sticky";
+            this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
             // ctx_TasStudio
             // 
             this.ctx_TasStudio.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ctx_TasStudio.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.utilityToolStripMenuItem});
+            this.utilityToolStripMenuItem,
+            this.tsmi_TasStudio_Big});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(118, 28);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(211, 80);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
-            // toolStripSeparator1
+            // tsmi_TasStudio_Big
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(162, 6);
+            this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_TasStudio_Big.Text = "Big";
+            this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
             // MainForm
             // 
@@ -1396,6 +1406,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem utilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replacementToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudio_Big;
     }
 }
 

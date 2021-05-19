@@ -119,6 +119,7 @@ namespace MupenUtils.Forms
             this.gp_Debug_Hex.TabIndex = 0;
             this.gp_Debug_Hex.TabStop = false;
             this.gp_Debug_Hex.Text = "View raw";
+            this.gp_Debug_Hex.Enter += new System.EventHandler(this.gp_Debug_Hex_Enter);
             // 
             // txt_Debug_Nthbyte
             // 

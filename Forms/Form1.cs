@@ -704,8 +704,8 @@ namespace MupenUtils
                         // this is easily done faster but do i care?
 
                         string cellValue = "";
-                        
-                        if (x < 15)
+                        Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
+                        if (x < 16)
                         {
                             if ((inputList[y] & (int)Math.Pow(2, x)) != 0)
                                 cellValue = inputStructNames[x];
@@ -715,13 +715,14 @@ namespace MupenUtils
                             
                             byte[] a = BitConverter.GetBytes(inputList[y]);
 
-                            if(x == 15)
+                            if(x == 16)
                             cellValue = a[2].ToString();
                             if(y == 17)
                             cellValue = a[3].ToString();
 
 
                         }
+                        dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
                     }
                 }
             }).Start();
@@ -840,7 +841,7 @@ namespace MupenUtils
             if (!checkAllowedStep(targetframe)) return;
             if(frame >= inputList.Count)
             {
-               frame = inputList.Count;
+               frame = (int)inputList.Count;
                stepFrameTimer.Enabled = false;
                return;
             }
@@ -1069,6 +1070,12 @@ namespace MupenUtils
             btn_PlayDirection.Text = forwardsPlayback ? ">" : "<";
             btn_PlayPause.Text = stepFrameTimer.Enabled ? "| |" : forwardsPlayback ? "|>" : "<|";
         }
+         private void tsmi_TasStudio_Big_Click(object sender, EventArgs e)
+        {
+            gp_TASStudio.Dock = gp_TASStudio.Dock == DockStyle.Right ? DockStyle.Fill : DockStyle.Right;
+            tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
+            tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
+        }
         private void MainForm_Resize(object sender, EventArgs e)
         {
 #if DEBUG
@@ -1249,6 +1256,8 @@ namespace MupenUtils
             JOY_mouseDown = true;
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
+
+       
 
         private void DrawJoystick(PaintEventArgs e)
         {
