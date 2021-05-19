@@ -57,7 +57,7 @@ namespace MupenUtils
         public static int markedGoToFrame = 0;
         public static bool forceGoto = false;
 
-        bool knowWhatImDoing = false;
+        bool simpleMode = false;
         public static bool mupenRunning = false;
 
         // M64 Data as Strings
@@ -142,6 +142,8 @@ namespace MupenUtils
         UpdateNotifier updateNotifier = new UpdateNotifier();
         SmoothingMode JOY_SmoothingMode = SmoothingMode.HighQuality;
 
+        Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0) };
+        
         #endregion
 
         #region Setup
@@ -157,6 +159,7 @@ namespace MupenUtils
 
             InitController();
             InitUI();
+
             // check for updates
             if (updateNotifier.CheckForInternetConnection())
                 updateNotifier.CheckForUpdates(UPDATE_UNKNOWN, true);
@@ -212,6 +215,11 @@ namespace MupenUtils
             cbox_startType.Items.Add("Power on");
             cbox_startType.Items.Add("EEPROM");
             cbox_startType.Items.Add("Unknown");
+            
+            originalGroupboxLocation[0] = gp_User.Location;
+            originalGroupboxLocation[1] = gp_M64_misc.Location;
+            originalGroupboxLocation[2] = gpRom.Location;
+            originalGroupboxLocation[3] = gp_Plugins.Location;
 
             if (!BitConverter.IsLittleEndian)
             {
@@ -220,7 +228,11 @@ namespace MupenUtils
                 MessageBox.Show("Your system is big-endian and this program might not work properly!");
             }
             UpdateReadOnly();
+            
             EnableM64View(false, true);
+
+            
+
         }
 
 #endregion
@@ -1085,6 +1097,46 @@ namespace MupenUtils
             tsmi_AAJoystick.Checked = JOY_SmoothingMode == SmoothingMode.HighQuality;
             pb_JoystickPic.Invalidate();
         }
+        
+        private void tsmi_TasStudioAllow_Click(object sender, EventArgs e)
+        {
+            gp_TASStudio.Visible = !gp_TASStudio.Visible;
+            tsmi_TasStudioAllow.Checked = gp_TASStudio.Visible;
+            if (gp_TASStudio.Visible) gp_TASStudio.Refresh();
+        }
+        
+        private void tsmi_SimpleMode_Click(object sender, EventArgs e)
+        {
+            simpleMode = !simpleMode;
+            tsmi_SimpleMode.Checked = simpleMode;
+            txt_joyX.Visible 
+                = txt_joyY.Visible 
+                = lbl_XY.Visible 
+                = txt_Frame.Visible 
+                = btn_FrameBack2.Visible 
+                = btn_FrameFront2.Visible 
+                = gp_TASStudio.Visible
+                = btn_Loop.Visible
+                = chk_restart.Visible
+                = chk_RESERVED1.Visible
+                = chk_RESERVED2.Visible
+                = gp_M64_misc.Visible
+                = gpRom.Visible
+                = !simpleMode;
+
+            if (simpleMode) gp_Plugins.Location = gp_M64_misc.Location;
+            else
+            {
+                 //gp_User.Location;
+                 //gp_M64_misc.Location;
+                 //gpRom.Location;
+                 //gp_Plugins.Location;
+
+                gp_Plugins.Location = originalGroupboxLocation[3];
+                gp_M64_misc.Location = originalGroupboxLocation[1];
+            }
+        }
+
 
         private void MainForm_Resize(object sender, EventArgs e)
         {

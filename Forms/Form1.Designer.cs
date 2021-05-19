@@ -128,6 +128,9 @@ namespace MupenUtils
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_TasStudioAllow = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -386,9 +389,9 @@ namespace MupenUtils
             // 
             // btn_Input_Debug
             // 
-            this.btn_Input_Debug.Location = new System.Drawing.Point(300, 195);
+            this.btn_Input_Debug.Location = new System.Drawing.Point(250, 195);
             this.btn_Input_Debug.Name = "btn_Input_Debug";
-            this.btn_Input_Debug.Size = new System.Drawing.Size(60, 30);
+            this.btn_Input_Debug.Size = new System.Drawing.Size(110, 30);
             this.btn_Input_Debug.TabIndex = 0;
             this.btn_Input_Debug.TabStop = false;
             this.btn_Input_Debug.Text = "More...";
@@ -1200,17 +1203,20 @@ namespace MupenUtils
             this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.replacementToolStripMenuItem,
             this.toolStripSeparator1,
-            this.tsmi_Input_Debug_DumpData,
+            this.tsmi_TasStudioAllow,
+            this.tsmi_AAJoystick,
+            this.tsmi_SimpleMode,
+            this.toolStripSeparator2,
             this.tsmi_Input_SetInput,
-            this.tsmi_Input_Sticky,
-            this.tsmi_AAJoystick});
+            this.tsmi_Input_Debug_DumpData,
+            this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(207, 140);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 226);
             // 
             // replacementToolStripMenuItem
             // 
             this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
-            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.replacementToolStripMenuItem.Text = "Replacement";
             this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
             // 
@@ -1222,21 +1228,21 @@ namespace MupenUtils
             // tsmi_Input_Debug_DumpData
             // 
             this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 26);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_Input_SetInput
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
-            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 26);
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 26);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
@@ -1268,9 +1274,30 @@ namespace MupenUtils
             this.tsmi_AAJoystick.Checked = true;
             this.tsmi_AAJoystick.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_AAJoystick.Name = "tsmi_AAJoystick";
-            this.tsmi_AAJoystick.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_AAJoystick.Size = new System.Drawing.Size(210, 26);
             this.tsmi_AAJoystick.Text = "Antialiased Joystick";
             this.tsmi_AAJoystick.Click += new System.EventHandler(this.tsmi_AAJoystick_Click);
+            // 
+            // tsmi_TasStudioAllow
+            // 
+            this.tsmi_TasStudioAllow.Checked = true;
+            this.tsmi_TasStudioAllow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmi_TasStudioAllow.Name = "tsmi_TasStudioAllow";
+            this.tsmi_TasStudioAllow.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_TasStudioAllow.Text = "TAS Studio";
+            this.tsmi_TasStudioAllow.Click += new System.EventHandler(this.tsmi_TasStudioAllow_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(207, 6);
+            // 
+            // tsmi_SimpleMode
+            // 
+            this.tsmi_SimpleMode.Name = "tsmi_SimpleMode";
+            this.tsmi_SimpleMode.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_SimpleMode.Text = "Simple mode";
+            this.tsmi_SimpleMode.Click += new System.EventHandler(this.tsmi_SimpleMode_Click);
             // 
             // MainForm
             // 
@@ -1419,6 +1446,9 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudio_Big;
         private System.Windows.Forms.ToolStripMenuItem tsmi_AAJoystick;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudioAllow;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_SimpleMode;
     }
 }
 
