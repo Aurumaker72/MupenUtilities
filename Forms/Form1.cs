@@ -1124,9 +1124,13 @@ namespace MupenUtils
                 = gpRom.Visible
                 = !simpleMode;
 
-            tsmi_TasStudioAllow.Enabled =
+            tsmi_TasStudioAllow.Visible =
+            tsmi_Input_Debug_DumpData.Visible = 
+            tsmi_Input_SetInput.Visible =
+            tsmi_Input_Sticky.Visible
             tsmi_TasStudioAllow.Checked = !simpleMode;
 
+            
             if (simpleMode) gp_Plugins.Location = gp_M64_misc.Location;
             else
             {
