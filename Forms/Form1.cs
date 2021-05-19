@@ -718,7 +718,7 @@ namespace MupenUtils
                         // this is easily done faster but do i care?
 
                         string cellValue = "";
-                        Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
+                        //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
                         if (x < 16)
                         {
                             if ((inputList[y] & (int)Math.Pow(2, x)) != 0)
@@ -726,13 +726,12 @@ namespace MupenUtils
                         }
                         else
                         {
-                            
-                            byte[] a = BitConverter.GetBytes(inputList[y]);
 
+                            byte[] data = BitConverter.GetBytes(inputList[y]);
                             if(x == 16)
-                            cellValue = a[2].ToString();
-                            if(y == 17)
-                            cellValue = a[3].ToString();
+                            cellValue = ((sbyte)data[2]).ToString();
+                            else if(x == 17)
+                            cellValue = ((sbyte)-data[3]).ToString();
 
 
                         }
@@ -793,8 +792,7 @@ namespace MupenUtils
         }
         void GetInput(int value)
         {
-            int numbuttons = controllerButtonsChk.Length;
-            for (int i = 0; i < numbuttons; i++)
+            for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
                 controllerButtonsChk[i].Checked = (value & (int)Math.Pow(2, i)) != 0;
             }
@@ -1127,7 +1125,7 @@ namespace MupenUtils
             tsmi_TasStudioAllow.Visible =
             tsmi_Input_Debug_DumpData.Visible = 
             tsmi_Input_SetInput.Visible =
-            tsmi_Input_Sticky.Visible
+            tsmi_Input_Sticky.Visible =
             tsmi_TasStudioAllow.Checked = !simpleMode;
 
             
