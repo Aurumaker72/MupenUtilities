@@ -17,7 +17,7 @@ namespace MupenUtils.Helpers
             "Try pressing \'Page up\' and \'Page down\' on the trackbar",
             "Check for updates with the button below",
             "You are on version " + MainForm.PROGRAM_VERSION,
-            "Labels will turn red if the program deems the property incompatible",
+            "Text will turn red if the program deems the property suspicious",
             "\'Set Input\' will allow you to set the raw input data for a frame",
             "Right click TAS Studio to get a useful menu",
             "\'CTRL+H\' on TAS Studio to get a useful menu",
@@ -30,7 +30,9 @@ namespace MupenUtils.Helpers
             "This app has been running since " + Process.GetCurrentProcess().StartTime.ToUniversalTime(),
             "Non-plaintext values are displayed in hexadecimal",
             "Some values are unmodifiable",
-            "The \"More\" button has useful dialogs"
+            "The \"More\" button has useful dialogs",
+            "\'Simple Mode\' disables some technical features to make usage simpler",
+            "Drag and drop is supported"
         };
         public static string GetRandomTip()
         {

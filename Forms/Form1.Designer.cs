@@ -121,16 +121,16 @@ namespace MupenUtils
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.replacementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_TasStudioAllow = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_TasStudioAllow = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -1211,38 +1211,68 @@ namespace MupenUtils
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(211, 226);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(207, 198);
             // 
             // replacementToolStripMenuItem
             // 
             this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
-            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.replacementToolStripMenuItem.Text = "Replacement";
             this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(203, 6);
             // 
-            // tsmi_Input_Debug_DumpData
+            // tsmi_TasStudioAllow
             // 
-            this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 26);
-            this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
-            this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
+            this.tsmi_TasStudioAllow.Checked = true;
+            this.tsmi_TasStudioAllow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmi_TasStudioAllow.Name = "tsmi_TasStudioAllow";
+            this.tsmi_TasStudioAllow.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_TasStudioAllow.Text = "TAS Studio";
+            this.tsmi_TasStudioAllow.Click += new System.EventHandler(this.tsmi_TasStudioAllow_Click);
+            // 
+            // tsmi_AAJoystick
+            // 
+            this.tsmi_AAJoystick.Checked = true;
+            this.tsmi_AAJoystick.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmi_AAJoystick.Name = "tsmi_AAJoystick";
+            this.tsmi_AAJoystick.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_AAJoystick.Text = "Antialiased Joystick";
+            this.tsmi_AAJoystick.Click += new System.EventHandler(this.tsmi_AAJoystick_Click);
+            // 
+            // tsmi_SimpleMode
+            // 
+            this.tsmi_SimpleMode.Name = "tsmi_SimpleMode";
+            this.tsmi_SimpleMode.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_SimpleMode.Text = "Simple mode";
+            this.tsmi_SimpleMode.Click += new System.EventHandler(this.tsmi_SimpleMode_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(203, 6);
             // 
             // tsmi_Input_SetInput
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
-            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(206, 26);
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
+            // 
+            // tsmi_Input_Debug_DumpData
+            // 
+            this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
+            this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(206, 26);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
@@ -1253,51 +1283,21 @@ namespace MupenUtils
             this.utilityToolStripMenuItem,
             this.tsmi_TasStudio_Big});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(118, 52);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(211, 80);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // tsmi_TasStudio_Big
             // 
             this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
-            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(117, 24);
-            this.tsmi_TasStudio_Big.Text = "Big";
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
-            // 
-            // tsmi_AAJoystick
-            // 
-            this.tsmi_AAJoystick.Checked = true;
-            this.tsmi_AAJoystick.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmi_AAJoystick.Name = "tsmi_AAJoystick";
-            this.tsmi_AAJoystick.Size = new System.Drawing.Size(210, 26);
-            this.tsmi_AAJoystick.Text = "Antialiased Joystick";
-            this.tsmi_AAJoystick.Click += new System.EventHandler(this.tsmi_AAJoystick_Click);
-            // 
-            // tsmi_TasStudioAllow
-            // 
-            this.tsmi_TasStudioAllow.Checked = true;
-            this.tsmi_TasStudioAllow.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmi_TasStudioAllow.Name = "tsmi_TasStudioAllow";
-            this.tsmi_TasStudioAllow.Size = new System.Drawing.Size(210, 26);
-            this.tsmi_TasStudioAllow.Text = "TAS Studio";
-            this.tsmi_TasStudioAllow.Click += new System.EventHandler(this.tsmi_TasStudioAllow_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(207, 6);
-            // 
-            // tsmi_SimpleMode
-            // 
-            this.tsmi_SimpleMode.Name = "tsmi_SimpleMode";
-            this.tsmi_SimpleMode.Size = new System.Drawing.Size(210, 26);
-            this.tsmi_SimpleMode.Text = "Simple mode";
-            this.tsmi_SimpleMode.Click += new System.EventHandler(this.tsmi_SimpleMode_Click);
             // 
             // MainForm
             // 
