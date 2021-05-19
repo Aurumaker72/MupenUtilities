@@ -1345,10 +1345,7 @@ namespace MupenUtils
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
             JOY_followMouse = e.Button != MouseButtons.Right || !JOY_followMouse;
-            if (e.Button == MouseButtons.Left && JOY_followMouse)
-            {
-                JOY_followMouse = false;
-            }
+            JOY_followMouse = !(e.Button == MouseButtons.Left && JOY_followMouse);
             JOY_mouseDown = true;
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }

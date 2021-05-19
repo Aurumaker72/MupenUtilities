@@ -400,7 +400,7 @@ namespace MupenUtils
             // 
             // pb_JoystickPic
             // 
-            this.pb_JoystickPic.BackColor = System.Drawing.Color.Transparent;
+            this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
             this.pb_JoystickPic.Location = new System.Drawing.Point(200, 25);
             this.pb_JoystickPic.Name = "pb_JoystickPic";
             this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
