@@ -16,6 +16,9 @@ You can view and edit M64 Joystick Inputs on each frame in a clean, interactive 
 You can seek back and forth, reverse playback, step frames and more intuitive controls.
 Playing the movie back in real-time (30 FPS) is also possible.
 
+### Replacement
+Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of input frames from one movie to another
+
 #### TAS Studio
 You can view all inputs in a neatly arranged grid
 
