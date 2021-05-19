@@ -44,5 +44,11 @@ namespace MupenUtils.Forms
         {
 
         }
+
+        private void btn_Debug_Random_Click(object sender, EventArgs e)
+        {
+            MainForm.inputList[selectedFrame] = new Random().Next(0, Int32.MaxValue);
+            txt_Debug_Uvalue.Text = MainForm.inputList[selectedFrame].ToString();
+        }
     }
 }

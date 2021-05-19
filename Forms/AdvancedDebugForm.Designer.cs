@@ -33,6 +33,7 @@ namespace MupenUtils.Forms
             this.lbl_Debug_InputValue = new System.Windows.Forms.Label();
             this.txt_Debug_Frame = new System.Windows.Forms.TextBox();
             this.lbl_Debug_Frame = new System.Windows.Forms.Label();
+            this.btn_Debug_Random = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txt_Debug_Uvalue
@@ -69,11 +70,23 @@ namespace MupenUtils.Forms
             this.lbl_Debug_Frame.TabIndex = 1;
             this.lbl_Debug_Frame.Text = "Frame";
             // 
+            // btn_Debug_Random
+            // 
+            this.btn_Debug_Random.Location = new System.Drawing.Point(208, 24);
+            this.btn_Debug_Random.Name = "btn_Debug_Random";
+            this.btn_Debug_Random.Size = new System.Drawing.Size(75, 23);
+            this.btn_Debug_Random.TabIndex = 0;
+            this.btn_Debug_Random.TabStop = false;
+            this.btn_Debug_Random.Text = "Random";
+            this.btn_Debug_Random.UseVisualStyleBackColor = true;
+            this.btn_Debug_Random.Click += new System.EventHandler(this.btn_Debug_Random_Click);
+            // 
             // AdvancedDebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(374, 154);
+            this.Controls.Add(this.btn_Debug_Random);
             this.Controls.Add(this.txt_Debug_Frame);
             this.Controls.Add(this.lbl_Debug_Frame);
             this.Controls.Add(this.lbl_Debug_InputValue);
@@ -91,5 +104,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Label lbl_Debug_InputValue;
         private System.Windows.Forms.TextBox txt_Debug_Frame;
         private System.Windows.Forms.Label lbl_Debug_Frame;
+        private System.Windows.Forms.Button btn_Debug_Random;
     }
 }
