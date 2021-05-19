@@ -137,8 +137,7 @@ namespace MupenUtils
         //int JOY_Relx, JOY_Rely, JOY_Absx, JOY_Absy;
         Point JOY_Rel, JOY_Abs, JOY_middle;
         bool JOY_mouseDown, JOY_followMouse;
-        const int JOY_clampDif = 4;
-
+        bool lockType;
         UpdateNotifier updateNotifier = new UpdateNotifier();
         SmoothingMode JOY_SmoothingMode = SmoothingMode.HighQuality;
 
@@ -244,6 +243,9 @@ namespace MupenUtils
             string bitarh;
             bitarh = IntPtr.Size == 4 ? "(32 bit)" : "(64 bit)";
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
+#if DEBUG
+            this.Text += " DEBUG";
+#endif
         }
 
         void ShowTipsForm()
@@ -416,6 +418,10 @@ namespace MupenUtils
             txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = "0"));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = 0));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
+            gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
+            Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
+            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = readOnly));
+            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Readonly"));
             ResetLblColors();
 
             // Read header
@@ -524,8 +530,14 @@ namespace MupenUtils
             EnableM64View_ThreadSafe(true);
 
             if (Controllers != 1)
-                lbl_Ctrls.ForeColor = Color.Red;
+            {
+                gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = false));
+                Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = false));
+                chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = false));
+                chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Invalid"));
 
+                lbl_Ctrls.ForeColor = Color.Red;
+            }
             if (txt_RomCountry.Text.Contains("Unknown"))
                 lbl_RomCountry.ForeColor = Color.Red;
 
@@ -1278,28 +1290,45 @@ namespace MupenUtils
                 JOY_Abs.Y = pb_JoystickPic.Height / 2;
             }
         }
+
+        Point RelativeToAbsolute(Point pt)
+        {
+             int X = pb_JoystickPic.ClientRectangle.Left + (pt.X + 128) * (pb_JoystickPic.ClientRectangle.Right - pb_JoystickPic.ClientRectangle.Left) / 256;
+             int Y = pb_JoystickPic.ClientRectangle.Top + (pt.Y + 128) * (pb_JoystickPic.ClientRectangle.Bottom - pb_JoystickPic.ClientRectangle.Top) / 256;
+             return new Point(X, Y);
+        }
+        Point AbsoluteToRelative(Point pt)
+        {
+             int X = pb_JoystickPic.ClientRectangle.Left - (pt.X + 128) * (pb_JoystickPic.ClientRectangle.Right - pb_JoystickPic.ClientRectangle.Left) / 256;
+             int Y = pb_JoystickPic.ClientRectangle.Top - (pt.Y + 128) * (pb_JoystickPic.ClientRectangle.Bottom - pb_JoystickPic.ClientRectangle.Top) / 256;
+            return new Point(X, Y);
+            
+        }
         void SetJoystickValue(Point pos, bool abs, bool user)
         {
+            lockType = abs == ABSOLUTE;
+
             if (abs == ABSOLUTE)
             {
                 // Point pos is absolute control location
-                JOY_Abs.X = pos.X;
-                JOY_Abs.Y = pos.Y;
+                JOY_Abs = pos;
+                JOY_Rel = AbsoluteToRelative(pos);
             }
             else
             {
                 // Point pos is relative joystick location
-                JOY_Rel.X = pos.X;
-                JOY_Rel.Y = pos.Y;
+                JOY_Rel = pos;
+                JOY_Abs = RelativeToAbsolute(pos);
             }
 
             //if (user && !readOnly) SetInput(frame);
+
 
             txt_joyX.Text = JOY_Rel.X.ToString();
             txt_joyY.Text = JOY_Rel.Y.ToString();
 
             pb_JoystickPic.Invalidate();
-            
+
 
         }
 
@@ -1331,14 +1360,18 @@ namespace MupenUtils
             Pen linepen = new Pen(Color.Blue, 3);
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
-                        
-            int x = pb_JoystickPic.ClientRectangle.Left + (JOY_Rel.X+128)*(pb_JoystickPic.ClientRectangle.Right-pb_JoystickPic.ClientRectangle.Left)/256;
-		    int y = pb_JoystickPic.ClientRectangle.Top  + (JOY_Rel.Y+128)*(pb_JoystickPic.ClientRectangle.Bottom-pb_JoystickPic.ClientRectangle.Top)/256;
-            Point xy = new Point(x,y);
+
+            Point xy;
+            if (lockType)
+                xy = JOY_Abs;
+            else
+            {
+                xy = RelativeToAbsolute(JOY_Rel);   
+            }
 
             e.Graphics.DrawLine(linepen, JOY_middle, xy);
             e.Graphics.DrawRectangle(Pens.Black, 0,0,pb_JoystickPic.Width-1,pb_JoystickPic.Height-1);
-            e.Graphics.FillEllipse(Brushes.Red, x - 4, y - 4, 8, 8);
+            e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
             e.Graphics.DrawEllipse(Pens.Black, 1,1, pb_JoystickPic.Width-3, pb_JoystickPic.Height-3);
             e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, 0, JOY_middle.Y);
             e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, JOY_middle.X, pb_JoystickPic.Height);

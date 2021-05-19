@@ -1283,19 +1283,19 @@ namespace MupenUtils
             this.utilityToolStripMenuItem,
             this.tsmi_TasStudio_Big});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(211, 80);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(143, 52);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // tsmi_TasStudio_Big
             // 
             this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
-            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(210, 24);
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(142, 24);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
