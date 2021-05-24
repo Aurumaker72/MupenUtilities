@@ -1,6 +1,6 @@
 # MupenUtilities
-![MupenUtilities](https://github.com/Aurumaker72/MupenUtilities/blob/main/logo.png "Mupen64 Utilities")<br>
-WIP utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)<br>
+![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/input-roll/screenshot1.PNG "Mupen64 Utilities")<br>
+Utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)<br>
 This can be seen as a continuation of the M64 Editor by [mkdasher](https://github.com/mkdasher/)
 
 ## M64
