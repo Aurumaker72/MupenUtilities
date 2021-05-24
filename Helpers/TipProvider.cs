@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Diagnostics;
 
 namespace MupenUtils.Helpers
 {
@@ -16,12 +17,22 @@ namespace MupenUtils.Helpers
             "Try pressing \'Page up\' and \'Page down\' on the trackbar",
             "Check for updates with the button below",
             "You are on version " + MainForm.PROGRAM_VERSION,
-            "Scrolling on the joystick will move it",
-            "You can\'t write letters in some textboxes",
-            "Clicking on the Mupen Utilities logo will open the repo in your browser",
-            "If the Mupen Utilities window turns gray\nand all controls are hidden your input file is corrupted",
-            "Press this text to copy the current tip",
-            "Press \'All tips\' to show all tips"
+            "Text will turn red if the program deems the property suspicious",
+            "\'Set Input\' will allow you to set the raw input data for a frame",
+            "Right click TAS Studio to get a useful menu",
+            "\'CTRL+H\' on TAS Studio to get a useful menu",
+            "Some dialogs are disabled until loading a m64",
+            "\'F11\' and \'ALT+ENTER\' will toggle fullscreen mode",
+            "Running this and Mupen64 will show a warning",
+            "There is an easter egg in the TAS Studio Utility dialog",
+            "Debug target builds will print information to console",
+            "The bit arhitecture is displayed in status bar",
+            "This app has been running since " + Process.GetCurrentProcess().StartTime.ToUniversalTime(),
+            "Non-plaintext values are displayed in hexadecimal",
+            "Some values are unmodifiable",
+            "The \"More\" button has useful dialogs",
+            "\'Simple Mode\' disables some technical features to make usage simpler",
+            "Drag and drop is supported"
         };
         public static string GetRandomTip()
         {

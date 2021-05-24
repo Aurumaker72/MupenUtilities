@@ -1,11 +1,16 @@
-﻿using System;
+    using MupenUtils.Forms;
+using MupenUtils.Networking;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Linq;
+using System.Drawing.Drawing2D;
 
 namespace MupenUtils
 {
@@ -13,12 +18,12 @@ namespace MupenUtils
     {
         #region Vars
 
-        public const string PROGRAM_VERSION = "1.1.1";
+        public const string PROGRAM_VERSION = "1.4";
         public const string PROGRAM_NAME = "Mupen Utilities";
-         
+
         public const string M64_LOADED_TEXT = "M64 Loaded";
         public const string M64_LOADING_TEXT = "M64 Loading";
-        public const string M64_FAILED_TEXT = "M64 Invalid";
+        public const string M64_FAILED_TEXT = "Failed to load M64.";
         public const string M64_SELECTED_TEXT = "Type: M64";
         public const string ST_SELECTED_TEXT = "Type: ST";
 
@@ -27,16 +32,20 @@ namespace MupenUtils
         public const byte UPDATE_EQUAL = 2;
         public const byte UPDATE_UNKNOWN = 255;
 
-        public const string URL_MUPENUTILITIES_REPOSITORY = "https://github.com/Aurumaker72/MupenUtilities";
-        public const string URL_MUPEN_REPOSITORY = "https://github.com/mkdasher/mupen64-rr-lua-/";
-        public const string URL_MUPEN_TASVIDEOS = "http://tasvideos.org/EmulatorResources/Mupen.html";
-        public const string URL_N64_RESOURCES = "https://www.reddit.com/r/SM64TAS/comments/9ek1o5/resources_master_thread/";
+        public const bool RELATIVE = false;
+        public const bool ABSOLUTE = true;
+
+        // [] means reserved, <^>v is direction
+        public string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start","Z","B","A","C>","C<","Cv","C^","R","L","[1]","[2]","X","Y"};
         
         Thread m64load;
         MoreForm moreForm = new MoreForm();
+        AdvancedDebugForm debugForm = new AdvancedDebugForm();
+        TASStudioMoreForm tasStudioForm = new TASStudioMoreForm();
+        ReplacementForm replacementForm = new ReplacementForm();
 
-        string Path, SavePath;
-        bool FileLoaded = false;
+        public static string Path, SavePath;
+        public static bool FileLoaded = false;
         bool ExpandedMenu = false;
         bool Sticky = false;
 
@@ -44,6 +53,12 @@ namespace MupenUtils
         bool bypassTypeCheck = false;
         bool forwardsPlayback = true;
         bool readOnly = true;
+
+        public static int markedGoToFrame = 0;
+        public static bool forceGoto = false;
+
+        bool simpleMode = false;
+        public static bool mupenRunning = false;
 
         // M64 Data as Strings
         string Magic;
@@ -70,31 +85,85 @@ namespace MupenUtils
         string Description;
 
         public CheckBox[] controllerButtonsChk;
-        List<int> inputList = new List<int>();
-        List<int> SAVE_inputList = new List<int>();
+        public static List<int> inputList = new List<int>();
+        public static List<int> SAVE_inputList = new List<int>();
+        public static UInt32[] validCrcs = { 
+            0x03048DE6,
+            0x11FB579B,
+            0xDD801954,
+            0x5CF7952A,
+            0xA1E15117,
+            0xBC9FF5F2,
+            0x3CE60709,
+            0x42C43204,
+            0x587DD983,
+            0x2AF50883,
+            0x6395C475,
+            0xA2DCF689,
+            0x7FE024C9,
+            0x4246EE14,
+            0x7FF42FD0,
+            0xC0345565,
+            0x3B53519F,
+            0x35958F55,
+            0x08287CC8,
+            0xF42BB75F,
+            0xCDF26D67,
+            0x356736C7,
+            0xE96779FA,
+            0xB2F04090,
+            0x45A91CB1,
+            0x7976248C,
+            0xEB97929E,
+            0xDD2DF6D9,
+            0xFAA6B083,
+            0x6787E212,
+            0x0248F6C3,
+            0x032625B0,
+            0x5D9696DF,
+            0x4711A9DC,
+            0x6CED6472,
+            0x26450AAB,
+            0x434389C1,
+            0x2BCEE11C,
+            0xDA98A5D3
+            };
         int lastValue;
 
-        int frame;
+        public static int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
 
         // Joystick input
         //int JOY_Relx, JOY_Rely, JOY_Absx, JOY_Absy;
         Point JOY_Rel, JOY_Abs, JOY_middle;
         bool JOY_mouseDown, JOY_followMouse;
-        const int JOY_clampDif = 4;
+        bool lockType;
+        UpdateNotifier updateNotifier = new UpdateNotifier();
+        SmoothingMode JOY_SmoothingMode = SmoothingMode.HighQuality;
 
+        Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0) };
+        
         #endregion
 
         #region Setup
 
         public MainForm()
         {
+            // must do this before anything else
+            #if !DEBUG
+            Application.ThreadException += applicationThreadException;
+            AppDomain.CurrentDomain.UnhandledException += currentDomainUnhandledException;
+            #endif
             InitializeComponent();
+
             InitController();
             InitUI();
+
+            // check for updates
+            if (updateNotifier.CheckForInternetConnection())
+                updateNotifier.CheckForUpdates(UPDATE_UNKNOWN, true);
         }
 
-       
         void InitController()
         {
             controllerButtonsChk = new CheckBox[] {
@@ -127,7 +196,7 @@ namespace MupenUtils
             JOY_middle.X = pb_JoystickPic.Width / 2;
             JOY_middle.Y = pb_JoystickPic.Height / 2;
         }
-        
+
         void InitUI()
         {
             st_Status1.Text = st_Status2.Text = "";
@@ -138,31 +207,50 @@ namespace MupenUtils
             gp_Path.Dock = DockStyle.Fill;
             JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
             this.KeyPreview = true;
-            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
-            txt_Path.Text = Properties.Settings.Default.LastPath;
-            Debug.WriteLineIf(!ExtensionMethods.ValidPath(Properties.Settings.Default.LastPath), "Settings: Invalid path!??!!");
+            ResetTitle();
+            this.AllowDrop = true;
+
+            cbox_startType.Items.Add("Snapshot");
+            cbox_startType.Items.Add("Power on");
+            cbox_startType.Items.Add("EEPROM");
+            cbox_startType.Items.Add("Unknown");
+            
+            originalGroupboxLocation[0] = gp_User.Location;
+            originalGroupboxLocation[1] = gp_M64_misc.Location;
+            originalGroupboxLocation[2] = gpRom.Location;
+            originalGroupboxLocation[3] = gp_Plugins.Location;
+
+            if (!BitConverter.IsLittleEndian)
+            {
+                // incompatible because this program is somewhat endian dependent
+                this.Text += " - Unsupported";
+                MessageBox.Show("Your system is big-endian and this program might not work properly!");
+            }
             UpdateReadOnly();
-            EnableM64View(false,true);
+            
+            EnableM64View(false, true);
+
+            
+
         }
 
-        #endregion
+#endregion
 
-        #region UI
+#region UI
+
+        void ResetTitle()
+        {
+            string bitarh;
+            bitarh = IntPtr.Size == 4 ? "(32 bit)" : "(64 bit)";
+            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
+#if DEBUG
+            this.Text += " DEBUG";
+#endif
+        }
 
         void ShowTipsForm()
         {
             moreForm.ShowDialog();
-        }
-
-        void ShowStatus(string msg, ToolStripStatusLabel ctl)
-        {
-            ctl.Text = msg;
-            new Thread(() =>
-               {
-               Thread.Sleep(1000);
-               if(ctl.GetCurrentParent()!=null)
-               ctl.GetCurrentParent().Invoke((MethodInvoker)(() => ctl.Text = string.Empty));
-               }).Start();
         }
 
         void RedControl(Control ctrl)
@@ -171,8 +259,8 @@ namespace MupenUtils
             ctrl.ForeColor = Color.Red;
             new Thread(() =>
                {
-               Thread.Sleep(1000);
-               ctrl.ForeColor = tempcolor;
+                   Thread.Sleep(1000);
+                   ctrl.ForeColor = tempcolor;
                }).Start();
         }
 
@@ -180,10 +268,10 @@ namespace MupenUtils
         {
             Size s;
             ExpandedMenu = flag;
-            if(change) FileLoaded = flag;
+            if (change) FileLoaded = flag;
 
-            
-            s = flag ? new Size(1005,580) : new Size(360+btn_Override.Width+20, 150);
+
+            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_Loop.Enabled = FileLoaded;
@@ -194,13 +282,15 @@ namespace MupenUtils
             btn_PlayDirection.Enabled = FileLoaded;
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
-            txt_Frame.Enabled = FileLoaded; 
+            txt_Frame.Enabled = FileLoaded;
             this.SuspendLayout();
+            this.MinimumSize = flag ? gp_M64.Size : new Size(1,1);
             this.Size = s;
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             this.MaximizeBox = flag;
             gp_M64.Visible = flag;
             st_Status.Visible = flag;
+            
             this.ResumeLayout();
         }
 
@@ -215,78 +305,131 @@ namespace MupenUtils
             Size s;
             FileLoaded = flag;
             gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
-            s = flag ? new Size(1005, 580) : new Size(360 + btn_Override.Width + 20, 150);
+            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + 20, 150);
             this.Invoke((MethodInvoker)(() => this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
             gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill));
             st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = flag));
             this.Invoke((MethodInvoker)(() => this.MaximizeBox = flag));
             if (!flag) this.Invoke((MethodInvoker)(() => this.WindowState = FormWindowState.Normal));
-            btn_FrameBack.Invoke((MethodInvoker)(() =>  btn_FrameBack.Enabled = flag));
-            btn_FrameBack2.Invoke((MethodInvoker)(() =>  btn_FrameBack2.Enabled = flag));
-            btn_FrameFront.Invoke((MethodInvoker)(() =>  btn_FrameFront.Enabled = flag));
-            btn_Loop.Invoke((MethodInvoker)(() =>  btn_Loop.Enabled = flag));
-            btn_FrameFront2.Invoke((MethodInvoker)(() =>  btn_FrameFront2.Enabled = flag));
-            btn_PlayDirection.Invoke((MethodInvoker)(() =>  btn_PlayDirection.Enabled = flag));
-            btn_PlayPause.Invoke((MethodInvoker)(() =>  btn_PlayPause.Enabled = flag));
-            tr_MovieScrub.Invoke((MethodInvoker)(() =>  tr_MovieScrub.Enabled = flag));
-            txt_Frame.Invoke((MethodInvoker)(() =>  txt_Frame.ReadOnly = !flag));
+            btn_FrameBack.Invoke((MethodInvoker)(() => btn_FrameBack.Enabled = flag));
+            btn_FrameBack2.Invoke((MethodInvoker)(() => btn_FrameBack2.Enabled = flag));
+            btn_FrameFront.Invoke((MethodInvoker)(() => btn_FrameFront.Enabled = flag));
+            btn_Loop.Invoke((MethodInvoker)(() => btn_Loop.Enabled = flag));
+            btn_FrameFront2.Invoke((MethodInvoker)(() => btn_FrameFront2.Enabled = flag));
+            btn_PlayDirection.Invoke((MethodInvoker)(() => btn_PlayDirection.Enabled = flag));
+            btn_PlayPause.Invoke((MethodInvoker)(() => btn_PlayPause.Enabled = flag));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = flag));
+            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.ReadOnly = flag));
+            this.Invoke((MethodInvoker)(() => this.MinimumSize = flag ? gp_M64.Size : new Size(1,1)));
             this.Invoke((MethodInvoker)(() => this.Size = s));
             
+            
+
         }
 
-        #endregion
-
-        #region I/O
-        void DumpInputsFile(bool plain)
+        void ResetLblColors()
         {
-            FileStream fs = File.Open("inputs.bin", FileMode.OpenOrCreate);
-            BinaryWriter br = new BinaryWriter(fs);
-            if (!plain)
+            
+            for (int i = 0; i < gp_User.Controls.Count; i++)
             {
-                
-                for (int i = 0; i < SAVE_inputList.Count / 4; i++)
-                {
-                    br.Write(inputList[i]);
+                if(gp_User.Controls[i] is Label){
+                 Label lbl = gp_User.Controls[i] as Label;
+                 lbl.Invoke((MethodInvoker)(() => lbl.ForeColor = Color.Black));
                 }
-                br.Flush(); br.Close(); fs.Close();
+            }
+            for (int i = 0; i < gp_M64.Controls.Count; i++)
+            {
+                if(gp_User.Controls[i] is Label){
+                 Label lbl = gp_User.Controls[i] as Label;
+                 lbl.Invoke((MethodInvoker)(() => lbl.ForeColor = Color.Black));
+                }
             }
         }
 
-        void ErrorM64(){
-          ShowStatus_ThreadSafe(M64_FAILED_TEXT);
-          // set status
+#endregion
 
-          txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
-          // clear path textbox
+#region I/O
+        void DumpInputsFile(bool plain)
+        {
 
-          this.Invoke((MethodInvoker)(() => this.ActiveControl = null));
-          // clear active control
+            FileStream fs;
+            BinaryWriter br;
+            try
+            {
+                fs = File.Open("inputs.bin", FileMode.Create);
+                br = new BinaryWriter(fs);
 
+            }catch { return; }
+            if (!plain)
+            {
+                for (int i = 0; i < inputList.Count; i++)
+                    br.Write(inputList[i]);
 
-          EnableM64View_ThreadSafe(false);
-          // set m64 style
+                 br.Flush(); br.Close();
 
-          m64load.Abort(); // try kill thread
+                MessageBox.Show(String.Format("Dumped {0} input samples to {1}", inputList.Count, fs.Name));
+
+                fs.Close();
+            }
+        }
+        void ErrorM64() {
+
+            MessageBox.Show(M64_FAILED_TEXT + " Are you loading a real M64?", PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
+
         }
         void ReadM64()
         {
             // Check for suspicious properties
-            long len = new FileInfo(Path).Length;
-            if (!bypassTypeCheck && (/*len < 1028 || */!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)) || !ExtensionMethods.ValidPath(Path))
+            if (!bypassTypeCheck && (!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)) || !ExtensionMethods.ValidPath(Path) || !File.Exists(Path))
             {
                 ErrorM64();
                 return;
             }
+            long len = new FileInfo(Path).Length;
+            if(len < 1028)
+            {
+                ErrorM64(); return;
+            }
+            foreach(Process procarr in Process.GetProcesses())
+            {
+                if(String.Equals(procarr.ProcessName, "mupen64", StringComparison.InvariantCultureIgnoreCase) || procarr.ProcessName.Contains("mupen64"))
+                {
+                st_Status.Invoke((MethodInvoker)(() => st_Status.Visible = true));
+                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Visible = true));
+                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.ForeColor = Color.Red));
+                st_Status1.GetCurrentParent().Invoke((MethodInvoker)(() => st_Status1.Text = "Mupen64 is running, this might cause file access issues"));
+                    mupenRunning = true;
+                    break;
+                }
+            }
+
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
             FileStream fs;
-            try{fs = File.Open(Path, FileMode.Open);}
-            catch{ErrorM64();return; }
+            try { fs = File.Open(Path, FileMode.Open); }
+            catch { 
+                ErrorM64(); 
+                return; }
             BinaryReader br = new BinaryReader(fs);
 
+            // Reset
+            inputList.Clear();
+            frame = 0;
+            lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "0"));
+            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = "0"));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = 0));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
+            gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
+            Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
+            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = readOnly));
+            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Readonly"));
+            ResetLblColors();
 
             // Read header
-            Magic = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
+            Int32 magic_Raw = br.ReadInt32();
+            Magic = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(magic_Raw));
             Version = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             UID = br.ReadInt32();
             VIs = br.ReadUInt32();//ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
@@ -326,10 +469,18 @@ namespace MupenUtils
 
             // Load inputs
             // We need a buffer to check if end of file reached
+
+             // rant time:
+            // tasstudio docs about mupen are fucking retarded and apparently the person who wrote it doesnt know what the difference
+            // between a frame and a VI is...
+            // to quote: "00C 4-byte little-endian unsigned int: number of frames (vertical interrupts)"
+            // WHATTT???? 
+
             Debug.WriteLine("VI/s:" + VIs);
-            frames = VIs; // Caution!!! misleading name. for some reason VIs in this case mean frames?!?!
+            frames = VIs;
             int findx = 0;
-            while(findx <= frames)
+            // position 1024
+            while (findx <= frames)
             {
                 if (br.BaseStream.Position + 4 > fs.Length) {
                     findx++;
@@ -356,7 +507,10 @@ namespace MupenUtils
             txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = VIs.ToString()));
             txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = RRs.ToString()));
             txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = Controllers.ToString()));
-            txt_StartType.Invoke((MethodInvoker)(() => txt_StartType.Text = DataHelper.GetMovieStartupType(StartType)));
+
+
+
+            cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.SelectedItem = DataHelper.GetMovieStartupType(StartType)));
 
             txt_videoplugin.Invoke((MethodInvoker)(() => txt_videoplugin.Text = VideoPlugin));
             txt_inputplugin.Invoke((MethodInvoker)(() => txt_inputplugin.Text = InputPlugin));
@@ -372,38 +526,79 @@ namespace MupenUtils
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = inputList.Count));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
 
-            txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
 
+            
             EnableM64View_ThreadSafe(true);
 
-            if(Controllers > 1)
+            if (Controllers != 1)
             {
-                MessageBox.Show("The movie has more than one controller enabled. The application might behave unexpectedly.", "M64 too many controllers!");
+                gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = false));
+                Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = false));
+                chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = false));
+                chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Invalid"));
+
+                lbl_Ctrls.ForeColor = Color.Red;
             }
+            if (txt_RomCountry.Text.Contains("Unknown"))
+                lbl_RomCountry.ForeColor = Color.Red;
 
-            ShowStatus_ThreadSafe(M64_LOADED_TEXT);
+            if(StartType > 4 || StartType < 1)
+                lb_starttype.ForeColor = Color.Red;
 
+            if(magic_Raw != 439629389)
+                lbl_misc_Magic.ForeColor = Color.Red;
+
+            // check if crc is some widespread game like sm64, ssb64, kario mart, etc...
+            foreach (var _ in validCrcs.Where(crc=>Crc32!=crc).Select(crc=>new{}))
+            {
+                lbl_ROMCRC.ForeColor = Color.Red;
+                break;
+            }
+            //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
+            
+            this.Invoke(new Action(() => PreloadTASStudio()));
         }
 
         void WriteM64()
         {
-            if (!FileLoaded) return;
-            object[] arrres = UIHelper.ShowFileDialog(true, true);
-            if ((bool)arrres[1])
-                SavePath = (string)arrres[0];
-            else
+            Debug.WriteLine(String.Format("Begin Save M64: File loaded: {0}", FileLoaded));
+            
+            if (!FileLoaded)
             {
-                MessageBox.Show("Something went wrong while selecting M64 save path.","Invalid file selection?");
+                RedControl(btn_PathSel);
                 return;
             }
+
+            string tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
+            
+            while (File.Exists(tmpPath))
+            {
+            
+                Debug.WriteLine("File already exists, trying " + tmpPath);
+                tmpPath = tmpPath + "-modified";
+            }
+            
+            tmpPath = tmpPath + ".m64";
+
+            SavePath = tmpPath;
+
+            Debug.WriteLine(tmpPath);
+
             File.Delete(SavePath);
-            FileStream fs = File.Open(SavePath, FileMode.OpenOrCreate);
+
+            FileStream fs = File.Open(SavePath, FileMode.Create);
             BinaryWriter br = new BinaryWriter(fs);
-            ShowStatus("Saving M64...", st_Status1);
+            //ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
-            Array.Clear(zeroar1, 0, zeroar1.Length); 
+            byte[] magic = new byte[5];
+            magic[0] = 0x4D;
+            magic[1] = 0x36;
+            magic[2] = 0x34;
+            magic[3] = 0x1A;
+            magic[4] = 0x03;
+            Array.Clear(zeroar1, 0, zeroar1.Length);
             Array.Clear(zeroar2, 0, zeroar2.Length);
 
             UID = Int32.Parse(txt_misc_UID.Text);
@@ -418,7 +613,7 @@ namespace MupenUtils
             Author = txt_Author.Text;
             Description = txt_Desc.Text;
 
-            br.Write((Int32)1295397914); // Int32 - Magic (4D36341A)
+            br.Write(BitConverter.ToInt32(magic,0)); // Int32 - Magic (4D36341A)
             br.Write((UInt32)3); // UInt32 - Version number (3)
             br.Write(UID); // UInt32 - UID
             br.Write((UInt32)VIs); // UInt32 - VIs
@@ -427,73 +622,160 @@ namespace MupenUtils
             br.Write(Controllers); // Byte - Controllers
             br.Write((Int16)0); // 2 Bytes - RESERVED
             br.Write(Samples); // UInt32 - Input Samples
-            br.Write(StartType); // UInt16 - Movie start type
+
+            br.Write((UInt16)DataHelper.GetMovieStartupTypeIndex(cbox_startType.SelectedItem.ToString())); // UInt16 - Movie start type
             br.Write((Int16)0); // 2 bytes - RESERVED
             br.Write(ControllerFlags); // UInt32 - Controller Flags
-            br.Write(zeroar1,0,zeroar1.Length); // 160 bytes - RESERVED
+            br.Write(zeroar1, 0, zeroar1.Length); // 160 bytes - RESERVED
             byte[] romname = new byte[32];
             romname = ASCIIEncoding.ASCII.GetBytes(RomName);
             Array.Resize(ref romname, 32);
             br.Write(romname, 0, 32);
             br.Write(Crc32);
             br.Write(RomCountry);
-            br.Write(zeroar2,0,zeroar2.Length); // 56 bytes - RESERVED
+            br.Write(zeroar2, 0, zeroar2.Length); // 56 bytes - RESERVED
 
-            
+
             byte[] gfx = new byte[64];
             byte[] audio = new byte[64];
             byte[] input = new byte[64];
             byte[] rsp = new byte[64];
             byte[] author = new byte[222];
             byte[] desc = new byte[256];
-            
-            gfx =    ASCIIEncoding.ASCII.GetBytes(VideoPlugin);
-            audio =  ASCIIEncoding.ASCII.GetBytes(AudioPlugin);
-            input =  ASCIIEncoding.ASCII.GetBytes(InputPlugin);
-            rsp =    ASCIIEncoding.ASCII.GetBytes(RSPPlugin);
-            author = ASCIIEncoding.ASCII.GetBytes(Author);
-            desc =   ASCIIEncoding.ASCII.GetBytes(Description);
-            
+
+            gfx = ASCIIEncoding.ASCII.GetBytes(VideoPlugin);
+            audio = ASCIIEncoding.ASCII.GetBytes(AudioPlugin);
+            input = ASCIIEncoding.ASCII.GetBytes(InputPlugin);
+            rsp = ASCIIEncoding.ASCII.GetBytes(RSPPlugin);
+            author = ASCIIEncoding.UTF8.GetBytes(Author);
+            desc = ASCIIEncoding.UTF8.GetBytes(Description);
+
             Array.Resize(ref gfx, 64);
             Array.Resize(ref audio, 64);
             Array.Resize(ref input, 64);
             Array.Resize(ref rsp, 64);
             Array.Resize(ref author, 222);
             Array.Resize(ref desc, 256);
-            
-            br.Write(gfx,0,64);
-            br.Write(audio,0,64);
-            br.Write(input,0,64);
-            br.Write(rsp,0,64);
-            br.Write(author,0,222);
-            br.Write(desc,0,256);
-            for (int i = 0; i < SAVE_inputList.Count/4; i++)
+
+            br.Write(gfx, 0, 64);
+            br.Write(audio, 0, 64);
+            br.Write(input, 0, 64);
+            br.Write(rsp, 0, 64);
+            br.Write(author, 0, 222);
+            br.Write(desc, 0, 256);
+            for (int i = 0; i < inputList.Count; i++)
             {
-            br.Write(inputList[i]);
+                br.Write(inputList[i]);
             }
             br.Flush();
             br.Close();
-            ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
+            fs.Close();
+            //ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
         }
 
-        
+
 
         void LoadST()
         {
             // WIP...
-            ShowStatus("ST Loading not implemented yet",st_Status1);
+            //ShowStatus("ST Loading not implemented yet", st_Status1);
+            MessageBox.Show("ST Parsing not implemented");
         }
-        #endregion
+#endregion
 
-        #region Input & Frames
-        
-        void WriteInput()
+#region Input & Frames
+
+        // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
+
+        void PreloadTASStudio()
         {
-            // Write input data at frame n and set visuals
 
+            // nuke data
+            // this crashes for some reason after the 2nd time
+            
+
+            dgv_Main.Rows.Clear();
+            dgv_Main.Columns.Clear();
+            dgv_Main.ClearSelection();
+            dgv_Main.Refresh();
+
+
+            dgv_Main.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(dgv_Main, true, null);
+            dgv_Main.ColumnCount = 18; // 16 buttons + joystick X Y
+            dgv_Main.ColumnHeadersVisible = true;
+            dgv_Main.ReadOnly = true; // lol 
+
+            
+            for (byte i = 0; i < inputStructNames.Length; i++)
+            {
+                dgv_Main.Columns[i].Name = inputStructNames[i];
+                dgv_Main.Columns[i].Width = 50; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
+            }
+
+            
+            gp_TASStudio.Text = "TAS Studio - Loading " + inputList.Count + " samples";
+            // populate with input data (this is cringe and painful and slow i dont care)
+            new Thread (() =>
+            {
+                while (dgv_Main.RecreatingHandle) ; // spin until handle is created
+                
+                for (int y = 0; y < inputList.Count; y++)
+                {
+                    // for each frame
+                    dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Add()));
+
+                    for (int x = 0; x < inputStructNames.Length; x++)
+                    {
+                        // for each button
+                        
+
+                        // kind of stupid implementation
+                        // this is easily done faster but do i care?
+
+                        string cellValue = "";
+                        //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
+                        if (x < 16)
+                        {
+                            if ((inputList[y] & (int)Math.Pow(2, x)) != 0)
+                                cellValue = inputStructNames[x];
+                        }
+                        else
+                        {
+
+                            byte[] data = BitConverter.GetBytes(inputList[y]);
+                            if(x == 16)
+                            cellValue = ((sbyte)data[2]).ToString();
+                            else if(x == 17)
+                            cellValue = ((sbyte)-data[3]).ToString();
+
+
+                        }
+                        dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
+                    }
+                }
+            }).Start();
+           gp_TASStudio.Text = "TAS Studio";
+        }
+
+    
+
+        int GetChkboxes()
+        {
+            int value = 0;
+            for (int i = 0; i < controllerButtonsChk.Length; i++)
+            {
+                if (controllerButtonsChk[i].Checked)
+                {
+                    value |= (int)Math.Pow(2, i);
+                }
+            }
+            return value;
+        }
+        void SetInput(int frame)
+        {
             if (!FileLoaded) 
                 return;
-            int value;
+            int value = 0XDD;
             try{
                 if (Sticky)
                     value = lastValue;
@@ -510,6 +792,7 @@ namespace MupenUtils
 
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
+                Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | BUTTON: " + controllerButtonsChk[i].Text.ToString() + " | Checked: " + controllerButtonsChk[i].Checked.ToString());
                 ExtensionMethods.SetBit(ref value, controllerButtonsChk[i].Checked, i);
             }
             byte[] joydata = BitConverter.GetBytes(value);
@@ -519,85 +802,121 @@ namespace MupenUtils
             value = BitConverter.ToInt32(joydata,0);
             lastValue = value;
             inputList[frame] = value;
+            Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
+            //GetInput(inputList[frame]); // also update visuals!
         }
-
-        void ReadInput(int value)
+        void GetInput(int value)
         {
-            // Read input data at frame n and set visuals
-
-            int numbuttons = controllerButtonsChk.Length;
-            for (int i = 0; i < numbuttons; i++)
+            for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
                 controllerButtonsChk[i].Checked = (value & (int)Math.Pow(2, i)) != 0;
             }
             byte[] data = BitConverter.GetBytes(value);
             sbyte joystickX = (sbyte)data[2];
             sbyte joystickY = (sbyte)-data[3];
-            ExtensionMethods.AdjustY(ref joystickX);
 
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
 
-            WriteInput();
-
-            UpdateJoystickValues(RelativeToAbsolute(new Point(joystickX,joystickY)), false);
+            SetInput(frame);
+            SetJoystickValue(new Point(joystickX,joystickY), RELATIVE, false);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
 
-        /*
-         Unreliable coding...
-         Length of input list might not be exactly the frames specified in m64 header if m64 is corrupted!
-         */
-        bool stepAllowed(int stepAmount)
+        bool checkAllowedStep(int stepAmount)
         {
-            int resultFrame = frame + stepAmount;
-            return (resultFrame <= inputList.Count && resultFrame >= 0);
-        }
-        bool movieAtEnd()
-        {
-            return frame == inputList.Count;
-        }
-        bool movieAtStart()
-        {
-            return frame == 0;
-        }
-        void loopMovie()
-        {
-            if (loopInputs)
+            if(frame > frames || frame < 0)
             {
-                if (movieAtEnd()) frame = 1;
-                if (movieAtStart()) frame = inputList.Count - 1;
+                if (!loopInputs)
+                {
+                    if (frame > frames)
+                        frame = (int)frames;
+                    else if (frame < 0)
+                        frame = 0;
+                }
+                else
+                {
+                    if (frame > frames)
+                    {
+                        frame = 0;
+                    }
+                    else if (frame < 0)
+                    {
+                        frame = (int)frames - 1;
+                    }
+                }
+                return false;
             }
-            else
-                frame = ExtensionMethods.Clamp(frame, 0, inputList.Count-1);
+            return true;
         }
+
         void StepFrame(int stepAmount)
         {
+            //frame += stepAmount;
+            //if (!checkAllowedStep(stepAmount)) return;
+            //lbl_FrameSelected.Text = "Frame " + frame;
+            //lbl_FrameSelected.ForeColor = Color.Black;
+            //SetInput(inputList[frame]);
+
+
             SetFrame(frame + stepAmount);
         }
-
         void SetFrame(int targetframe)
         {
-            // Don't set frame first, wait until target frame is validated
-            if (!stepAllowed(targetframe-frame)) return; // If frame is out of bounds
-            
             frame = targetframe;
-
-            loopMovie(); // loop movie if needed
-
-            ReadInput(inputList[frame]);
+            if (!checkAllowedStep(targetframe)) return;
+            if(frame >= inputList.Count)
+            {
+               frame = (int)inputList.Count;
+               stepFrameTimer.Enabled = false;
+               return;
+            }
+            GetInput(inputList[frame]);
             UpdateFrameControlUI();
         }
+#endregion
 
-        #endregion
+#region Event Handlers
+        
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+           if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Move;
+        }
 
-        #region Event Handlers
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string file = files[0];
+            if(files.Length > 1)
+            {
+                MessageBox.Show("You are attempting to load more than one m64, picking first one from list...", PROGRAM_NAME + " - Too much data");
+            }
+
+            if (!ExtensionMethods.ValidPath(file)) return;
+            Path = txt_Path.Text = file;
+
+            Properties.Settings.Default.LastPath = Path;
+            Properties.Settings.Default.Save();
+
+            if (rb_M64sel.Checked)
+            {
+                m64load = new Thread(() => ReadM64());
+                m64load.Start();
+            }
+        }
 
         private void btn_Input_Debug_Click(object sender, EventArgs e)
         {
             ctx_Input_Debug.Show(Cursor.Position);
         }
+        
+        private void dgv_Main_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            ctx_TasStudio.Show(Cursor.Position);
+        }
+
         private void tsmi_Input_Debug_DumpData_Click(object sender, EventArgs e)
         {
             DumpInputsFile(false);
@@ -608,6 +927,47 @@ namespace MupenUtils
             Sticky = !Sticky;
             tsmi_Input_Sticky.Checked = Sticky;
         }
+        
+        private void tsmi_Input_SetInput_Click(object sender, EventArgs e)
+        {
+            debugForm.ShowDialog();
+        }
+        private void dgv_Main_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            using (SolidBrush b = new SolidBrush(dgv_Main.RowHeadersDefaultCellStyle.ForeColor))
+            {
+                e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
+            }
+        }
+        private void dgv_Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.H && e.Modifiers == Keys.Control)
+                tasStudioForm.ShowDialog();
+            
+        }
+        
+        private void replacementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            replacementForm.ShowDialog();
+        }
+
+        private void MainForm_Focus(object sender, EventArgs e)
+        {
+            if (forceGoto)
+            {
+                dgv_Main.CurrentCell = dgv_Main.Rows[markedGoToFrame].Cells[0];
+                dgv_Main.Rows[markedGoToFrame].Selected = true;
+                
+                forceGoto = false;
+            }
+            
+        }
+
+        private void utilityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+           tasStudioForm.ShowDialog();
+        }
 
         private void txt_GenericNumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -615,11 +975,11 @@ namespace MupenUtils
         }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
-            ShowStatus("Selecting movie...",st_Status1);
-            object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked,false);
+            //ShowStatus("Selecting movie...",st_Status1);
+            object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
             {
-                ShowStatus("Cancelled movie selection",st_Status1);
+                //ShowStatus("Cancelled movie selection",st_Status1);
                 return;
             }
 
@@ -641,8 +1001,9 @@ namespace MupenUtils
             Path = Properties.Settings.Default.LastPath;
             if (!ExtensionMethods.ValidPath(Path))
             {
-                ShowStatus(M64_FAILED_TEXT, st_Status1);
-                return;
+              //ShowStatus(M64_FAILED_TEXT, st_Status1);
+              MessageBox.Show(M64_FAILED_TEXT);
+              return;
             }
             if (rb_M64sel.Checked && ExtensionMethods.ValidPath(Path)){
                m64load = new Thread ( () => ReadM64() );
@@ -692,10 +1053,13 @@ namespace MupenUtils
         }
         void UpdateFrameControlUI()
         {
+            lbl_FrameSelected.Text = "Frame " + frame;
+            lbl_FrameSelected.ForeColor = Color.Black;
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
 
             txt_Frame.Text = frame.ToString();
+            if(frame <= tr_MovieScrub.Maximum && frame >= tr_MovieScrub.Minimum)  
             tr_MovieScrub.Value = frame;
         }
         void AdvanceInputAuto(object obj, EventArgs e)
@@ -704,11 +1068,17 @@ namespace MupenUtils
         }
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Oem5) //  (\ or |)
+            if (e.KeyCode == Keys.Oem5) //  (\ or |)
             {
                 StepFrameAuto();
             }
+            else if ((e.KeyCode == Keys.Enter && e.Modifiers == Keys.Alt) || e.KeyCode == Keys.F11)
+            {
+                ExtensionMethods.FullScreen(this);
+            }   
         }
+
+
         private void btn_PlayPause_Click(object sender, EventArgs e)
         {
             // Toggle timer
@@ -727,6 +1097,67 @@ namespace MupenUtils
             btn_PlayDirection.Text = forwardsPlayback ? ">" : "<";
             btn_PlayPause.Text = stepFrameTimer.Enabled ? "| |" : forwardsPlayback ? "|>" : "<|";
         }
+         private void tsmi_TasStudio_Big_Click(object sender, EventArgs e)
+        {
+            gp_TASStudio.Dock = gp_TASStudio.Dock == DockStyle.Right ? DockStyle.Fill : DockStyle.Right;
+            tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
+            tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
+        }
+        
+        private void tsmi_AAJoystick_Click(object sender, EventArgs e)
+        {
+            JOY_SmoothingMode = JOY_SmoothingMode == SmoothingMode.HighQuality ? SmoothingMode.None : SmoothingMode.HighQuality;
+            tsmi_AAJoystick.Checked = JOY_SmoothingMode == SmoothingMode.HighQuality;
+            pb_JoystickPic.Invalidate();
+        }
+        
+        private void tsmi_TasStudioAllow_Click(object sender, EventArgs e)
+        {
+            gp_TASStudio.Visible = !gp_TASStudio.Visible;
+            tsmi_TasStudioAllow.Checked = gp_TASStudio.Visible;
+            if (gp_TASStudio.Visible) gp_TASStudio.Refresh();
+        }
+        
+        private void tsmi_SimpleMode_Click(object sender, EventArgs e)
+        {
+            simpleMode = !simpleMode;
+            tsmi_SimpleMode.Checked = simpleMode;
+            txt_joyX.Visible 
+                = txt_joyY.Visible 
+                = lbl_XY.Visible 
+                = txt_Frame.Visible 
+                = btn_FrameBack2.Visible 
+                = btn_FrameFront2.Visible 
+                = gp_TASStudio.Visible
+                = btn_Loop.Visible
+                = chk_restart.Visible
+                = chk_RESERVED1.Visible
+                = chk_RESERVED2.Visible
+                = gp_M64_misc.Visible
+                = gpRom.Visible
+                = !simpleMode;
+
+            tsmi_TasStudioAllow.Visible =
+            tsmi_Input_Debug_DumpData.Visible = 
+            tsmi_Input_SetInput.Visible =
+            tsmi_Input_Sticky.Visible =
+            tsmi_TasStudioAllow.Checked = !simpleMode;
+
+            
+            if (simpleMode) gp_Plugins.Location = gp_M64_misc.Location;
+            else
+            {
+                 //gp_User.Location;
+                 //gp_M64_misc.Location;
+                 //gpRom.Location;
+                 //gp_Plugins.Location;
+
+                gp_Plugins.Location = originalGroupboxLocation[3];
+                gp_M64_misc.Location = originalGroupboxLocation[1];
+            }
+        }
+
+
         private void MainForm_Resize(object sender, EventArgs e)
         {
 #if DEBUG
@@ -763,13 +1194,14 @@ namespace MupenUtils
         void ParseXYTextbox()
         {
             if(ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text))
-                UpdateJoystickValues(RelativeToAbsolute(new Point(sbyte.Parse(txt_joyX.Text),sbyte.Parse(txt_joyY.Text))), false);
+                SetJoystickValue(new Point( sbyte.Parse(txt_joyX.Text), sbyte.Parse(txt_joyY.Text)), RELATIVE, false);
         }
         private void txt_joyX_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter) ParseXYTextbox();
             if (e.KeyCode == Keys.Escape) this.ActiveControl = null;
         }
+
         private void txt_joyY_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter) ParseXYTextbox();
@@ -783,8 +1215,8 @@ namespace MupenUtils
         {
             readOnly = chk_readonly.Checked;
             chk_readonly.Text = readOnly ? "Readonly" : "Readwrite";
-            if(!readOnly) ShowStatus("Read-Write mode: All changes will be flushed to a new file upon pressing \'Save File\'", st_Status1);
-            else ShowStatus("Read-only mode: You can only view M64 data", st_Status1);
+            //if(!readOnly) ShowStatus("Read-Write mode: All changes will be flushed to a new file upon pressing \'Save File\'", st_Status1);
+            //else ShowStatus("Read-only mode: You can only view M64 data", st_Status1);
             // Groupboxes + Child controls
             foreach (Control ctl in gp_User.Controls)
             {
@@ -795,6 +1227,7 @@ namespace MupenUtils
             }
             txt_Rom.ReadOnly = readOnly;
             txt_CTRLS.ReadOnly = readOnly;
+            cbox_startType.Enabled = !readOnly;
             foreach (Control ctl in gp_Plugins.Controls)
             {
                 if(ctl is TextBox){
@@ -813,7 +1246,6 @@ namespace MupenUtils
                 chk.Enabled = !readOnly;
                 }
             }
-            btn_Savem64.Enabled = !readOnly;
         }
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
@@ -825,21 +1257,24 @@ namespace MupenUtils
         {
             UpdateReadOnly();
         }
-
-
-        #endregion
-
-
-        #region Joystick Drawing, Events, etc...
-
-        Point AbsoluteToRelative(Point abs)
+        
+        private void generic_ClickDisallowedProperty(object sender, MouseEventArgs e)
         {
-            return new Point(abs.X-82,abs.Y+72);
+            MessageBox.Show("This property is vital for the emulator to play back the movie correctly. You cannot change this in the simple GUI.", PROGRAM_NAME);
         }
-        Point RelativeToAbsolute(Point rel)
+
+        private void tsmi_Agressive_Click(object sender, EventArgs e)
         {
-            return new Point(rel.X+82,rel.Y+72);
+            tsmi_Agressive.Checked ^= true;
         }
+
+
+#endregion
+
+
+#region Joystick Drawing, Events, etc...
+
+        
         private void InputChk_Changed(object sender, MouseEventArgs e)
         {
             // This fires when any input checkbox has been changed
@@ -847,11 +1282,9 @@ namespace MupenUtils
             return;
             
             UpdateFrameControlUI();
-            WriteInput();
+            SetInput(frame);
         }
 
-        // UNUSED:
-        // this is a cool QoL feature but causes inaccuracy
         void SnapJoystick()
         {
             if (JOY_Rel.X < 5 && JOY_Rel.X > -5)
@@ -866,63 +1299,124 @@ namespace MupenUtils
             }
         }
 
-        void InternalUpdateJoystickValues(Point e, bool user, bool adjust){
-            JOY_Abs.X = ExtensionMethods.Clamp(e.X, JOY_clampDif / 2, pb_JoystickPic.Width - JOY_clampDif);
-            JOY_Abs.Y = ExtensionMethods.Clamp(e.Y, JOY_clampDif / 2, pb_JoystickPic.Height - JOY_clampDif);
-            JOY_Rel.X = ExtensionMethods.Clamp(e.X - JOY_middle.X, -127, 127);
-            JOY_Rel.Y = ExtensionMethods.Clamp(e.Y - JOY_middle.Y, -127, 127);
+        Point RelativeToAbsolute(Point pt)
+        {
+            int X = pb_JoystickPic.ClientRectangle.Left + (pt.X + 128) * (pb_JoystickPic.ClientRectangle.Right - pb_JoystickPic.ClientRectangle.Left) / 256;
+            int Y = pb_JoystickPic.ClientRectangle.Top + (pt.Y + 128) * (pb_JoystickPic.ClientRectangle.Bottom - pb_JoystickPic.ClientRectangle.Top) / 256;
+            return new Point(X, Y);
+        }
+        Point AbsoluteToRelative(Point pt)
+        {
+            int x =  (pt.X*256/pb_JoystickPic.Width - 128 + 1);
+		    int y = -(pt.Y*256/pb_JoystickPic.Height - 128 + 1);
+            x = ExtensionMethods.Clamp(x, -128, 127);
+            y = ExtensionMethods.Clamp(y, -127, 128);
+            return new Point(x, y);
+            
+        }
+        void SetJoystickValue(Point pos, bool abs, bool user)
+        {
+            lockType = abs == ABSOLUTE;
 
-            if (adjust)
+            if (abs == ABSOLUTE)
             {
-                sbyte relYadj = (sbyte)-JOY_Rel.Y;
-                ExtensionMethods.AdjustY(ref relYadj);
-                JOY_Rel.Y = relYadj;
+                // Point pos is absolute control location
+                JOY_Abs = pos;
+                JOY_Rel = AbsoluteToRelative(pos);
             }
-            if (user && !readOnly) WriteInput();
+            else
+            {
+                // Point pos is relative joystick location
+                JOY_Rel = pos;
+                JOY_Abs = RelativeToAbsolute(pos);
+            }
+
+            //if (user && !readOnly) SetInput(frame);
+
 
             txt_joyX.Text = JOY_Rel.X.ToString();
             txt_joyY.Text = JOY_Rel.Y.ToString();
+
             pb_JoystickPic.Refresh();
+
+            
+
         }
 
-        void UpdateJoystickValues(Point e, bool user)
+        private void pb_JoystickPic_Paint(object sender, PaintEventArgs e)
         {
-            InternalUpdateJoystickValues(e, user, true);
+            DrawJoystick(e);
+        }
+        private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
+        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (JOY_mouseDown) SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
-        private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
-
-        private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
-        private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e) {if (JOY_mouseDown) UpdateJoystickValues(e.Location, true);}
-        private void pb_JoystickPic_MouseWheel(object sender, MouseEventArgs e) => InternalUpdateJoystickValues(RelativeToAbsolute(new Point(JOY_Rel.X, JOY_Rel.Y - Math.Sign(e.Delta))), false, false);
-        
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
             JOY_followMouse = e.Button != MouseButtons.Right || !JOY_followMouse;
-            if (e.Button == MouseButtons.Left && JOY_followMouse)
-            {
-                JOY_followMouse = false;
-            }
+            JOY_followMouse = !(e.Button == MouseButtons.Left && JOY_followMouse);
             JOY_mouseDown = true;
-            UpdateJoystickValues(e.Location, true);
+            SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
         private void DrawJoystick(PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = JOY_SmoothingMode;
+
             Pen linepen = new Pen(Color.Blue, 3);
-            e.Graphics.DrawLine(linepen, JOY_middle, JOY_Abs); 
-            e.Graphics.DrawRectangle(Pens.Black, 0,0,pb_JoystickPic.Width-1,pb_JoystickPic.Height-1);
-            e.Graphics.FillEllipse(Brushes.Red, JOY_Abs.X - 4, JOY_Abs.Y - 4, 8, 8);
-            e.Graphics.DrawEllipse(Pens.Black, 1,1, pb_JoystickPic.Width-3, pb_JoystickPic.Height-3);
-            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, 0, JOY_middle.Y);
-            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, JOY_middle.X, pb_JoystickPic.Height);
-            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, JOY_middle.Y, JOY_middle.X, 0);
+
+            //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
+
+            Point xy;
+            if (lockType)
+                xy = JOY_Abs;
+            else
+            {
+                xy = RelativeToAbsolute(JOY_Rel);   
+            }
+
+            
+            e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+            e.Graphics.DrawEllipse(Pens.Black, 1,1, pb_JoystickPic.Width-2, pb_JoystickPic.Height-2);
+            e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+            e.Graphics.DrawLine(linepen, JOY_middle, xy);
             linepen.Dispose();
 
+            if(tsmi_Agressive.Checked)
+            SetInput(frame);
         }
 
 
-        #endregion
+#endregion
+
+#region Special
+        private static void currentDomainUnhandledException(object sender,UnhandledExceptionEventArgs e)
+        {
+            MExcept(e.ExceptionObject as Exception);
+
+        }
+        private static void applicationThreadException(object sender,ThreadExceptionEventArgs e)
+        {
+            MExcept(e.Exception);
+
+        }
+
+        static void MExcept(Exception ex)
+        {
+            if(MessageBox.Show("Exception occured. The program will attempt to continue. Do you want to dump relevant data to a crash log?", PROGRAM_NAME + " - Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+            {
+                string exStr = "";
+                exStr += "message: " + ex.Message + "\n";
+                exStr += "stack trace: " + ex.StackTrace + "\n";
+                exStr += "file loaded: " + FileLoaded.ToString() + "\n";
+                exStr += "mupen running: " + mupenRunning.ToString() + "\n";
+                File.WriteAllText(@"lastexception.log", exStr);
+            }
+        }
+
+#endregion
     }
 }

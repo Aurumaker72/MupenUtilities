@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 public static class ExtensionMethods
 {
@@ -13,11 +14,10 @@ public static class ExtensionMethods
     public static int HighWord(this int number, int newValue) => (number & 0x0000FFFF) + (newValue << 16);
 
     public static int Clamp(int value, int min, int max) => (value < min) ? min : (value > max) ? max : value;
-
-    public static void AdjustY(ref sbyte value) {
-        if (value > -1) value--;
-        else value++;
-    }
+    //public static void AdjustY(ref sbyte value) {
+    //    if (value > -1) value--;
+    //    else value++;
+    //}
     public static bool ValidStringInt(string str, int min, int max)
     {
         if(str.Length == 0||String.IsNullOrEmpty(str)||String.IsNullOrWhiteSpace(str))return false;
@@ -86,13 +86,21 @@ public static class ExtensionMethods
     
         return isValid;
     }
-    public static string ArrStrFormatted(string[] arr)
+
+    public static void FullScreen(Form form)
     {
-        StringBuilder strb = new StringBuilder();
-
-        for (int i = 0; i < arr.Length; i++)
-            strb.Append("[" + i + "] " + (string)arr[i] + '\n');
-
-        return strb.ToString();
+        if (form.FormBorderStyle == FormBorderStyle.Sizable)
+        {
+            form.WindowState = FormWindowState.Normal;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.WindowState = FormWindowState.Maximized;
+        }
+        else
+        {
+            form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            form.WindowState = FormWindowState.Normal;
+        }
     }
+
+
 }

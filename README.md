@@ -1,18 +1,10 @@
 # MupenUtilities
-![Downloads](https://img.shields.io/github/downloads/Aurumaker72/MupenUtilities/total)
-![Activity](https://img.shields.io/github/commit-activity/m/Aurumaker72/MupenUtilities)<br>
-![MupenUtilities](https://github.com/Aurumaker72/MupenUtilities/blob/main/logo.png "Mupen64 Utilities")   
-[**__Download Latest__**](https://github.com/Aurumaker72/MupenUtilities/zipball/main)<br>
-[Discord Server](https://discord.gg/KDdWP3rN3T)
-
-WIP utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)<br>
+![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/input-roll/screenshot1.PNG "Mupen64 Utilities")<br>
+Utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)<br>
 This can be seen as a continuation of the M64 Editor by [mkdasher](https://github.com/mkdasher/)
-
-__This program is GUI-Based and doesn't have command line support yet!__
 
 ## M64
 The data of any M64 file is presented in a simple interface.
-The edited input/header data can be saved to a new M64.
 
 #### Header
 You can view and edit all meaningful M64 Header data.
@@ -24,9 +16,15 @@ You can view and edit M64 Joystick Inputs on each frame in a clean, interactive 
 You can seek back and forth, reverse playback, step frames and more intuitive controls.
 Playing the movie back in real-time (30 FPS) is also possible.
 
+### Replacement
+Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of input frames from one movie to another
+
+#### TAS Studio
+You can view all inputs in a neatly arranged grid
+
 #### Advanced
-You can dump a movie's raw input data to a file if you are a nerd
+You can dump a movie's raw input data to a file.
+You can change the raw input value at a frame using a unsafe debug menu.
 
 ## Other
-There are in-app tips and tricks for usage.
-This program checks for updates!
+This program checks for updates
