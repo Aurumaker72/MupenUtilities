@@ -365,11 +365,12 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.btn_FrameFront);
             this.gp_input.Controls.Add(this.btn_FrameBack2);
             this.gp_input.Controls.Add(this.btn_FrameBack);
-            this.gp_input.Location = new System.Drawing.Point(565, 30);
+            this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gp_input.Location = new System.Drawing.Point(564, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
             this.gp_input.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_input.Size = new System.Drawing.Size(660, 364);
+            this.gp_input.Size = new System.Drawing.Size(668, 408);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input - Controller 1";
@@ -378,9 +379,9 @@ namespace MupenUtils
             // 
             this.gp_TASStudio.Controls.Add(this.dgv_Main);
             this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_TASStudio.Location = new System.Drawing.Point(370, 19);
+            this.gp_TASStudio.Location = new System.Drawing.Point(378, 19);
             this.gp_TASStudio.Name = "gp_TASStudio";
-            this.gp_TASStudio.Size = new System.Drawing.Size(286, 341);
+            this.gp_TASStudio.Size = new System.Drawing.Size(286, 385);
             this.gp_TASStudio.TabIndex = 0;
             this.gp_TASStudio.TabStop = false;
             this.gp_TASStudio.Text = "TAS Studio";
@@ -395,7 +396,7 @@ namespace MupenUtils
             this.dgv_Main.Name = "dgv_Main";
             this.dgv_Main.RowHeadersWidth = 51;
             this.dgv_Main.RowTemplate.Height = 24;
-            this.dgv_Main.Size = new System.Drawing.Size(280, 320);
+            this.dgv_Main.Size = new System.Drawing.Size(280, 364);
             this.dgv_Main.TabIndex = 0;
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
             this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_Main_KeyDown);

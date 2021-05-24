@@ -32,7 +32,8 @@ namespace MupenUtils.Helpers
             "Some values are unmodifiable",
             "The \"More\" button has useful dialogs",
             "\'Simple Mode\' disables some technical features to make usage simpler",
-            "Drag and drop is supported"
+            "Drag and drop is supported",
+            "Right clicking the \'New Tip\' button will show all tips"
         };
         public static string GetRandomTip()
         {
