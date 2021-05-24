@@ -1,4 +1,4 @@
-﻿
+
 namespace MupenUtils
 {
     partial class MainForm

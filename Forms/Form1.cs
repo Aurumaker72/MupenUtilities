@@ -1,4 +1,4 @@
-﻿    using MupenUtils.Forms;
+    using MupenUtils.Forms;
 using MupenUtils.Networking;
 using System;
 using System.Collections.Generic;

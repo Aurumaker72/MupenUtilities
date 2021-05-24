@@ -1,4 +1,4 @@
-﻿using MupenUtils.Helpers;
+using MupenUtils.Helpers;
 using MupenUtils.Networking;
 using System;
 using System.Diagnostics;
