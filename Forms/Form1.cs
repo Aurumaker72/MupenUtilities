@@ -1089,6 +1089,8 @@ namespace MupenUtils
         {
             if (e.KeyCode == Keys.Oem5) //  (\ or |)
             {
+                stepFrameTimer.Enabled = false;
+                btn_PlayPause.Text = "|>";
                 StepFrameAuto();
             }
             else if ((e.KeyCode == Keys.Enter && e.Modifiers == Keys.Alt) || e.KeyCode == Keys.F11)
