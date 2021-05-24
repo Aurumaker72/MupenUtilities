@@ -131,6 +131,8 @@ namespace MupenUtils
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_Help = new System.Windows.Forms.Button();
+            this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -171,6 +173,7 @@ namespace MupenUtils
             // 
             // gp_Path
             // 
+            this.gp_Path.Controls.Add(this.btn_Help);
             this.gp_Path.Controls.Add(this.btn_Tips);
             this.gp_Path.Controls.Add(this.chk_readonly);
             this.gp_Path.Controls.Add(this.btn_Override);
@@ -1208,29 +1211,30 @@ namespace MupenUtils
             this.tsmi_SimpleMode,
             this.toolStripSeparator2,
             this.tsmi_Input_SetInput,
+            this.tsmi_Agressive,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(207, 198);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 224);
             // 
             // replacementToolStripMenuItem
             // 
             this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
-            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.replacementToolStripMenuItem.Text = "Replacement";
             this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(203, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
             // 
             // tsmi_TasStudioAllow
             // 
             this.tsmi_TasStudioAllow.Checked = true;
             this.tsmi_TasStudioAllow.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_TasStudioAllow.Name = "tsmi_TasStudioAllow";
-            this.tsmi_TasStudioAllow.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_TasStudioAllow.Size = new System.Drawing.Size(210, 26);
             this.tsmi_TasStudioAllow.Text = "TAS Studio";
             this.tsmi_TasStudioAllow.Click += new System.EventHandler(this.tsmi_TasStudioAllow_Click);
             // 
@@ -1239,41 +1243,42 @@ namespace MupenUtils
             this.tsmi_AAJoystick.Checked = true;
             this.tsmi_AAJoystick.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_AAJoystick.Name = "tsmi_AAJoystick";
-            this.tsmi_AAJoystick.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_AAJoystick.Size = new System.Drawing.Size(210, 26);
             this.tsmi_AAJoystick.Text = "Antialiased Joystick";
             this.tsmi_AAJoystick.Click += new System.EventHandler(this.tsmi_AAJoystick_Click);
             // 
             // tsmi_SimpleMode
             // 
             this.tsmi_SimpleMode.Name = "tsmi_SimpleMode";
-            this.tsmi_SimpleMode.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_SimpleMode.Size = new System.Drawing.Size(210, 26);
             this.tsmi_SimpleMode.Text = "Simple mode";
             this.tsmi_SimpleMode.Click += new System.EventHandler(this.tsmi_SimpleMode_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(203, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(207, 6);
             // 
             // tsmi_Input_SetInput
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
-            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 26);
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
             // tsmi_Input_Debug_DumpData
             // 
             this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 26);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(206, 26);
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 26);
             this.tsmi_Input_Sticky.Text = "Sticky";
+            this.tsmi_Input_Sticky.Visible = false;
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
             // ctx_TasStudio
@@ -1298,6 +1303,27 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(142, 24);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
+            // 
+            // btn_Help
+            // 
+            this.btn_Help.Location = new System.Drawing.Point(310, 45);
+            this.btn_Help.Name = "btn_Help";
+            this.btn_Help.Size = new System.Drawing.Size(55, 28);
+            this.btn_Help.TabIndex = 0;
+            this.btn_Help.TabStop = false;
+            this.btn_Help.Text = "Help";
+            this.btn_Help.UseVisualStyleBackColor = true;
+            this.btn_Help.Visible = false;
+            this.btn_Help.Click += new System.EventHandler(this.btn_Tips_Click);
+            // 
+            // tsmi_Agressive
+            // 
+            this.tsmi_Agressive.Checked = true;
+            this.tsmi_Agressive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmi_Agressive.Name = "tsmi_Agressive";
+            this.tsmi_Agressive.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_Agressive.Text = "Aggressive Override";
+            this.tsmi_Agressive.Click += new System.EventHandler(this.tsmi_Agressive_Click);
             // 
             // MainForm
             // 
@@ -1449,6 +1475,8 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudioAllow;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmi_SimpleMode;
+        private System.Windows.Forms.Button btn_Help;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Agressive;
     }
 }
 

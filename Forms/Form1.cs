@@ -382,13 +382,16 @@ namespace MupenUtils
         void ReadM64()
         {
             // Check for suspicious properties
-            long len = new FileInfo(Path).Length;
-            if (!bypassTypeCheck && (/*len < 1028 || */!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)) || !ExtensionMethods.ValidPath(Path))
+            if (!bypassTypeCheck && (!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)) || !ExtensionMethods.ValidPath(Path) || !File.Exists(Path))
             {
                 ErrorM64();
                 return;
             }
-
+            long len = new FileInfo(Path).Length;
+            if(len < 1028)
+            {
+                ErrorM64(); return;
+            }
             foreach(Process procarr in Process.GetProcesses())
             {
                 if(String.Equals(procarr.ProcessName, "mupen64", StringComparison.InvariantCultureIgnoreCase) || procarr.ProcessName.Contains("mupen64"))
@@ -1260,6 +1263,11 @@ namespace MupenUtils
             MessageBox.Show("This property is vital for the emulator to play back the movie correctly. You cannot change this in the simple GUI.", PROGRAM_NAME);
         }
 
+        private void tsmi_Agressive_Click(object sender, EventArgs e)
+        {
+            tsmi_Agressive.Checked ^= true;
+        }
+
 
 #endregion
 
@@ -1293,15 +1301,17 @@ namespace MupenUtils
 
         Point RelativeToAbsolute(Point pt)
         {
-             int X = pb_JoystickPic.ClientRectangle.Left + (pt.X + 128) * (pb_JoystickPic.ClientRectangle.Right - pb_JoystickPic.ClientRectangle.Left) / 256;
-             int Y = pb_JoystickPic.ClientRectangle.Top + (pt.Y + 128) * (pb_JoystickPic.ClientRectangle.Bottom - pb_JoystickPic.ClientRectangle.Top) / 256;
-             return new Point(X, Y);
+            int X = pb_JoystickPic.ClientRectangle.Left + (pt.X + 128) * (pb_JoystickPic.ClientRectangle.Right - pb_JoystickPic.ClientRectangle.Left) / 256;
+            int Y = pb_JoystickPic.ClientRectangle.Top + (pt.Y + 128) * (pb_JoystickPic.ClientRectangle.Bottom - pb_JoystickPic.ClientRectangle.Top) / 256;
+            return new Point(X, Y);
         }
         Point AbsoluteToRelative(Point pt)
         {
-             int X = pb_JoystickPic.ClientRectangle.Left - (pt.X + 128) * (pb_JoystickPic.ClientRectangle.Right - pb_JoystickPic.ClientRectangle.Left) / 256;
-             int Y = pb_JoystickPic.ClientRectangle.Top - (pt.Y + 128) * (pb_JoystickPic.ClientRectangle.Bottom - pb_JoystickPic.ClientRectangle.Top) / 256;
-            return new Point(X, Y);
+            int x =  (pt.X*256/pb_JoystickPic.Width - 128 + 1);
+		    int y = -(pt.Y*256/pb_JoystickPic.Height - 128 + 1);
+            x = ExtensionMethods.Clamp(x, -128, 127);
+            y = ExtensionMethods.Clamp(y, -127, 128);
+            return new Point(x, y);
             
         }
         void SetJoystickValue(Point pos, bool abs, bool user)
@@ -1327,8 +1337,9 @@ namespace MupenUtils
             txt_joyX.Text = JOY_Rel.X.ToString();
             txt_joyY.Text = JOY_Rel.Y.ToString();
 
-            pb_JoystickPic.Invalidate();
+            pb_JoystickPic.Refresh();
 
+            
 
         }
 
@@ -1366,14 +1377,16 @@ namespace MupenUtils
                 xy = RelativeToAbsolute(JOY_Rel);   
             }
 
-            e.Graphics.DrawLine(linepen, JOY_middle, xy);
+            
             e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
             e.Graphics.DrawEllipse(Pens.Black, 1,1, pb_JoystickPic.Width-2, pb_JoystickPic.Height-2);
             e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
             e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-
+            e.Graphics.DrawLine(linepen, JOY_middle, xy);
             linepen.Dispose();
 
+            if(tsmi_Agressive.Checked)
+            SetInput(frame);
         }
 
 
