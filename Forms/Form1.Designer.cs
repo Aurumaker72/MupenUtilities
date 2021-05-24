@@ -34,6 +34,7 @@ namespace MupenUtils
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
             this.gp_Path = new System.Windows.Forms.GroupBox();
+            this.btn_Help = new System.Windows.Forms.Button();
             this.btn_Tips = new System.Windows.Forms.Button();
             this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.btn_Override = new System.Windows.Forms.Button();
@@ -126,13 +127,12 @@ namespace MupenUtils
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_Help = new System.Windows.Forms.Button();
-            this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -151,7 +151,7 @@ namespace MupenUtils
             // 
             // btn_PathSel
             // 
-            this.btn_PathSel.Location = new System.Drawing.Point(208, 16);
+            this.btn_PathSel.Location = new System.Drawing.Point(216, 16);
             this.btn_PathSel.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PathSel.Name = "btn_PathSel";
             this.btn_PathSel.Size = new System.Drawing.Size(100, 28);
@@ -167,7 +167,7 @@ namespace MupenUtils
             this.txt_Path.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Path.Name = "txt_Path";
             this.txt_Path.ReadOnly = true;
-            this.txt_Path.Size = new System.Drawing.Size(191, 22);
+            this.txt_Path.Size = new System.Drawing.Size(199, 22);
             this.txt_Path.TabIndex = 0;
             this.txt_Path.TabStop = false;
             // 
@@ -192,9 +192,21 @@ namespace MupenUtils
             this.gp_Path.TabStop = false;
             this.gp_Path.Text = "Selection";
             // 
+            // btn_Help
+            // 
+            this.btn_Help.Location = new System.Drawing.Point(318, 45);
+            this.btn_Help.Name = "btn_Help";
+            this.btn_Help.Size = new System.Drawing.Size(55, 28);
+            this.btn_Help.TabIndex = 0;
+            this.btn_Help.TabStop = false;
+            this.btn_Help.Text = "Help";
+            this.btn_Help.UseVisualStyleBackColor = true;
+            this.btn_Help.Visible = false;
+            this.btn_Help.Click += new System.EventHandler(this.btn_Tips_Click);
+            // 
             // btn_Tips
             // 
-            this.btn_Tips.Location = new System.Drawing.Point(310, 16);
+            this.btn_Tips.Location = new System.Drawing.Point(318, 16);
             this.btn_Tips.Name = "btn_Tips";
             this.btn_Tips.Size = new System.Drawing.Size(55, 28);
             this.btn_Tips.TabIndex = 0;
@@ -210,16 +222,16 @@ namespace MupenUtils
             this.chk_readonly.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chk_readonly.Location = new System.Drawing.Point(115, 50);
             this.chk_readonly.Name = "chk_readonly";
-            this.chk_readonly.Size = new System.Drawing.Size(90, 21);
+            this.chk_readonly.Size = new System.Drawing.Size(95, 21);
             this.chk_readonly.TabIndex = 0;
             this.chk_readonly.TabStop = false;
-            this.chk_readonly.Text = "Readonly";
+            this.chk_readonly.Text = "Read-only";
             this.chk_readonly.UseVisualStyleBackColor = true;
             this.chk_readonly.CheckedChanged += new System.EventHandler(this.chk_readonly_CheckedChanged);
             // 
             // btn_Override
             // 
-            this.btn_Override.Location = new System.Drawing.Point(272, 45);
+            this.btn_Override.Location = new System.Drawing.Point(280, 45);
             this.btn_Override.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Override.Name = "btn_Override";
             this.btn_Override.Size = new System.Drawing.Size(36, 28);
@@ -232,7 +244,6 @@ namespace MupenUtils
             // rb_STsel
             // 
             this.rb_STsel.AutoSize = true;
-            this.rb_STsel.Enabled = false;
             this.rb_STsel.Location = new System.Drawing.Point(65, 50);
             this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_STsel.Name = "rb_STsel";
@@ -256,7 +267,7 @@ namespace MupenUtils
             // 
             // btn_LoadLatest
             // 
-            this.btn_LoadLatest.Location = new System.Drawing.Point(208, 45);
+            this.btn_LoadLatest.Location = new System.Drawing.Point(216, 45);
             this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
             this.btn_LoadLatest.Name = "btn_LoadLatest";
             this.btn_LoadLatest.Size = new System.Drawing.Size(62, 28);
@@ -300,12 +311,12 @@ namespace MupenUtils
             this.gp_M64.Controls.Add(this.gpRom);
             this.gp_M64.Controls.Add(this.gp_Plugins);
             this.gp_M64.Controls.Add(this.gp_M64_misc);
-            this.gp_M64.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gp_M64.Location = new System.Drawing.Point(0, 109);
+            this.gp_M64.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gp_M64.Location = new System.Drawing.Point(0, 89);
             this.gp_M64.Margin = new System.Windows.Forms.Padding(4);
             this.gp_M64.Name = "gp_M64";
             this.gp_M64.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_M64.Size = new System.Drawing.Size(1236, 411);
+            this.gp_M64.Size = new System.Drawing.Size(1236, 431);
             this.gp_M64.TabIndex = 0;
             this.gp_M64.TabStop = false;
             this.gp_M64.Text = "M64";
@@ -900,7 +911,7 @@ namespace MupenUtils
             this.gpRom.Controls.Add(this.lbl_ROMCRC);
             this.gpRom.Controls.Add(this.btn_Savem64);
             this.gpRom.Controls.Add(this.lbl_RomCountry);
-            this.gpRom.Location = new System.Drawing.Point(11, 236);
+            this.gpRom.Location = new System.Drawing.Point(11, 234);
             this.gpRom.Margin = new System.Windows.Forms.Padding(4);
             this.gpRom.Name = "gpRom";
             this.gpRom.Padding = new System.Windows.Forms.Padding(4);
@@ -991,7 +1002,7 @@ namespace MupenUtils
             this.gp_Plugins.Controls.Add(this.txtbox_Audioplugin);
             this.gp_Plugins.Controls.Add(this.lbl_Input);
             this.gp_Plugins.Controls.Add(this.txt_Rsp);
-            this.gp_Plugins.Location = new System.Drawing.Point(288, 236);
+            this.gp_Plugins.Location = new System.Drawing.Point(288, 234);
             this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
             this.gp_Plugins.Name = "gp_Plugins";
             this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
@@ -1220,21 +1231,21 @@ namespace MupenUtils
             // replacementToolStripMenuItem
             // 
             this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
-            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(211, 26);
             this.replacementToolStripMenuItem.Text = "Replacement";
             this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
             // 
             // tsmi_TasStudioAllow
             // 
             this.tsmi_TasStudioAllow.Checked = true;
             this.tsmi_TasStudioAllow.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_TasStudioAllow.Name = "tsmi_TasStudioAllow";
-            this.tsmi_TasStudioAllow.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_TasStudioAllow.Size = new System.Drawing.Size(211, 26);
             this.tsmi_TasStudioAllow.Text = "TAS Studio";
             this.tsmi_TasStudioAllow.Click += new System.EventHandler(this.tsmi_TasStudioAllow_Click);
             // 
@@ -1243,40 +1254,49 @@ namespace MupenUtils
             this.tsmi_AAJoystick.Checked = true;
             this.tsmi_AAJoystick.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_AAJoystick.Name = "tsmi_AAJoystick";
-            this.tsmi_AAJoystick.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_AAJoystick.Size = new System.Drawing.Size(211, 26);
             this.tsmi_AAJoystick.Text = "Antialiased Joystick";
             this.tsmi_AAJoystick.Click += new System.EventHandler(this.tsmi_AAJoystick_Click);
             // 
             // tsmi_SimpleMode
             // 
             this.tsmi_SimpleMode.Name = "tsmi_SimpleMode";
-            this.tsmi_SimpleMode.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_SimpleMode.Size = new System.Drawing.Size(211, 26);
             this.tsmi_SimpleMode.Text = "Simple mode";
             this.tsmi_SimpleMode.Click += new System.EventHandler(this.tsmi_SimpleMode_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(207, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(208, 6);
             // 
             // tsmi_Input_SetInput
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
-            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(211, 26);
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
+            // 
+            // tsmi_Agressive
+            // 
+            this.tsmi_Agressive.Checked = true;
+            this.tsmi_Agressive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmi_Agressive.Name = "tsmi_Agressive";
+            this.tsmi_Agressive.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_Agressive.Text = "Aggressive Override";
+            this.tsmi_Agressive.Click += new System.EventHandler(this.tsmi_Agressive_Click);
             // 
             // tsmi_Input_Debug_DumpData
             // 
             this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(211, 26);
             this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
             this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(211, 26);
             this.tsmi_Input_Sticky.Text = "Sticky";
             this.tsmi_Input_Sticky.Visible = false;
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
@@ -1303,27 +1323,6 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(142, 24);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
-            // 
-            // btn_Help
-            // 
-            this.btn_Help.Location = new System.Drawing.Point(310, 45);
-            this.btn_Help.Name = "btn_Help";
-            this.btn_Help.Size = new System.Drawing.Size(55, 28);
-            this.btn_Help.TabIndex = 0;
-            this.btn_Help.TabStop = false;
-            this.btn_Help.Text = "Help";
-            this.btn_Help.UseVisualStyleBackColor = true;
-            this.btn_Help.Visible = false;
-            this.btn_Help.Click += new System.EventHandler(this.btn_Tips_Click);
-            // 
-            // tsmi_Agressive
-            // 
-            this.tsmi_Agressive.Checked = true;
-            this.tsmi_Agressive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmi_Agressive.Name = "tsmi_Agressive";
-            this.tsmi_Agressive.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_Agressive.Text = "Aggressive Override";
-            this.tsmi_Agressive.Click += new System.EventHandler(this.tsmi_Agressive_Click);
             // 
             // MainForm
             // 

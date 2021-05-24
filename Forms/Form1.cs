@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Linq;
 using System.Drawing.Drawing2D;
+using System.IO.Compression;
 
 namespace MupenUtils
 {
@@ -678,9 +679,27 @@ namespace MupenUtils
         void LoadST()
         {
             // WIP...
-            //ShowStatus("ST Loading not implemented yet", st_Status1);
-            MessageBox.Show("ST Parsing not implemented");
+            // just decompress for now
+            FileInfo f = new FileInfo(Path);
+            string newFs;
+            using (FileStream origFs = f.OpenRead())
+            {
+                string curFs = f.FullName;
+                newFs = curFs.Remove(curFs.Length - f.Extension.Length) + ".bin";
+
+                using (FileStream defFs = File.Create(newFs))
+                {
+                    using (GZipStream deStream = new GZipStream(origFs, CompressionMode.Decompress))
+                    {
+                        deStream.CopyTo(defFs);
+                    }
+                }
+            }
+
+            MessageBox.Show("Savestate has been decompressed to " + newFs, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
+
 #endregion
 
 #region Input & Frames
@@ -1214,7 +1233,7 @@ namespace MupenUtils
         void UpdateReadOnly()
         {
             readOnly = chk_readonly.Checked;
-            chk_readonly.Text = readOnly ? "Readonly" : "Readwrite";
+            chk_readonly.Text = readOnly ? "Read-only" : "Read-write";
             //if(!readOnly) ShowStatus("Read-Write mode: All changes will be flushed to a new file upon pressing \'Save File\'", st_Status1);
             //else ShowStatus("Read-only mode: You can only view M64 data", st_Status1);
             // Groupboxes + Child controls
@@ -1368,6 +1387,10 @@ namespace MupenUtils
             Pen linepen = new Pen(Color.Blue, 3);
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
+            if (lockType)
+            {
+                SnapJoystick(); // warning: is this desync proof and accurate?
+            }
 
             Point xy;
             if (lockType)
