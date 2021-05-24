@@ -195,7 +195,7 @@ namespace MupenUtils
             // 
             // pb_More_Logo
             // 
-            this.pb_More_Logo.BackgroundImage = global::MupenUtils.Properties.Resources.logo;
+            this.pb_More_Logo.BackgroundImage = global::MupenUtils.Properties.Resources.logoPng;
             this.pb_More_Logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pb_More_Logo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pb_More_Logo.Cursor = System.Windows.Forms.Cursors.Hand;
