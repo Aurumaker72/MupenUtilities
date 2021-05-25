@@ -81,6 +81,7 @@ namespace MupenUtils.Forms
         {
             Replace();
         }
+
         void Replace()
         { 
             lbl_Repl_Status.Text = "Replacing";
@@ -95,13 +96,14 @@ namespace MupenUtils.Forms
             }
             src = File.ReadAllBytes(pathSource);
             trg = File.ReadAllBytes(pathTarget);
+
             if(trg.Length < src.Length)
             {
                 lbl_Repl_Status.Text = "Target file too small";
                 return;
             }
 
-            int basePosition = 1024; // input begin (byte)
+            const int basePosition = 1024; // input begin (byte)
 
             int from = 0;
             int to = 0;
@@ -115,6 +117,7 @@ namespace MupenUtils.Forms
                 lbl_Repl_Status.Text = "Failed (from/to)";
             }
 
+            
             //if (!ExtensionMethods.ValidStringInt(txt_Repl_FFrom.Text, 0, src.Length / 4 - 1024/*length of input data*/))
             //{
             //    lbl_Repl_Status.Text = "Failed (OOB)";
@@ -129,11 +132,15 @@ namespace MupenUtils.Forms
 
             if (chk_Repl_All.Checked)
             {
-                from = 0;
-                to = src.Length / 4 - basePosition;
+                from = basePosition;
+                to = src.Length;
+            }
+            else
+            {
+                from -= 1024;
             }
             
-            for (int i = basePosition+from; i < to; i++)
+            for (int i = from; i < to; i++)
             {
                 lbl_Repl_Status.Text = "Copying " + i;
                 trg[i] = src[i];

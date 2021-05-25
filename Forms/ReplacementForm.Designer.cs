@@ -31,21 +31,21 @@ namespace MupenUtils.Forms
         {
             this.gpBox_Repl_Replacement = new System.Windows.Forms.GroupBox();
             this.gp_Repl_Commands = new System.Windows.Forms.GroupBox();
+            this.chk_Repl_All = new System.Windows.Forms.CheckBox();
+            this.btn_Repl_Go = new System.Windows.Forms.Button();
             this.lbl_Repl_Fto = new System.Windows.Forms.Label();
             this.txt_Repl_Fto = new System.Windows.Forms.TextBox();
             this.lbl_Repl_FFrom = new System.Windows.Forms.Label();
             this.txt_Repl_FFrom = new System.Windows.Forms.TextBox();
             this.gp_Repl_File = new System.Windows.Forms.GroupBox();
+            this.chk_Repl_Trg = new System.Windows.Forms.CheckBox();
+            this.lbl_Repl_Status = new System.Windows.Forms.Label();
             this.btn_Repl_BrowseTrg = new System.Windows.Forms.Button();
             this.btn_Repl_BrowseSrc = new System.Windows.Forms.Button();
             this.txt_Repl_Trg = new System.Windows.Forms.TextBox();
             this.txt_Repl_Src = new System.Windows.Forms.TextBox();
             this.gp_Repl_Trg = new System.Windows.Forms.Label();
             this.gp_Repl_Src = new System.Windows.Forms.Label();
-            this.btn_Repl_Go = new System.Windows.Forms.Button();
-            this.lbl_Repl_Status = new System.Windows.Forms.Label();
-            this.chk_Repl_All = new System.Windows.Forms.CheckBox();
-            this.chk_Repl_Trg = new System.Windows.Forms.CheckBox();
             this.gpBox_Repl_Replacement.SuspendLayout();
             this.gp_Repl_Commands.SuspendLayout();
             this.gp_Repl_File.SuspendLayout();
@@ -78,6 +78,29 @@ namespace MupenUtils.Forms
             this.gp_Repl_Commands.TabIndex = 0;
             this.gp_Repl_Commands.TabStop = false;
             this.gp_Repl_Commands.Text = "Commands";
+            // 
+            // chk_Repl_All
+            // 
+            this.chk_Repl_All.AutoSize = true;
+            this.chk_Repl_All.Location = new System.Drawing.Point(16, 112);
+            this.chk_Repl_All.Name = "chk_Repl_All";
+            this.chk_Repl_All.Size = new System.Drawing.Size(45, 21);
+            this.chk_Repl_All.TabIndex = 0;
+            this.chk_Repl_All.TabStop = false;
+            this.chk_Repl_All.Text = "All";
+            this.chk_Repl_All.UseVisualStyleBackColor = true;
+            this.chk_Repl_All.CheckedChanged += new System.EventHandler(this.chk_Repl_All_CheckedChanged);
+            // 
+            // btn_Repl_Go
+            // 
+            this.btn_Repl_Go.Location = new System.Drawing.Point(96, 176);
+            this.btn_Repl_Go.Name = "btn_Repl_Go";
+            this.btn_Repl_Go.Size = new System.Drawing.Size(91, 31);
+            this.btn_Repl_Go.TabIndex = 0;
+            this.btn_Repl_Go.TabStop = false;
+            this.btn_Repl_Go.Text = "Go";
+            this.btn_Repl_Go.UseVisualStyleBackColor = true;
+            this.btn_Repl_Go.Click += new System.EventHandler(this.btn_Repl_Go_Click);
             // 
             // lbl_Repl_Fto
             // 
@@ -130,6 +153,29 @@ namespace MupenUtils.Forms
             this.gp_Repl_File.TabIndex = 0;
             this.gp_Repl_File.TabStop = false;
             this.gp_Repl_File.Text = "File";
+            // 
+            // chk_Repl_Trg
+            // 
+            this.chk_Repl_Trg.AutoSize = true;
+            this.chk_Repl_Trg.Checked = true;
+            this.chk_Repl_Trg.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_Repl_Trg.Location = new System.Drawing.Point(280, 84);
+            this.chk_Repl_Trg.Name = "chk_Repl_Trg";
+            this.chk_Repl_Trg.Size = new System.Drawing.Size(18, 17);
+            this.chk_Repl_Trg.TabIndex = 0;
+            this.chk_Repl_Trg.TabStop = false;
+            this.chk_Repl_Trg.UseVisualStyleBackColor = true;
+            this.chk_Repl_Trg.Visible = false;
+            this.chk_Repl_Trg.CheckedChanged += new System.EventHandler(this.chk_Repl_Trg_CheckedChanged);
+            // 
+            // lbl_Repl_Status
+            // 
+            this.lbl_Repl_Status.AutoSize = true;
+            this.lbl_Repl_Status.Location = new System.Drawing.Point(16, 184);
+            this.lbl_Repl_Status.Name = "lbl_Repl_Status";
+            this.lbl_Repl_Status.Size = new System.Drawing.Size(30, 17);
+            this.lbl_Repl_Status.TabIndex = 0;
+            this.lbl_Repl_Status.Text = "Idle";
             // 
             // btn_Repl_BrowseTrg
             // 
@@ -186,51 +232,6 @@ namespace MupenUtils.Forms
             this.gp_Repl_Src.Size = new System.Drawing.Size(53, 17);
             this.gp_Repl_Src.TabIndex = 0;
             this.gp_Repl_Src.Text = "Source";
-            // 
-            // btn_Repl_Go
-            // 
-            this.btn_Repl_Go.Location = new System.Drawing.Point(96, 176);
-            this.btn_Repl_Go.Name = "btn_Repl_Go";
-            this.btn_Repl_Go.Size = new System.Drawing.Size(91, 31);
-            this.btn_Repl_Go.TabIndex = 0;
-            this.btn_Repl_Go.TabStop = false;
-            this.btn_Repl_Go.Text = "Go";
-            this.btn_Repl_Go.UseVisualStyleBackColor = true;
-            this.btn_Repl_Go.Click += new System.EventHandler(this.btn_Repl_Go_Click);
-            // 
-            // lbl_Repl_Status
-            // 
-            this.lbl_Repl_Status.AutoSize = true;
-            this.lbl_Repl_Status.Location = new System.Drawing.Point(16, 184);
-            this.lbl_Repl_Status.Name = "lbl_Repl_Status";
-            this.lbl_Repl_Status.Size = new System.Drawing.Size(30, 17);
-            this.lbl_Repl_Status.TabIndex = 0;
-            this.lbl_Repl_Status.Text = "Idle";
-            // 
-            // chk_Repl_All
-            // 
-            this.chk_Repl_All.AutoSize = true;
-            this.chk_Repl_All.Location = new System.Drawing.Point(16, 112);
-            this.chk_Repl_All.Name = "chk_Repl_All";
-            this.chk_Repl_All.Size = new System.Drawing.Size(45, 21);
-            this.chk_Repl_All.TabIndex = 0;
-            this.chk_Repl_All.TabStop = false;
-            this.chk_Repl_All.Text = "All";
-            this.chk_Repl_All.UseVisualStyleBackColor = true;
-            this.chk_Repl_All.CheckedChanged += new System.EventHandler(this.chk_Repl_All_CheckedChanged);
-            // 
-            // chk_Repl_Trg
-            // 
-            this.chk_Repl_Trg.AutoSize = true;
-            this.chk_Repl_Trg.Checked = true;
-            this.chk_Repl_Trg.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_Repl_Trg.Location = new System.Drawing.Point(280, 84);
-            this.chk_Repl_Trg.Name = "chk_Repl_Trg";
-            this.chk_Repl_Trg.Size = new System.Drawing.Size(18, 17);
-            this.chk_Repl_Trg.TabIndex = 0;
-            this.chk_Repl_Trg.TabStop = false;
-            this.chk_Repl_Trg.UseVisualStyleBackColor = true;
-            this.chk_Repl_Trg.CheckedChanged += new System.EventHandler(this.chk_Repl_Trg_CheckedChanged);
             // 
             // ReplacementForm
             // 
