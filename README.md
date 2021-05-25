@@ -12,12 +12,13 @@ You can view and edit all meaningful M64 Header data.
 
 #### Input
 You can view and edit M64 Joystick Inputs on each frame in a clean, interactive TASInput style interface.
+There are no major QoL features for Inputting on Joystick or Buttons as this is not TASing software 
 
 #### Frame Control
 You can seek back and forth, reverse playback, step frames and more intuitive controls.
 Playing the movie back in real-time (30 FPS) is also possible.
 
-### Replacement
+#### Replacement
 Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of input frames from one movie to another
 
 #### TAS Studio
