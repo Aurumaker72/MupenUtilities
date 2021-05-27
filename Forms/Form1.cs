@@ -275,7 +275,6 @@ namespace MupenUtils
             s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
-            btn_Loop.Enabled = FileLoaded;
             btn_FrameBack.Enabled = FileLoaded;
             btn_FrameBack2.Enabled = FileLoaded;
             btn_FrameFront.Enabled = FileLoaded;
@@ -315,7 +314,6 @@ namespace MupenUtils
             btn_FrameBack.Invoke((MethodInvoker)(() => btn_FrameBack.Enabled = flag));
             btn_FrameBack2.Invoke((MethodInvoker)(() => btn_FrameBack2.Enabled = flag));
             btn_FrameFront.Invoke((MethodInvoker)(() => btn_FrameFront.Enabled = flag));
-            btn_Loop.Invoke((MethodInvoker)(() => btn_Loop.Enabled = flag));
             btn_FrameFront2.Invoke((MethodInvoker)(() => btn_FrameFront2.Enabled = flag));
             btn_PlayDirection.Invoke((MethodInvoker)(() => btn_PlayDirection.Enabled = flag));
             btn_PlayPause.Invoke((MethodInvoker)(() => btn_PlayPause.Enabled = flag));
@@ -421,7 +419,7 @@ namespace MupenUtils
             lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "0"));
             txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = "0"));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = 0));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
             gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
             Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = readOnly));
@@ -526,7 +524,7 @@ namespace MupenUtils
             txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 0));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
 
 
@@ -845,29 +843,7 @@ namespace MupenUtils
 
         bool checkAllowedStep(int stepAmount)
         {
-            if(frame > frames || frame < 0)
-            {
-                if (!loopInputs)
-                {
-                    if (frame > frames)
-                        frame = (int)frames;
-                    else if (frame < 0)
-                        frame = 0;
-                }
-                else
-                {
-                    if (frame > frames)
-                    {
-                        frame = 0;
-                    }
-                    else if (frame < 0)
-                    {
-                        frame = (int)frames - 1;
-                    }
-                }
-                return false;
-            }
-            return true;
+            return frame > 0 && frame < inputList.Count && (frame + stepAmount) > 0 && (frame + stepAmount) < inputList.Count;
         }
 
         void StepFrame(int stepAmount)
@@ -879,16 +855,23 @@ namespace MupenUtils
             //SetInput(inputList[frame]);
 
 
-            SetFrame(frame + stepAmount);
+            SetFrame(frame + stepAmount, stepAmount);
         }
-        void SetFrame(int targetframe)
+        void SetFrame(int targetframe, int stepamount)
         {
+            int tmp = frame;
             frame = targetframe;
-            if (!checkAllowedStep(targetframe)) return;
-            if(frame >= inputList.Count)
+            UpdateFrameControlUI();
+            if (!checkAllowedStep(stepamount))
+            {
+                frame = tmp; // revert
+                return;
+            }
+            if(frame > inputList.Count)
             {
                frame = (int)inputList.Count;
                stepFrameTimer.Enabled = false;
+               UpdateFrameControlUI();
                return;
             }
             GetInput(inputList[frame]);
@@ -1106,12 +1089,6 @@ namespace MupenUtils
             stepFrameTimer.Enabled = !stepFrameTimer.Enabled;
             btn_PlayPause.Text = stepFrameTimer.Enabled ? "| |" : forwardsPlayback ? "|>" : "<|";
         }
-        private void btn_Loop_Click(object sender, EventArgs e)
-        {
-            this.ActiveControl = null;
-            loopInputs = !loopInputs;
-            btn_Loop.Text = loopInputs ? "🔁" : "➡";
-        }
         private void btn_PlayDirection_Click(object sender, EventArgs e)
         {
             forwardsPlayback = !forwardsPlayback;
@@ -1145,12 +1122,11 @@ namespace MupenUtils
             tsmi_SimpleMode.Checked = simpleMode;
             txt_joyX.Visible 
                 = txt_joyY.Visible 
-                = lbl_XY.Visible 
+                = lbl_Y.Visible 
                 = txt_Frame.Visible 
                 = btn_FrameBack2.Visible 
                 = btn_FrameFront2.Visible 
                 = gp_TASStudio.Visible
-                = btn_Loop.Visible
                 = chk_restart.Visible
                 = chk_RESERVED1.Visible
                 = chk_RESERVED2.Visible
@@ -1209,7 +1185,7 @@ namespace MupenUtils
         {
             if(ExtensionMethods.ValidStringInt(txt_Frame.Text, 0, (int)frames) && e.KeyCode == Keys.Enter)
             {
-                SetFrame(Int32.Parse(txt_Frame.Text));
+                SetFrame(Int32.Parse(txt_Frame.Text),0);
             }
         }
         void ParseXYTextbox()
@@ -1271,7 +1247,7 @@ namespace MupenUtils
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
         {
-            SetFrame(tr_MovieScrub.Value);
+            SetFrame(tr_MovieScrub.Value,0);
         }
 
         private void chk_readonly_CheckedChanged(object sender, EventArgs e)
