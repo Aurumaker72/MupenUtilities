@@ -497,15 +497,27 @@ namespace MupenUtils
             // position 1024
             while (findx <= frames)
             {
-                if (br.BaseStream.Position + 4 > fs.Length) {
+                for (int i = 0; i < Controllers; i++)
+                {
+
+
+                    if (br.BaseStream.Position + 4 > fs.Length)
+                    {
+                        findx++;
+                        continue;
+                    }
+
+                    if (Controllers == 1)
+                        inputListCtl1.Add(br.ReadInt32());
+                    else if (Controllers == 2)
+                        inputListCtl2.Add(br.ReadInt32());
+                    else if (Controllers == 3)
+                        inputListCtl3.Add(br.ReadInt32());
+                    else if (Controllers == 4)
+                        inputListCtl4.Add(br.ReadInt32());
+
                     findx++;
-                    continue;
                 }
-#if DEBUG
-                Debug.WriteLine("[LOADING M64] --- Sample " + findx + "/" + frames + " ---");
-#endif
-                inputListCtl1.Add(br.ReadInt32());
-                findx++;
             }
             SAVE_inputList = inputListCtl1; // copy
 
@@ -550,7 +562,7 @@ namespace MupenUtils
             
             EnableM64View_ThreadSafe(true);
 
-            if (Controllers != 1)
+            if (Controllers > 4)
             {
                 gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = false));
                 Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = false));
