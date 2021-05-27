@@ -11,11 +11,20 @@ To change the data, select Read-write mode by clicking on the upper left checkbo
 You can save a modified copy of the selected M64 by clicking the bottom left button "Save M64"
 
 ### Header
-You can view and edit all meaningful M64 Header data.
+You can view and edit all meaningful M64 Header data such as
+- Rerecords
+- Plugin names
+- Author
+- Description
+- all else...
 
 ### Input
 You can view and edit M64 Joystick Inputs on each frame in a clean, interactive TASInput style interface.
 There are no major QoL features for Inputting on Joystick or Buttons as this is not TASing software.
+
+### Hex Viewer
+View any byte (offset) of the selected movie as hexadecimal string.
+This opens up limitless possibilities of finding data in a movie file.
 
 ##### Frame Control
 You can seek back and forth, reverse playback, step frames and more intuitive controls.
