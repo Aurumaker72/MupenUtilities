@@ -86,7 +86,16 @@ namespace MupenUtils
         string Description;
 
         public CheckBox[] controllerButtonsChk;
-        public static List<int> inputList = new List<int>();
+
+        public static List<int> inputListCtl1 = new List<int>();
+        public static List<int> inputListCtl2 = new List<int>();
+        public static List<int> inputListCtl3 = new List<int>();
+        public static List<int> inputListCtl4 = new List<int>();
+
+        public static List<int>[] inputLists = { inputListCtl1, inputListCtl2, inputListCtl3, inputListCtl4 };
+
+        public static byte selectedController = 0;
+
         public static List<int> SAVE_inputList = new List<int>();
         public static UInt32[] validCrcs = { 
             0x03048DE6,
@@ -227,6 +236,8 @@ namespace MupenUtils
                 this.Text += " - Unsupported";
                 MessageBox.Show("Your system is big-endian and this program might not work properly!");
             }
+
+
             UpdateReadOnly();
             
             EnableM64View(false, true);
@@ -361,12 +372,12 @@ namespace MupenUtils
             }catch { return; }
             if (!plain)
             {
-                for (int i = 0; i < inputList.Count; i++)
-                    br.Write(inputList[i]);
+                for (int i = 0; i < inputListCtl1.Count; i++)
+                    br.Write(inputListCtl1[i]);
 
                  br.Flush(); br.Close();
 
-                MessageBox.Show(String.Format("Dumped {0} input samples to {1}", inputList.Count, fs.Name));
+                MessageBox.Show(String.Format("Dumped {0} input samples to {1}", inputListCtl1.Count, fs.Name));
 
                 fs.Close();
             }
@@ -414,7 +425,11 @@ namespace MupenUtils
             BinaryReader br = new BinaryReader(fs);
 
             // Reset
-            inputList.Clear();
+            inputListCtl1.Clear();
+            inputListCtl2.Clear();
+            inputListCtl3.Clear();
+            inputListCtl4.Clear();
+
             frame = 0;
             lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "0"));
             txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = "0"));
@@ -424,6 +439,7 @@ namespace MupenUtils
             Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = readOnly));
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Readonly"));
+            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
             ResetLblColors();
 
             // Read header
@@ -488,10 +504,10 @@ namespace MupenUtils
 #if DEBUG
                 Debug.WriteLine("[LOADING M64] --- Sample " + findx + "/" + frames + " ---");
 #endif
-                inputList.Add(br.ReadInt32());
+                inputListCtl1.Add(br.ReadInt32());
                 findx++;
             }
-            SAVE_inputList = inputList; // copy
+            SAVE_inputList = inputListCtl1; // copy
 
 
 
@@ -527,7 +543,10 @@ namespace MupenUtils
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
 
+            for (int i = 0; i < Controllers; i++)
+               cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Add("Controller " + (i+1))));
 
+            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
             
             EnableM64View_ThreadSafe(true);
 
@@ -662,9 +681,9 @@ namespace MupenUtils
             br.Write(rsp, 0, 64);
             br.Write(author, 0, 222);
             br.Write(desc, 0, 256);
-            for (int i = 0; i < inputList.Count; i++)
+            for (int i = 0; i < inputListCtl1.Count; i++)
             {
-                br.Write(inputList[i]);
+                br.Write(inputListCtl1[i]);
             }
             br.Flush();
             br.Close();
@@ -730,13 +749,13 @@ namespace MupenUtils
             }
 
             
-            gp_TASStudio.Text = "TAS Studio - Loading " + inputList.Count + " samples";
+            gp_TASStudio.Text = "TAS Studio - Loading " + inputListCtl1.Count + " samples";
             // populate with input data (this is cringe and painful and slow i dont care)
             new Thread (() =>
             {
                 while (dgv_Main.RecreatingHandle) ; // spin until handle is created
                 
-                for (int y = 0; y < inputList.Count; y++)
+                for (int y = 0; y < inputListCtl1.Count; y++)
                 {
                     // for each frame
                     dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Add()));
@@ -753,13 +772,13 @@ namespace MupenUtils
                         //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
                         if (x < 16)
                         {
-                            if ((inputList[y] & (int)Math.Pow(2, x)) != 0)
+                            if ((inputListCtl1[y] & (int)Math.Pow(2, x)) != 0)
                                 cellValue = inputStructNames[x];
                         }
                         else
                         {
 
-                            byte[] data = BitConverter.GetBytes(inputList[y]);
+                            byte[] data = BitConverter.GetBytes(inputListCtl1[y]);
                             if(x == 16)
                             cellValue = ((sbyte)data[2]).ToString();
                             else if(x == 17)
@@ -797,7 +816,7 @@ namespace MupenUtils
                 if (Sticky)
                     value = lastValue;
                 else
-                    value = inputList[frame];
+                    value = inputLists[selectedController][frame];
             } // get value at that frame. If this fails then m64 is corrupted 
             catch
             {
@@ -818,7 +837,7 @@ namespace MupenUtils
 
             value = BitConverter.ToInt32(joydata,0);
             lastValue = value;
-            inputList[frame] = value;
+            inputListCtl1[frame] = value;
             Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
             //GetInput(inputList[frame]); // also update visuals!
         }
@@ -843,7 +862,7 @@ namespace MupenUtils
 
         bool checkAllowedStep(int stepAmount)
         {
-            return frame > 0 && frame < inputList.Count && (frame + stepAmount) > 0 && (frame + stepAmount) < inputList.Count;
+            return frame > 0 && frame < inputListCtl1.Count && (frame + stepAmount) > 0 && (frame + stepAmount) < inputListCtl1.Count;
         }
 
         void StepFrame(int stepAmount)
@@ -867,14 +886,14 @@ namespace MupenUtils
                 frame = tmp; // revert
                 return;
             }
-            if(frame > inputList.Count)
+            if(frame > inputLists[selectedController].Count)
             {
-               frame = (int)inputList.Count;
+               frame = (int)inputLists[selectedController].Count;
                stepFrameTimer.Enabled = false;
                UpdateFrameControlUI();
                return;
             }
-            GetInput(inputList[frame]);
+            GetInput(inputLists[selectedController][frame]);
             UpdateFrameControlUI();
         }
 #endregion
@@ -1264,7 +1283,20 @@ namespace MupenUtils
         {
             tsmi_Agressive.Checked ^= true;
         }
+        
+        private void cbox_Controllers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbox_Controllers.SelectedIndex + 1 > Controllers)
+            {
+                selectedController = 0;
+                goto update;
+            }
+            selectedController = Convert.ToByte(cbox_Controllers.SelectedIndex);
 
+        update:
+            GetInput(frame);
+            cbox_Controllers.SelectedIndex = selectedController;
+        }
 
 #endregion
 
@@ -1357,6 +1389,7 @@ namespace MupenUtils
             JOY_mouseDown = true;
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
+
 
         private void DrawJoystick(PaintEventArgs e)
         {

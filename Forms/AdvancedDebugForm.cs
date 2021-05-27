@@ -30,7 +30,7 @@ namespace MupenUtils.Forms
         {
             try
             {
-                MainForm.inputList[selectedFrame] = Int32.Parse(txt_Debug_Uvalue.Text);
+                MainForm.inputLists[MainForm.selectedController][selectedFrame] = Int32.Parse(txt_Debug_Uvalue.Text);
             }
             catch { }
         }
@@ -39,7 +39,7 @@ namespace MupenUtils.Forms
         {
             try
             {
-                if (ExtensionMethods.ValidStringInt(txt_Debug_Frame.Text, 0, MainForm.inputList.Count))
+                if (ExtensionMethods.ValidStringInt(txt_Debug_Frame.Text, 0, MainForm.inputLists[MainForm.selectedController].Count))
                     selectedFrame = Int32.Parse(txt_Debug_Frame.Text);
             }
             catch { }
@@ -47,8 +47,8 @@ namespace MupenUtils.Forms
 
         private void btn_Debug_Random_Click(object sender, EventArgs e)
         {
-            MainForm.inputList[selectedFrame] = new Random().Next(0, Int32.MaxValue);
-            txt_Debug_Uvalue.Text = MainForm.inputList[selectedFrame].ToString();
+            MainForm.inputLists[MainForm.selectedController][selectedFrame] = new Random().Next(0, Int32.MaxValue);
+            txt_Debug_Uvalue.Text = MainForm.inputLists[MainForm.selectedController][selectedFrame].ToString();
         }
 
         private void AdvancedDebugForm_Shown_1(object sender, EventArgs e)

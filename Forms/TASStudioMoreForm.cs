@@ -37,7 +37,7 @@ namespace MupenUtils.Forms
 
             if(txt == "Invalid") {txt = "0"; txt_TasStudio_Frame.Text = txt;}
 
-            if (ExtensionMethods.ValidStringInt(txt, 0, MainForm.inputList.Count))
+            if (ExtensionMethods.ValidStringInt(txt, 0, MainForm.inputLists[MainForm.selectedController].Count))
                 selectedFrame = Int32.Parse(txt);
             else
                 txt = "Invalid";
@@ -50,7 +50,7 @@ namespace MupenUtils.Forms
         private void btn_TasStudio_Goto_Click(object sender, EventArgs e)
         {
             MainForm.forceGoto = true;
-            selectedFrame = ExtensionMethods.Clamp(selectedFrame - 1, 0, MainForm.inputList.Count);
+            selectedFrame = ExtensionMethods.Clamp(selectedFrame - 1, 0, MainForm.inputLists[MainForm.selectedController].Count);
             MainForm.markedGoToFrame = selectedFrame;
         }
 
