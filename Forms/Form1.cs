@@ -1407,7 +1407,11 @@ namespace MupenUtils
         {
             e.Graphics.SmoothingMode = JOY_SmoothingMode;
 
-            Pen linepen = new Pen(Color.Blue, 3);
+            Pen linepen;
+            if(!readOnly)
+            linepen = new Pen(Color.Blue, 3);
+            else
+            linepen = new Pen(Color.Gray, 3);
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
             if (lockType)
@@ -1423,13 +1427,22 @@ namespace MupenUtils
                 xy = RelativeToAbsolute(JOY_Rel);   
             }
 
-            e.Graphics.DrawEllipse(Pens.Black, 1,1, pb_JoystickPic.Width-2, pb_JoystickPic.Height-2);
-            e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-            e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-            
-            
-            e.Graphics.DrawLine(linepen, JOY_middle, xy);
-            e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+            if (!readOnly)
+            {
+                e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+            }
+            else
+            {
+                e.Graphics.DrawEllipse(Pens.Gray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                e.Graphics.DrawLine(Pens.Gray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                e.Graphics.DrawLine(Pens.Gray, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                e.Graphics.FillEllipse(Brushes.Gray, xy.X - 4, xy.Y - 4, 8, 8);
+            }
             linepen.Dispose();
 
             if(tsmi_Agressive.Checked)
