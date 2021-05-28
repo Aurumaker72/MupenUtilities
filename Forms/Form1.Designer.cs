@@ -849,12 +849,17 @@ namespace MupenUtils
             // 
             this.tr_MovieScrub.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tr_MovieScrub.Location = new System.Drawing.Point(186, 360);
+            this.tr_MovieScrub.BackColor = System.Drawing.SystemColors.Control;
+            this.tr_MovieScrub.Location = new System.Drawing.Point(180, 360);
+            this.tr_MovieScrub.Maximum = 2;
+            this.tr_MovieScrub.Minimum = 1;
             this.tr_MovieScrub.Name = "tr_MovieScrub";
-            this.tr_MovieScrub.Size = new System.Drawing.Size(175, 56);
+            this.tr_MovieScrub.Size = new System.Drawing.Size(176, 56);
             this.tr_MovieScrub.TabIndex = 0;
             this.tr_MovieScrub.TabStop = false;
+            this.tr_MovieScrub.TickFrequency = 0;
             this.tr_MovieScrub.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tr_MovieScrub.Value = 1;
             this.tr_MovieScrub.Scroll += new System.EventHandler(this.tr_MovieScrub_Scroll);
             // 
             // btn_Input_Debug

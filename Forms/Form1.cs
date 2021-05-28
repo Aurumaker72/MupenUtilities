@@ -433,8 +433,8 @@ namespace MupenUtils
             frame = 0;
             lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "0"));
             txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = "0"));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = 0));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = 1));
             gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
             Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = readOnly));
@@ -896,14 +896,18 @@ namespace MupenUtils
             if (!checkAllowedStep(stepamount))
             {
                 frame = tmp; // revert
+                GetInput(inputLists[selectedController][tmp]);
                 return;
             }
-            if(frame > inputLists[selectedController].Count)
+            if (frame > inputLists[selectedController].Count)
             {
-               frame = (int)inputLists[selectedController].Count;
-               stepFrameTimer.Enabled = false;
-               UpdateFrameControlUI();
-               return;
+                frame = (int)inputLists[selectedController].Count;
+                stepFrameTimer.Enabled = false;
+
+                GetInput(inputLists[selectedController][frame]);
+                UpdateFrameControlUI();
+
+                return;
             }
             GetInput(inputLists[selectedController][frame]);
             UpdateFrameControlUI();
@@ -1278,7 +1282,8 @@ namespace MupenUtils
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
         {
-            SetFrame(tr_MovieScrub.Value,0);
+            MessageBox.Show("not yet");
+            //SetFrame(tr_MovieScrub.Value,0);
         }
 
         private void chk_readonly_CheckedChanged(object sender, EventArgs e)
