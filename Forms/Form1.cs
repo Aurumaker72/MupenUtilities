@@ -795,8 +795,6 @@ namespace MupenUtils
                             cellValue = ((sbyte)data[2]).ToString();
                             else if(x == 17)
                             cellValue = ((sbyte)-data[3]).ToString();
-
-
                         }
                         dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
                     }
@@ -861,20 +859,15 @@ namespace MupenUtils
             }
             byte[] data = BitConverter.GetBytes(value);
             sbyte joystickX = (sbyte)data[2];
-            sbyte joystickY = (sbyte)-data[3];
+            sbyte joystickY = (sbyte)data[3];
 
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
 
             SetInput(frame);
-            SetJoystickValue(new Point(joystickX,joystickY), RELATIVE, false);
+            SetJoystickValue(new Point(joystickX, joystickY), RELATIVE, false);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
-        }
-
-        bool checkAllowedStep(int stepAmount)
-        {
-            return frame > 0 && frame < inputListCtl1.Count && (frame + stepAmount) > 0 && (frame + stepAmount) < inputListCtl1.Count;
         }
 
         void StepFrame(int stepAmount)
@@ -886,28 +879,44 @@ namespace MupenUtils
             //SetInput(inputList[frame]);
 
 
-            SetFrame(frame + stepAmount, stepAmount);
+            SetFrame(frame + stepAmount);
         }
-        void SetFrame(int targetframe, int stepamount)
+        bool checkAllowedStep(int stepAmount)
         {
-            int tmp = frame;
-            frame = targetframe;
-            UpdateFrameControlUI();
-            if (!checkAllowedStep(stepamount))
+            if(frame > frames || frame < 0)
             {
-                frame = tmp; // revert
-                GetInput(inputLists[selectedController][tmp]);
-                return;
+                if (!loopInputs)
+                {
+                    if (frame > frames)
+                        frame = (int)frames;
+                    else if (frame < 0)
+                        frame = 0;
+                }
+                else
+                {
+                    if (frame > frames)
+                    {
+                        frame = 0;
+                    }
+                    else if (frame < 0)
+                    {
+                        frame = (int)frames - 1;
+                    }
+                }
+                return false;
             }
-            if (frame > inputLists[selectedController].Count)
+            return true;
+        }
+
+        void SetFrame(int targetframe)
+        {
+            frame = targetframe;
+            if (!checkAllowedStep(targetframe)) return;
+            if(frame >= inputLists[selectedController].Count)
             {
-                frame = (int)inputLists[selectedController].Count;
-                stepFrameTimer.Enabled = false;
-
-                GetInput(inputLists[selectedController][frame]);
-                UpdateFrameControlUI();
-
-                return;
+               frame = inputLists[selectedController].Count;
+               stepFrameTimer.Enabled = false;
+               return;
             }
             GetInput(inputLists[selectedController][frame]);
             UpdateFrameControlUI();
@@ -1220,7 +1229,7 @@ namespace MupenUtils
         {
             if(ExtensionMethods.ValidStringInt(txt_Frame.Text, 0, (int)frames) && e.KeyCode == Keys.Enter)
             {
-                SetFrame(Int32.Parse(txt_Frame.Text),0);
+                SetFrame(Int32.Parse(txt_Frame.Text));
             }
         }
         void ParseXYTextbox()
@@ -1282,8 +1291,7 @@ namespace MupenUtils
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
         {
-            MessageBox.Show("not yet");
-            //SetFrame(tr_MovieScrub.Value,0);
+            SetFrame(tr_MovieScrub.Value);
         }
 
         private void chk_readonly_CheckedChanged(object sender, EventArgs e)
