@@ -60,6 +60,7 @@ namespace MupenUtils
 
         bool simpleMode = false;
         public static bool mupenRunning = false;
+        public static bool loadedInvalidFile = false;
 
         // M64 Data as Strings
         string Magic;
@@ -395,7 +396,7 @@ namespace MupenUtils
         }
         void ErrorM64()
         {
-
+            loadedInvalidFile = true;
             MessageBox.Show(M64_FAILED_TEXT + " Are you loading a real M64?", PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
@@ -404,6 +405,7 @@ namespace MupenUtils
         void ReadM64()
         {
             // Check for suspicious properties
+            loadedInvalidFile = false;
             if (!bypassTypeCheck && (!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)) || !ExtensionMethods.ValidPath(Path) || !File.Exists(Path))
             {
                 ErrorM64();
@@ -1493,6 +1495,7 @@ namespace MupenUtils
                 exStr += "stack trace: " + ex.StackTrace + "\n";
                 exStr += "file loaded: " + FileLoaded.ToString() + "\n";
                 exStr += "mupen running: " + mupenRunning.ToString() + "\n";
+                exStr += "loaded invalid file: " + loadedInvalidFile.ToString() + "\n";
                 File.WriteAllText(@"exception.log", exStr);
             }
         }
