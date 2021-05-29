@@ -230,6 +230,14 @@ namespace MupenUtils
             originalGroupboxLocation[2] = gpRom.Location;
             originalGroupboxLocation[3] = gp_Plugins.Location;
 
+#if DEBUG
+            ctx_Input_Debug.Items.Add(new ToolStripSeparator());
+            ToolStripMenuItem tsmi_DBG_Crash = new ToolStripMenuItem();
+            tsmi_DBG_Crash.MouseDown += (s, e) => throw new Exception("Intentional crash");
+            tsmi_DBG_Crash.Text = "Debug - Crash";
+            ctx_Input_Debug.Items.Add(tsmi_DBG_Crash);
+            
+#endif
             if (!BitConverter.IsLittleEndian)
             {
                 // incompatible because this program is somewhat endian dependent
@@ -1337,8 +1345,7 @@ namespace MupenUtils
         #endregion
 
 
-        #region Joystick Drawing, Events, etc...
-
+        #region Joystick Behaviour
 
         private void InputChk_Changed(object sender, MouseEventArgs e)
         {
@@ -1479,14 +1486,14 @@ namespace MupenUtils
 
         static void MExcept(Exception ex)
         {
-            if (MessageBox.Show("Exception occured. The program will attempt to continue. Do you want to dump relevant data to a crash log?", PROGRAM_NAME + " - Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+            if (MessageBox.Show("Exception occured and the program will attempt to continue. Do you want to dump relevant data to a crash log?", PROGRAM_NAME + " - Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
             {
                 string exStr = "";
                 exStr += "message: " + ex.Message + "\n";
                 exStr += "stack trace: " + ex.StackTrace + "\n";
                 exStr += "file loaded: " + FileLoaded.ToString() + "\n";
                 exStr += "mupen running: " + mupenRunning.ToString() + "\n";
-                File.WriteAllText(@"lastexception.log", exStr);
+                File.WriteAllText(@"exception.log", exStr);
             }
         }
 
