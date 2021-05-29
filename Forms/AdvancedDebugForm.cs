@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MupenUtils.Forms
@@ -53,7 +46,7 @@ namespace MupenUtils.Forms
 
         private void AdvancedDebugForm_Shown_1(object sender, EventArgs e)
         {
-            foreach(Control ctl in Controls)
+            foreach (Control ctl in Controls)
                 ctl.Enabled = MainForm.FileLoaded;
 
             if (MainForm.FileLoaded)
@@ -65,19 +58,19 @@ namespace MupenUtils.Forms
 
         private void txt_Debug_Nthbyte_TextChanged(object sender, EventArgs e)
         {
-            if(ExtensionMethods.ValidStringInt(txt_Debug_Nthbyte.Text, 0, file.Length))
+            if (ExtensionMethods.ValidStringInt(txt_Debug_Nthbyte.Text, 0, file.Length))
             {
                 selectedByte = Int32.Parse(txt_Debug_Nthbyte.Text);
                 txt_Debug_Nthbyte.Text = selectedByte.ToString();
                 txt_Debug_Value.Text = file[selectedByte].ToString();
-                txt_Debug_HexByte.Text =  file[selectedByte].ToString("X2");
+                txt_Debug_HexByte.Text = file[selectedByte].ToString("X2");
             }
 
         }
 
         private void txt_Debug_Value_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void gp_Debug_Hex_Enter(object sender, EventArgs e)

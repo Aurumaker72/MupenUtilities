@@ -37,7 +37,7 @@ namespace MupenUtils.Helpers
         };
         public static string GetRandomTip()
         {
-            return tips[rng.Next(0,tips.Length)];
+            return tips[rng.Next(0, tips.Length)];
         }
     }
 }

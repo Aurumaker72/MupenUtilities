@@ -16,7 +16,7 @@ namespace MupenUtils
             InitializeComponent();
             this.Text = MainForm.PROGRAM_NAME + " - More";
 
-            if(!updateNotifier.CheckForInternetConnection())
+            if (!updateNotifier.CheckForInternetConnection())
             {
                 btn_More_CheckUpdates.Enabled = false;
                 btn_More_CheckUpdates.Text = "No Internet";
@@ -50,12 +50,12 @@ namespace MupenUtils
 
         private void event_NewTip(object sender, MouseEventArgs e)
         {
-           if(e.Button != MouseButtons.Right)
-           lbl_More_Tip.Text = TipProvider.GetRandomTip();
+            if (e.Button != MouseButtons.Right)
+                lbl_More_Tip.Text = TipProvider.GetRandomTip();
             else
             {
-                string str=string.Empty;
-                for(int i=0;i<TipProvider.tips.Length;i++)str+=(i)+" | "+TipProvider.tips[i]+'\n';
+                string str = string.Empty;
+                for (int i = 0; i < TipProvider.tips.Length; i++) str += (i) + " | " + TipProvider.tips[i] + '\n';
 
 
                 MessageBox.Show(str, MainForm.PROGRAM_NAME + " - All tips");

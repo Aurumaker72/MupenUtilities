@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MupenUtils.Forms
@@ -32,16 +26,16 @@ namespace MupenUtils.Forms
 
         private void txt_TasStudio_Frame_TextChanged(object sender, EventArgs e)
         {
-            
+
             string txt = txt_TasStudio_Frame.Text;
 
-            if(txt == "Invalid") {txt = "0"; txt_TasStudio_Frame.Text = txt;}
+            if (txt == "Invalid") { txt = "0"; txt_TasStudio_Frame.Text = txt; }
 
             if (ExtensionMethods.ValidStringInt(txt, 0, MainForm.inputLists[MainForm.selectedController].Count))
                 selectedFrame = Int32.Parse(txt);
             else
                 txt = "Invalid";
-            
+
             txt_TasStudio_Frame.Text = txt;
 
 
@@ -64,7 +58,7 @@ namespace MupenUtils.Forms
             }
             this.WindowState = FormWindowState.Maximized;
             for (int i = 0; i < 50; i++)
-            this.Text = this.Text + "Obunga";
+                this.Text = this.Text + "Obunga";
         }
 
     }

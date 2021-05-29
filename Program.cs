@@ -11,13 +11,13 @@ namespace MupenUtils
         [STAThread]
         static void Main()
         {
-            
+
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-//#if !DEBUG
+            //#if !DEBUG
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-//#endif
+            //#endif
             Application.Run(new MainForm());
         }
     }

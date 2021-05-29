@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MupenUtils
+﻿namespace MupenUtils
 {
     public static class DataHelper
     {
@@ -51,69 +45,69 @@ namespace MupenUtils
         public static string GetCountryCode(ushort ccode)
         {
             string code = "Error";
-            switch(ccode&0xFF)
-	        {
-	        /* Demo */
-	        case 0:
+            switch (ccode & 0xFF)
+            {
+                /* Demo */
+                case 0:
                     code = "Demo";
-	        	break;
-	        case '7':
+                    break;
+                case '7':
                     code = "Beta";
-	        	break;
+                    break;
 
-	        case 0x41:
+                case 0x41:
                     code = "USA/Japan";
-	        	break;
+                    break;
 
-	        /* Germany */
-	        case 0x44:
+                /* Germany */
+                case 0x44:
                     code = "German";
-	        	break;
+                    break;
 
-	        /* USA */
-	        case 0x45:
+                /* USA */
+                case 0x45:
                 case 0x60:
                     code = "USA";
-	        	break;
+                    break;
 
-	        /* France */
-	        case 0x46:
+                /* France */
+                case 0x46:
                     code = "France";
-	        	break;
+                    break;
 
-	        /* Italy */
-	        case 'I':
+                /* Italy */
+                case 'I':
                     code = "Italy";
-	        	break;
+                    break;
 
-	        /* Japan */
-	        case 0x4A:
+                /* Japan */
+                case 0x4A:
                     code = "Japan";
-	        	break;
+                    break;
 
-	        case 'S':	/* Spain */
+                case 'S':	/* Spain */
                     code = "Spain";
-	        	break;
+                    break;
 
-	        /* Australia */
-	        case 0x55:
-	        case 0x59:
+                /* Australia */
+                case 0x55:
+                case 0x59:
                     code = "Australia";
-	        	break;
+                    break;
 
-            case 0x50:
-            case 0x58:
-	        case 0x20:
-	        case 0x21:
-	        case 0x38:
-	        case 0x70:
+                case 0x50:
+                case 0x58:
+                case 0x20:
+                case 0x21:
+                case 0x38:
+                case 0x70:
                     code = "Europe";
-	        	break;
+                    break;
 
-	        default:
+                default:
                     code = "Unknown (" + ccode + ")";
-	        	break;
-	        }
+                    break;
+            }
             return code;
         }
 

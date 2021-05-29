@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 public static class ExtensionMethods
@@ -20,29 +17,29 @@ public static class ExtensionMethods
     //}
     public static bool ValidStringInt(string str, int min, int max)
     {
-        if(str.Length == 0||String.IsNullOrEmpty(str)||String.IsNullOrWhiteSpace(str))return false;
-        foreach(char c in str){if(c<'0'||c>'9')return false;}
-        int r=Int32.Parse(str);
-        if (r>=min&&r<=max)
-        return true;
+        if (str.Length == 0 || String.IsNullOrEmpty(str) || String.IsNullOrWhiteSpace(str)) return false;
+        foreach (char c in str) { if (c < '0' || c > '9') return false; }
+        int r = Int32.Parse(str);
+        if (r >= min && r <= max)
+            return true;
         return false;
     }
     public static bool ValidStringSByte(string str)
     {
-        if(str.Length == 0||String.IsNullOrEmpty(str)||String.IsNullOrWhiteSpace(str))return false;
-        foreach(char c in str){if(c<'0'||c>'9')return false;}
-        int r=int.Parse(str);
-        if (r>sbyte.MaxValue||r<sbyte.MinValue)return false;
+        if (str.Length == 0 || String.IsNullOrEmpty(str) || String.IsNullOrWhiteSpace(str)) return false;
+        foreach (char c in str) { if (c < '0' || c > '9') return false; }
+        int r = int.Parse(str);
+        if (r > sbyte.MaxValue || r < sbyte.MinValue) return false;
         return true;
     }
     public static string ByteArrayToString(byte[] ba)
     {
         StringBuilder hex = new StringBuilder(ba.Length * 2);
-         foreach (byte b in ba)
-             hex.AppendFormat("{0:x2}", b);
-        
-         return "0x" + hex.ToString().ToUpper();
-         
+        foreach (byte b in ba)
+            hex.AppendFormat("{0:x2}", b);
+
+        return "0x" + hex.ToString().ToUpper();
+
     }
     public static string StringASCII(string str)
     {
@@ -63,12 +60,12 @@ public static class ExtensionMethods
     }
     public static void SetBit(ref int value, bool bitval, int bitpos)
     {
-        if (!bitval)value&=~(1<<bitpos);else value|=1<<bitpos;
+        if (!bitval) value &= ~(1 << bitpos); else value |= 1 << bitpos;
     }
     public static bool ValidPath(string path, bool allowRelativePaths = false)
     {
         bool isValid = true;
-    
+
         try
         {
             string fullPath = Path.GetFullPath(path);
@@ -82,8 +79,8 @@ public static class ExtensionMethods
                 isValid = string.IsNullOrEmpty(root.Trim(new char[] { '\\', '/' })) == false;
             }
         }
-        catch{isValid = false;}
-    
+        catch { isValid = false; }
+
         return isValid;
     }
 

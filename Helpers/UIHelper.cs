@@ -18,24 +18,24 @@ namespace MupenUtils
             string title = "Select M64";
             if (!m64)
             {
-               filter = "ST Files (*.st)|*.st|All Files (*.*)|*.*";
-               title = "Select ST";
+                filter = "ST Files (*.st)|*.st|All Files (*.*)|*.*";
+                title = "Select ST";
             }
-             OpenFileDialog openFileDialog = new OpenFileDialog
-             {
-                 InitialDirectory = "C:\\",
-                 FilterIndex = 2
-             };
-             openFileDialog.Title = title;
-             openFileDialog.Filter = filter;
-             openFileDialog.CheckFileExists = 
-             openFileDialog.CheckPathExists = 
-             openFileDialog.RestoreDirectory = true;
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                InitialDirectory = "C:\\",
+                FilterIndex = 2
+            };
+            openFileDialog.Title = title;
+            openFileDialog.Filter = filter;
+            openFileDialog.CheckFileExists =
+            openFileDialog.CheckPathExists =
+            openFileDialog.RestoreDirectory = true;
 
-             if (openFileDialog.ShowDialog() == DialogResult.OK)
-             path = openFileDialog.FileName;
-             else
-             return new object[] {"FAIL", false};
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                path = openFileDialog.FileName;
+            else
+                return new object[] { "FAIL", false };
 
             openFileDialog.Dispose();
             return new object[] { path, true };
