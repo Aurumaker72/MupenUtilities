@@ -1,7 +1,7 @@
 # MupenUtilities - Utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)
 ### __This app is work in progress! Expect bugs which can heavily impact usability__
 ![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/input-roll/screenshot1.PNG "Mupen64 Utilities")<br>
-This can be seen as a continuation of the M64 Editor by [mkdasher](https://github.com/mkdasher/)
+This project is heavily inspired by [mkdasher's](https://github.com/mkdasher/) M64 Editor.
 
 ## M64
 The data of any M64 file is presented in a simple interface.
