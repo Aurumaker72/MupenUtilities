@@ -44,6 +44,7 @@ namespace MupenUtils
         AdvancedDebugForm debugForm = new AdvancedDebugForm();
         TASStudioMoreForm tasStudioForm = new TASStudioMoreForm();
         ReplacementForm replacementForm = new ReplacementForm();
+        ControllerFlagsForm controllerFlagsForm = new ControllerFlagsForm();
 
         public static string Path, SavePath;
         public static bool FileLoaded = false;
@@ -80,7 +81,7 @@ namespace MupenUtils
         string AudioPlugin;
         string RSPPlugin;
         UInt32 Samples;
-        UInt32 ControllerFlags;
+        public static UInt32 ControllerFlags;
 
         string M64Name; // Name = m64 file name (path)
         string Author;
@@ -153,6 +154,8 @@ namespace MupenUtils
         SmoothingMode JOY_SmoothingMode = SmoothingMode.HighQuality;
 
         Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0) };
+
+        public static bool notifiedReupdateControllerFlags;
 
         #endregion
 
@@ -394,10 +397,11 @@ namespace MupenUtils
                 fs.Close();
             }
         }
-        void ErrorM64()
+        void ErrorM64(string failReason)
         {
             loadedInvalidFile = true;
-            MessageBox.Show(M64_FAILED_TEXT + " Are you loading a real M64?", PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            MessageBox.Show(M64_FAILED_TEXT + " " + failReason, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
 
@@ -406,15 +410,27 @@ namespace MupenUtils
         {
             // Check for suspicious properties
             loadedInvalidFile = false;
-            if (!bypassTypeCheck && (!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase) || String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path)) || !ExtensionMethods.ValidPath(Path) || !File.Exists(Path))
+            if (!bypassTypeCheck)
             {
-                ErrorM64();
-                return;
+                string errReason = "";
+
+                if(!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase))
+                    errReason += "Extension invalid. ";
+                if(String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path))
+                    errReason += "Path invalid. ";
+                if (!File.Exists(Path))
+                    errReason += "File does not exist. ";
+
+                if (errReason != "")
+                {
+                    ErrorM64(errReason);
+                    return;
+                }
             }
             long len = new FileInfo(Path).Length;
-            if (len < 1028)
+            if (len < 1027)
             {
-                ErrorM64(); return;
+                ErrorM64("File is too small to be a movie."); return;
             }
             foreach (Process procarr in Process.GetProcesses())
             {
@@ -435,7 +451,7 @@ namespace MupenUtils
             try { fs = File.Open(Path, FileMode.Open); }
             catch
             {
-                ErrorM64();
+                ErrorM64("File inaccessible.");
                 return;
             }
             BinaryReader br = new BinaryReader(fs);
@@ -472,7 +488,7 @@ namespace MupenUtils
             StartType = br.ReadInt16();//DataHelper.GetMovieStartupType(br.ReadInt16());
 
             br.ReadInt16(); // reserved -- seek 2 bytes forward (dummy)
-            ControllerFlags = br.ReadUInt32(); // controller flags -- seek 4 bytes forward (dummy)
+            ControllerFlags = br.ReadUInt32(); // controller flags
             br.ReadBytes(160); // reserved -- seek 160 bytes forward (dummy)
             RomName = ascii.GetString(br.ReadBytes(32)); // rom name
             Crc32 = br.ReadUInt32();// crc32
@@ -616,6 +632,11 @@ namespace MupenUtils
                 RedControl(btn_PathSel);
                 return;
             }
+            if(Controllers != 1 || byte.Parse(txt_CTRLS.Text) != 1)
+            {
+                RedControl(lbl_Ctrls);
+                return;
+            }
 
             string tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
 
@@ -638,12 +659,12 @@ namespace MupenUtils
             BinaryWriter br = new BinaryWriter(fs);
             //ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
-            byte[] magic = new byte[5];
-            magic[0] = 0x4D;
-            magic[1] = 0x36;
-            magic[2] = 0x34;
-            magic[3] = 0x1A;
-            magic[4] = 0x03;
+            byte[] magic = new byte[5] { 0x4D, 0x36, 0x34, 0x1A, 0x03};
+            //magic[0] = 0x4D;
+            //magic[1] = 0x36;
+            //magic[2] = 0x34;
+            //magic[3] = 0x1A;
+            //magic[4] = 0x03;
             Array.Clear(zeroar1, 0, zeroar1.Length);
             Array.Clear(zeroar2, 0, zeroar2.Length);
 
@@ -659,8 +680,8 @@ namespace MupenUtils
             Author = txt_Author.Text;
             Description = txt_Desc.Text;
 
-            br.Write(BitConverter.ToInt32(magic, 0)); // Int32 - Magic (4D36341A)
-            br.Write((UInt32)3); // UInt32 - Version number (3)
+            br.Write(BitConverter.ToInt32(magic,0)); // Int32 - Magic (4D36341A)
+            br.Write(0x3); // UInt32 - Version number (3)
             br.Write(UID); // UInt32 - UID
             br.Write((UInt32)VIs); // UInt32 - VIs
             br.Write((UInt32)RRs); // UInt32 - RRs
@@ -673,7 +694,7 @@ namespace MupenUtils
             br.Write((Int16)0); // 2 bytes - RESERVED
             br.Write(ControllerFlags); // UInt32 - Controller Flags
             br.Write(zeroar1, 0, zeroar1.Length); // 160 bytes - RESERVED
-            byte[] romname = new byte[32];
+            byte[] romname;
             romname = ASCIIEncoding.ASCII.GetBytes(RomName);
             Array.Resize(ref romname, 32);
             br.Write(romname, 0, 32);
@@ -689,13 +710,13 @@ namespace MupenUtils
             byte[] author = new byte[222];
             byte[] desc = new byte[256];
 
-            gfx = ASCIIEncoding.ASCII.GetBytes(VideoPlugin);
-            audio = ASCIIEncoding.ASCII.GetBytes(AudioPlugin);
-            input = ASCIIEncoding.ASCII.GetBytes(InputPlugin);
-            rsp = ASCIIEncoding.ASCII.GetBytes(RSPPlugin);
-            author = ASCIIEncoding.UTF8.GetBytes(Author);
-            desc = ASCIIEncoding.UTF8.GetBytes(Description);
-
+            gfx = Encoding.ASCII.GetBytes(VideoPlugin);
+            audio = Encoding.ASCII.GetBytes(AudioPlugin);
+            input = Encoding.ASCII.GetBytes(InputPlugin);
+            rsp = Encoding.ASCII.GetBytes(RSPPlugin);
+            author = Encoding.UTF8.GetBytes(Author);
+            desc = Encoding.UTF8.GetBytes(Description);
+            
             Array.Resize(ref gfx, 64);
             Array.Resize(ref audio, 64);
             Array.Resize(ref input, 64);
@@ -1023,6 +1044,18 @@ namespace MupenUtils
 
                 forceGoto = false;
             }
+            if (notifiedReupdateControllerFlags)
+            {
+                Controllers = 0;
+                for (int i = 0; i < 4; i++)
+                {
+                    if (ExtensionMethods.GetBit(ControllerFlags, i))
+                        Controllers++;
+                }
+                txt_CTRLS.Text = Controllers.ToString();
+
+                notifiedReupdateControllerFlags = false;
+            }
 
         }
 
@@ -1123,8 +1156,13 @@ namespace MupenUtils
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
 
             txt_Frame.Text = frame.ToString();
+
+            dgv_Main.CurrentCell = dgv_Main.Rows[frame].Cells[inputStructNames.Length/2];
+                dgv_Main.Rows[frame].Selected = true;
+
             if (frame <= tr_MovieScrub.Maximum && frame >= tr_MovieScrub.Minimum)
                 tr_MovieScrub.Value = frame;
+
         }
         void AdvanceInputAuto(object obj, EventArgs e)
         {
@@ -1344,6 +1382,10 @@ namespace MupenUtils
             cbox_Controllers.SelectedIndex = selectedController;
         }
 
+        private void btn_CtlFlags_Click(object sender, EventArgs e)
+        {
+            controllerFlagsForm.ShowDialog();
+        }
         #endregion
 
 
@@ -1431,7 +1473,6 @@ namespace MupenUtils
             JOY_mouseDown = true;
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
-
 
         private void DrawJoystick(PaintEventArgs e)
         {

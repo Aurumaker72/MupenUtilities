@@ -58,9 +58,21 @@ public static class ExtensionMethods
     {
         return value != 0;
     }
+    public static void SetBit(ref uint value, bool bitval, int bitpos)
+    {
+        if (!bitval) value &= ~((UInt32)1 << bitpos); else value |= (UInt32)1 << bitpos;
+    }
     public static void SetBit(ref int value, bool bitval, int bitpos)
     {
         if (!bitval) value &= ~(1 << bitpos); else value |= 1 << bitpos;
+    }
+    public static bool GetBit(int value, int bitpos)
+    {
+        return 1 == ((value >> bitpos) & 1);
+    }
+    public static bool GetBit(uint value, int bitpos)
+    {
+        return 1 == ((value >> bitpos) & 1);
     }
     public static bool ValidPath(string path, bool allowRelativePaths = false)
     {

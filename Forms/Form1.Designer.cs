@@ -46,6 +46,13 @@ namespace MupenUtils
             this.st_Status2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.pnl_M64Header = new System.Windows.Forms.Panel();
+            this.gpRom = new System.Windows.Forms.GroupBox();
+            this.txt_Rom = new System.Windows.Forms.TextBox();
+            this.txt_Crc = new System.Windows.Forms.TextBox();
+            this.txt_RomCountry = new System.Windows.Forms.TextBox();
+            this.lbl_ROMNAME = new System.Windows.Forms.Label();
+            this.lbl_ROMCRC = new System.Windows.Forms.Label();
+            this.lbl_RomCountry = new System.Windows.Forms.Label();
             this.gp_User = new System.Windows.Forms.GroupBox();
             this.txt_PathName = new System.Windows.Forms.TextBox();
             this.lbl_Name = new System.Windows.Forms.Label();
@@ -57,13 +64,6 @@ namespace MupenUtils
             this.lbl_Desc = new System.Windows.Forms.Label();
             this.lb_RR = new System.Windows.Forms.Label();
             this.txt_Author = new System.Windows.Forms.TextBox();
-            this.gpRom = new System.Windows.Forms.GroupBox();
-            this.txt_Rom = new System.Windows.Forms.TextBox();
-            this.txt_Crc = new System.Windows.Forms.TextBox();
-            this.txt_RomCountry = new System.Windows.Forms.TextBox();
-            this.lbl_ROMNAME = new System.Windows.Forms.Label();
-            this.lbl_ROMCRC = new System.Windows.Forms.Label();
-            this.lbl_RomCountry = new System.Windows.Forms.Label();
             this.gp_Plugins = new System.Windows.Forms.GroupBox();
             this.lbl_Video = new System.Windows.Forms.Label();
             this.txt_videoplugin = new System.Windows.Forms.TextBox();
@@ -135,12 +135,14 @@ namespace MupenUtils
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_CtlFlags = new System.Windows.Forms.Button();
+            this.lbl_CtlFlags = new System.Windows.Forms.Label();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.pnl_M64Header.SuspendLayout();
-            this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
+            this.gp_User.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_M64_misc.SuspendLayout();
             this.gp_input.SuspendLayout();
@@ -322,8 +324,8 @@ namespace MupenUtils
             // 
             // pnl_M64Header
             // 
-            this.pnl_M64Header.Controls.Add(this.gp_User);
             this.pnl_M64Header.Controls.Add(this.gpRom);
+            this.pnl_M64Header.Controls.Add(this.gp_User);
             this.pnl_M64Header.Controls.Add(this.gp_Plugins);
             this.pnl_M64Header.Controls.Add(this.gp_M64_misc);
             this.pnl_M64Header.Controls.Add(this.btn_Savem64);
@@ -332,6 +334,83 @@ namespace MupenUtils
             this.pnl_M64Header.Name = "pnl_M64Header";
             this.pnl_M64Header.Size = new System.Drawing.Size(560, 408);
             this.pnl_M64Header.TabIndex = 2;
+            // 
+            // gpRom
+            // 
+            this.gpRom.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.gpRom.Controls.Add(this.txt_Rom);
+            this.gpRom.Controls.Add(this.txt_Crc);
+            this.gpRom.Controls.Add(this.txt_RomCountry);
+            this.gpRom.Controls.Add(this.lbl_ROMNAME);
+            this.gpRom.Controls.Add(this.lbl_ROMCRC);
+            this.gpRom.Controls.Add(this.lbl_RomCountry);
+            this.gpRom.Location = new System.Drawing.Point(6, 222);
+            this.gpRom.Margin = new System.Windows.Forms.Padding(4);
+            this.gpRom.Name = "gpRom";
+            this.gpRom.Padding = new System.Windows.Forms.Padding(4);
+            this.gpRom.Size = new System.Drawing.Size(267, 140);
+            this.gpRom.TabIndex = 0;
+            this.gpRom.TabStop = false;
+            this.gpRom.Text = "ROM";
+            // 
+            // txt_Rom
+            // 
+            this.txt_Rom.Location = new System.Drawing.Point(128, 20);
+            this.txt_Rom.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_Rom.Name = "txt_Rom";
+            this.txt_Rom.Size = new System.Drawing.Size(132, 22);
+            this.txt_Rom.TabIndex = 0;
+            this.txt_Rom.TabStop = false;
+            // 
+            // txt_Crc
+            // 
+            this.txt_Crc.Location = new System.Drawing.Point(128, 49);
+            this.txt_Crc.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_Crc.Name = "txt_Crc";
+            this.txt_Crc.ReadOnly = true;
+            this.txt_Crc.Size = new System.Drawing.Size(132, 22);
+            this.txt_Crc.TabIndex = 0;
+            this.txt_Crc.TabStop = false;
+            // 
+            // txt_RomCountry
+            // 
+            this.txt_RomCountry.Location = new System.Drawing.Point(128, 79);
+            this.txt_RomCountry.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_RomCountry.Name = "txt_RomCountry";
+            this.txt_RomCountry.ReadOnly = true;
+            this.txt_RomCountry.Size = new System.Drawing.Size(132, 22);
+            this.txt_RomCountry.TabIndex = 0;
+            this.txt_RomCountry.TabStop = false;
+            // 
+            // lbl_ROMNAME
+            // 
+            this.lbl_ROMNAME.AutoSize = true;
+            this.lbl_ROMNAME.Location = new System.Drawing.Point(10, 25);
+            this.lbl_ROMNAME.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_ROMNAME.Name = "lbl_ROMNAME";
+            this.lbl_ROMNAME.Size = new System.Drawing.Size(81, 17);
+            this.lbl_ROMNAME.TabIndex = 0;
+            this.lbl_ROMNAME.Text = "ROM Name";
+            // 
+            // lbl_ROMCRC
+            // 
+            this.lbl_ROMCRC.AutoSize = true;
+            this.lbl_ROMCRC.Location = new System.Drawing.Point(10, 54);
+            this.lbl_ROMCRC.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_ROMCRC.Name = "lbl_ROMCRC";
+            this.lbl_ROMCRC.Size = new System.Drawing.Size(72, 17);
+            this.lbl_ROMCRC.TabIndex = 0;
+            this.lbl_ROMCRC.Text = "ROM CRC";
+            // 
+            // lbl_RomCountry
+            // 
+            this.lbl_RomCountry.AutoSize = true;
+            this.lbl_RomCountry.Location = new System.Drawing.Point(10, 84);
+            this.lbl_RomCountry.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_RomCountry.Name = "lbl_RomCountry";
+            this.lbl_RomCountry.Size = new System.Drawing.Size(93, 17);
+            this.lbl_RomCountry.TabIndex = 0;
+            this.lbl_RomCountry.Text = "ROM Country";
             // 
             // gp_User
             // 
@@ -349,7 +428,7 @@ namespace MupenUtils
             this.gp_User.Margin = new System.Windows.Forms.Padding(4);
             this.gp_User.Name = "gp_User";
             this.gp_User.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_User.Size = new System.Drawing.Size(267, 197);
+            this.gp_User.Size = new System.Drawing.Size(267, 216);
             this.gp_User.TabIndex = 0;
             this.gp_User.TabStop = false;
             this.gp_User.Text = "Specific";
@@ -451,83 +530,6 @@ namespace MupenUtils
             this.txt_Author.TabIndex = 0;
             this.txt_Author.TabStop = false;
             // 
-            // gpRom
-            // 
-            this.gpRom.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.gpRom.Controls.Add(this.txt_Rom);
-            this.gpRom.Controls.Add(this.txt_Crc);
-            this.gpRom.Controls.Add(this.txt_RomCountry);
-            this.gpRom.Controls.Add(this.lbl_ROMNAME);
-            this.gpRom.Controls.Add(this.lbl_ROMCRC);
-            this.gpRom.Controls.Add(this.lbl_RomCountry);
-            this.gpRom.Location = new System.Drawing.Point(6, 186);
-            this.gpRom.Margin = new System.Windows.Forms.Padding(4);
-            this.gpRom.Name = "gpRom";
-            this.gpRom.Padding = new System.Windows.Forms.Padding(4);
-            this.gpRom.Size = new System.Drawing.Size(267, 158);
-            this.gpRom.TabIndex = 0;
-            this.gpRom.TabStop = false;
-            this.gpRom.Text = "ROM";
-            // 
-            // txt_Rom
-            // 
-            this.txt_Rom.Location = new System.Drawing.Point(128, 20);
-            this.txt_Rom.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_Rom.Name = "txt_Rom";
-            this.txt_Rom.Size = new System.Drawing.Size(132, 22);
-            this.txt_Rom.TabIndex = 0;
-            this.txt_Rom.TabStop = false;
-            // 
-            // txt_Crc
-            // 
-            this.txt_Crc.Location = new System.Drawing.Point(128, 49);
-            this.txt_Crc.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_Crc.Name = "txt_Crc";
-            this.txt_Crc.ReadOnly = true;
-            this.txt_Crc.Size = new System.Drawing.Size(132, 22);
-            this.txt_Crc.TabIndex = 0;
-            this.txt_Crc.TabStop = false;
-            // 
-            // txt_RomCountry
-            // 
-            this.txt_RomCountry.Location = new System.Drawing.Point(128, 79);
-            this.txt_RomCountry.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_RomCountry.Name = "txt_RomCountry";
-            this.txt_RomCountry.ReadOnly = true;
-            this.txt_RomCountry.Size = new System.Drawing.Size(132, 22);
-            this.txt_RomCountry.TabIndex = 0;
-            this.txt_RomCountry.TabStop = false;
-            // 
-            // lbl_ROMNAME
-            // 
-            this.lbl_ROMNAME.AutoSize = true;
-            this.lbl_ROMNAME.Location = new System.Drawing.Point(10, 25);
-            this.lbl_ROMNAME.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_ROMNAME.Name = "lbl_ROMNAME";
-            this.lbl_ROMNAME.Size = new System.Drawing.Size(81, 17);
-            this.lbl_ROMNAME.TabIndex = 0;
-            this.lbl_ROMNAME.Text = "ROM Name";
-            // 
-            // lbl_ROMCRC
-            // 
-            this.lbl_ROMCRC.AutoSize = true;
-            this.lbl_ROMCRC.Location = new System.Drawing.Point(10, 54);
-            this.lbl_ROMCRC.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_ROMCRC.Name = "lbl_ROMCRC";
-            this.lbl_ROMCRC.Size = new System.Drawing.Size(72, 17);
-            this.lbl_ROMCRC.TabIndex = 0;
-            this.lbl_ROMCRC.Text = "ROM CRC";
-            // 
-            // lbl_RomCountry
-            // 
-            this.lbl_RomCountry.AutoSize = true;
-            this.lbl_RomCountry.Location = new System.Drawing.Point(10, 84);
-            this.lbl_RomCountry.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_RomCountry.Name = "lbl_RomCountry";
-            this.lbl_RomCountry.Size = new System.Drawing.Size(93, 17);
-            this.lbl_RomCountry.TabIndex = 0;
-            this.lbl_RomCountry.Text = "ROM Country";
-            // 
             // gp_Plugins
             // 
             this.gp_Plugins.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -539,11 +541,11 @@ namespace MupenUtils
             this.gp_Plugins.Controls.Add(this.txtbox_Audioplugin);
             this.gp_Plugins.Controls.Add(this.lbl_Input);
             this.gp_Plugins.Controls.Add(this.txt_Rsp);
-            this.gp_Plugins.Location = new System.Drawing.Point(275, 204);
+            this.gp_Plugins.Location = new System.Drawing.Point(275, 228);
             this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
             this.gp_Plugins.Name = "gp_Plugins";
             this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_Plugins.Size = new System.Drawing.Size(267, 158);
+            this.gp_Plugins.Size = new System.Drawing.Size(267, 134);
             this.gp_Plugins.TabIndex = 0;
             this.gp_Plugins.TabStop = false;
             this.gp_Plugins.Text = "Plugins";
@@ -636,12 +638,14 @@ namespace MupenUtils
             this.gp_M64_misc.Controls.Add(this.lbl_misc_Magic);
             this.gp_M64_misc.Controls.Add(this.txt_CTRLS);
             this.gp_M64_misc.Controls.Add(this.lbl_Ctrls);
+            this.gp_M64_misc.Controls.Add(this.lbl_CtlFlags);
             this.gp_M64_misc.Controls.Add(this.lb_starttype);
+            this.gp_M64_misc.Controls.Add(this.btn_CtlFlags);
             this.gp_M64_misc.Location = new System.Drawing.Point(275, 6);
             this.gp_M64_misc.Margin = new System.Windows.Forms.Padding(4);
             this.gp_M64_misc.Name = "gp_M64_misc";
             this.gp_M64_misc.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_M64_misc.Size = new System.Drawing.Size(267, 197);
+            this.gp_M64_misc.Size = new System.Drawing.Size(267, 216);
             this.gp_M64_misc.TabIndex = 0;
             this.gp_M64_misc.TabStop = false;
             this.gp_M64_misc.Text = "Miscellaneous";
@@ -750,8 +754,7 @@ namespace MupenUtils
             // 
             // btn_Savem64
             // 
-            this.btn_Savem64.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_Savem64.Location = new System.Drawing.Point(0, 380);
+            this.btn_Savem64.Location = new System.Drawing.Point(0, 366);
             this.btn_Savem64.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Savem64.Name = "btn_Savem64";
             this.btn_Savem64.Size = new System.Drawing.Size(560, 28);
@@ -1353,6 +1356,27 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
+            // btn_CtlFlags
+            // 
+            this.btn_CtlFlags.Location = new System.Drawing.Point(117, 174);
+            this.btn_CtlFlags.Name = "btn_CtlFlags";
+            this.btn_CtlFlags.Size = new System.Drawing.Size(132, 24);
+            this.btn_CtlFlags.TabIndex = 0;
+            this.btn_CtlFlags.TabStop = false;
+            this.btn_CtlFlags.Text = "Edit";
+            this.btn_CtlFlags.UseVisualStyleBackColor = true;
+            this.btn_CtlFlags.Click += new System.EventHandler(this.btn_CtlFlags_Click);
+            // 
+            // lbl_CtlFlags
+            // 
+            this.lbl_CtlFlags.AutoSize = true;
+            this.lbl_CtlFlags.Location = new System.Drawing.Point(22, 179);
+            this.lbl_CtlFlags.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_CtlFlags.Name = "lbl_CtlFlags";
+            this.lbl_CtlFlags.Size = new System.Drawing.Size(42, 17);
+            this.lbl_CtlFlags.TabIndex = 0;
+            this.lbl_CtlFlags.Text = "Flags";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1380,10 +1404,10 @@ namespace MupenUtils
             this.st_Status.PerformLayout();
             this.gp_M64.ResumeLayout(false);
             this.pnl_M64Header.ResumeLayout(false);
-            this.gp_User.ResumeLayout(false);
-            this.gp_User.PerformLayout();
             this.gpRom.ResumeLayout(false);
             this.gpRom.PerformLayout();
+            this.gp_User.ResumeLayout(false);
+            this.gp_User.PerformLayout();
             this.gp_Plugins.ResumeLayout(false);
             this.gp_Plugins.PerformLayout();
             this.gp_M64_misc.ResumeLayout(false);
@@ -1507,6 +1531,8 @@ namespace MupenUtils
         private System.Windows.Forms.Panel pnl_M64Header;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbox_Controllers;
+        private System.Windows.Forms.Button btn_CtlFlags;
+        private System.Windows.Forms.Label lbl_CtlFlags;
     }
 }
 

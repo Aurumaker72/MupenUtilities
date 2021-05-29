@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -104,6 +104,12 @@
     <Compile Include="Forms\AdvancedDebugForm.Designer.cs">
       <DependentUpon>AdvancedDebugForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ControllerFlagsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ControllerFlagsForm.Designer.cs">
+      <DependentUpon>ControllerFlagsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ReplacementForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,9 @@
     <Compile Include="Helpers\UIHelper.cs" />
     <EmbeddedResource Include="Forms\AdvancedDebugForm.resx">
       <DependentUpon>AdvancedDebugForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ControllerFlagsForm.resx">
+      <DependentUpon>ControllerFlagsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
