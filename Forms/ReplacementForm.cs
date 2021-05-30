@@ -17,6 +17,7 @@ namespace MupenUtils.Forms
         {
             InitializeComponent();
             this.Text = MainForm.PROGRAM_NAME + " - Replacement";
+
             this.MinimumSize = gpBox_Repl_Replacement.Size;
         }
         private void ReplacementForm_Shown(object sender, EventArgs e)

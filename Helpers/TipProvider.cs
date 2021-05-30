@@ -33,7 +33,7 @@ namespace MupenUtils.Helpers
             "The \"More\" button has useful dialogs",
             "\'Simple Mode\' disables some technical features to make usage simpler",
             "Drag and drop is supported",
-            "Right clicking the \'New Tip\' button will show all tips"
+            "Right clicking the \'New Tip\' button will show all tips",
         };
         public static string GetRandomTip()
         {

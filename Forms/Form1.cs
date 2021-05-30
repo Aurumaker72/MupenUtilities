@@ -37,6 +37,7 @@ namespace MupenUtils
         public const bool RELATIVE = false;
         public const bool ABSOLUTE = true;
 
+        public static bool standardBitArh;
         // [] means reserved, <^>v is direction
         public string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "[1]", "[2]", "X", "Y" };
 
@@ -313,6 +314,7 @@ namespace MupenUtils
         {
             string bitarh;
             bitarh = IntPtr.Size == 4 ? "(32 bit)" : "(64 bit)";
+            standardBitArh = IntPtr.Size == 4;
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
 #if DEBUG
             this.Text += " DEBUG";
@@ -466,7 +468,7 @@ namespace MupenUtils
                 fs.Close();
             }
         }
-        void MupenHook()
+        public void MupenHook()
         {
         go:
             string procName = "mupen64";
@@ -481,7 +483,7 @@ namespace MupenUtils
                     return;
                 }
             }
-            MupenHookForm.loading = true; 
+            MupenHookForm.loading = true;
             mupenHookForm.Show();
             
 
@@ -1250,18 +1252,13 @@ namespace MupenUtils
         private void btn_Last_MouseClick(object sender, MouseEventArgs e)
         {
             Path = Properties.Settings.Default.LastPath;
-            if (!ExtensionMethods.ValidPath(Path))
-            {
-                //ShowStatus(M64_FAILED_TEXT, st_Status1);
-                MessageBox.Show(M64_FAILED_TEXT);
-                return;
-            }
-            if (rb_M64sel.Checked && ExtensionMethods.ValidPath(Path))
+            if (UsageType == UsageTypes.M64 && ExtensionMethods.ValidPath(Path))
             {
                 m64load = new Thread(() => ReadM64());
                 m64load.Start();
             }
-            else if (rb_STsel.Checked) LoadST();
+            else if (UsageType == UsageTypes.ST) LoadST();
+            else if (UsageType == UsageTypes.Mupen) MupenHook();
         }
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
         {
