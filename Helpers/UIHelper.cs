@@ -11,12 +11,12 @@ namespace MupenUtils
         // ---------------------
         // Parameters:
         // 0 - Boolean (file/folder)
-        public static object[] ShowFileDialog(bool m64)
+        public static object[] ShowFileDialog(MainForm.UsageTypes usageType)
         {
             string path = string.Empty;
             string filter = "M64 Files (*.m64)|*.m64|All Files (*.*)|*.*";
             string title = "Select M64";
-            if (!m64)
+            if (usageType == MainForm.UsageTypes.ST)
             {
                 filter = "ST Files (*.st)|*.st|All Files (*.*)|*.*";
                 title = "Select ST";

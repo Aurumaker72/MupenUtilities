@@ -14,6 +14,8 @@ namespace MupenUtils.Networking
             if (versionResult == MainForm.UPDATE_UNKNOWN)
                 versionResult = GetGithubVersion();
 
+            if (versionResult == byte.MaxValue / 2) return;
+
             if ((versionResult == MainForm.UPDATE_CLIENT_AHEAD || versionResult == MainForm.UPDATE_EQUAL) && !silenced)
                 System.Windows.Forms.MessageBox.Show("You are up to date!", MainForm.PROGRAM_NAME + " - Up to date");
             else if (versionResult == MainForm.UPDATE_CLIENT_OUTDATED && System.Windows.Forms.MessageBox.Show("Your " + MainForm.PROGRAM_NAME + " is outdated. Do you want to download the latest release?", MainForm.PROGRAM_NAME + " - Outdated!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -38,7 +40,15 @@ namespace MupenUtils.Networking
         public byte GetGithubVersion()
         {
             GitHubClient client = new GitHubClient(new ProductHeaderValue("muputils"));
-            IReadOnlyList<Release> releases = client.Repository.Release.GetAll("Aurumaker72", "MupenUtilities").Result;
+            IReadOnlyList<Release> releases;
+            try
+            {
+                releases = client.Repository.Release.GetAll("Aurumaker72", "MupenUtilities").Result;
+            }
+            catch
+            {
+                return byte.MaxValue / 2;
+            }
             Version latestGitHubVersion = new Version(releases[0].TagName);
 
             Version localVersion = new Version(MainForm.PROGRAM_VERSION);

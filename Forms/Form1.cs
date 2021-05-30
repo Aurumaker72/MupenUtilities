@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -52,7 +53,6 @@ namespace MupenUtils
         bool Sticky = false;
 
         bool loopInputs = true;
-        bool bypassTypeCheck = false;
         bool forwardsPlayback = true;
         bool readOnly = true;
 
@@ -156,6 +156,52 @@ namespace MupenUtils
         Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0) };
 
         public static bool notifiedReupdateControllerFlags;
+
+        public enum UsageTypes
+        {
+            Any,
+            M64,
+            ST,
+            Mupen
+        };
+        UsageTypes UsageType;
+
+        const int PROCESS_QUERY_INFORMATION = 0x0400;
+        const int MEM_COMMIT = 0x00001000;
+        const int PAGE_READWRITE = 0x04;
+        const int PROCESS_WM_READ = 0x0010;
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+        [DllImport("kernel32.dll")]
+        public static extern bool ReadProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
+        [DllImport("kernel32.dll")]
+        static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
+        [DllImport("kernel32.dll", SetLastError=true)]
+        static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
+        public struct MEMORY_BASIC_INFORMATION
+        {
+            public int BaseAddress;
+            public int AllocationBase;
+            public int AllocationProtect;
+            public int RegionSize;
+            public int State;
+            public int Protect;
+            public int lType;
+        }
+        public struct SYSTEM_INFO
+        {
+            public ushort processorArchitecture;
+            ushort reserved;
+            public uint pageSize;
+            public IntPtr minimumApplicationAddress;
+            public IntPtr maximumApplicationAddress;
+            public IntPtr activeProcessorMask;
+            public uint numberOfProcessors;
+            public uint processorType;
+            public uint allocationGranularity;
+            public ushort processorLevel;
+            public ushort processorRevision;
+        }
 
         #endregion
 
@@ -295,7 +341,7 @@ namespace MupenUtils
             if (change) FileLoaded = flag;
 
 
-            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + 20, 150);
+            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + btn_Help.Width + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_FrameBack.Enabled = FileLoaded;
@@ -328,7 +374,7 @@ namespace MupenUtils
             Size s;
             FileLoaded = flag;
             gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
-            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + 20, 150);
+            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + btn_Help.Width + 20, 150);
             this.Invoke((MethodInvoker)(() => this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
             gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill));
             st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = flag));
@@ -370,6 +416,28 @@ namespace MupenUtils
             }
         }
 
+        void UpdateVisualsTop()
+        {
+            btn_LoadLatest.Enabled = true;
+
+            switch (UsageType)
+            {
+                case UsageTypes.Any:
+                    btn_PathSel.Text = "Browse Any";
+                    btn_LoadLatest.Enabled = false;
+                    break;
+                case UsageTypes.M64:
+                    btn_PathSel.Text = "Browse M64";
+                    break;
+                case UsageTypes.ST:
+                    btn_PathSel.Text = "Browse ST";
+                    break;
+                case UsageTypes.Mupen:
+                    btn_PathSel.Text = "Hook";
+                    break;
+            }
+        }
+
         #endregion
 
         #region I/O
@@ -397,6 +465,79 @@ namespace MupenUtils
                 fs.Close();
             }
         }
+        void MupenHook()
+        {
+        go:
+            string procName = "mupen64";
+
+            if (Process.GetProcessesByName("mupen64").Length == 0)
+            {
+                // normal mupen not found... try to find debug mupen
+                procName = "mupen64_debug";
+                if (Process.GetProcessesByName("mupen64_debug").Length == 0)
+                {
+                    MessageBox.Show("Couldn\'t find any instance of mupen64 running.", PROGRAM_NAME + " - Mupen not running", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            SYSTEM_INFO sys_info = new SYSTEM_INFO();
+            GetSystemInfo(out sys_info);  
+
+            IntPtr proc_min_address = sys_info.minimumApplicationAddress;
+            IntPtr proc_max_address = sys_info.maximumApplicationAddress;
+
+            long proc_min_address_l = (long)proc_min_address;
+            long proc_max_address_l = (long)proc_max_address;
+
+            Process process = Process.GetProcessesByName(procName)[0];
+            IntPtr processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_WM_READ, false, process.Id);
+            MEMORY_BASIC_INFORMATION mem_basic_info = new MEMORY_BASIC_INFORMATION();
+
+            int bytesRead = 0;
+            //byte[] buffer = new byte[400]; // shouldnt be bigger that 64mb or something
+            List<byte> buffer = new List<byte>();
+
+            while (proc_min_address_l < proc_max_address_l)
+            {
+                VirtualQueryEx(processHandle, proc_min_address, out mem_basic_info, 28);
+
+                // if this memory chunk is accessible
+                if (mem_basic_info.Protect == PAGE_READWRITE && mem_basic_info.State == MEM_COMMIT)
+                {
+                    byte[] tmp = new byte[mem_basic_info.RegionSize];
+                    ReadProcessMemory((int)processHandle, mem_basic_info.BaseAddress, tmp, mem_basic_info.RegionSize, ref bytesRead);
+                    
+                    foreach (Byte b in tmp)
+                        buffer.Add(b);
+                }
+
+                // move to the next memory chunk
+                proc_min_address_l += mem_basic_info.RegionSize;
+                proc_min_address = new IntPtr(proc_min_address_l);
+            }
+
+
+            const string MUPEN_VERSION = "Mupen 64 0.0.0";
+            const string MUPEN_SPLIT = "Mupen 64 1.";
+            string finalName = "";
+            string str = "";
+            str = ExtensionMethods.CharsToString(Encoding.UTF8.GetChars(buffer.ToArray()));
+            int baseIndex = str.IndexOf(MUPEN_SPLIT);
+
+            if (baseIndex != -1)
+            {
+                for (int i = 0; i < MUPEN_VERSION.Length; i++)
+                {
+                    //Debug.WriteLine(str.Length.ToString() + " " + baseIndex.ToString() + " " + i.ToString());
+                    finalName = String.Concat(finalName, (char)buffer[baseIndex + i]);
+                }
+            }
+
+            Debug.WriteLine(finalName);
+            MessageBox.Show(finalName);
+        }
+
         void ErrorM64(string failReason)
         {
             loadedInvalidFile = true;
@@ -410,7 +551,7 @@ namespace MupenUtils
         {
             // Check for suspicious properties
             loadedInvalidFile = false;
-            if (!bypassTypeCheck)
+            if (UsageType != UsageTypes.Any)
             {
                 string errReason = "";
 
@@ -1069,10 +1210,16 @@ namespace MupenUtils
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
+        
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
-            //ShowStatus("Selecting movie...",st_Status1);
-            object[] result = UIHelper.ShowFileDialog(rb_M64sel.Checked);
+            if (UsageType == UsageTypes.Mupen)
+            {
+                MupenHook(); // skip dialog
+                return;
+            }
+
+            object[] result = UIHelper.ShowFileDialog(UsageType);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
             {
                 //ShowStatus("Cancelled movie selection",st_Status1);
@@ -1084,12 +1231,12 @@ namespace MupenUtils
             Properties.Settings.Default.LastPath = Path;
             Properties.Settings.Default.Save();
 
-            if (rb_M64sel.Checked)
+            if (UsageType == UsageTypes.M64)
             {
                 m64load = new Thread(() => ReadM64());
                 m64load.Start();
             }
-            else if (rb_STsel.Checked)
+            else if (UsageType == UsageTypes.ST)
                 LoadST();
         }
         private void btn_Last_MouseClick(object sender, MouseEventArgs e)
@@ -1110,15 +1257,19 @@ namespace MupenUtils
         }
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
         {
-            bypassTypeCheck = e.Button != MouseButtons.Left;
-            btn_PathSel.ForeColor = bypassTypeCheck ? Color.Orange : Color.Black;
-            btn_PathSel.Text = e.Button == MouseButtons.Left ? "Browse M64" : "Browse Any";
+            UsageType = UsageTypes.M64;
+            UpdateVisualsTop();
         }
         private void rb_STsel_MouseDown(object sender, MouseEventArgs e)
         {
-            bypassTypeCheck = e.Button != MouseButtons.Left;
-            btn_PathSel.ForeColor = bypassTypeCheck ? Color.Orange : Color.Black;
-            btn_PathSel.Text = e.Button == MouseButtons.Left ? "Browse ST" : "Browse Any";
+            UsageType = UsageTypes.ST;
+            UpdateVisualsTop();
+        }
+
+        private void rb_MUPsel_MouseDown(object sender, MouseEventArgs e)
+        {
+            UsageType = UsageTypes.Mupen;
+            UpdateVisualsTop();
         }
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
@@ -1481,6 +1632,7 @@ namespace MupenUtils
             JOY_mouseDown = true;
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
+
 
         private void DrawJoystick(PaintEventArgs e)
         {

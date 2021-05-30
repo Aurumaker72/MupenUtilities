@@ -74,6 +74,39 @@ public static class ExtensionMethods
     {
         return 1 == ((value >> bitpos) & 1);
     }
+    public static int IndexOfOccurence(this string s, string match, int occurence)
+    {
+        int i = 1;
+        int index = -1;
+
+        while (i <= occurence && (index = s.IndexOf(match, index + 1)) != -1)
+        {
+            if (i == occurence)
+                return index;
+
+            i++;
+        }
+
+        return -1;
+    }
+    public static byte[] Combine(byte[] first, byte[] second)
+    {
+        byte[] ret = new byte[first.Length + second.Length];
+        Buffer.BlockCopy(first, 0, ret, 0, first.Length);
+        Buffer.BlockCopy(second, 0, ret, first.Length, second.Length);
+        return ret;
+    }
+    public static string CharsToString(char[] b)
+    {
+        var sb = new StringBuilder();
+        foreach (var c in b)
+        {
+            sb.Append(c);
+        }
+
+        return sb.ToString();
+    }
+
     public static bool ValidPath(string path, bool allowRelativePaths = false)
     {
         bool isValid = true;

@@ -131,13 +131,14 @@ namespace MupenUtils
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_GetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_GetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.rb_MUPSel = new System.Windows.Forms.RadioButton();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -157,7 +158,7 @@ namespace MupenUtils
             // 
             // btn_PathSel
             // 
-            this.btn_PathSel.Location = new System.Drawing.Point(216, 16);
+            this.btn_PathSel.Location = new System.Drawing.Point(288, 16);
             this.btn_PathSel.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PathSel.Name = "btn_PathSel";
             this.btn_PathSel.Size = new System.Drawing.Size(100, 28);
@@ -173,7 +174,7 @@ namespace MupenUtils
             this.txt_Path.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Path.Name = "txt_Path";
             this.txt_Path.ReadOnly = true;
-            this.txt_Path.Size = new System.Drawing.Size(199, 22);
+            this.txt_Path.Size = new System.Drawing.Size(271, 22);
             this.txt_Path.TabIndex = 0;
             this.txt_Path.TabStop = false;
             // 
@@ -183,6 +184,7 @@ namespace MupenUtils
             this.gp_Path.Controls.Add(this.btn_Tips);
             this.gp_Path.Controls.Add(this.chk_readonly);
             this.gp_Path.Controls.Add(this.btn_Override);
+            this.gp_Path.Controls.Add(this.rb_MUPSel);
             this.gp_Path.Controls.Add(this.rb_STsel);
             this.gp_Path.Controls.Add(this.rb_M64sel);
             this.gp_Path.Controls.Add(this.txt_Path);
@@ -200,7 +202,7 @@ namespace MupenUtils
             // 
             // btn_Help
             // 
-            this.btn_Help.Location = new System.Drawing.Point(318, 45);
+            this.btn_Help.Location = new System.Drawing.Point(390, 45);
             this.btn_Help.Name = "btn_Help";
             this.btn_Help.Size = new System.Drawing.Size(55, 28);
             this.btn_Help.TabIndex = 0;
@@ -212,7 +214,7 @@ namespace MupenUtils
             // 
             // btn_Tips
             // 
-            this.btn_Tips.Location = new System.Drawing.Point(318, 16);
+            this.btn_Tips.Location = new System.Drawing.Point(390, 16);
             this.btn_Tips.Name = "btn_Tips";
             this.btn_Tips.Size = new System.Drawing.Size(55, 28);
             this.btn_Tips.TabIndex = 0;
@@ -226,7 +228,7 @@ namespace MupenUtils
             this.chk_readonly.AutoSize = true;
             this.chk_readonly.Checked = true;
             this.chk_readonly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_readonly.Location = new System.Drawing.Point(115, 50);
+            this.chk_readonly.Location = new System.Drawing.Point(186, 50);
             this.chk_readonly.Name = "chk_readonly";
             this.chk_readonly.Size = new System.Drawing.Size(95, 21);
             this.chk_readonly.TabIndex = 0;
@@ -237,7 +239,7 @@ namespace MupenUtils
             // 
             // btn_Override
             // 
-            this.btn_Override.Location = new System.Drawing.Point(280, 45);
+            this.btn_Override.Location = new System.Drawing.Point(352, 45);
             this.btn_Override.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Override.Name = "btn_Override";
             this.btn_Override.Size = new System.Drawing.Size(36, 28);
@@ -250,7 +252,7 @@ namespace MupenUtils
             // rb_STsel
             // 
             this.rb_STsel.AutoSize = true;
-            this.rb_STsel.Location = new System.Drawing.Point(65, 50);
+            this.rb_STsel.Location = new System.Drawing.Point(66, 50);
             this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_STsel.Name = "rb_STsel";
             this.rb_STsel.Size = new System.Drawing.Size(47, 21);
@@ -262,7 +264,7 @@ namespace MupenUtils
             // rb_M64sel
             // 
             this.rb_M64sel.AutoSize = true;
-            this.rb_M64sel.Location = new System.Drawing.Point(11, 49);
+            this.rb_M64sel.Location = new System.Drawing.Point(12, 50);
             this.rb_M64sel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_M64sel.Name = "rb_M64sel";
             this.rb_M64sel.Size = new System.Drawing.Size(56, 21);
@@ -273,7 +275,7 @@ namespace MupenUtils
             // 
             // btn_LoadLatest
             // 
-            this.btn_LoadLatest.Location = new System.Drawing.Point(216, 45);
+            this.btn_LoadLatest.Location = new System.Drawing.Point(288, 45);
             this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
             this.btn_LoadLatest.Name = "btn_LoadLatest";
             this.btn_LoadLatest.Size = new System.Drawing.Size(62, 28);
@@ -1281,7 +1283,7 @@ namespace MupenUtils
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 278);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 250);
             // 
             // replacementToolStripMenuItem
             // 
@@ -1332,6 +1334,13 @@ namespace MupenUtils
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
+            // tsmi_GetInput
+            // 
+            this.tsmi_GetInput.Name = "tsmi_GetInput";
+            this.tsmi_GetInput.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_GetInput.Text = "Get Input";
+            this.tsmi_GetInput.Click += new System.EventHandler(this.tsmi_GetInput_Click);
+            // 
             // tsmi_Agressive
             // 
             this.tsmi_Agressive.Checked = true;
@@ -1379,12 +1388,17 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
-            // tsmi_GetInput
+            // rb_MUPSel
             // 
-            this.tsmi_GetInput.Name = "tsmi_GetInput";
-            this.tsmi_GetInput.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_GetInput.Text = "Get Input";
-            this.tsmi_GetInput.Click += new System.EventHandler(this.tsmi_GetInput_Click);
+            this.rb_MUPSel.AutoSize = true;
+            this.rb_MUPSel.Location = new System.Drawing.Point(114, 50);
+            this.rb_MUPSel.Margin = new System.Windows.Forms.Padding(4);
+            this.rb_MUPSel.Name = "rb_MUPSel";
+            this.rb_MUPSel.Size = new System.Drawing.Size(72, 21);
+            this.rb_MUPSel.TabIndex = 0;
+            this.rb_MUPSel.Text = "Mupen";
+            this.rb_MUPSel.UseVisualStyleBackColor = true;
+            this.rb_MUPSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_MUPsel_MouseDown);
             // 
             // MainForm
             // 
@@ -1543,6 +1557,7 @@ namespace MupenUtils
         private System.Windows.Forms.Button btn_CtlFlags;
         private System.Windows.Forms.Label lbl_CtlFlags;
         private System.Windows.Forms.ToolStripMenuItem tsmi_GetInput;
+        private System.Windows.Forms.RadioButton rb_MUPSel;
     }
 }
 
