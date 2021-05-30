@@ -835,12 +835,13 @@ namespace MupenUtils
             // 
             this.cbox_Controllers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbox_Controllers.FormattingEnabled = true;
-            this.cbox_Controllers.Location = new System.Drawing.Point(42, 360);
+            this.cbox_Controllers.Location = new System.Drawing.Point(48, 360);
             this.cbox_Controllers.Name = "cbox_Controllers";
             this.cbox_Controllers.Size = new System.Drawing.Size(121, 24);
             this.cbox_Controllers.TabIndex = 0;
             this.cbox_Controllers.TabStop = false;
             this.cbox_Controllers.SelectedIndexChanged += new System.EventHandler(this.cbox_Controllers_SelectedIndexChanged);
+            this.cbox_Controllers.Parent = gp_input;
             // 
             // gp_TASStudio
             // 
