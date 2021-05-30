@@ -1391,7 +1391,7 @@ namespace MupenUtils
         {
             if (FileLoaded)
             {
-                MessageBox.Show(String.Format("Input data at frame {0}: {1}", frame, ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(inputLists[selectedController][frame]))), PROGRAM_NAME + " - Get Input");
+                MessageBox.Show(String.Format("Input data at frame {0}: {1}", frame, ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(inputLists[selectedController][frame])) + "\nGuide: Bit 0-15 are dedicated to Buttons and Bytes 2,3 (Bits 16-24 and Bits 24-36) are Joystick X and Y respectively."), PROGRAM_NAME + " - Get Input");
             }
         }
         #endregion
