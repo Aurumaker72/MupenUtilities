@@ -137,6 +137,7 @@ namespace MupenUtils
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_GetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -841,7 +842,6 @@ namespace MupenUtils
             this.cbox_Controllers.TabIndex = 0;
             this.cbox_Controllers.TabStop = false;
             this.cbox_Controllers.SelectedIndexChanged += new System.EventHandler(this.cbox_Controllers_SelectedIndexChanged);
-            this.cbox_Controllers.Parent = gp_input;
             // 
             // gp_TASStudio
             // 
@@ -1276,11 +1276,12 @@ namespace MupenUtils
             this.tsmi_SimpleMode,
             this.toolStripSeparator2,
             this.tsmi_Input_SetInput,
+            this.tsmi_GetInput,
             this.tsmi_Agressive,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 224);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 278);
             // 
             // replacementToolStripMenuItem
             // 
@@ -1377,6 +1378,13 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(142, 24);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
+            // 
+            // tsmi_GetInput
+            // 
+            this.tsmi_GetInput.Name = "tsmi_GetInput";
+            this.tsmi_GetInput.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_GetInput.Text = "Get Input";
+            this.tsmi_GetInput.Click += new System.EventHandler(this.tsmi_GetInput_Click);
             // 
             // MainForm
             // 
@@ -1534,6 +1542,7 @@ namespace MupenUtils
         private System.Windows.Forms.ComboBox cbox_Controllers;
         private System.Windows.Forms.Button btn_CtlFlags;
         private System.Windows.Forms.Label lbl_CtlFlags;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_GetInput;
     }
 }
 

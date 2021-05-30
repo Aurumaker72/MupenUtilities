@@ -1156,9 +1156,11 @@ namespace MupenUtils
 
            txt_Frame.Text = frame.ToString();
 
-            dgv_Main.CurrentCell = dgv_Main.Rows[frame].Cells[inputStructNames.Length/2];
+            if (frame <= dgv_Main.Rows.Count)
+            {
+                dgv_Main.CurrentCell = dgv_Main.Rows[frame].Cells[inputStructNames.Length / 2];
                 dgv_Main.Rows[frame].Selected = true;
-
+            }
             if (frame <= tr_MovieScrub.Maximum && frame >= tr_MovieScrub.Minimum)
                 tr_MovieScrub.Value = frame;
 
@@ -1384,6 +1386,13 @@ namespace MupenUtils
         private void btn_CtlFlags_Click(object sender, EventArgs e)
         {
             controllerFlagsForm.ShowDialog();
+        }
+        private void tsmi_GetInput_Click(object sender, EventArgs e)
+        {
+            if (FileLoaded)
+            {
+                MessageBox.Show(String.Format("Input data at frame {0}: {1}", frame, ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(inputLists[selectedController][frame]))), PROGRAM_NAME + " - Get Input");
+            }
         }
         #endregion
 

@@ -148,7 +148,7 @@ namespace MupenUtils
             this.Llbl_More_MupenCringe.Name = "Llbl_More_MupenCringe";
             this.Llbl_More_MupenCringe.Size = new System.Drawing.Size(125, 17);
             this.Llbl_More_MupenCringe.TabIndex = 0;
-            this.Llbl_More_MupenCringe.TabStop = true;
+            this.Llbl_More_MupenCringe.TabStop = false;
             this.Llbl_More_MupenCringe.Text = "Mupen TASVideos";
             this.Llbl_More_MupenCringe.VisitedLinkColor = System.Drawing.Color.Blue;
             this.Llbl_More_MupenCringe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Llbl_More_MupenCringe_LinkClicked);
@@ -162,7 +162,7 @@ namespace MupenUtils
             this.Llbl_More_Resources.Name = "Llbl_More_Resources";
             this.Llbl_More_Resources.Size = new System.Drawing.Size(107, 17);
             this.Llbl_More_Resources.TabIndex = 0;
-            this.Llbl_More_Resources.TabStop = true;
+            this.Llbl_More_Resources.TabStop = false;
             this.Llbl_More_Resources.Text = "TAS Resources";
             this.Llbl_More_Resources.VisitedLinkColor = System.Drawing.Color.Blue;
             this.Llbl_More_Resources.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Llbl_More_Resources_LinkClicked);
@@ -176,7 +176,7 @@ namespace MupenUtils
             this.Llbl_More_Mupen.Name = "Llbl_More_Mupen";
             this.Llbl_More_Mupen.Size = new System.Drawing.Size(104, 17);
             this.Llbl_More_Mupen.TabIndex = 0;
-            this.Llbl_More_Mupen.TabStop = true;
+            this.Llbl_More_Mupen.TabStop = false;
             this.Llbl_More_Mupen.Text = "Mupen64 rr lua";
             this.Llbl_More_Mupen.VisitedLinkColor = System.Drawing.Color.Blue;
             this.Llbl_More_Mupen.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Llbl_More_Mupen_LinkClicked);
