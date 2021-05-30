@@ -95,6 +95,9 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
+    <Reference Include="MRG.Controls.UI">
+      <HintPath>..\..\..\..\Downloads\MRGLoadingCircledemo\MRG.WinForm.Test\bin\MRG.Controls.UI.dll</HintPath>
+    </Reference>
     <Reference Include="Octokit, Version=0.50.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Octokit.0.50.0\lib\net46\Octokit.dll</HintPath>
     </Reference>
@@ -129,6 +132,12 @@
     </Compile>
     <Compile Include="Forms\ControllerFlagsForm.Designer.cs">
       <DependentUpon>ControllerFlagsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MupenHookForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MupenHookForm.Designer.cs">
+      <DependentUpon>MupenHookForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ReplacementForm.cs">
       <SubType>Form</SubType>
@@ -173,6 +182,9 @@
     <EmbeddedResource Include="Forms\MoreForm.resx">
       <DependentUpon>MoreForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MupenHookForm.resx">
+      <DependentUpon>MupenHookForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReplacementForm.resx">
       <DependentUpon>ReplacementForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -210,6 +222,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\obunga.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo.png" />
+    <Content Include="mupeutil.PNG" />
+    <Content Include="screenshot1.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

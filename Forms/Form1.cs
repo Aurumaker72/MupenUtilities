@@ -46,6 +46,7 @@ namespace MupenUtils
         TASStudioMoreForm tasStudioForm = new TASStudioMoreForm();
         ReplacementForm replacementForm = new ReplacementForm();
         ControllerFlagsForm controllerFlagsForm = new ControllerFlagsForm();
+        MupenHookForm mupenHookForm = new MupenHookForm();
 
         public static string Path, SavePath;
         public static bool FileLoaded = false;
@@ -480,6 +481,9 @@ namespace MupenUtils
                     return;
                 }
             }
+            MupenHookForm.loading = true; 
+            mupenHookForm.Show();
+            
 
             SYSTEM_INFO sys_info = new SYSTEM_INFO();
             GetSystemInfo(out sys_info);  
@@ -518,24 +522,28 @@ namespace MupenUtils
             }
 
 
-            const string MUPEN_VERSION = "Mupen 64 0.0.0";
+            const string MUPEN_VERSION = "Mupen 64 9.9.9";
             const string MUPEN_SPLIT = "Mupen 64 1.";
             string finalName = "";
             string str = "";
             str = ExtensionMethods.CharsToString(Encoding.UTF8.GetChars(buffer.ToArray()));
-            int baseIndex = str.IndexOf(MUPEN_SPLIT);
+            int baseIndex = str.IndexOf(MUPEN_SPLIT) - str.Length;
 
             if (baseIndex != -1)
             {
                 for (int i = 0; i < MUPEN_VERSION.Length; i++)
                 {
-                    //Debug.WriteLine(str.Length.ToString() + " " + baseIndex.ToString() + " " + i.ToString());
-                    finalName = String.Concat(finalName, (char)buffer[baseIndex + i]);
+                    finalName = String.Concat(finalName, (char)buffer[i]);
                 }
             }
 
-            Debug.WriteLine(finalName);
-            MessageBox.Show(finalName);
+            MupenHookForm.MupenDataStruct mupenData;
+            mupenData.CONFIRMED = finalName != "";
+            mupenData.MUPEN_NAME = finalName;
+            mupenData.PROCESS_NAME = procName;
+            MupenHookForm.MupenData = mupenData;
+
+            MupenHookForm.loading = false;
         }
 
         void ErrorM64(string failReason)

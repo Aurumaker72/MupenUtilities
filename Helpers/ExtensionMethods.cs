@@ -106,6 +106,20 @@ public static class ExtensionMethods
 
         return sb.ToString();
     }
+    public static void SetDoubleBuffered(System.Windows.Forms.Control c)
+    {
+        //https://stackoverflow.com/questions/76993/how-to-double-buffer-net-controls-on-a-form
+        if (System.Windows.Forms.SystemInformation.TerminalServerSession)
+            return;
+
+        System.Reflection.PropertyInfo aProp =
+              typeof(System.Windows.Forms.Control).GetProperty(
+                    "DoubleBuffered",
+                    System.Reflection.BindingFlags.NonPublic |
+                    System.Reflection.BindingFlags.Instance);
+
+        aProp.SetValue(c, true, null);
+    }
 
     public static bool ValidPath(string path, bool allowRelativePaths = false)
     {
