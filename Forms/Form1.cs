@@ -305,7 +305,7 @@ namespace MupenUtils
             btn_PlayDirection.Enabled = FileLoaded;
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
-            txt_Frame.Enabled = FileLoaded;
+            txt_Frame.ReadOnly = !FileLoaded;
             this.SuspendLayout();
             this.MinimumSize = flag ? gp_M64.Size : new Size(1, 1);
             this.Size = s;
@@ -1150,12 +1150,11 @@ namespace MupenUtils
         }
         void UpdateFrameControlUI()
         {
-            lbl_FrameSelected.Text = "Frame " + frame;
-            lbl_FrameSelected.ForeColor = Color.Black;
+            lbl_FrameSelected.Text = "Frame " + frame.ToString();
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
 
-            txt_Frame.Text = frame.ToString();
+           txt_Frame.Text = frame.ToString();
 
             dgv_Main.CurrentCell = dgv_Main.Rows[frame].Cells[inputStructNames.Length/2];
                 dgv_Main.Rows[frame].Selected = true;

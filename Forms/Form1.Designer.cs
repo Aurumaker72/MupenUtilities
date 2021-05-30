@@ -332,7 +332,7 @@ namespace MupenUtils
             this.pnl_M64Header.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_M64Header.Location = new System.Drawing.Point(4, 19);
             this.pnl_M64Header.Name = "pnl_M64Header";
-            this.pnl_M64Header.Size = new System.Drawing.Size(560, 408);
+            this.pnl_M64Header.Size = new System.Drawing.Size(566, 408);
             this.pnl_M64Header.TabIndex = 2;
             // 
             // gpRom
@@ -541,7 +541,7 @@ namespace MupenUtils
             this.gp_Plugins.Controls.Add(this.txtbox_Audioplugin);
             this.gp_Plugins.Controls.Add(this.lbl_Input);
             this.gp_Plugins.Controls.Add(this.txt_Rsp);
-            this.gp_Plugins.Location = new System.Drawing.Point(275, 216);
+            this.gp_Plugins.Location = new System.Drawing.Point(281, 216);
             this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
             this.gp_Plugins.Name = "gp_Plugins";
             this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
@@ -641,7 +641,7 @@ namespace MupenUtils
             this.gp_M64_misc.Controls.Add(this.lbl_CtlFlags);
             this.gp_M64_misc.Controls.Add(this.lb_starttype);
             this.gp_M64_misc.Controls.Add(this.btn_CtlFlags);
-            this.gp_M64_misc.Location = new System.Drawing.Point(275, 0);
+            this.gp_M64_misc.Location = new System.Drawing.Point(281, 0);
             this.gp_M64_misc.Margin = new System.Windows.Forms.Padding(4);
             this.gp_M64_misc.Name = "gp_M64_misc";
             this.gp_M64_misc.Padding = new System.Windows.Forms.Padding(4);
@@ -748,9 +748,9 @@ namespace MupenUtils
             this.lbl_CtlFlags.Location = new System.Drawing.Point(22, 179);
             this.lbl_CtlFlags.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_CtlFlags.Name = "lbl_CtlFlags";
-            this.lbl_CtlFlags.Size = new System.Drawing.Size(42, 17);
+            this.lbl_CtlFlags.Size = new System.Drawing.Size(69, 17);
             this.lbl_CtlFlags.TabIndex = 0;
-            this.lbl_CtlFlags.Text = "Flags";
+            this.lbl_CtlFlags.Text = "Controller";
             // 
             // lb_starttype
             // 
@@ -822,11 +822,11 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.btn_FrameBack2);
             this.gp_input.Controls.Add(this.btn_FrameBack);
             this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_input.Location = new System.Drawing.Point(564, 19);
+            this.gp_input.Location = new System.Drawing.Point(570, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
             this.gp_input.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_input.Size = new System.Drawing.Size(668, 408);
+            this.gp_input.Size = new System.Drawing.Size(662, 408);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input - Controller 1";
@@ -846,7 +846,7 @@ namespace MupenUtils
             // 
             this.gp_TASStudio.Controls.Add(this.dgv_Main);
             this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_TASStudio.Location = new System.Drawing.Point(378, 19);
+            this.gp_TASStudio.Location = new System.Drawing.Point(372, 19);
             this.gp_TASStudio.Name = "gp_TASStudio";
             this.gp_TASStudio.Size = new System.Drawing.Size(286, 385);
             this.gp_TASStudio.TabIndex = 0;
@@ -878,7 +878,7 @@ namespace MupenUtils
             this.tr_MovieScrub.Maximum = 2;
             this.tr_MovieScrub.Minimum = 1;
             this.tr_MovieScrub.Name = "tr_MovieScrub";
-            this.tr_MovieScrub.Size = new System.Drawing.Size(176, 56);
+            this.tr_MovieScrub.Size = new System.Drawing.Size(170, 56);
             this.tr_MovieScrub.TabIndex = 0;
             this.tr_MovieScrub.TabStop = false;
             this.tr_MovieScrub.TickFrequency = 0;
@@ -912,7 +912,7 @@ namespace MupenUtils
             // 
             // txt_Frame
             // 
-            this.txt_Frame.Location = new System.Drawing.Point(325, 330);
+            this.txt_Frame.Location = new System.Drawing.Point(270, 324);
             this.txt_Frame.Name = "txt_Frame";
             this.txt_Frame.Size = new System.Drawing.Size(35, 22);
             this.txt_Frame.TabIndex = 0;
@@ -994,7 +994,7 @@ namespace MupenUtils
             // 
             // btn_PlayDirection
             // 
-            this.btn_PlayDirection.Location = new System.Drawing.Point(290, 325);
+            this.btn_PlayDirection.Location = new System.Drawing.Point(12, 325);
             this.btn_PlayDirection.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PlayDirection.Name = "btn_PlayDirection";
             this.btn_PlayDirection.Size = new System.Drawing.Size(32, 28);
@@ -1209,7 +1209,7 @@ namespace MupenUtils
             // lbl_FrameSelected
             // 
             this.lbl_FrameSelected.AutoSize = true;
-            this.lbl_FrameSelected.Location = new System.Drawing.Point(139, 295);
+            this.lbl_FrameSelected.Location = new System.Drawing.Point(132, 295);
             this.lbl_FrameSelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_FrameSelected.Name = "lbl_FrameSelected";
             this.lbl_FrameSelected.Size = new System.Drawing.Size(64, 17);
@@ -1218,7 +1218,7 @@ namespace MupenUtils
             // 
             // btn_FrameFront2
             // 
-            this.btn_FrameFront2.Location = new System.Drawing.Point(235, 325);
+            this.btn_FrameFront2.Location = new System.Drawing.Point(216, 325);
             this.btn_FrameFront2.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FrameFront2.Name = "btn_FrameFront2";
             this.btn_FrameFront2.Size = new System.Drawing.Size(53, 28);
@@ -1230,7 +1230,7 @@ namespace MupenUtils
             // 
             // btn_FrameFront
             // 
-            this.btn_FrameFront.Location = new System.Drawing.Point(192, 325);
+            this.btn_FrameFront.Location = new System.Drawing.Point(180, 325);
             this.btn_FrameFront.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FrameFront.Name = "btn_FrameFront";
             this.btn_FrameFront.Size = new System.Drawing.Size(36, 28);
@@ -1242,7 +1242,7 @@ namespace MupenUtils
             // 
             // btn_FrameBack2
             // 
-            this.btn_FrameBack2.Location = new System.Drawing.Point(43, 325);
+            this.btn_FrameBack2.Location = new System.Drawing.Point(60, 325);
             this.btn_FrameBack2.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FrameBack2.Name = "btn_FrameBack2";
             this.btn_FrameBack2.Size = new System.Drawing.Size(53, 28);
@@ -1254,7 +1254,7 @@ namespace MupenUtils
             // 
             // btn_FrameBack
             // 
-            this.btn_FrameBack.Location = new System.Drawing.Point(107, 325);
+            this.btn_FrameBack.Location = new System.Drawing.Point(114, 325);
             this.btn_FrameBack.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FrameBack.Name = "btn_FrameBack";
             this.btn_FrameBack.Size = new System.Drawing.Size(36, 28);
