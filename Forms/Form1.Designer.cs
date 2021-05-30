@@ -83,7 +83,9 @@ namespace MupenUtils
             this.lbl_misc_Magic = new System.Windows.Forms.Label();
             this.txt_CTRLS = new System.Windows.Forms.TextBox();
             this.lbl_Ctrls = new System.Windows.Forms.Label();
+            this.lbl_CtlFlags = new System.Windows.Forms.Label();
             this.lb_starttype = new System.Windows.Forms.Label();
+            this.btn_CtlFlags = new System.Windows.Forms.Button();
             this.btn_Savem64 = new System.Windows.Forms.Button();
             this.gp_input = new System.Windows.Forms.GroupBox();
             this.cbox_Controllers = new System.Windows.Forms.ComboBox();
@@ -135,8 +137,6 @@ namespace MupenUtils
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_CtlFlags = new System.Windows.Forms.Button();
-            this.lbl_CtlFlags = new System.Windows.Forms.Label();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -344,7 +344,7 @@ namespace MupenUtils
             this.gpRom.Controls.Add(this.lbl_ROMNAME);
             this.gpRom.Controls.Add(this.lbl_ROMCRC);
             this.gpRom.Controls.Add(this.lbl_RomCountry);
-            this.gpRom.Location = new System.Drawing.Point(6, 222);
+            this.gpRom.Location = new System.Drawing.Point(6, 216);
             this.gpRom.Margin = new System.Windows.Forms.Padding(4);
             this.gpRom.Name = "gpRom";
             this.gpRom.Padding = new System.Windows.Forms.Padding(4);
@@ -424,7 +424,7 @@ namespace MupenUtils
             this.gp_User.Controls.Add(this.lbl_Desc);
             this.gp_User.Controls.Add(this.lb_RR);
             this.gp_User.Controls.Add(this.txt_Author);
-            this.gp_User.Location = new System.Drawing.Point(6, 6);
+            this.gp_User.Location = new System.Drawing.Point(6, 0);
             this.gp_User.Margin = new System.Windows.Forms.Padding(4);
             this.gp_User.Name = "gp_User";
             this.gp_User.Padding = new System.Windows.Forms.Padding(4);
@@ -541,11 +541,11 @@ namespace MupenUtils
             this.gp_Plugins.Controls.Add(this.txtbox_Audioplugin);
             this.gp_Plugins.Controls.Add(this.lbl_Input);
             this.gp_Plugins.Controls.Add(this.txt_Rsp);
-            this.gp_Plugins.Location = new System.Drawing.Point(275, 228);
+            this.gp_Plugins.Location = new System.Drawing.Point(275, 216);
             this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
             this.gp_Plugins.Name = "gp_Plugins";
             this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_Plugins.Size = new System.Drawing.Size(267, 134);
+            this.gp_Plugins.Size = new System.Drawing.Size(267, 140);
             this.gp_Plugins.TabIndex = 0;
             this.gp_Plugins.TabStop = false;
             this.gp_Plugins.Text = "Plugins";
@@ -641,7 +641,7 @@ namespace MupenUtils
             this.gp_M64_misc.Controls.Add(this.lbl_CtlFlags);
             this.gp_M64_misc.Controls.Add(this.lb_starttype);
             this.gp_M64_misc.Controls.Add(this.btn_CtlFlags);
-            this.gp_M64_misc.Location = new System.Drawing.Point(275, 6);
+            this.gp_M64_misc.Location = new System.Drawing.Point(275, 0);
             this.gp_M64_misc.Margin = new System.Windows.Forms.Padding(4);
             this.gp_M64_misc.Name = "gp_M64_misc";
             this.gp_M64_misc.Padding = new System.Windows.Forms.Padding(4);
@@ -742,6 +742,16 @@ namespace MupenUtils
             this.lbl_Ctrls.TabIndex = 0;
             this.lbl_Ctrls.Text = "Controllers";
             // 
+            // lbl_CtlFlags
+            // 
+            this.lbl_CtlFlags.AutoSize = true;
+            this.lbl_CtlFlags.Location = new System.Drawing.Point(22, 179);
+            this.lbl_CtlFlags.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_CtlFlags.Name = "lbl_CtlFlags";
+            this.lbl_CtlFlags.Size = new System.Drawing.Size(42, 17);
+            this.lbl_CtlFlags.TabIndex = 0;
+            this.lbl_CtlFlags.Text = "Flags";
+            // 
             // lb_starttype
             // 
             this.lb_starttype.AutoSize = true;
@@ -751,6 +761,17 @@ namespace MupenUtils
             this.lb_starttype.Size = new System.Drawing.Size(74, 17);
             this.lb_starttype.TabIndex = 0;
             this.lb_starttype.Text = "Start Type";
+            // 
+            // btn_CtlFlags
+            // 
+            this.btn_CtlFlags.Location = new System.Drawing.Point(117, 174);
+            this.btn_CtlFlags.Name = "btn_CtlFlags";
+            this.btn_CtlFlags.Size = new System.Drawing.Size(132, 24);
+            this.btn_CtlFlags.TabIndex = 0;
+            this.btn_CtlFlags.TabStop = false;
+            this.btn_CtlFlags.Text = "Edit";
+            this.btn_CtlFlags.UseVisualStyleBackColor = true;
+            this.btn_CtlFlags.Click += new System.EventHandler(this.btn_CtlFlags_Click);
             // 
             // btn_Savem64
             // 
@@ -1355,27 +1376,6 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(142, 24);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
-            // 
-            // btn_CtlFlags
-            // 
-            this.btn_CtlFlags.Location = new System.Drawing.Point(117, 174);
-            this.btn_CtlFlags.Name = "btn_CtlFlags";
-            this.btn_CtlFlags.Size = new System.Drawing.Size(132, 24);
-            this.btn_CtlFlags.TabIndex = 0;
-            this.btn_CtlFlags.TabStop = false;
-            this.btn_CtlFlags.Text = "Edit";
-            this.btn_CtlFlags.UseVisualStyleBackColor = true;
-            this.btn_CtlFlags.Click += new System.EventHandler(this.btn_CtlFlags_Click);
-            // 
-            // lbl_CtlFlags
-            // 
-            this.lbl_CtlFlags.AutoSize = true;
-            this.lbl_CtlFlags.Location = new System.Drawing.Point(22, 179);
-            this.lbl_CtlFlags.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_CtlFlags.Name = "lbl_CtlFlags";
-            this.lbl_CtlFlags.Size = new System.Drawing.Size(42, 17);
-            this.lbl_CtlFlags.TabIndex = 0;
-            this.lbl_CtlFlags.Text = "Flags";
             // 
             // MainForm
             // 
