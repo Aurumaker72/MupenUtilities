@@ -48,6 +48,7 @@ namespace MupenUtils
         ReplacementForm replacementForm = new ReplacementForm();
         ControllerFlagsForm controllerFlagsForm = new ControllerFlagsForm();
         MupenHookForm mupenHookForm = new MupenHookForm();
+        STForm stForm = new STForm();
 
         public static string Path, SavePath;
         public static bool FileLoaded = false;
@@ -548,11 +549,14 @@ namespace MupenUtils
             MupenHookForm.loading = false;
         }
 
-        void ErrorM64(string failReason)
+        void ErrorProcessing(string failReason)
         {
             loadedInvalidFile = true;
 
-            MessageBox.Show(M64_FAILED_TEXT + " " + failReason, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            string title = "Failed to load ";
+            title += UsageType.ToString();
+
+            MessageBox.Show(title + " " + failReason, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
 
@@ -574,14 +578,14 @@ namespace MupenUtils
 
                 if (errReason != "")
                 {
-                    ErrorM64(errReason);
+                    ErrorProcessing(errReason);
                     return;
                 }
             }
             long len = new FileInfo(Path).Length;
             if (len < 1027)
             {
-                ErrorM64("File is too small to be a movie."); return;
+                ErrorProcessing("File is too small to be a movie."); return;
             }
             foreach (Process procarr in Process.GetProcesses())
             {
@@ -602,7 +606,7 @@ namespace MupenUtils
             try { fs = File.Open(Path, FileMode.Open); }
             catch
             {
-                ErrorM64("File inaccessible.");
+                ErrorProcessing("File inaccessible.");
                 return;
             }
             BinaryReader br = new BinaryReader(fs);
@@ -897,23 +901,53 @@ namespace MupenUtils
         {
             // WIP...
             // just decompress for now
-            FileInfo f = new FileInfo(Path);
-            string newFs;
-            using (FileStream origFs = f.OpenRead())
-            {
-                string curFs = f.FullName;
-                newFs = curFs.Remove(curFs.Length - f.Extension.Length) + ".bin";
 
-                using (FileStream defFs = File.Create(newFs))
+            if (UsageType != UsageTypes.Any)
+            {
+                string errReason = "";
+
+                if (!System.IO.Path.GetExtension(Path).Equals(".st", StringComparison.InvariantCultureIgnoreCase))
+                    errReason += "Extension invalid. ";
+                if (String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path))
+                    errReason += "Path invalid. ";
+                if (!File.Exists(Path))
+                    errReason += "File does not exist. ";
+
+                if (errReason != "")
                 {
-                    using (GZipStream deStream = new GZipStream(origFs, CompressionMode.Decompress))
-                    {
-                        deStream.CopyTo(defFs);
-                    }
+                    ErrorProcessing(errReason);
+                    return;
                 }
             }
 
-            MessageBox.Show("Savestate has been decompressed to " + newFs, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FileInfo f = new FileInfo(Path);
+            FileStream origFs, defFs;
+            GZipStream deStream;
+            string newFs;
+            origFs = f.OpenRead();
+
+
+            string curFs = f.FullName;
+            newFs = curFs.Remove(curFs.Length - f.Extension.Length) + ".bin";
+
+            defFs = File.Create(newFs);
+
+            deStream = new GZipStream(origFs, CompressionMode.Decompress);
+            deStream.CopyTo(defFs);
+
+            BinaryReader br = new BinaryReader(defFs);
+
+            //defFs.Read(STForm.savestateRDRAM, 0, (int)deStream.BaseStream.Length);
+            br.BaseStream.Seek(0x1B0, SeekOrigin.Begin); // have fun figuring this out without docs
+            STForm.savestateRDRAM = br.ReadBytes(8388608);
+
+            defFs.Close();
+            origFs.Close();
+            br.Close(); 
+
+            stForm.ShowDialog(); // main ui thread here pauses because of modal popup (execution does not continue)
+            
+            //MessageBox.Show("Savestate has been decompressed to " + newFs, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
