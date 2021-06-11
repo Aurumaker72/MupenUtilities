@@ -941,9 +941,21 @@ namespace MupenUtils
             br.BaseStream.Seek(0x1B0, SeekOrigin.Begin); // have fun figuring this out without docs
             STForm.savestateRDRAM = br.ReadBytes(8388608);
 
+            STForm.savestate = ExtensionMethods.ReadAllBytes(br.BaseStream).ToList();
+
             defFs.Close();
             origFs.Close();
-            br.Close(); 
+            br.Close();
+
+            string tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
+            while (File.Exists(tmpPath))
+            {
+                Debug.WriteLine("File already exists, trying " + tmpPath);
+                tmpPath = tmpPath + "-modified";
+            }
+            tmpPath = tmpPath + ".st";
+            STForm.Path = tmpPath;
+
 
             stForm.ShowDialog(); // main ui thread here pauses because of modal popup (execution does not continue)
             

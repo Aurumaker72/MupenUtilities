@@ -31,42 +31,44 @@ namespace MupenUtils.Forms
         {
             this.gp_st = new System.Windows.Forms.GroupBox();
             this.gp_RDRAM = new System.Windows.Forms.GroupBox();
+            this.btn_SaveST = new System.Windows.Forms.Button();
+            this.btn_Disallow = new System.Windows.Forms.Button();
+            this.btn_Remove = new System.Windows.Forms.Button();
+            this.btn_Save = new System.Windows.Forms.Button();
+            this.txt_Edit = new System.Windows.Forms.TextBox();
             this.txt_RDRAM = new System.Windows.Forms.TextBox();
             this.lbl_Saved = new System.Windows.Forms.Label();
+            this.lbl_Interact = new System.Windows.Forms.Label();
             this.lbl_live = new System.Windows.Forms.Label();
             this.btn_RDRAMOffsetHelp = new System.Windows.Forms.Button();
             this.lbl_RDRAMOff = new System.Windows.Forms.Label();
             this.txt_rdramoffset = new System.Windows.Forms.TextBox();
             this.ls_SAVED = new System.Windows.Forms.ListBox();
-            this.panel_st = new System.Windows.Forms.Panel();
-            this.lbl_loadstatus = new System.Windows.Forms.Label();
-            this.lbl_loading = new System.Windows.Forms.Label();
-            this.lc_loading = new MRG.Controls.UI.LoadingCircle();
-            this.btn_Save = new System.Windows.Forms.Button();
-            this.btn_Disallow = new System.Windows.Forms.Button();
-            this.btn_Remove = new System.Windows.Forms.Button();
             this.gp_st.SuspendLayout();
             this.gp_RDRAM.SuspendLayout();
-            this.panel_st.SuspendLayout();
             this.SuspendLayout();
             // 
             // gp_st
             // 
             this.gp_st.Controls.Add(this.gp_RDRAM);
-            this.gp_st.Location = new System.Drawing.Point(288, 0);
+            this.gp_st.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gp_st.Location = new System.Drawing.Point(0, 0);
             this.gp_st.Name = "gp_st";
-            this.gp_st.Size = new System.Drawing.Size(480, 453);
+            this.gp_st.Size = new System.Drawing.Size(762, 453);
             this.gp_st.TabIndex = 1;
             this.gp_st.TabStop = false;
             this.gp_st.Text = "Savestate";
             // 
             // gp_RDRAM
             // 
+            this.gp_RDRAM.Controls.Add(this.btn_SaveST);
             this.gp_RDRAM.Controls.Add(this.btn_Disallow);
             this.gp_RDRAM.Controls.Add(this.btn_Remove);
             this.gp_RDRAM.Controls.Add(this.btn_Save);
+            this.gp_RDRAM.Controls.Add(this.txt_Edit);
             this.gp_RDRAM.Controls.Add(this.txt_RDRAM);
             this.gp_RDRAM.Controls.Add(this.lbl_Saved);
+            this.gp_RDRAM.Controls.Add(this.lbl_Interact);
             this.gp_RDRAM.Controls.Add(this.lbl_live);
             this.gp_RDRAM.Controls.Add(this.btn_RDRAMOffsetHelp);
             this.gp_RDRAM.Controls.Add(this.lbl_RDRAMOff);
@@ -80,12 +82,68 @@ namespace MupenUtils.Forms
             this.gp_RDRAM.TabStop = false;
             this.gp_RDRAM.Text = "RDRAM";
             // 
+            // btn_SaveST
+            // 
+            this.btn_SaveST.Location = new System.Drawing.Point(352, 400);
+            this.btn_SaveST.Name = "btn_SaveST";
+            this.btn_SaveST.Size = new System.Drawing.Size(75, 23);
+            this.btn_SaveST.TabIndex = 0;
+            this.btn_SaveST.TabStop = false;
+            this.btn_SaveST.Text = "Save ST";
+            this.btn_SaveST.UseVisualStyleBackColor = true;
+            this.btn_SaveST.Click += new System.EventHandler(this.btn_SaveST_Click);
+            // 
+            // btn_Disallow
+            // 
+            this.btn_Disallow.Location = new System.Drawing.Point(128, 40);
+            this.btn_Disallow.Name = "btn_Disallow";
+            this.btn_Disallow.Size = new System.Drawing.Size(75, 24);
+            this.btn_Disallow.TabIndex = 0;
+            this.btn_Disallow.TabStop = false;
+            this.btn_Disallow.Text = "Block";
+            this.btn_Disallow.UseVisualStyleBackColor = true;
+            this.btn_Disallow.Click += new System.EventHandler(this.btn_Disallow_Click);
+            // 
+            // btn_Remove
+            // 
+            this.btn_Remove.Location = new System.Drawing.Point(352, 200);
+            this.btn_Remove.Name = "btn_Remove";
+            this.btn_Remove.Size = new System.Drawing.Size(75, 24);
+            this.btn_Remove.TabIndex = 0;
+            this.btn_Remove.TabStop = false;
+            this.btn_Remove.Text = "Remove";
+            this.btn_Remove.UseVisualStyleBackColor = true;
+            this.btn_Remove.Click += new System.EventHandler(this.btn_Remove_Click);
+            // 
+            // btn_Save
+            // 
+            this.btn_Save.Location = new System.Drawing.Point(208, 40);
+            this.btn_Save.Name = "btn_Save";
+            this.btn_Save.Size = new System.Drawing.Size(75, 24);
+            this.btn_Save.TabIndex = 0;
+            this.btn_Save.TabStop = false;
+            this.btn_Save.Text = "Save";
+            this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
+            // 
+            // txt_Edit
+            // 
+            this.txt_Edit.Location = new System.Drawing.Point(288, 16);
+            this.txt_Edit.MaxLength = 4;
+            this.txt_Edit.Name = "txt_Edit";
+            this.txt_Edit.Size = new System.Drawing.Size(136, 22);
+            this.txt_Edit.TabIndex = 0;
+            this.txt_Edit.TabStop = false;
+            this.txt_Edit.TextChanged += new System.EventHandler(this.txt_Edit_TextChanged);
+            // 
             // txt_RDRAM
             // 
             this.txt_RDRAM.Location = new System.Drawing.Point(128, 16);
             this.txt_RDRAM.Name = "txt_RDRAM";
-            this.txt_RDRAM.Size = new System.Drawing.Size(304, 22);
-            this.txt_RDRAM.TabIndex = 3;
+            this.txt_RDRAM.ReadOnly = true;
+            this.txt_RDRAM.Size = new System.Drawing.Size(154, 22);
+            this.txt_RDRAM.TabIndex = 0;
+            this.txt_RDRAM.TabStop = false;
             // 
             // lbl_Saved
             // 
@@ -96,6 +154,15 @@ namespace MupenUtils.Forms
             this.lbl_Saved.TabIndex = 0;
             this.lbl_Saved.Text = "Saved Values";
             this.lbl_Saved.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lbl_Interact
+            // 
+            this.lbl_Interact.AutoSize = true;
+            this.lbl_Interact.Location = new System.Drawing.Point(8, 40);
+            this.lbl_Interact.Name = "lbl_Interact";
+            this.lbl_Interact.Size = new System.Drawing.Size(57, 17);
+            this.lbl_Interact.TabIndex = 0;
+            this.lbl_Interact.Text = "Change";
             // 
             // lbl_live
             // 
@@ -131,7 +198,8 @@ namespace MupenUtils.Forms
             this.txt_rdramoffset.Location = new System.Drawing.Point(144, 339);
             this.txt_rdramoffset.Name = "txt_rdramoffset";
             this.txt_rdramoffset.Size = new System.Drawing.Size(100, 22);
-            this.txt_rdramoffset.TabIndex = 1;
+            this.txt_rdramoffset.TabIndex = 0;
+            this.txt_rdramoffset.TabStop = false;
             this.txt_rdramoffset.TextChanged += new System.EventHandler(this.txt_rdramoffset_TextChanged);
             // 
             // ls_SAVED
@@ -143,94 +211,11 @@ namespace MupenUtils.Forms
             this.ls_SAVED.Size = new System.Drawing.Size(303, 116);
             this.ls_SAVED.TabIndex = 0;
             // 
-            // panel_st
-            // 
-            this.panel_st.Controls.Add(this.lbl_loadstatus);
-            this.panel_st.Controls.Add(this.lbl_loading);
-            this.panel_st.Controls.Add(this.lc_loading);
-            this.panel_st.Location = new System.Drawing.Point(8, 8);
-            this.panel_st.Name = "panel_st";
-            this.panel_st.Size = new System.Drawing.Size(264, 224);
-            this.panel_st.TabIndex = 2;
-            // 
-            // lbl_loadstatus
-            // 
-            this.lbl_loadstatus.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lbl_loadstatus.AutoSize = true;
-            this.lbl_loadstatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_loadstatus.Location = new System.Drawing.Point(96, 56);
-            this.lbl_loadstatus.Name = "lbl_loadstatus";
-            this.lbl_loadstatus.Size = new System.Drawing.Size(50, 18);
-            this.lbl_loadstatus.TabIndex = 0;
-            this.lbl_loadstatus.Text = "Status";
-            // 
-            // lbl_loading
-            // 
-            this.lbl_loading.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lbl_loading.AutoSize = true;
-            this.lbl_loading.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_loading.Location = new System.Drawing.Point(-52, 16);
-            this.lbl_loading.Name = "lbl_loading";
-            this.lbl_loading.Size = new System.Drawing.Size(359, 38);
-            this.lbl_loading.TabIndex = 0;
-            this.lbl_loading.Text = "Loading Savestate data";
-            // 
-            // lc_loading
-            // 
-            this.lc_loading.Active = true;
-            this.lc_loading.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.lc_loading.Color = System.Drawing.Color.Black;
-            this.lc_loading.InnerCircleRadius = 8;
-            this.lc_loading.Location = new System.Drawing.Point(100, 104);
-            this.lc_loading.Name = "lc_loading";
-            this.lc_loading.NumberSpoke = 24;
-            this.lc_loading.OuterCircleRadius = 9;
-            this.lc_loading.RotationSpeed = 5;
-            this.lc_loading.Size = new System.Drawing.Size(40, 40);
-            this.lc_loading.SpokeThickness = 4;
-            this.lc_loading.StylePreset = MRG.Controls.UI.LoadingCircle.StylePresets.IE7;
-            this.lc_loading.TabIndex = 0;
-            this.lc_loading.Text = "Loading st";
-            // 
-            // btn_Save
-            // 
-            this.btn_Save.Location = new System.Drawing.Point(352, 40);
-            this.btn_Save.Name = "btn_Save";
-            this.btn_Save.Size = new System.Drawing.Size(75, 24);
-            this.btn_Save.TabIndex = 0;
-            this.btn_Save.TabStop = false;
-            this.btn_Save.Text = "Save";
-            this.btn_Save.UseVisualStyleBackColor = true;
-            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
-            // 
-            // btn_Disallow
-            // 
-            this.btn_Disallow.Location = new System.Drawing.Point(272, 40);
-            this.btn_Disallow.Name = "btn_Disallow";
-            this.btn_Disallow.Size = new System.Drawing.Size(75, 24);
-            this.btn_Disallow.TabIndex = 0;
-            this.btn_Disallow.TabStop = false;
-            this.btn_Disallow.Text = "Block";
-            this.btn_Disallow.UseVisualStyleBackColor = true;
-            this.btn_Disallow.Click += new System.EventHandler(this.btn_Disallow_Click);
-            // 
-            // btn_Remove
-            // 
-            this.btn_Remove.Location = new System.Drawing.Point(352, 200);
-            this.btn_Remove.Name = "btn_Remove";
-            this.btn_Remove.Size = new System.Drawing.Size(75, 24);
-            this.btn_Remove.TabIndex = 0;
-            this.btn_Remove.TabStop = false;
-            this.btn_Remove.Text = "Remove";
-            this.btn_Remove.UseVisualStyleBackColor = true;
-            this.btn_Remove.Click += new System.EventHandler(this.btn_Remove_Click);
-            // 
             // STForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(762, 453);
-            this.Controls.Add(this.panel_st);
             this.Controls.Add(this.gp_st);
             this.MaximizeBox = false;
             this.Name = "STForm";
@@ -242,8 +227,6 @@ namespace MupenUtils.Forms
             this.gp_st.ResumeLayout(false);
             this.gp_RDRAM.ResumeLayout(false);
             this.gp_RDRAM.PerformLayout();
-            this.panel_st.ResumeLayout(false);
-            this.panel_st.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -254,10 +237,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Button btn_RDRAMOffsetHelp;
         private System.Windows.Forms.Label lbl_RDRAMOff;
         private System.Windows.Forms.TextBox txt_rdramoffset;
-        private System.Windows.Forms.Panel panel_st;
-        private MRG.Controls.UI.LoadingCircle lc_loading;
-        private System.Windows.Forms.Label lbl_loading;
-        private System.Windows.Forms.Label lbl_loadstatus;
         private System.Windows.Forms.TextBox txt_RDRAM;
         private System.Windows.Forms.Label lbl_Saved;
         private System.Windows.Forms.Label lbl_live;
@@ -265,5 +244,8 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Button btn_Disallow;
         private System.Windows.Forms.Button btn_Remove;
         private System.Windows.Forms.Button btn_Save;
+        private System.Windows.Forms.Label lbl_Interact;
+        private System.Windows.Forms.TextBox txt_Edit;
+        private System.Windows.Forms.Button btn_SaveST;
     }
 }

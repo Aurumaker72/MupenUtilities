@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 public static class ExtensionMethods
@@ -20,6 +21,35 @@ public static class ExtensionMethods
         if (str.Length == 0 || String.IsNullOrEmpty(str) || String.IsNullOrWhiteSpace(str)) return false;
         foreach (char c in str) { if (c < '0' || c > '9') return false; }
         int r = Int32.Parse(str);
+        if (r >= min && r <= max)
+            return true;
+        return false;
+    }
+
+    public static byte[] ReadAllBytes(Stream stream)
+    {
+        using (var ms = new MemoryStream())
+        {
+            stream.CopyTo(ms);
+            return ms.ToArray();
+        }
+    }
+
+    public static bool ValidHexStringInt(string str, int min, int max)
+    {
+        //str = str.ToUpper();
+        
+        if (str.Length == 0 || String.IsNullOrEmpty(str) || String.IsNullOrWhiteSpace(str) || !Regex.IsMatch(str, @"\A\b(0[xX])?[0-9a-fA-F]+\b\Z")) return false;
+
+        int r;
+
+            
+
+        if (str.Contains("x"))
+            r = Convert.ToInt32(str, 16);
+        else
+            r = Int32.Parse(str);
+
         if (r >= min && r <= max)
             return true;
         return false;

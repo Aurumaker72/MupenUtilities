@@ -9,15 +9,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.IO;
 
 namespace MupenUtils.Forms
 {
     public partial class STForm : Form
     {
+        public static List<byte> savestate = new List<byte>();
+
         public static byte[] savestateRDRAM = new byte[8388608];
+
         public static Thread stLoadThread;
         public static int selectedOffset = 0;
         public static List<int> disallowedOffsets = new List<int>();
+
+        public static string Path;
 
         public STForm()
         {
@@ -27,10 +33,6 @@ namespace MupenUtils.Forms
 
         private void STForm_Shown(object sender, EventArgs e)
         {
-            gp_st.Invoke((MethodInvoker)(() => panel_st.Dock = DockStyle.Fill));
-            panel_st.Invoke((MethodInvoker)(() => panel_st.Dock = DockStyle.None));
-            panel_st.Invoke((MethodInvoker)(() => panel_st.Visible = false));
-
         }
 
         private void txt_rdramoffset_TextChanged(object sender, EventArgs e)
@@ -55,7 +57,7 @@ namespace MupenUtils.Forms
                 }
             }
 
-            txt_RDRAM.Clear();
+            //txt_RDRAM.Clear();
             txt_RDRAM.Text = savestateRDRAM[selectedOffset].ToString("X2");
 
             
@@ -78,6 +80,7 @@ namespace MupenUtils.Forms
 
         private void btn_Remove_Click(object sender, EventArgs e)
         {
+            if(ls_SAVED.SelectedIndex != -1)
             ls_SAVED.Items.RemoveAt(ls_SAVED.SelectedIndex);
         }
 
@@ -88,6 +91,43 @@ namespace MupenUtils.Forms
             for(int i=0;i<disallowedOffsets.Count;i++)if(selectedOffset==disallowedOffsets[i])disallowedOffsets.RemoveAt(i);
 
             disallowedOffsets.Add(selectedOffset);
+        }
+
+        private void txt_Edit_TextChanged(object sender, EventArgs e)
+        {
+            txt_Edit.ForeColor = Color.Black;
+
+
+            
+            if(txt_Edit.Text.Length > 4 || selectedOffset == 0 || !ExtensionMethods.ValidHexStringInt(txt_Edit.Text, 0, byte.MaxValue)){txt_Edit.ForeColor = Color.Red;return;}
+            for (int i = 0; i < disallowedOffsets.Count; i++) if (selectedOffset == disallowedOffsets[i]){txt_Edit.ForeColor = Color.Red;return;}
+
+            byte final = 0;
+
+            
+
+            if (txt_Edit.Text.Contains("x"))
+                final = Convert.ToByte(txt_Edit.Text, 16);
+            else
+                final = byte.Parse(txt_Edit.Text);
+
+            savestateRDRAM[selectedOffset] = final;
+            txt_RDRAM.Text = savestateRDRAM[selectedOffset].ToString("X2");
+        }
+
+        private void btn_SaveST_Click(object sender, EventArgs e)
+        {
+            byte[] st = savestate.ToArray();
+
+            FileStream fs = File.Open(Path, FileMode.OpenOrCreate);
+            BinaryWriter br = new BinaryWriter(fs);
+            br.Write(st, 0, 0x1A0);
+            br.Write(savestateRDRAM);
+            br.Write(st, 0x8001B0, st.Length);
+
+            br.Flush();  br.Close(); fs.Close();
+
+            MessageBox.Show(String.Format("Dumped {0} bytes savestate at {1}", st.Length, Path));
         }
     }
 }
