@@ -1,5 +1,9 @@
 # MupenUtilities - Utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)
-### __This app is work in progress! Expect bugs which can heavily impact usability__
+
+### ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+)  __This app is work in progress! Expect bugs which can heavily impact usability__ ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) 
+
+
+
 ![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/input-roll/screenshot1.PNG "Mupen64 Utilities")<br>
 This project is heavily inspired by [mkdasher's](https://github.com/mkdasher/) M64 Editor.
 
@@ -49,4 +53,4 @@ Change the raw input value at any frame in a debug menu located under "More" but
 Get the raw input value at any frame in a dialog located under "More" button. 
 
 ## Other
-This program checks for updates
+ ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) This program checks for updates!
