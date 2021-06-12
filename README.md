@@ -42,8 +42,11 @@ You can view all inputs in a neatly arranged and compacter grid.
 This is useful for those who don't want to waste time skimming through the movie
 
 ### Advanced
-You can dump a movie's raw input data to a file.
-You can change the raw input value at any frame in a debug menu located under "More" button.
+Dump a movie's raw input data to a file.
+
+Change the raw input value at any frame in a debug menu located under "More" button.
+
+Get the raw input value at any frame in a dialog located under "More" button. 
 
 ## Other
 This program checks for updates
