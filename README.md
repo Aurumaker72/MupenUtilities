@@ -52,5 +52,13 @@ Change the raw input value at any frame in a debug menu located under "More" but
 
 Get the raw input value at any frame in a dialog located under "More" button. 
 
+## Savestate
+
+### RDRAM
+View and edit savestates' RDRAM section. You can save and block special addresses to make it easier to remember what goes where.
+
+## Mupen [WIP]
+Hook into mupen64 process memory and view some data like version
+
 ## Other
  ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) This program checks for updates!
