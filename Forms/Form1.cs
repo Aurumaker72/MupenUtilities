@@ -49,6 +49,7 @@ namespace MupenUtils
         ControllerFlagsForm controllerFlagsForm = new ControllerFlagsForm();
         MupenHookForm mupenHookForm = new MupenHookForm();
         STForm stForm = new STForm();
+        static ExceptionForm exceptionForm = new ExceptionForm();
 
         public static string Path, SavePath;
         public static bool FileLoaded = false;
@@ -174,6 +175,7 @@ namespace MupenUtils
         const int MEM_COMMIT = 0x00001000;
         const int PAGE_READWRITE = 0x04;
         const int PROCESS_WM_READ = 0x0010;
+
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
         [DllImport("kernel32.dll")]
@@ -181,6 +183,7 @@ namespace MupenUtils
         [DllImport("kernel32.dll")]
         static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
         [DllImport("kernel32.dll", SetLastError=true)]
+
         static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
         public struct MEMORY_BASIC_INFORMATION
         {
@@ -284,14 +287,14 @@ namespace MupenUtils
             originalGroupboxLocation[2] = gpRom.Location;
             originalGroupboxLocation[3] = gp_Plugins.Location;
 
-#if DEBUG
+//#if DEBUG
             ctx_Input_Debug.Items.Add(new ToolStripSeparator());
             ToolStripMenuItem tsmi_DBG_Crash = new ToolStripMenuItem();
             tsmi_DBG_Crash.MouseDown += (s, e) => throw new Exception("Intentional crash");
             tsmi_DBG_Crash.Text = "Debug - Crash";
             ctx_Input_Debug.Items.Add(tsmi_DBG_Crash);
             
-#endif
+//#endif
             if (!BitConverter.IsLittleEndian)
             {
                 // incompatible because this program is somewhat endian dependent
@@ -1751,21 +1754,34 @@ namespace MupenUtils
         #endregion
 
         #region Special
-        private static void currentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e) => MExcept(e.ExceptionObject as Exception);
-        private static void applicationThreadException(object sender, ThreadExceptionEventArgs e) => MExcept(e.Exception);
 
-        static void MExcept(Exception ex)
+        private static void currentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (MessageBox.Show("Exception occured and the program will attempt to continue. Do you want to dump relevant data to a crash log?", PROGRAM_NAME + " - Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-            {
-                string exStr = "";
-                exStr += "message: " + ex.Message + "\n";
-                exStr += "stack trace: " + ex.StackTrace + "\n";
-                exStr += "file loaded: " + FileLoaded.ToString() + "\n";
-                exStr += "mupen running: " + mupenRunning.ToString() + "\n";
-                exStr += "loaded invalid file: " + loadedInvalidFile.ToString() + "\n";
-                File.WriteAllText(@"exception.log", exStr);
-            }
+            ExceptionForm.mException = e.ExceptionObject as Exception;
+            exceptionForm.ShowDialog();
+            //MExcept(e.ExceptionObject as Exception, true);
+        }
+        private static void applicationThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            ExceptionForm.mException = e.Exception;
+            exceptionForm.ShowDialog();
+            //MExcept(e.Exception, true);
+        }
+
+        public static string MExcept(Exception ex, bool mbox)
+        {
+            if(mbox)
+            if (MessageBox.Show("Exception occured and the program will attempt to continue. Do you want to dump relevant data to a crash log?", PROGRAM_NAME + " - Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes) return string.Empty;
+
+            string exStr = "";
+            exStr += "message: " + ex.Message + "\n";
+            exStr += "stack trace: " + ex.StackTrace + "\n";
+            exStr += "file loaded: " + FileLoaded.ToString() + "\n";
+            exStr += "mupen running: " + mupenRunning.ToString() + "\n";
+            exStr += "loaded invalid file: " + loadedInvalidFile.ToString() + "\n";
+            File.WriteAllText(@"exception.log", exStr);
+
+            return @"exception.log";
         }
 
         #endregion

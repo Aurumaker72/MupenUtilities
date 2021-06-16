@@ -133,6 +133,12 @@
     <Compile Include="Forms\ControllerFlagsForm.Designer.cs">
       <DependentUpon>ControllerFlagsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExceptionForm.Designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MupenHookForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ControllerFlagsForm.resx">
       <DependentUpon>ControllerFlagsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -235,6 +244,7 @@
   <ItemGroup>
     <Content Include="logo.png" />
     <Content Include="mupeutil.PNG" />
+    <None Include="Resources\mupenbw.png" />
     <Content Include="screenshot1.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -117,14 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="logoPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mupengreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="obunga" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\obunga.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mupenbw" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mupenbw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="lbl_info.Text" xml:space="preserve">
+    <value>An exception has been thrown by a operation. 
+
+Press "Continue" or close this dialog to continue.
+Press "Dump Crash Log" to generate a crash log 
+which can be posted to Github issues.
+Press "Quit" to quit and generate  a crash log.</value>
   </data>
 </root>

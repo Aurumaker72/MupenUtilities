@@ -73,6 +73,16 @@ namespace MupenUtils.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap mupenbw {
+            get {
+                object obj = ResourceManager.GetObject("mupenbw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap obunga {
             get {
                 object obj = ResourceManager.GetObject("obunga", resourceCulture);
