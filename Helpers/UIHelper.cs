@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace MupenUtils
@@ -13,6 +14,8 @@ namespace MupenUtils
         // 0 - Boolean (file/folder)
         public static object[] ShowFileDialog(MainForm.UsageTypes usageType)
         {
+            Debug.WriteLine("file dialog!");
+            
             string path = string.Empty;
             string filter = "M64 Files (*.m64)|*.m64|All Files (*.*)|*.*";
             string title = "Select M64";
@@ -32,7 +35,7 @@ namespace MupenUtils
             openFileDialog.CheckPathExists =
             openFileDialog.RestoreDirectory = true;
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK || openFileDialog.ShowDialog() == DialogResult.Yes)
                 path = openFileDialog.FileName;
             else
                 return new object[] { "FAIL", false };

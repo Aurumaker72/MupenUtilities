@@ -75,6 +75,7 @@ namespace MupenUtils
         UInt32 frames;
         UInt32 RRs;
         byte Controllers;
+        bool[] ControllersEnabled = { false, false, false, false };
         Int16 StartType;
         string RomName;
         UInt32 Crc32;
@@ -167,7 +168,7 @@ namespace MupenUtils
             ST,
             Mupen
         };
-        UsageTypes UsageType;
+        UsageTypes UsageType = UsageTypes.M64;
 
         const int PROCESS_QUERY_INFORMATION = 0x0400;
         const int MEM_COMMIT = 0x00001000;
@@ -551,6 +552,8 @@ namespace MupenUtils
 
         void ErrorProcessing(string failReason)
         {
+            Debug.WriteLine("failed to load m64 " + failReason);
+
             loadedInvalidFile = true;
 
             string title = "Failed to load ";
@@ -564,6 +567,8 @@ namespace MupenUtils
         void ReadM64()
         {
             // Check for suspicious properties
+            Debug.WriteLine("Attempting to load m64...");
+
             loadedInvalidFile = false;
             if (UsageType != UsageTypes.Any)
             {
@@ -669,15 +674,19 @@ namespace MupenUtils
             Author = utf8.GetString(br.ReadBytes(222));
             Description = utf8.GetString(br.ReadBytes(256));
 
+            for (int i = 0; i < 4; i++)
+             ControllersEnabled[i] = ExtensionMethods.GetBit(ControllerFlags, i);
+            
+
             // Load inputs
             // We need a buffer to check if end of file reached
 
-            // rant time:
             // tasstudio docs about mupen are fucking retarded and apparently the person who wrote it doesnt know what the difference
             // between a frame and a VI is...
             // to quote: "00C 4-byte little-endian unsigned int: number of frames (vertical interrupts)"
             // WHATTT???? 
 
+            
             Debug.WriteLine("VI/s:" + VIs);
             frames = VIs;
             int findx = 0;
@@ -694,13 +703,14 @@ namespace MupenUtils
                         continue;
                     }
 
-                    if (Controllers == 1)
+
+                    if (ControllersEnabled[0])
                         inputListCtl1.Add(br.ReadInt32());
-                    else if (Controllers == 2)
+                    if (ControllersEnabled[1])
                         inputListCtl2.Add(br.ReadInt32());
-                    else if (Controllers == 3)
+                    if (ControllersEnabled[2])
                         inputListCtl3.Add(br.ReadInt32());
-                    else if (Controllers == 4)
+                    if (ControllersEnabled[3])
                         inputListCtl4.Add(br.ReadInt32());
 
                     findx++;
@@ -1174,7 +1184,10 @@ namespace MupenUtils
                 MessageBox.Show("You are attempting to load more than one m64, picking first one from list...", PROGRAM_NAME + " - Too much data");
             }
 
-            if (!ExtensionMethods.ValidPath(file)) return;
+            if (!ExtensionMethods.ValidPath(file))
+            {
+                Debug.WriteLine("invalid path");return;
+            }
             Path = txt_Path.Text = file;
 
             Properties.Settings.Default.LastPath = Path;
@@ -1269,6 +1282,8 @@ namespace MupenUtils
         
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
+            Debug.WriteLine("browse...");
+
             if (UsageType == UsageTypes.Mupen)
             {
                 MupenHook(); // skip dialog
@@ -1278,11 +1293,12 @@ namespace MupenUtils
             object[] result = UIHelper.ShowFileDialog(UsageType);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
             {
-                //ShowStatus("Cancelled movie selection",st_Status1);
+                Debug.WriteLine("failed dialog");
                 return;
             }
 
-            Path = txt_Path.Text = (string)result[0];
+            txt_Path.Text = (string)result[0];
+            Path = (string)result[0];
 
             Properties.Settings.Default.LastPath = Path;
             Properties.Settings.Default.Save();
