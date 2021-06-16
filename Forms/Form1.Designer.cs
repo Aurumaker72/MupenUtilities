@@ -38,6 +38,7 @@ namespace MupenUtils
             this.btn_Tips = new System.Windows.Forms.Button();
             this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.btn_Override = new System.Windows.Forms.Button();
+            this.rb_MUPSel = new System.Windows.Forms.RadioButton();
             this.rb_STsel = new System.Windows.Forms.RadioButton();
             this.rb_M64sel = new System.Windows.Forms.RadioButton();
             this.btn_LoadLatest = new System.Windows.Forms.Button();
@@ -138,7 +139,6 @@ namespace MupenUtils
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
-            this.rb_MUPSel = new System.Windows.Forms.RadioButton();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -249,6 +249,18 @@ namespace MupenUtils
             this.btn_Override.UseVisualStyleBackColor = true;
             this.btn_Override.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Override_MouseDown);
             // 
+            // rb_MUPSel
+            // 
+            this.rb_MUPSel.AutoSize = true;
+            this.rb_MUPSel.Location = new System.Drawing.Point(114, 50);
+            this.rb_MUPSel.Margin = new System.Windows.Forms.Padding(4);
+            this.rb_MUPSel.Name = "rb_MUPSel";
+            this.rb_MUPSel.Size = new System.Drawing.Size(72, 21);
+            this.rb_MUPSel.TabIndex = 0;
+            this.rb_MUPSel.Text = "Mupen";
+            this.rb_MUPSel.UseVisualStyleBackColor = true;
+            this.rb_MUPSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_MUPsel_MouseDown);
+            // 
             // rb_STsel
             // 
             this.rb_STsel.AutoSize = true;
@@ -335,7 +347,7 @@ namespace MupenUtils
             this.pnl_M64Header.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_M64Header.Location = new System.Drawing.Point(4, 19);
             this.pnl_M64Header.Name = "pnl_M64Header";
-            this.pnl_M64Header.Size = new System.Drawing.Size(566, 408);
+            this.pnl_M64Header.Size = new System.Drawing.Size(560, 408);
             this.pnl_M64Header.TabIndex = 2;
             // 
             // gpRom
@@ -544,7 +556,7 @@ namespace MupenUtils
             this.gp_Plugins.Controls.Add(this.txtbox_Audioplugin);
             this.gp_Plugins.Controls.Add(this.lbl_Input);
             this.gp_Plugins.Controls.Add(this.txt_Rsp);
-            this.gp_Plugins.Location = new System.Drawing.Point(281, 216);
+            this.gp_Plugins.Location = new System.Drawing.Point(275, 216);
             this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
             this.gp_Plugins.Name = "gp_Plugins";
             this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
@@ -644,7 +656,7 @@ namespace MupenUtils
             this.gp_M64_misc.Controls.Add(this.lbl_CtlFlags);
             this.gp_M64_misc.Controls.Add(this.lb_starttype);
             this.gp_M64_misc.Controls.Add(this.btn_CtlFlags);
-            this.gp_M64_misc.Location = new System.Drawing.Point(281, 0);
+            this.gp_M64_misc.Location = new System.Drawing.Point(275, 0);
             this.gp_M64_misc.Margin = new System.Windows.Forms.Padding(4);
             this.gp_M64_misc.Name = "gp_M64_misc";
             this.gp_M64_misc.Padding = new System.Windows.Forms.Padding(4);
@@ -825,11 +837,11 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.btn_FrameBack2);
             this.gp_input.Controls.Add(this.btn_FrameBack);
             this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_input.Location = new System.Drawing.Point(570, 19);
+            this.gp_input.Location = new System.Drawing.Point(564, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
             this.gp_input.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_input.Size = new System.Drawing.Size(662, 408);
+            this.gp_input.Size = new System.Drawing.Size(668, 408);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input - Controller 1";
@@ -838,7 +850,7 @@ namespace MupenUtils
             // 
             this.cbox_Controllers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbox_Controllers.FormattingEnabled = true;
-            this.cbox_Controllers.Location = new System.Drawing.Point(48, 360);
+            this.cbox_Controllers.Location = new System.Drawing.Point(12, 360);
             this.cbox_Controllers.Name = "cbox_Controllers";
             this.cbox_Controllers.Size = new System.Drawing.Size(121, 24);
             this.cbox_Controllers.TabIndex = 0;
@@ -849,7 +861,7 @@ namespace MupenUtils
             // 
             this.gp_TASStudio.Controls.Add(this.dgv_Main);
             this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_TASStudio.Location = new System.Drawing.Point(372, 19);
+            this.gp_TASStudio.Location = new System.Drawing.Point(378, 19);
             this.gp_TASStudio.Name = "gp_TASStudio";
             this.gp_TASStudio.Size = new System.Drawing.Size(286, 385);
             this.gp_TASStudio.TabIndex = 0;
@@ -877,11 +889,11 @@ namespace MupenUtils
             this.tr_MovieScrub.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tr_MovieScrub.BackColor = System.Drawing.SystemColors.Control;
-            this.tr_MovieScrub.Location = new System.Drawing.Point(180, 360);
+            this.tr_MovieScrub.Location = new System.Drawing.Point(138, 360);
             this.tr_MovieScrub.Maximum = 2;
             this.tr_MovieScrub.Minimum = 1;
             this.tr_MovieScrub.Name = "tr_MovieScrub";
-            this.tr_MovieScrub.Size = new System.Drawing.Size(170, 56);
+            this.tr_MovieScrub.Size = new System.Drawing.Size(176, 56);
             this.tr_MovieScrub.TabIndex = 0;
             this.tr_MovieScrub.TabStop = false;
             this.tr_MovieScrub.TickFrequency = 0;
@@ -915,7 +927,7 @@ namespace MupenUtils
             // 
             // txt_Frame
             // 
-            this.txt_Frame.Location = new System.Drawing.Point(270, 324);
+            this.txt_Frame.Location = new System.Drawing.Point(270, 327);
             this.txt_Frame.Name = "txt_Frame";
             this.txt_Frame.Size = new System.Drawing.Size(35, 22);
             this.txt_Frame.TabIndex = 0;
@@ -1387,18 +1399,6 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(142, 24);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
-            // 
-            // rb_MUPSel
-            // 
-            this.rb_MUPSel.AutoSize = true;
-            this.rb_MUPSel.Location = new System.Drawing.Point(114, 50);
-            this.rb_MUPSel.Margin = new System.Windows.Forms.Padding(4);
-            this.rb_MUPSel.Name = "rb_MUPSel";
-            this.rb_MUPSel.Size = new System.Drawing.Size(72, 21);
-            this.rb_MUPSel.TabIndex = 0;
-            this.rb_MUPSel.Text = "Mupen";
-            this.rb_MUPSel.UseVisualStyleBackColor = true;
-            this.rb_MUPSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_MUPsel_MouseDown);
             // 
             // MainForm
             // 
