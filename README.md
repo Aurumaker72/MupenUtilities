@@ -1,7 +1,5 @@
 # MupenUtilities - Utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)
-
-### ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+)  __This app is work in progress! Expect bugs which can heavily impact usability__ ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) 
-
+ 🐛 **This app is work in progress! Expect bugs which can heavily impact usability** 🐛
 
 
 ![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/input-roll/screenshot1.PNG "Mupen64 Utilities")<br>
@@ -63,4 +61,5 @@ Hook into mupen64 process memory and view some data like version string.
 ### __Mupen hook might be unbearably slow or not work on some systems!__
 
 ## Other
- ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) This program checks for updates!
+⚠️ This program automatically checks for updates when internet is connected.
+⚠️This program accesses other program's memory and might be marked as unsafe. 
