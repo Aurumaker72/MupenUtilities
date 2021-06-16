@@ -36,7 +36,7 @@ You can seek back and forth, reverse playback, step frames and more intuitive co
 Playing the movie back in real-time (30 FPS) is also possible.
 
 ### Replacement
-Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of input frames from one movie to another. 
+Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of input __samples__ from one movie to another. 
 
 The N64 may or may not poll inputs a lot of times within a frame so only use this if you know exactly what you're doing.
 
