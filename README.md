@@ -2,7 +2,7 @@
  🐛 **This app is work in progress! Expect bugs which can heavily impact usability** 🐛
 
 
-![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/input-roll/screenshot1.PNG "Mupen64 Utilities")<br>
+![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG "Mupen64 Utilities")<br>
 This project is heavily inspired by [mkdasher's](https://github.com/mkdasher/) M64 Editor.
 
 ## M64
