@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,6 +20,7 @@ namespace MupenUtils.Forms
         public ExceptionForm()
         {
             InitializeComponent();
+            TopMost = true;
         }
 
         private void llbl_Issues_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -44,15 +46,20 @@ namespace MupenUtils.Forms
             MainForm.MExcept(mException, false);
             Application.Exit();
         }
-
+        private void FocusLost(object sender, EventArgs e)
+        {
+            this.Focus();
+        }
         private void ExceptionForm_Shown(object sender, EventArgs e)
         {
+
             this.Text = ProductName + " - Exception";
+
+            
 
             btn_CrashLog.Text = "Dump Crash Log";
             btn_CrashLog.ForeColor = Color.Black;
             btn_OpenCrashLog.Visible = false;
-
         }
 
         private void btn_OpenCrashLog_Click(object sender, EventArgs e)

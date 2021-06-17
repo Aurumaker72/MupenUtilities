@@ -1159,7 +1159,10 @@ namespace MupenUtils
         void SetFrame(int targetframe)
         {
             frame = targetframe;
-            if (!checkAllowedStep(targetframe)) return;
+            if (!checkAllowedStep(targetframe))
+            {
+                return;
+            }
             if (frame >= inputLists[selectedController].Count)
             {
                 frame = inputLists[selectedController].Count;
@@ -1375,7 +1378,7 @@ namespace MupenUtils
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
 
-           txt_Frame.Text = frame.ToString();
+            txt_Frame.Text = frame.ToString();
 
             if (frame <= dgv_Main.Rows.Count)
             {
@@ -1402,6 +1405,28 @@ namespace MupenUtils
             {
                 ExtensionMethods.FullScreen(this);
             }
+            if (!readOnly)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.W:
+                    case Keys.Up:
+                        SetJoystickValue(new Point(0, -127), false, false);
+                        break;
+                    case Keys.A:
+                    case Keys.Left:
+                        SetJoystickValue(new Point(-128, 0), false, false);
+                        break;
+                    case Keys.S:
+                    case Keys.Down:
+                        SetJoystickValue(new Point(0,127/*-127 actually but this is inaccuracy which will be fixed*/), false, false);
+                        break;
+                    case Keys.D:
+                    case Keys.Right:
+                        SetJoystickValue(new Point(127, 0), false, false);
+                        break;
+                }
+            }
         }
 
 
@@ -1422,6 +1447,7 @@ namespace MupenUtils
             gp_TASStudio.Dock = gp_TASStudio.Dock == DockStyle.Right ? DockStyle.Fill : DockStyle.Right;
             tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
             tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
+            cbox_Controllers.Visible = gp_TASStudio.Dock != DockStyle.Fill;
         }
 
         private void tsmi_AAJoystick_Click(object sender, EventArgs e)

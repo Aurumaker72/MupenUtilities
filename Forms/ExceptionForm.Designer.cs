@@ -116,7 +116,7 @@ namespace MupenUtils.Forms
             // 
             // btn_OpenCrashLog
             // 
-            this.btn_OpenCrashLog.Location = new System.Drawing.Point(336, 264);
+            this.btn_OpenCrashLog.Location = new System.Drawing.Point(16, 296);
             this.btn_OpenCrashLog.Name = "btn_OpenCrashLog";
             this.btn_OpenCrashLog.Size = new System.Drawing.Size(120, 32);
             this.btn_OpenCrashLog.TabIndex = 0;
@@ -147,6 +147,8 @@ namespace MupenUtils.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ExceptionForm";
             this.Shown += new System.EventHandler(this.ExceptionForm_Shown);
+            this.LostFocus += new System.EventHandler(this.FocusLost);
+            this.Deactivate += new System.EventHandler(this.FocusLost);
             ((System.ComponentModel.ISupportInitialize)(this.pb_LogoBad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1413,7 +1413,7 @@ namespace MupenUtils
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mupen Utilities ";
+            this.Text = "Mupen Utilities";
             this.Activated += new System.EventHandler(this.MainForm_Focus);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
