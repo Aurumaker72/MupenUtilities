@@ -17,7 +17,12 @@ You can view and edit all meaningful M64 Header data such as
 - Plugin names
 - Author
 - Description
-- all else...
+- Controller Flags
+  - Enabled
+  - Mempak
+  - Rumblepak
+- All else...
+
 
 ### Input
 You can view and edit all M64 Inputs on each frame in a clean, interactive TASInput style interface.
