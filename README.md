@@ -17,7 +17,12 @@ You can view and edit all meaningful M64 Header data such as
 - Plugin names
 - Author
 - Description
-- all else...
+- Controller Flags
+  - Enabled
+  - Mempak
+  - Rumblepak
+- All else...
+
 
 ### Input
 You can view and edit all M64 Inputs on each frame in a clean, interactive TASInput style interface.
@@ -61,5 +66,9 @@ Hook into mupen64 process memory and view some data like version string.
 ### __Mupen hook might be unbearably slow or not work on some systems!__
 
 ## Other
-⚠️ This program automatically checks for updates when internet is connected.
+⚠️This program automatically checks for updates when internet is connected.
+
 ⚠️This program accesses other program's memory and might be marked as unsafe. 
+
+🥚There is a easter egg in the TAS Studio utility dialog
+
