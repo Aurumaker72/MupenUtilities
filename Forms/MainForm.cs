@@ -20,7 +20,7 @@ namespace MupenUtils
     {
         #region Vars
 
-        public const string PROGRAM_VERSION = "1.5";
+        public const string PROGRAM_VERSION = "1.6";
         public const string PROGRAM_NAME = "Mupen Utilities";
 
         public const string M64_LOADED_TEXT = "M64 Loaded";
@@ -39,7 +39,7 @@ namespace MupenUtils
 
         public static bool standardBitArh;
         // [] means reserved, <^>v is direction
-        public string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "[1]", "[2]", "X", "Y" };
+        public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "[1]", "[2]", "X", "Y" };
 
         Thread m64load;
         MoreForm moreForm = new MoreForm();
@@ -60,8 +60,12 @@ namespace MupenUtils
         bool forwardsPlayback = true;
         bool readOnly = true;
 
+        /*TAS Studio*/
         public static int markedGoToFrame = 0;
+        public static int markedSizeCell = 10;
         public static bool forceGoto = false;
+        public static bool forceResizeCell = false;
+        int cellSize = 10;
 
         bool simpleMode = false;
         public static bool mupenRunning = false;
@@ -1216,7 +1220,19 @@ namespace MupenUtils
             if (e.Button == MouseButtons.Right)
                 ctx_TasStudio.Show(Cursor.Position);
         }
+        private void dgv_Main_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (Control.ModifierKeys != Keys.Control) return;
 
+
+            cellSize += Math.Sign(e.Delta)*5;
+
+            for (int i = 0; i < dgv_Main.Columns.Count; i++)
+            {
+                DataGridViewColumn c = dgv_Main.Columns[i];
+                c.Width = cellSize;
+            }
+        }
         private void tsmi_Input_Debug_DumpData_Click(object sender, EventArgs e)
         {
             DumpInputsFile(false);
@@ -1234,6 +1250,8 @@ namespace MupenUtils
         }
         private void dgv_Main_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
+            
+
             using (SolidBrush b = new SolidBrush(dgv_Main.RowHeadersDefaultCellStyle.ForeColor))
             {
                 e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
@@ -1259,6 +1277,15 @@ namespace MupenUtils
                 dgv_Main.Rows[markedGoToFrame].Selected = true;
 
                 forceGoto = false;
+            }
+            if (forceResizeCell)
+            {
+                for (int i = 0; i < dgv_Main.Columns.Count; i++)
+                {
+                    DataGridViewColumn c = dgv_Main.Columns[i];
+                    c.Width = markedSizeCell;
+                }
+                forceResizeCell = false;
             }
             if (notifiedReupdateControllerFlags)
             {
@@ -1637,8 +1664,16 @@ namespace MupenUtils
         private void tsmi_GetInput_Click(object sender, EventArgs e)
         {
             if (FileLoaded)
-            {
-                MessageBox.Show(String.Format("Input data at frame {0}: {1}", frame, ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(inputLists[selectedController][frame])) + "\nGuide: Bit 0-15 are dedicated to Buttons and Bytes 2,3 (Bits 16-24 and Bits 24-36) are Joystick X and Y respectively."), PROGRAM_NAME + " - Get Input");
+            { 
+                string s = "";
+                s += String.Format("Input data at frame {0}: {1}", frame, ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(inputLists[selectedController][frame])) + "\n");
+                s += "View:\n";
+                s += DataHelper.GetFriendlyValue(inputLists[selectedController][frame]);
+                s += "\nGuide: Bit 0-15 are dedicated to Buttons and Bytes 2,3 (Bits 16-24 and Bits 24-36) are Joystick X and Y respectively.";
+
+
+                MessageBox.Show(s, PROGRAM_NAME + " - Advanced Get Input");
+
             }
         }
         #endregion

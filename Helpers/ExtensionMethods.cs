@@ -104,6 +104,14 @@ public static class ExtensionMethods
     {
         return 1 == ((value >> bitpos) & 1);
     }
+    public static bool Button(uint value, int bitpos)
+    {
+        return (value & (int)Math.Pow(2, bitpos)) != 0;
+    }
+    public static bool Button(int value, int bitpos)
+    {
+        return (value & (int)Math.Pow(2, bitpos)) != 0;
+    }
     public static int IndexOfOccurence(this string s, string match, int occurence)
     {
         int i = 1;
@@ -185,6 +193,14 @@ public static class ExtensionMethods
         {
             form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             form.WindowState = FormWindowState.Normal;
+        }
+    }
+    public static void ForAllControls(this Control parent, Action<Control> action)
+    {
+        foreach (Control c in parent.Controls)
+        {
+            action(c);
+            ForAllControls(c, action);
         }
     }
 

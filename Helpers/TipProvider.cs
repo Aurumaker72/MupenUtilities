@@ -34,6 +34,8 @@ namespace MupenUtils.Helpers
             "\'Simple Mode\' disables some technical features to make usage simpler",
             "Drag and drop is supported",
             "Right clicking the \'New Tip\' button will show all tips",
+            "CTRL+Scroll in TAS Studio will zoom in and out",
+            "Sending the debug log upon a crash helps me fix bugs"
         };
         public static string GetRandomTip()
         {

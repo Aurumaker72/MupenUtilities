@@ -352,7 +352,6 @@ namespace MupenUtils
             // 
             // gpRom
             // 
-            this.gpRom.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.gpRom.Controls.Add(this.txt_Rom);
             this.gpRom.Controls.Add(this.txt_Crc);
             this.gpRom.Controls.Add(this.txt_RomCountry);
@@ -547,7 +546,6 @@ namespace MupenUtils
             // 
             // gp_Plugins
             // 
-            this.gp_Plugins.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.gp_Plugins.Controls.Add(this.lbl_Video);
             this.gp_Plugins.Controls.Add(this.txt_videoplugin);
             this.gp_Plugins.Controls.Add(this.lbl_RSP);
@@ -643,7 +641,6 @@ namespace MupenUtils
             // 
             // gp_M64_misc
             // 
-            this.gp_M64_misc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.gp_M64_misc.Controls.Add(this.cbox_startType);
             this.gp_M64_misc.Controls.Add(this.txt_misc_UID);
             this.gp_M64_misc.Controls.Add(this.txt_misc_Version);
@@ -793,7 +790,7 @@ namespace MupenUtils
             this.btn_Savem64.Location = new System.Drawing.Point(0, 366);
             this.btn_Savem64.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Savem64.Name = "btn_Savem64";
-            this.btn_Savem64.Size = new System.Drawing.Size(560, 28);
+            this.btn_Savem64.Size = new System.Drawing.Size(543, 28);
             this.btn_Savem64.TabIndex = 0;
             this.btn_Savem64.TabStop = false;
             this.btn_Savem64.Text = "Save M64";
@@ -883,11 +880,10 @@ namespace MupenUtils
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
             this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_Main_KeyDown);
             this.dgv_Main.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_Main_MouseClick);
+            this.dgv_Main.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.dgv_Main_MouseWheel);
             // 
             // tr_MovieScrub
             // 
-            this.tr_MovieScrub.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tr_MovieScrub.BackColor = System.Drawing.SystemColors.Control;
             this.tr_MovieScrub.Location = new System.Drawing.Point(138, 360);
             this.tr_MovieScrub.Maximum = 2;

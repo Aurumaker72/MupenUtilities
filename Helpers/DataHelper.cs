@@ -1,4 +1,7 @@
-﻿namespace MupenUtils
+﻿using System;
+using System.Diagnostics;
+
+namespace MupenUtils
 {
     public static class DataHelper
     {
@@ -109,6 +112,32 @@
                     break;
             }
             return code;
+        }
+
+        public static string GetFriendlyValue(int value)
+        {
+            string final = "";
+
+            byte[] joy = BitConverter.GetBytes(value);
+
+            for (int i = 0; i < MainForm.inputStructNames.Length-2; i++)
+            {
+                // loop through all buttons
+                Debug.WriteLine(value.ToString("X2"));
+                if(ExtensionMethods.GetBit(value,i))
+                {
+                    final += MainForm.inputStructNames[i] + " ";
+                }
+            }
+
+            if((sbyte)joy[2] != 0)
+            final += "\nJoy X " + ((sbyte)joy[2]).ToString();
+
+            if((sbyte)-joy[3] != 0)
+            final += "\nJoy Y " + ((sbyte)-joy[3]).ToString() + "\n";
+
+            return final;
+
         }
 
     }
