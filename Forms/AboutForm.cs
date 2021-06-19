@@ -61,5 +61,15 @@ namespace MupenUtils
                 MessageBox.Show(str, MainForm.PROGRAM_NAME + " - All tips");
             }
         }
+
+        private void Llbl_More_ReportBug_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/Aurumaker72/MupenUtilities/issues/new?assignees=&labels=bug&template=bug_report.md&title=Bug+report");
+        }
+
+        private void Llbl_More_FeatureSuggestIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/Aurumaker72/MupenUtilities/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=Feature+request");
+        }
     }
 }
