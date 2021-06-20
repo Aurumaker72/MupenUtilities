@@ -84,7 +84,7 @@ namespace MupenUtils.Forms
             // 
             // pb_LogoBad
             // 
-            this.pb_LogoBad.BackgroundImage = global::MupenUtils.Properties.Resources.mupenbw;
+            this.pb_LogoBad.BackgroundImage = global::MupenUtilities.Properties.Resources.mupenbw;
             this.pb_LogoBad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pb_LogoBad.Location = new System.Drawing.Point(16, 16);
             this.pb_LogoBad.Name = "pb_LogoBad";

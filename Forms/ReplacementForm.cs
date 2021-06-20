@@ -25,11 +25,11 @@ namespace MupenUtils.Forms
             //foreach (Control ctl in this.Controls)
             //    ctl.Enabled = MainForm.FileLoaded;
 
-            if (ExtensionMethods.ValidPath(Properties.Settings.Default.LastPathReplaceSrc))
-                txt_Repl_Src.Text = Properties.Settings.Default.LastPathReplaceSrc;
+            if (ExtensionMethods.ValidPath(MupenUtilities.Properties.Settings.Default.LastPathReplaceSrc))
+                txt_Repl_Src.Text = MupenUtilities.Properties.Settings.Default.LastPathReplaceSrc;
 
-            if (ExtensionMethods.ValidPath(Properties.Settings.Default.LastPathReplaceTrg))
-                txt_Repl_Trg.Text = Properties.Settings.Default.LastPathReplaceTrg;
+            if (ExtensionMethods.ValidPath(MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg))
+                txt_Repl_Trg.Text = MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg;
         }
 
         private void btn_Repl_BrowseSrc_Click(object sender, EventArgs e)
@@ -42,8 +42,8 @@ namespace MupenUtils.Forms
 
             txt_Repl_Src.Text = pathSource;
             lbl_Repl_Status.Text = "Idle";
-            Properties.Settings.Default.LastPathReplaceSrc = pathSource;
-            Properties.Settings.Default.Save();
+            MupenUtilities.Properties.Settings.Default.LastPathReplaceSrc = pathSource;
+            MupenUtilities.Properties.Settings.Default.Save();
 
             if (pathSource == pathTarget)
                 lbl_Repl_Status.Text = "Identical paths";
@@ -59,8 +59,8 @@ namespace MupenUtils.Forms
 
             txt_Repl_Trg.Text = pathTarget;
             lbl_Repl_Status.Text = "Idle";
-            Properties.Settings.Default.LastPathReplaceTrg = pathTarget;
-            Properties.Settings.Default.Save();
+            MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg = pathTarget;
+            MupenUtilities.Properties.Settings.Default.Save();
 
             if (pathSource == pathTarget)
                 lbl_Repl_Status.Text = "Identical paths";

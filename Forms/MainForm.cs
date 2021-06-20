@@ -296,7 +296,7 @@ namespace MupenUtils
             originalGroupboxLocation[2] = gpRom.Location;
             originalGroupboxLocation[3] = gp_Plugins.Location;
 
-            tsmi_DarkMode.Checked = Properties.Settings.Default.DarkMode;
+            tsmi_DarkMode.Checked = MupenUtilities.Properties.Settings.Default.DarkMode;
             darkMode = tsmi_DarkMode.Checked;
             if(darkMode) SetDarkMode(darkMode);
 
@@ -634,7 +634,7 @@ namespace MupenUtils
         }
         void ReadM64()
         {
-            // Check for suspicious properties
+            // Check for suspicious MupenUtilities.Properties
             Debug.WriteLine("Attempting to load m64...");
 
             loadedInvalidFile = false;
@@ -1297,8 +1297,8 @@ namespace MupenUtils
                 Debug.WriteLine("invalid path"); return;
             }
             Path = txt_Path.Text = file;
-            Properties.Settings.Default.LastPath = Path;
-            Properties.Settings.Default.Save();
+            MupenUtilities.Properties.Settings.Default.LastPath = Path;
+            MupenUtilities.Properties.Settings.Default.Save();
 
             if (UsageType == UsageTypes.M64)
             {
@@ -1437,8 +1437,8 @@ namespace MupenUtils
             txt_Path.Text = (string)result[0];
             Path = (string)result[0];
 
-            Properties.Settings.Default.LastPath = Path;
-            Properties.Settings.Default.Save();
+            MupenUtilities.Properties.Settings.Default.LastPath = Path;
+            MupenUtilities.Properties.Settings.Default.Save();
 
             if (UsageType == UsageTypes.M64)
             {
@@ -1450,7 +1450,7 @@ namespace MupenUtils
         }
         private void btn_Last_MouseClick(object sender, MouseEventArgs e)
         {
-            Path = Properties.Settings.Default.LastPath;
+            Path = MupenUtilities.Properties.Settings.Default.LastPath;
             if (UsageType == UsageTypes.M64 && ExtensionMethods.ValidPath(Path))
             {
                 m64load = new Thread(() => ReadM64());
@@ -1898,8 +1898,9 @@ namespace MupenUtils
         {
             darkMode ^= true;
             tsmi_DarkMode.Checked = darkMode;
-            Properties.Settings.Default.DarkMode = darkMode;
-            Properties.Settings.Default.Save();
+            MupenUtilities.Properties.Settings.Default.DarkMode = darkMode;
+            MupenUtilities.Properties.Settings.Default.Save();
+            
             SetDarkMode(darkMode);
         }
 

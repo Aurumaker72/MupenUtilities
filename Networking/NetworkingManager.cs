@@ -74,9 +74,9 @@ namespace MupenUtils.Networking
                 latest += whatsNew[0].Body;
                 avatarUrl = whatsNew[0].Author.AvatarUrl;
             }
-            catch
+            catch(Exception e)
             {
-                return new object[] { "??? Unable to retrieve news", ""};
+                return new object[] { "Unable to retrieve news\r\n " + e.InnerException.Message, ""};
             }
 
             latest = latest.Replace('#'.ToString(), "");

@@ -57,7 +57,7 @@ namespace MupenUtils.Forms
         {
             // jumpscare
 
-            string wejiwqJWu="";var xmKWwkre=new char[]{(char)79,(char)98,(char)117,(char)110,(char)103,(char)97};for(int xmKwwkre=0xFF-255;xmKwwkre<6;++xmKwwkre)wejiwqJWu+=xmKWwkre[xmKwwkre];this.ForAllControls(c=>{c.Text = wejiwqJWu;c.BackgroundImage = Properties.Resources.obunga;});this.WindowState=(FormWindowState)2;for(int i=0;i<new Random().Next(60,200);i++)this.Text+=wejiwqJWu;
+            string wejiwqJWu="";var xmKWwkre=new char[]{(char)79,(char)98,(char)117,(char)110,(char)103,(char)97};for(int xmKwwkre=0xFF-255;xmKwwkre<6;++xmKwwkre)wejiwqJWu+=xmKWwkre[xmKwwkre];this.ForAllControls(c=>{c.Text = wejiwqJWu;c.BackgroundImage = MupenUtilities.Properties.Resources.obunga;});this.WindowState=(FormWindowState)2;for(int i=0;i<new Random().Next(60,200);i++)this.Text+=wejiwqJWu;
         }
 
         private void txt_CellSize_TextChanged(object sender, EventArgs e)

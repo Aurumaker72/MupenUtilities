@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7E5AFCD6-5244-4064-9EB5-63344F34C7AA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MupenUtils</RootNamespace>
-    <AssemblyName>MupenUtils</AssemblyName>
+    <RootNamespace>MupenUtilities</RootNamespace>
+    <AssemblyName>MupenUtilities</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -87,6 +87,9 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mupengreen.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -184,7 +187,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\TipProvider.cs" />
-    <Compile Include="Networking\UpdateNotifier.cs" />
+    <Compile Include="Networking\NetworkingManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UIHelper.cs" />
@@ -252,8 +255,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.png" />
-    <Content Include="mupeutil.PNG" />
     <None Include="Resources\mupenbw.png" />
+    <Content Include="mupengreen.ico" />
     <Content Include="screenshot1.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
