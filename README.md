@@ -1,5 +1,5 @@
-# MupenUtilities - Utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)
- 🐛 **This app is work in progress! Expect bugs which can heavily impact usability** 🐛
+# MupenUtilities
+### 🛡️ Feature-rich Utility application for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/) 🛡️
 
 
 ![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG "Mupen64 Utilities")<br>
@@ -63,6 +63,11 @@ Hook into mupen64 process memory and view some data like version string.
 
 ### __Mupen hook might be unbearably slow or not work on some systems!__
 
+## Requirements
+- M64, ST or Mupen exe
+- OS newer than Windows 7
+- more than 1 GB RAM
+
 ## Other
 ⚠️This program automatically checks for updates when internet is connected.
 
@@ -70,3 +75,4 @@ Hook into mupen64 process memory and view some data like version string.
 
 🥚There is a easter egg in the TAS Studio utility dialog
 
+🧵This program is multithreaded
