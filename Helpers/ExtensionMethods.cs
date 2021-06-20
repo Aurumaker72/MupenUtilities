@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -61,6 +62,13 @@ public static class ExtensionMethods
         int r = int.Parse(str);
         if (r > sbyte.MaxValue || r < sbyte.MinValue) return false;
         return true;
+    }
+    public static Image ImageFromBytes(byte[] dataArr)
+    {
+        using (var ms = new MemoryStream(dataArr))
+        {
+            return Image.FromStream(ms);
+        }
     }
     public static string ByteArrayToString(byte[] ba)
     {

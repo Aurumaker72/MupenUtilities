@@ -61,5 +61,29 @@ namespace MupenUtils.Networking
             else
                 return MainForm.UPDATE_EQUAL;
         }
+
+        public object[] GetLatestReleaseText()
+        {
+             GitHubClient client = new GitHubClient(new ProductHeaderValue("muputils"));
+            string latest;
+            string avatarUrl;
+            try
+            {
+                var whatsNew = client.Repository.Release.GetAll("Aurumaker72", "MupenUtilities").Result;
+                latest = whatsNew[0].Name;
+                latest += whatsNew[0].Body;
+                avatarUrl = whatsNew[0].Author.AvatarUrl;
+            }
+            catch
+            {
+                return new object[] { "??? Unable to retrieve news", ""};
+            }
+
+            latest = latest.Replace('#'.ToString(), "");
+            latest = latest.Replace('*'.ToString(), "");
+            latest = latest.Replace('_'.ToString(), "");
+
+            return new object[] { latest, avatarUrl };
+        }
     }
 }

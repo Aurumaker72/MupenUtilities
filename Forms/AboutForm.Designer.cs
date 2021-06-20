@@ -46,6 +46,7 @@ namespace MupenUtils
             this.Llbl_More_Mupen = new System.Windows.Forms.LinkLabel();
             this.txt_More_Info = new System.Windows.Forms.TextBox();
             this.pb_More_Logo = new System.Windows.Forms.PictureBox();
+            this.btn_News = new System.Windows.Forms.Button();
             this.gp_More_Tips.SuspendLayout();
             this.gp_More_About.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_More_Logo)).BeginInit();
@@ -97,6 +98,7 @@ namespace MupenUtils
             // 
             // gp_More_About
             // 
+            this.gp_More_About.Controls.Add(this.btn_News);
             this.gp_More_About.Controls.Add(this.btn_More_CheckUpdates);
             this.gp_More_About.Controls.Add(this.lbl_Github);
             this.gp_More_About.Controls.Add(this.lbl_More_Related2);
@@ -249,6 +251,17 @@ namespace MupenUtils
             this.pb_More_Logo.TabStop = false;
             this.pb_More_Logo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_More_Logo_MouseDown);
             // 
+            // btn_News
+            // 
+            this.btn_News.Location = new System.Drawing.Point(240, 224);
+            this.btn_News.Name = "btn_News";
+            this.btn_News.Size = new System.Drawing.Size(131, 31);
+            this.btn_News.TabIndex = 0;
+            this.btn_News.TabStop = false;
+            this.btn_News.Text = "What\'s new?";
+            this.btn_News.UseVisualStyleBackColor = true;
+            this.btn_News.Click += new System.EventHandler(this.btn_News_Click);
+            // 
             // MoreForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -286,5 +299,6 @@ namespace MupenUtils
         private System.Windows.Forms.Label lbl_Github;
         private System.Windows.Forms.LinkLabel Llbl_More_ReportBug;
         private System.Windows.Forms.LinkLabel Llbl_More_FeatureSuggestIssue;
+        private System.Windows.Forms.Button btn_News;
     }
 }

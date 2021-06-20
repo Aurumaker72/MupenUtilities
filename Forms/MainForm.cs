@@ -364,7 +364,10 @@ namespace MupenUtils
                 dgv_Main.GridColor = Color.FromKnownColor(KnownColor.Black);
                 dgv_Main.ForeColor = Color.FromKnownColor(KnownColor.Black);
                 pb_JoystickPic.BackColor = Color.Transparent;
+                
             }
+            st_Status.Visible = !darkMode;
+
         }
         void ResetTitle()
         {
