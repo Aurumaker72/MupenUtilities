@@ -51,6 +51,9 @@ namespace MupenUtils
         STForm stForm = new STForm();
         static ExceptionForm exceptionForm = new ExceptionForm();
         InputStatsForm inputStatisticsForm = new InputStatsForm();
+
+        List<Color> ctlColor = new List<Color>();
+
         public static string Path, SavePath;
         public static bool FileLoaded = false;
         bool ExpandedMenu = false;
@@ -59,6 +62,7 @@ namespace MupenUtils
         bool loopInputs = true;
         bool forwardsPlayback = true;
         bool readOnly = true;
+        bool darkMode = false;
 
         /*TAS Studio*/
         public static int markedGoToFrame = 0;
@@ -292,6 +296,10 @@ namespace MupenUtils
             originalGroupboxLocation[2] = gpRom.Location;
             originalGroupboxLocation[3] = gp_Plugins.Location;
 
+            tsmi_DarkMode.Checked = Properties.Settings.Default.DarkMode;
+            darkMode = tsmi_DarkMode.Checked;
+            
+
 //#if DEBUG
             ctx_Input_Debug.Items.Add(new ToolStripSeparator());
             ToolStripMenuItem tsmi_DBG_Crash = new ToolStripMenuItem();
@@ -320,6 +328,42 @@ namespace MupenUtils
 
         #region UI
 
+        void SetDarkMode(bool flag)
+        {
+
+            if (flag)
+            {
+                this.ForAllControls(c =>
+                {
+                    if (c is GroupBox) c.BackColor = Color.Gray;
+                    if (c is CheckBox) c.Parent.BackColor = Color.Gray;
+                    if (c is Button) { Button b = c as Button; b.FlatStyle = FlatStyle.Flat; b.FlatAppearance.BorderSize = 0; b.BackColor = Color.DarkGray; }
+                    if (c is TextBox) c.BackColor = Color.DarkGray;
+
+                });
+                tr_MovieScrub.BackColor = Color.Gray;
+                this.BackColor = Color.Gray;
+                dgv_Main.BackgroundColor = Color.Gray;
+                dgv_Main.GridColor = Color.Black;
+                dgv_Main.ForeColor = Color.Black;
+            }
+            else
+            {
+                this.ForAllControls(c =>
+                {
+                    if (c is GroupBox) c.BackColor = Color.FromKnownColor(KnownColor.Control);
+                    if (c is CheckBox) c.Parent.BackColor = Color.FromKnownColor(KnownColor.Control);
+                    if (c is Button) {  Button b = c as Button; b.UseVisualStyleBackColor = true; b.FlatStyle = FlatStyle.Standard; b.FlatAppearance.BorderSize = 0; b.BackColor = Color.FromKnownColor(KnownColor.Control); }
+                    if (c is TextBox) c.BackColor = Color.FromKnownColor(KnownColor.Control);
+
+                });
+                tr_MovieScrub.BackColor = Color.FromKnownColor(KnownColor.Control);
+                this.BackColor = Color.FromKnownColor(KnownColor.Control);
+                dgv_Main.BackgroundColor = Color.FromKnownColor(KnownColor.Control);
+                dgv_Main.GridColor = Color.FromKnownColor(KnownColor.Black);
+                dgv_Main.ForeColor = Color.FromKnownColor(KnownColor.Black);
+            }
+        }
         void ResetTitle()
         {
             string bitarh;
@@ -349,14 +393,16 @@ namespace MupenUtils
 
         void EnableM64View(bool flag, bool change)
         {
+            
             Size s;
             ExpandedMenu = flag;
             if (change) FileLoaded = flag;
 
-
+            
             s = flag ? new Size(1320, 620) : new Size(100 + btn_Help.Location.X + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
+            this.SuspendLayout();
             btn_FrameBack.Enabled = FileLoaded;
             btn_FrameBack2.Enabled = FileLoaded;
             btn_FrameFront.Enabled = FileLoaded;
@@ -365,7 +411,7 @@ namespace MupenUtils
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
             txt_Frame.ReadOnly = !FileLoaded;
-            this.SuspendLayout();
+            
             this.MinimumSize = flag ? gp_M64.Size : new Size(1, 1);
             this.Size = s;
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
@@ -1842,6 +1888,16 @@ namespace MupenUtils
         {
             SetFrame(e.RowIndex+1);
         }
+
+        private void tsmi_DarkMode_Click(object sender, EventArgs e)
+        {
+            darkMode ^= true;
+            tsmi_DarkMode.Checked = darkMode;
+            Properties.Settings.Default.DarkMode = darkMode;
+            Properties.Settings.Default.Save();
+            SetDarkMode(darkMode);
+        }
+
 
         private void DrawJoystick(PaintEventArgs e)
         {
