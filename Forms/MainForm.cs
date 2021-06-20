@@ -996,7 +996,7 @@ namespace MupenUtils
 
         // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
 
-        void PreloadTASStudio()
+                void PreloadTASStudio()
         {
 
             // nuke data
@@ -1045,23 +1045,25 @@ namespace MupenUtils
                        //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
                        if (x < 16)
                        {
-                           if ((inputLists[selectedController][frame] & (int)Math.Pow(2, x)) != 0)
+                           if ((inputLists[selectedController][y] & (int)Math.Pow(2, x)) != 0)
                                cellValue = inputStructNames[x];
                        }
                        else
                        {
 
-                           byte[] data = BitConverter.GetBytes(inputLists[selectedController][frame]);
+                           byte[] data = BitConverter.GetBytes(inputLists[selectedController][y]);
+                           
                            if (x == 16)
                                cellValue = ((sbyte)data[2]).ToString();
                            else if (x == 17)
                                cellValue = ((sbyte)-data[3]).ToString();
                        }
                        dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
+                       
                    }
                }
+               gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
            }).Start();
-            gp_TASStudio.Text = "TAS Studio";
         }
 
 
