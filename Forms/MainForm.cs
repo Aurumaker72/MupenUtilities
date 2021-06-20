@@ -298,7 +298,7 @@ namespace MupenUtils
 
             tsmi_DarkMode.Checked = Properties.Settings.Default.DarkMode;
             darkMode = tsmi_DarkMode.Checked;
-            
+            if(darkMode) SetDarkMode(darkMode);
 
 //#if DEBUG
             ctx_Input_Debug.Items.Add(new ToolStripSeparator());
@@ -346,6 +346,7 @@ namespace MupenUtils
                 dgv_Main.BackgroundColor = Color.Gray;
                 dgv_Main.GridColor = Color.Black;
                 dgv_Main.ForeColor = Color.Black;
+                pb_JoystickPic.BackColor = Color.Transparent;
             }
             else
             {
@@ -362,6 +363,7 @@ namespace MupenUtils
                 dgv_Main.BackgroundColor = Color.FromKnownColor(KnownColor.Control);
                 dgv_Main.GridColor = Color.FromKnownColor(KnownColor.Black);
                 dgv_Main.ForeColor = Color.FromKnownColor(KnownColor.Black);
+                pb_JoystickPic.BackColor = Color.Transparent;
             }
         }
         void ResetTitle()
@@ -1904,10 +1906,10 @@ namespace MupenUtils
             e.Graphics.SmoothingMode = JOY_SmoothingMode;
 
             Pen linepen;
-            if (!readOnly)
-                linepen = new Pen(Color.Blue, 3);
-            else
-                linepen = new Pen(Color.Gray, 3);
+            if (readOnly) linepen = new Pen(Color.Gray, 3);
+            if(darkMode) linepen = new Pen(Color.Black, 3);
+            else linepen = new Pen(Color.Blue, 3);
+            if (darkMode) e.Graphics.FillRectangle(Brushes.Gray, pb_JoystickPic.ClientRectangle);
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
             if (lockType)
@@ -1925,19 +1927,41 @@ namespace MupenUtils
 
             if (!readOnly)
             {
-                e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-                e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+                if (darkMode)
+                {
+                    e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                    e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                    e.Graphics.FillEllipse(Brushes.Black, xy.X - 4, xy.Y - 4, 8, 8);
+                }
+                else
+                {
+                    e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                    e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                    e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+                }
             }
             else
             {
-                e.Graphics.DrawEllipse(Pens.Gray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                e.Graphics.DrawLine(Pens.Gray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                e.Graphics.DrawLine(Pens.Gray, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-                e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                e.Graphics.FillEllipse(Brushes.Gray, xy.X - 4, xy.Y - 4, 8, 8);
+                if (darkMode)
+                {
+                    e.Graphics.DrawEllipse(Pens.DarkGray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawLine(Pens.DarkGray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                    e.Graphics.DrawLine(Pens.DarkGray, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                    e.Graphics.FillEllipse(Brushes.DarkGray, xy.X - 4, xy.Y - 4, 8, 8);
+                }
+                else
+                {
+                    e.Graphics.DrawEllipse(Pens.Gray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawLine(Pens.Gray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                    e.Graphics.DrawLine(Pens.Gray, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                    e.Graphics.FillEllipse(Brushes.Gray, xy.X - 4, xy.Y - 4, 8, 8);
+                }
             }
             linepen.Dispose();
 
