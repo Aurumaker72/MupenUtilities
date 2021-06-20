@@ -38,6 +38,7 @@ namespace MupenUtils
             this.btn_Tips = new System.Windows.Forms.Button();
             this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.btn_Override = new System.Windows.Forms.Button();
+            this.rb_ReplacementSel = new System.Windows.Forms.RadioButton();
             this.rb_MUPSel = new System.Windows.Forms.RadioButton();
             this.rb_STsel = new System.Windows.Forms.RadioButton();
             this.rb_M64sel = new System.Windows.Forms.RadioButton();
@@ -129,8 +130,10 @@ namespace MupenUtils
             this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_GetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.inputStatisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
@@ -139,7 +142,6 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_LiveTasStudio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.rb_ReplacementSel = new System.Windows.Forms.RadioButton();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -250,6 +252,18 @@ namespace MupenUtils
             this.btn_Override.Text = "v";
             this.btn_Override.UseVisualStyleBackColor = true;
             this.btn_Override.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Override_MouseDown);
+            // 
+            // rb_ReplacementSel
+            // 
+            this.rb_ReplacementSel.AutoSize = true;
+            this.rb_ReplacementSel.Location = new System.Drawing.Point(186, 50);
+            this.rb_ReplacementSel.Margin = new System.Windows.Forms.Padding(4);
+            this.rb_ReplacementSel.Name = "rb_ReplacementSel";
+            this.rb_ReplacementSel.Size = new System.Drawing.Size(112, 21);
+            this.rb_ReplacementSel.TabIndex = 0;
+            this.rb_ReplacementSel.Text = "Replacement";
+            this.rb_ReplacementSel.UseVisualStyleBackColor = true;
+            this.rb_ReplacementSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_Replacementsel_MouseDown);
             // 
             // rb_MUPSel
             // 
@@ -881,6 +895,7 @@ namespace MupenUtils
             this.dgv_Main.RowTemplate.Height = 24;
             this.dgv_Main.Size = new System.Drawing.Size(358, 391);
             this.dgv_Main.TabIndex = 0;
+            this.dgv_Main.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_Main_CellMouseDown);
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
             this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_Main_KeyDown);
             this.dgv_Main.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_Main_MouseClick);
@@ -1287,13 +1302,15 @@ namespace MupenUtils
             this.tsmi_AAJoystick,
             this.tsmi_SimpleMode,
             this.toolStripSeparator2,
-            this.tsmi_Input_SetInput,
             this.tsmi_GetInput,
+            this.tsmi_Input_SetInput,
+            this.inputStatisticsToolStripMenuItem,
+            this.toolStripSeparator3,
             this.tsmi_Agressive,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 218);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 250);
             // 
             // tsmi_TasStudioAllow
             // 
@@ -1325,6 +1342,13 @@ namespace MupenUtils
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(208, 6);
             // 
+            // tsmi_GetInput
+            // 
+            this.tsmi_GetInput.Name = "tsmi_GetInput";
+            this.tsmi_GetInput.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_GetInput.Text = "Get Input";
+            this.tsmi_GetInput.Click += new System.EventHandler(this.tsmi_GetInput_Click);
+            // 
             // tsmi_Input_SetInput
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
@@ -1332,12 +1356,17 @@ namespace MupenUtils
             this.tsmi_Input_SetInput.Text = "Set Input";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
-            // tsmi_GetInput
+            // inputStatisticsToolStripMenuItem
             // 
-            this.tsmi_GetInput.Name = "tsmi_GetInput";
-            this.tsmi_GetInput.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_GetInput.Text = "Get Input";
-            this.tsmi_GetInput.Click += new System.EventHandler(this.tsmi_GetInput_Click);
+            this.inputStatisticsToolStripMenuItem.Name = "inputStatisticsToolStripMenuItem";
+            this.inputStatisticsToolStripMenuItem.Size = new System.Drawing.Size(211, 26);
+            this.inputStatisticsToolStripMenuItem.Text = "Input Statistics";
+            this.inputStatisticsToolStripMenuItem.Click += new System.EventHandler(this.inputStatisticsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(208, 6);
             // 
             // tsmi_Agressive
             // 
@@ -1400,18 +1429,6 @@ namespace MupenUtils
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
-            // 
-            // rb_ReplacementSel
-            // 
-            this.rb_ReplacementSel.AutoSize = true;
-            this.rb_ReplacementSel.Location = new System.Drawing.Point(186, 50);
-            this.rb_ReplacementSel.Margin = new System.Windows.Forms.Padding(4);
-            this.rb_ReplacementSel.Name = "rb_ReplacementSel";
-            this.rb_ReplacementSel.Size = new System.Drawing.Size(112, 21);
-            this.rb_ReplacementSel.TabIndex = 0;
-            this.rb_ReplacementSel.Text = "Replacement";
-            this.rb_ReplacementSel.UseVisualStyleBackColor = true;
-            this.rb_ReplacementSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_Replacementsel_MouseDown);
             // 
             // MainForm
             // 
@@ -1572,6 +1589,8 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_LiveTasStudio;
         private System.Windows.Forms.RadioButton rb_ReplacementSel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem inputStatisticsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

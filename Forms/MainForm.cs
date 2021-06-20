@@ -50,7 +50,7 @@ namespace MupenUtils
         MupenHookForm mupenHookForm = new MupenHookForm();
         STForm stForm = new STForm();
         static ExceptionForm exceptionForm = new ExceptionForm();
-
+        InputStatsForm inputStatisticsForm = new InputStatsForm();
         public static string Path, SavePath;
         public static bool FileLoaded = false;
         bool ExpandedMenu = false;
@@ -77,7 +77,7 @@ namespace MupenUtils
         Int32 UID;
         UInt32 VIs; // vis
         byte VI_s; // vi/s
-        UInt32 frames;
+        public static UInt32 frames;
         UInt32 RRs;
         byte Controllers;
         bool[] ControllersEnabled = { false, false, false, false };
@@ -721,15 +721,18 @@ namespace MupenUtils
                     }
 
 
-                    if (ControllersEnabled[0])
-                        inputListCtl1.Add(br.ReadInt32());
-                    if (ControllersEnabled[1])
-                        inputListCtl2.Add(br.ReadInt32());
-                    if (ControllersEnabled[2])
-                        inputListCtl3.Add(br.ReadInt32());
-                    if (ControllersEnabled[3])
-                        inputListCtl4.Add(br.ReadInt32());
-
+                    try
+                    {
+                        if (ControllersEnabled[0])
+                            inputListCtl1.Add(br.ReadInt32());
+                        if (ControllersEnabled[1])
+                            inputListCtl2.Add(br.ReadInt32());
+                        if (ControllersEnabled[2])
+                            inputListCtl3.Add(br.ReadInt32());
+                        if (ControllersEnabled[3])
+                            inputListCtl4.Add(br.ReadInt32());
+                    }
+                    catch { findx++; }
                     findx++;
                 }
             }
@@ -776,14 +779,10 @@ namespace MupenUtils
 
             EnableM64View_ThreadSafe(true);
 
-            if (Controllers > 4)
+            if (Controllers > 1)
             {
-                gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = false));
-                Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = false));
-                chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = false));
-                chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Invalid"));
-
                 lbl_Ctrls.ForeColor = Color.Red;
+                MessageBox.Show("Your movie has more than one controller plugged in. This might cause bugs and crashes.", PROGRAM_NAME + " - Too many controllers");
             }
             if (txt_RomCountry.Text.Contains("Unknown"))
                 lbl_RomCountry.ForeColor = Color.Red;
@@ -926,9 +925,6 @@ namespace MupenUtils
 
         void LoadST()
         {
-            // WIP...
-            // just decompress for now
-
             if (UsageType != UsageTypes.Any)
             {
                 string errReason = "";
@@ -996,7 +992,7 @@ namespace MupenUtils
 
         // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
 
-                void PreloadTASStudio()
+        void PreloadTASStudio()
         {
 
             // nuke data
@@ -1052,14 +1048,14 @@ namespace MupenUtils
                        {
 
                            byte[] data = BitConverter.GetBytes(inputLists[selectedController][y]);
-                           
+
                            if (x == 16)
                                cellValue = ((sbyte)data[2]).ToString();
                            else if (x == 17)
                                cellValue = ((sbyte)-data[3]).ToString();
                        }
                        dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
-                       
+
                    }
                }
                gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
@@ -1228,6 +1224,11 @@ namespace MupenUtils
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
+            if(UsageType != UsageTypes.M64 && UsageType != UsageTypes.ST)
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Move;
         }
 
@@ -1237,22 +1238,28 @@ namespace MupenUtils
             string file = files[0];
             if (files.Length > 1)
             {
-                MessageBox.Show("You are attempting to load more than one m64, picking first one from list...", PROGRAM_NAME + " - Too much data");
+                MessageBox.Show("You are attempting to load more than one file, picking first one from list...", PROGRAM_NAME + " - Too much data");
             }
 
             if (!ExtensionMethods.ValidPath(file))
             {
-                Debug.WriteLine("invalid path");return;
+                Debug.WriteLine("invalid path"); return;
             }
             Path = txt_Path.Text = file;
-
             Properties.Settings.Default.LastPath = Path;
             Properties.Settings.Default.Save();
 
-            if (rb_M64sel.Checked)
+            if (UsageType == UsageTypes.M64)
             {
-                m64load = new Thread(() => ReadM64());
-                m64load.Start();
+                if (rb_M64sel.Checked)
+                {
+                    m64load = new Thread(() => ReadM64());
+                    m64load.Start();
+                }
+            }
+            else if(UsageType == UsageTypes.ST)
+            {
+                LoadST();
             }
         }
 
@@ -1736,7 +1743,6 @@ namespace MupenUtils
 
         #endregion
 
-
         #region Joystick Behaviour
 
         private void InputChk_Changed(object sender, MouseEventArgs e)
@@ -1822,7 +1828,20 @@ namespace MupenUtils
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
-        
+        private void inputStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InputStatsForm.inputCtl1 = inputListCtl1;
+            InputStatsForm.inputCtl2 = inputListCtl2;
+            InputStatsForm.inputCtl3 = inputListCtl3;
+            InputStatsForm.inputCtl4 = inputListCtl4;
+
+            inputStatisticsForm.ShowDialog();
+        }
+
+        private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            SetFrame(e.RowIndex+1);
+        }
 
         private void DrawJoystick(PaintEventArgs e)
         {
