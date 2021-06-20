@@ -55,7 +55,7 @@ namespace MupenUtils
         public static bool FileLoaded = false;
         bool ExpandedMenu = false;
         bool Sticky = false;
-
+        bool liveTasStudio = true;
         bool loopInputs = true;
         bool forwardsPlayback = true;
         bool readOnly = true;
@@ -353,7 +353,7 @@ namespace MupenUtils
             if (change) FileLoaded = flag;
 
 
-            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + btn_Help.Width + 20, 150);
+            s = flag ? new Size(1320, 620) : new Size(360 + btn_Override.Width + btn_Help.Width + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_FrameBack.Enabled = FileLoaded;
@@ -386,7 +386,7 @@ namespace MupenUtils
             Size s;
             FileLoaded = flag;
             gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
-            s = flag ? new Size(1254, 590) : new Size(360 + btn_Override.Width + btn_Help.Width + 20, 150);
+            s = flag ? new Size(1320, 620) : new Size(360 + btn_Override.Width + btn_Help.Width + 20, 150);
             this.Invoke((MethodInvoker)(() => this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
             gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill));
             st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = flag));
@@ -1012,13 +1012,13 @@ namespace MupenUtils
             }
 
 
-            gp_TASStudio.Text = "TAS Studio - Loading " + inputListCtl1.Count + " samples";
+            gp_TASStudio.Text = "TAS Studio - Loading " + inputLists[selectedController].Count + " samples";
             // populate with input data (this is cringe and painful and slow i dont care)
             new Thread(() =>
            {
                while (dgv_Main.RecreatingHandle) ; // spin until handle is created
 
-               for (int y = 0; y < inputListCtl1.Count; y++)
+               for (int y = 0; y < inputLists[selectedController].Count; y++)
                {
                    // for each frame
                    dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Add()));
@@ -1035,13 +1035,13 @@ namespace MupenUtils
                        //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
                        if (x < 16)
                        {
-                           if ((inputListCtl1[y] & (int)Math.Pow(2, x)) != 0)
+                           if ((inputLists[selectedController][frame] & (int)Math.Pow(2, x)) != 0)
                                cellValue = inputStructNames[x];
                        }
                        else
                        {
 
-                           byte[] data = BitConverter.GetBytes(inputListCtl1[y]);
+                           byte[] data = BitConverter.GetBytes(inputLists[selectedController][frame]);
                            if (x == 16)
                                cellValue = ((sbyte)data[2]).ToString();
                            else if (x == 17)
@@ -1075,16 +1075,13 @@ namespace MupenUtils
             int value = 0XDD;
             try
             {
-                if (Sticky)
-                    value = lastValue;
-                else
-                    value = inputLists[selectedController][frame];
+                value = inputLists[selectedController][frame];
             } // get value at that frame. If this fails then m64 is corrupted 
-            catch
+            catch(IndexOutOfRangeException e)
             {
                 EnableM64View(false, false);
                 stepFrameTimer.Enabled = false;
-                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart. (Is your M64 corrupted?)", "M64 corrupted");
+                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart. (Is your M64 corrupted?)", PROGRAM_NAME + " - Fatal desync");
                 return;
             }
 
@@ -1101,6 +1098,43 @@ namespace MupenUtils
             lastValue = value;
             inputListCtl1[frame] = value;
             Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
+
+            // update tas studio
+                if (liveTasStudio)
+                {
+                    dgv_Main.ReadOnly = false;
+                    // workaround because windows controls are fucked
+
+                    for (int i = 0; i < inputStructNames.Length; i++)
+                    {
+                        string cellValue = "";
+
+                        if (i < 16)
+                        {
+                            
+                            if ((inputLists[selectedController][frame] & (int)Math.Pow(2, i)) != 0)
+                            cellValue = inputStructNames[i];
+
+                        }
+                        else
+                        {
+
+                            byte[] data = BitConverter.GetBytes(inputLists[selectedController][frame]);
+
+                            if (i == 16)
+                                cellValue = ((sbyte)data[2]).ToString();
+                            else if (i == 17)
+                                cellValue = ((sbyte)-data[3]).ToString();
+
+                            
+                        }
+
+                        dgv_Main.Rows[frame].Cells[i].Value = cellValue;
+                    }
+                    dgv_Main.ReadOnly = true;
+
+                }
+
             //GetInput(inputList[frame]); // also update visuals!
         }
         void GetInput(int value)
@@ -1676,6 +1710,12 @@ namespace MupenUtils
 
             }
         }
+        private void tsmi_LiveTasStudio_Click_1(object sender, EventArgs e)
+        {
+            liveTasStudio ^= true;
+            tsmi_LiveTasStudio.Checked = liveTasStudio;
+        }
+
         #endregion
 
 
@@ -1764,6 +1804,7 @@ namespace MupenUtils
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
+        
 
         private void DrawJoystick(PaintEventArgs e)
         {
