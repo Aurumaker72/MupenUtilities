@@ -171,7 +171,8 @@ namespace MupenUtils
             Any,
             M64,
             ST,
-            Mupen
+            Mupen,
+            Replacement
         };
         UsageTypes UsageType = UsageTypes.M64;
 
@@ -353,7 +354,7 @@ namespace MupenUtils
             if (change) FileLoaded = flag;
 
 
-            s = flag ? new Size(1320, 620) : new Size(360 + btn_Override.Width + btn_Help.Width + 20, 150);
+            s = flag ? new Size(1320, 620) : new Size(100 + btn_Help.Location.X + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_FrameBack.Enabled = FileLoaded;
@@ -386,7 +387,7 @@ namespace MupenUtils
             Size s;
             FileLoaded = flag;
             gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
-            s = flag ? new Size(1320, 620) : new Size(360 + btn_Override.Width + btn_Help.Width + 20, 150);
+            s = flag ? new Size(1320, 620) : new Size(100 + btn_Help.Location.X + 20, 150);
             this.Invoke((MethodInvoker)(() => this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
             gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill));
             st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = flag));
@@ -431,23 +432,32 @@ namespace MupenUtils
         void UpdateVisualsTop()
         {
             btn_LoadLatest.Enabled = true;
+            string txt = "?";
 
             switch (UsageType)
             {
                 case UsageTypes.Any:
-                    btn_PathSel.Text = "Browse Any";
+                    txt = "Browse Any";
                     btn_LoadLatest.Enabled = false;
                     break;
                 case UsageTypes.M64:
-                    btn_PathSel.Text = "Browse M64";
+                    txt = "Browse M64";
                     break;
                 case UsageTypes.ST:
-                    btn_PathSel.Text = "Browse ST";
+                    txt = "Browse ST";
                     break;
                 case UsageTypes.Mupen:
-                    btn_PathSel.Text = "Hook";
+                    txt = "Hook";
+                    btn_LoadLatest.Enabled = false;
                     break;
+                case UsageTypes.Replacement:
+                    txt = "Replacement";
+                    btn_LoadLatest.Enabled = false;
+                    break;
+
             }
+
+            btn_PathSel.Text = txt;
         }
 
         #endregion
@@ -1298,11 +1308,6 @@ namespace MupenUtils
 
         }
 
-        private void replacementToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            replacementForm.ShowDialog();
-        }
-
         private void MainForm_Focus(object sender, EventArgs e)
         {
             if (forceGoto)
@@ -1356,6 +1361,11 @@ namespace MupenUtils
                 MupenHook(); // skip dialog
                 return;
             }
+            if(UsageType == UsageTypes.Replacement)
+            {
+                replacementForm.ShowDialog();
+                return;
+            }
 
             object[] result = UIHelper.ShowFileDialog(UsageType);
             if ((string)result[0] == "FAIL" && (bool)result[1] == false)
@@ -1405,6 +1415,12 @@ namespace MupenUtils
             UsageType = UsageTypes.Mupen;
             UpdateVisualsTop();
         }
+        private void rb_Replacementsel_MouseDown(object sender, MouseEventArgs e)
+        {
+            UsageType = UsageTypes.Replacement;
+            UpdateVisualsTop();
+        }
+
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
             EnableM64View(!ExpandedMenu, false);

@@ -46,6 +46,48 @@ namespace MupenUtils
             this.st_Status1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.st_Status2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
+            this.gp_header = new System.Windows.Forms.GroupBox();
+            this.gp_User = new System.Windows.Forms.GroupBox();
+            this.txt_PathName = new System.Windows.Forms.TextBox();
+            this.lbl_Name = new System.Windows.Forms.Label();
+            this.txt_Desc = new System.Windows.Forms.TextBox();
+            this.lbl_Author = new System.Windows.Forms.Label();
+            this.txt_VIs = new System.Windows.Forms.TextBox();
+            this.lb_VIs = new System.Windows.Forms.Label();
+            this.txt_RR = new System.Windows.Forms.TextBox();
+            this.lbl_Desc = new System.Windows.Forms.Label();
+            this.lb_RR = new System.Windows.Forms.Label();
+            this.txt_Author = new System.Windows.Forms.TextBox();
+            this.btn_Savem64 = new System.Windows.Forms.Button();
+            this.gpRom = new System.Windows.Forms.GroupBox();
+            this.txt_Rom = new System.Windows.Forms.TextBox();
+            this.txt_Crc = new System.Windows.Forms.TextBox();
+            this.txt_RomCountry = new System.Windows.Forms.TextBox();
+            this.lbl_ROMNAME = new System.Windows.Forms.Label();
+            this.lbl_ROMCRC = new System.Windows.Forms.Label();
+            this.lbl_RomCountry = new System.Windows.Forms.Label();
+            this.gp_M64_misc = new System.Windows.Forms.GroupBox();
+            this.cbox_startType = new System.Windows.Forms.ComboBox();
+            this.txt_misc_UID = new System.Windows.Forms.TextBox();
+            this.txt_misc_Version = new System.Windows.Forms.TextBox();
+            this.txt_misc_Magic = new System.Windows.Forms.TextBox();
+            this.lbl_misc_uid = new System.Windows.Forms.Label();
+            this.lbl_misc_version = new System.Windows.Forms.Label();
+            this.lbl_misc_Magic = new System.Windows.Forms.Label();
+            this.txt_CTRLS = new System.Windows.Forms.TextBox();
+            this.lbl_Ctrls = new System.Windows.Forms.Label();
+            this.lbl_CtlFlags = new System.Windows.Forms.Label();
+            this.lb_starttype = new System.Windows.Forms.Label();
+            this.btn_CtlFlags = new System.Windows.Forms.Button();
+            this.gp_Plugins = new System.Windows.Forms.GroupBox();
+            this.lbl_Video = new System.Windows.Forms.Label();
+            this.txt_videoplugin = new System.Windows.Forms.TextBox();
+            this.lbl_RSP = new System.Windows.Forms.Label();
+            this.txt_inputplugin = new System.Windows.Forms.TextBox();
+            this.lbl_Audio = new System.Windows.Forms.Label();
+            this.txtbox_Audioplugin = new System.Windows.Forms.TextBox();
+            this.lbl_Input = new System.Windows.Forms.Label();
+            this.txt_Rsp = new System.Windows.Forms.TextBox();
             this.gp_input = new System.Windows.Forms.GroupBox();
             this.cbox_Controllers = new System.Windows.Forms.ComboBox();
             this.gp_TASStudio = new System.Windows.Forms.GroupBox();
@@ -83,8 +125,6 @@ namespace MupenUtils
             this.btn_FrameBack2 = new System.Windows.Forms.Button();
             this.btn_FrameBack = new System.Windows.Forms.Button();
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.replacementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_TasStudioAllow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,52 +137,17 @@ namespace MupenUtils
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
-            this.gp_header = new System.Windows.Forms.GroupBox();
-            this.gp_Plugins = new System.Windows.Forms.GroupBox();
-            this.txt_Rsp = new System.Windows.Forms.TextBox();
-            this.lbl_Input = new System.Windows.Forms.Label();
-            this.txtbox_Audioplugin = new System.Windows.Forms.TextBox();
-            this.lbl_Audio = new System.Windows.Forms.Label();
-            this.txt_inputplugin = new System.Windows.Forms.TextBox();
-            this.lbl_RSP = new System.Windows.Forms.Label();
-            this.txt_videoplugin = new System.Windows.Forms.TextBox();
-            this.lbl_Video = new System.Windows.Forms.Label();
-            this.gp_M64_misc = new System.Windows.Forms.GroupBox();
-            this.btn_CtlFlags = new System.Windows.Forms.Button();
-            this.lb_starttype = new System.Windows.Forms.Label();
-            this.lbl_CtlFlags = new System.Windows.Forms.Label();
-            this.lbl_Ctrls = new System.Windows.Forms.Label();
-            this.txt_CTRLS = new System.Windows.Forms.TextBox();
-            this.lbl_misc_Magic = new System.Windows.Forms.Label();
-            this.lbl_misc_version = new System.Windows.Forms.Label();
-            this.lbl_misc_uid = new System.Windows.Forms.Label();
-            this.txt_misc_Magic = new System.Windows.Forms.TextBox();
-            this.txt_misc_Version = new System.Windows.Forms.TextBox();
-            this.txt_misc_UID = new System.Windows.Forms.TextBox();
-            this.cbox_startType = new System.Windows.Forms.ComboBox();
-            this.gpRom = new System.Windows.Forms.GroupBox();
-            this.lbl_RomCountry = new System.Windows.Forms.Label();
-            this.lbl_ROMCRC = new System.Windows.Forms.Label();
-            this.lbl_ROMNAME = new System.Windows.Forms.Label();
-            this.txt_RomCountry = new System.Windows.Forms.TextBox();
-            this.txt_Crc = new System.Windows.Forms.TextBox();
-            this.txt_Rom = new System.Windows.Forms.TextBox();
-            this.btn_Savem64 = new System.Windows.Forms.Button();
-            this.gp_User = new System.Windows.Forms.GroupBox();
-            this.txt_Author = new System.Windows.Forms.TextBox();
-            this.lb_RR = new System.Windows.Forms.Label();
-            this.lbl_Desc = new System.Windows.Forms.Label();
-            this.txt_RR = new System.Windows.Forms.TextBox();
-            this.lb_VIs = new System.Windows.Forms.Label();
-            this.txt_VIs = new System.Windows.Forms.TextBox();
-            this.lbl_Author = new System.Windows.Forms.Label();
-            this.txt_Desc = new System.Windows.Forms.TextBox();
-            this.lbl_Name = new System.Windows.Forms.Label();
-            this.txt_PathName = new System.Windows.Forms.TextBox();
             this.tsmi_LiveTasStudio = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.rb_ReplacementSel = new System.Windows.Forms.RadioButton();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
+            this.gp_header.SuspendLayout();
+            this.gp_User.SuspendLayout();
+            this.gpRom.SuspendLayout();
+            this.gp_M64_misc.SuspendLayout();
+            this.gp_Plugins.SuspendLayout();
             this.gp_input.SuspendLayout();
             this.gp_TASStudio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
@@ -150,16 +155,11 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
-            this.gp_header.SuspendLayout();
-            this.gp_Plugins.SuspendLayout();
-            this.gp_M64_misc.SuspendLayout();
-            this.gpRom.SuspendLayout();
-            this.gp_User.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
             // 
-            this.btn_PathSel.Location = new System.Drawing.Point(288, 16);
+            this.btn_PathSel.Location = new System.Drawing.Point(402, 16);
             this.btn_PathSel.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PathSel.Name = "btn_PathSel";
             this.btn_PathSel.Size = new System.Drawing.Size(100, 28);
@@ -175,7 +175,7 @@ namespace MupenUtils
             this.txt_Path.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Path.Name = "txt_Path";
             this.txt_Path.ReadOnly = true;
-            this.txt_Path.Size = new System.Drawing.Size(271, 22);
+            this.txt_Path.Size = new System.Drawing.Size(385, 22);
             this.txt_Path.TabIndex = 0;
             this.txt_Path.TabStop = false;
             // 
@@ -185,6 +185,7 @@ namespace MupenUtils
             this.gp_Path.Controls.Add(this.btn_Tips);
             this.gp_Path.Controls.Add(this.chk_readonly);
             this.gp_Path.Controls.Add(this.btn_Override);
+            this.gp_Path.Controls.Add(this.rb_ReplacementSel);
             this.gp_Path.Controls.Add(this.rb_MUPSel);
             this.gp_Path.Controls.Add(this.rb_STsel);
             this.gp_Path.Controls.Add(this.rb_M64sel);
@@ -203,7 +204,7 @@ namespace MupenUtils
             // 
             // btn_Help
             // 
-            this.btn_Help.Location = new System.Drawing.Point(390, 45);
+            this.btn_Help.Location = new System.Drawing.Point(504, 45);
             this.btn_Help.Name = "btn_Help";
             this.btn_Help.Size = new System.Drawing.Size(55, 28);
             this.btn_Help.TabIndex = 0;
@@ -215,7 +216,7 @@ namespace MupenUtils
             // 
             // btn_Tips
             // 
-            this.btn_Tips.Location = new System.Drawing.Point(390, 16);
+            this.btn_Tips.Location = new System.Drawing.Point(504, 16);
             this.btn_Tips.Name = "btn_Tips";
             this.btn_Tips.Size = new System.Drawing.Size(55, 28);
             this.btn_Tips.TabIndex = 0;
@@ -229,7 +230,7 @@ namespace MupenUtils
             this.chk_readonly.AutoSize = true;
             this.chk_readonly.Checked = true;
             this.chk_readonly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_readonly.Location = new System.Drawing.Point(186, 50);
+            this.chk_readonly.Location = new System.Drawing.Point(300, 50);
             this.chk_readonly.Name = "chk_readonly";
             this.chk_readonly.Size = new System.Drawing.Size(95, 21);
             this.chk_readonly.TabIndex = 0;
@@ -240,7 +241,7 @@ namespace MupenUtils
             // 
             // btn_Override
             // 
-            this.btn_Override.Location = new System.Drawing.Point(352, 45);
+            this.btn_Override.Location = new System.Drawing.Point(466, 45);
             this.btn_Override.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Override.Name = "btn_Override";
             this.btn_Override.Size = new System.Drawing.Size(36, 28);
@@ -288,7 +289,7 @@ namespace MupenUtils
             // 
             // btn_LoadLatest
             // 
-            this.btn_LoadLatest.Location = new System.Drawing.Point(288, 45);
+            this.btn_LoadLatest.Location = new System.Drawing.Point(402, 45);
             this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
             this.btn_LoadLatest.Name = "btn_LoadLatest";
             this.btn_LoadLatest.Size = new System.Drawing.Size(62, 28);
@@ -337,6 +338,468 @@ namespace MupenUtils
             this.gp_M64.TabIndex = 0;
             this.gp_M64.TabStop = false;
             this.gp_M64.Text = "M64";
+            // 
+            // gp_header
+            // 
+            this.gp_header.Controls.Add(this.gp_User);
+            this.gp_header.Controls.Add(this.btn_Savem64);
+            this.gp_header.Controls.Add(this.gpRom);
+            this.gp_header.Controls.Add(this.gp_M64_misc);
+            this.gp_header.Controls.Add(this.gp_Plugins);
+            this.gp_header.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gp_header.Location = new System.Drawing.Point(4, 19);
+            this.gp_header.Name = "gp_header";
+            this.gp_header.Size = new System.Drawing.Size(554, 435);
+            this.gp_header.TabIndex = 0;
+            this.gp_header.TabStop = false;
+            this.gp_header.Text = "Header";
+            // 
+            // gp_User
+            // 
+            this.gp_User.Controls.Add(this.txt_PathName);
+            this.gp_User.Controls.Add(this.lbl_Name);
+            this.gp_User.Controls.Add(this.txt_Desc);
+            this.gp_User.Controls.Add(this.lbl_Author);
+            this.gp_User.Controls.Add(this.txt_VIs);
+            this.gp_User.Controls.Add(this.lb_VIs);
+            this.gp_User.Controls.Add(this.txt_RR);
+            this.gp_User.Controls.Add(this.lbl_Desc);
+            this.gp_User.Controls.Add(this.lb_RR);
+            this.gp_User.Controls.Add(this.txt_Author);
+            this.gp_User.Location = new System.Drawing.Point(6, 30);
+            this.gp_User.Margin = new System.Windows.Forms.Padding(4);
+            this.gp_User.Name = "gp_User";
+            this.gp_User.Padding = new System.Windows.Forms.Padding(4);
+            this.gp_User.Size = new System.Drawing.Size(267, 216);
+            this.gp_User.TabIndex = 0;
+            this.gp_User.TabStop = false;
+            this.gp_User.Text = "Specific";
+            // 
+            // txt_PathName
+            // 
+            this.txt_PathName.Location = new System.Drawing.Point(128, 30);
+            this.txt_PathName.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PathName.Name = "txt_PathName";
+            this.txt_PathName.Size = new System.Drawing.Size(132, 22);
+            this.txt_PathName.TabIndex = 0;
+            this.txt_PathName.TabStop = false;
+            // 
+            // lbl_Name
+            // 
+            this.lbl_Name.AutoSize = true;
+            this.lbl_Name.Location = new System.Drawing.Point(11, 30);
+            this.lbl_Name.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Name.Name = "lbl_Name";
+            this.lbl_Name.Size = new System.Drawing.Size(45, 17);
+            this.lbl_Name.TabIndex = 0;
+            this.lbl_Name.Text = "Name";
+            // 
+            // txt_Desc
+            // 
+            this.txt_Desc.Location = new System.Drawing.Point(128, 89);
+            this.txt_Desc.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_Desc.Name = "txt_Desc";
+            this.txt_Desc.Size = new System.Drawing.Size(132, 22);
+            this.txt_Desc.TabIndex = 0;
+            this.txt_Desc.TabStop = false;
+            // 
+            // lbl_Author
+            // 
+            this.lbl_Author.AutoSize = true;
+            this.lbl_Author.Location = new System.Drawing.Point(11, 59);
+            this.lbl_Author.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Author.Name = "lbl_Author";
+            this.lbl_Author.Size = new System.Drawing.Size(50, 17);
+            this.lbl_Author.TabIndex = 0;
+            this.lbl_Author.Text = "Author";
+            // 
+            // txt_VIs
+            // 
+            this.txt_VIs.Location = new System.Drawing.Point(128, 148);
+            this.txt_VIs.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_VIs.Name = "txt_VIs";
+            this.txt_VIs.Size = new System.Drawing.Size(132, 22);
+            this.txt_VIs.TabIndex = 0;
+            this.txt_VIs.TabStop = false;
+            this.txt_VIs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
+            // 
+            // lb_VIs
+            // 
+            this.lb_VIs.AutoSize = true;
+            this.lb_VIs.Location = new System.Drawing.Point(10, 150);
+            this.lb_VIs.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_VIs.Name = "lb_VIs";
+            this.lb_VIs.Size = new System.Drawing.Size(27, 17);
+            this.lb_VIs.TabIndex = 0;
+            this.lb_VIs.Text = "VIs";
+            // 
+            // txt_RR
+            // 
+            this.txt_RR.Location = new System.Drawing.Point(128, 118);
+            this.txt_RR.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_RR.Name = "txt_RR";
+            this.txt_RR.Size = new System.Drawing.Size(132, 22);
+            this.txt_RR.TabIndex = 0;
+            this.txt_RR.TabStop = false;
+            this.txt_RR.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
+            // 
+            // lbl_Desc
+            // 
+            this.lbl_Desc.AutoSize = true;
+            this.lbl_Desc.Location = new System.Drawing.Point(11, 89);
+            this.lbl_Desc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Desc.Name = "lbl_Desc";
+            this.lbl_Desc.Size = new System.Drawing.Size(79, 17);
+            this.lbl_Desc.TabIndex = 0;
+            this.lbl_Desc.Text = "Description";
+            // 
+            // lb_RR
+            // 
+            this.lb_RR.AutoSize = true;
+            this.lb_RR.Location = new System.Drawing.Point(10, 120);
+            this.lb_RR.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_RR.Name = "lb_RR";
+            this.lb_RR.Size = new System.Drawing.Size(74, 17);
+            this.lb_RR.TabIndex = 0;
+            this.lb_RR.Text = "Rerecords";
+            // 
+            // txt_Author
+            // 
+            this.txt_Author.Location = new System.Drawing.Point(128, 59);
+            this.txt_Author.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_Author.Name = "txt_Author";
+            this.txt_Author.Size = new System.Drawing.Size(132, 22);
+            this.txt_Author.TabIndex = 0;
+            this.txt_Author.TabStop = false;
+            // 
+            // btn_Savem64
+            // 
+            this.btn_Savem64.Location = new System.Drawing.Point(6, 390);
+            this.btn_Savem64.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Savem64.Name = "btn_Savem64";
+            this.btn_Savem64.Size = new System.Drawing.Size(270, 28);
+            this.btn_Savem64.TabIndex = 0;
+            this.btn_Savem64.TabStop = false;
+            this.btn_Savem64.Text = "Save M64";
+            this.btn_Savem64.UseVisualStyleBackColor = true;
+            this.btn_Savem64.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Savem64_MouseClick);
+            // 
+            // gpRom
+            // 
+            this.gpRom.Controls.Add(this.txt_Rom);
+            this.gpRom.Controls.Add(this.txt_Crc);
+            this.gpRom.Controls.Add(this.txt_RomCountry);
+            this.gpRom.Controls.Add(this.lbl_ROMNAME);
+            this.gpRom.Controls.Add(this.lbl_ROMCRC);
+            this.gpRom.Controls.Add(this.lbl_RomCountry);
+            this.gpRom.Location = new System.Drawing.Point(6, 246);
+            this.gpRom.Margin = new System.Windows.Forms.Padding(4);
+            this.gpRom.Name = "gpRom";
+            this.gpRom.Padding = new System.Windows.Forms.Padding(4);
+            this.gpRom.Size = new System.Drawing.Size(267, 140);
+            this.gpRom.TabIndex = 0;
+            this.gpRom.TabStop = false;
+            this.gpRom.Text = "ROM";
+            // 
+            // txt_Rom
+            // 
+            this.txt_Rom.Location = new System.Drawing.Point(128, 20);
+            this.txt_Rom.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_Rom.Name = "txt_Rom";
+            this.txt_Rom.Size = new System.Drawing.Size(132, 22);
+            this.txt_Rom.TabIndex = 0;
+            this.txt_Rom.TabStop = false;
+            // 
+            // txt_Crc
+            // 
+            this.txt_Crc.Location = new System.Drawing.Point(128, 49);
+            this.txt_Crc.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_Crc.Name = "txt_Crc";
+            this.txt_Crc.ReadOnly = true;
+            this.txt_Crc.Size = new System.Drawing.Size(132, 22);
+            this.txt_Crc.TabIndex = 0;
+            this.txt_Crc.TabStop = false;
+            // 
+            // txt_RomCountry
+            // 
+            this.txt_RomCountry.Location = new System.Drawing.Point(128, 79);
+            this.txt_RomCountry.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_RomCountry.Name = "txt_RomCountry";
+            this.txt_RomCountry.ReadOnly = true;
+            this.txt_RomCountry.Size = new System.Drawing.Size(132, 22);
+            this.txt_RomCountry.TabIndex = 0;
+            this.txt_RomCountry.TabStop = false;
+            // 
+            // lbl_ROMNAME
+            // 
+            this.lbl_ROMNAME.AutoSize = true;
+            this.lbl_ROMNAME.Location = new System.Drawing.Point(10, 25);
+            this.lbl_ROMNAME.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_ROMNAME.Name = "lbl_ROMNAME";
+            this.lbl_ROMNAME.Size = new System.Drawing.Size(81, 17);
+            this.lbl_ROMNAME.TabIndex = 0;
+            this.lbl_ROMNAME.Text = "ROM Name";
+            // 
+            // lbl_ROMCRC
+            // 
+            this.lbl_ROMCRC.AutoSize = true;
+            this.lbl_ROMCRC.Location = new System.Drawing.Point(10, 54);
+            this.lbl_ROMCRC.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_ROMCRC.Name = "lbl_ROMCRC";
+            this.lbl_ROMCRC.Size = new System.Drawing.Size(72, 17);
+            this.lbl_ROMCRC.TabIndex = 0;
+            this.lbl_ROMCRC.Text = "ROM CRC";
+            // 
+            // lbl_RomCountry
+            // 
+            this.lbl_RomCountry.AutoSize = true;
+            this.lbl_RomCountry.Location = new System.Drawing.Point(10, 84);
+            this.lbl_RomCountry.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_RomCountry.Name = "lbl_RomCountry";
+            this.lbl_RomCountry.Size = new System.Drawing.Size(93, 17);
+            this.lbl_RomCountry.TabIndex = 0;
+            this.lbl_RomCountry.Text = "ROM Country";
+            // 
+            // gp_M64_misc
+            // 
+            this.gp_M64_misc.Controls.Add(this.cbox_startType);
+            this.gp_M64_misc.Controls.Add(this.txt_misc_UID);
+            this.gp_M64_misc.Controls.Add(this.txt_misc_Version);
+            this.gp_M64_misc.Controls.Add(this.txt_misc_Magic);
+            this.gp_M64_misc.Controls.Add(this.lbl_misc_uid);
+            this.gp_M64_misc.Controls.Add(this.lbl_misc_version);
+            this.gp_M64_misc.Controls.Add(this.lbl_misc_Magic);
+            this.gp_M64_misc.Controls.Add(this.txt_CTRLS);
+            this.gp_M64_misc.Controls.Add(this.lbl_Ctrls);
+            this.gp_M64_misc.Controls.Add(this.lbl_CtlFlags);
+            this.gp_M64_misc.Controls.Add(this.lb_starttype);
+            this.gp_M64_misc.Controls.Add(this.btn_CtlFlags);
+            this.gp_M64_misc.Location = new System.Drawing.Point(275, 30);
+            this.gp_M64_misc.Margin = new System.Windows.Forms.Padding(4);
+            this.gp_M64_misc.Name = "gp_M64_misc";
+            this.gp_M64_misc.Padding = new System.Windows.Forms.Padding(4);
+            this.gp_M64_misc.Size = new System.Drawing.Size(267, 216);
+            this.gp_M64_misc.TabIndex = 0;
+            this.gp_M64_misc.TabStop = false;
+            this.gp_M64_misc.Text = "Miscellaneous";
+            // 
+            // cbox_startType
+            // 
+            this.cbox_startType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox_startType.FormattingEnabled = true;
+            this.cbox_startType.Location = new System.Drawing.Point(117, 145);
+            this.cbox_startType.Name = "cbox_startType";
+            this.cbox_startType.Size = new System.Drawing.Size(132, 24);
+            this.cbox_startType.TabIndex = 1;
+            // 
+            // txt_misc_UID
+            // 
+            this.txt_misc_UID.Location = new System.Drawing.Point(117, 89);
+            this.txt_misc_UID.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_misc_UID.Name = "txt_misc_UID";
+            this.txt_misc_UID.ReadOnly = true;
+            this.txt_misc_UID.Size = new System.Drawing.Size(132, 22);
+            this.txt_misc_UID.TabIndex = 0;
+            this.txt_misc_UID.TabStop = false;
+            this.txt_misc_UID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
+            // 
+            // txt_misc_Version
+            // 
+            this.txt_misc_Version.Location = new System.Drawing.Point(117, 59);
+            this.txt_misc_Version.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_misc_Version.Name = "txt_misc_Version";
+            this.txt_misc_Version.ReadOnly = true;
+            this.txt_misc_Version.Size = new System.Drawing.Size(132, 22);
+            this.txt_misc_Version.TabIndex = 0;
+            this.txt_misc_Version.TabStop = false;
+            this.txt_misc_Version.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
+            // 
+            // txt_misc_Magic
+            // 
+            this.txt_misc_Magic.Location = new System.Drawing.Point(117, 30);
+            this.txt_misc_Magic.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_misc_Magic.Name = "txt_misc_Magic";
+            this.txt_misc_Magic.ReadOnly = true;
+            this.txt_misc_Magic.Size = new System.Drawing.Size(132, 22);
+            this.txt_misc_Magic.TabIndex = 0;
+            this.txt_misc_Magic.TabStop = false;
+            this.txt_misc_Magic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
+            // 
+            // lbl_misc_uid
+            // 
+            this.lbl_misc_uid.AutoSize = true;
+            this.lbl_misc_uid.Location = new System.Drawing.Point(21, 89);
+            this.lbl_misc_uid.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_misc_uid.Name = "lbl_misc_uid";
+            this.lbl_misc_uid.Size = new System.Drawing.Size(31, 17);
+            this.lbl_misc_uid.TabIndex = 0;
+            this.lbl_misc_uid.Text = "UID";
+            // 
+            // lbl_misc_version
+            // 
+            this.lbl_misc_version.AutoSize = true;
+            this.lbl_misc_version.Location = new System.Drawing.Point(21, 59);
+            this.lbl_misc_version.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_misc_version.Name = "lbl_misc_version";
+            this.lbl_misc_version.Size = new System.Drawing.Size(56, 17);
+            this.lbl_misc_version.TabIndex = 0;
+            this.lbl_misc_version.Text = "Version";
+            // 
+            // lbl_misc_Magic
+            // 
+            this.lbl_misc_Magic.AutoSize = true;
+            this.lbl_misc_Magic.Location = new System.Drawing.Point(21, 30);
+            this.lbl_misc_Magic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_misc_Magic.Name = "lbl_misc_Magic";
+            this.lbl_misc_Magic.Size = new System.Drawing.Size(45, 17);
+            this.lbl_misc_Magic.TabIndex = 0;
+            this.lbl_misc_Magic.Text = "Magic";
+            // 
+            // txt_CTRLS
+            // 
+            this.txt_CTRLS.Location = new System.Drawing.Point(117, 118);
+            this.txt_CTRLS.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_CTRLS.Name = "txt_CTRLS";
+            this.txt_CTRLS.Size = new System.Drawing.Size(132, 22);
+            this.txt_CTRLS.TabIndex = 0;
+            this.txt_CTRLS.TabStop = false;
+            this.txt_CTRLS.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
+            // 
+            // lbl_Ctrls
+            // 
+            this.lbl_Ctrls.AutoSize = true;
+            this.lbl_Ctrls.Location = new System.Drawing.Point(21, 118);
+            this.lbl_Ctrls.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Ctrls.Name = "lbl_Ctrls";
+            this.lbl_Ctrls.Size = new System.Drawing.Size(76, 17);
+            this.lbl_Ctrls.TabIndex = 0;
+            this.lbl_Ctrls.Text = "Controllers";
+            // 
+            // lbl_CtlFlags
+            // 
+            this.lbl_CtlFlags.AutoSize = true;
+            this.lbl_CtlFlags.Location = new System.Drawing.Point(22, 179);
+            this.lbl_CtlFlags.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_CtlFlags.Name = "lbl_CtlFlags";
+            this.lbl_CtlFlags.Size = new System.Drawing.Size(69, 17);
+            this.lbl_CtlFlags.TabIndex = 0;
+            this.lbl_CtlFlags.Text = "Controller";
+            // 
+            // lb_starttype
+            // 
+            this.lb_starttype.AutoSize = true;
+            this.lb_starttype.Location = new System.Drawing.Point(21, 148);
+            this.lb_starttype.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_starttype.Name = "lb_starttype";
+            this.lb_starttype.Size = new System.Drawing.Size(74, 17);
+            this.lb_starttype.TabIndex = 0;
+            this.lb_starttype.Text = "Start Type";
+            // 
+            // btn_CtlFlags
+            // 
+            this.btn_CtlFlags.Location = new System.Drawing.Point(117, 174);
+            this.btn_CtlFlags.Name = "btn_CtlFlags";
+            this.btn_CtlFlags.Size = new System.Drawing.Size(132, 24);
+            this.btn_CtlFlags.TabIndex = 0;
+            this.btn_CtlFlags.TabStop = false;
+            this.btn_CtlFlags.Text = "Edit";
+            this.btn_CtlFlags.UseVisualStyleBackColor = true;
+            this.btn_CtlFlags.Click += new System.EventHandler(this.btn_CtlFlags_Click);
+            // 
+            // gp_Plugins
+            // 
+            this.gp_Plugins.Controls.Add(this.lbl_Video);
+            this.gp_Plugins.Controls.Add(this.txt_videoplugin);
+            this.gp_Plugins.Controls.Add(this.lbl_RSP);
+            this.gp_Plugins.Controls.Add(this.txt_inputplugin);
+            this.gp_Plugins.Controls.Add(this.lbl_Audio);
+            this.gp_Plugins.Controls.Add(this.txtbox_Audioplugin);
+            this.gp_Plugins.Controls.Add(this.lbl_Input);
+            this.gp_Plugins.Controls.Add(this.txt_Rsp);
+            this.gp_Plugins.Location = new System.Drawing.Point(275, 246);
+            this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
+            this.gp_Plugins.Name = "gp_Plugins";
+            this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
+            this.gp_Plugins.Size = new System.Drawing.Size(267, 140);
+            this.gp_Plugins.TabIndex = 0;
+            this.gp_Plugins.TabStop = false;
+            this.gp_Plugins.Text = "Plugins";
+            // 
+            // lbl_Video
+            // 
+            this.lbl_Video.AutoSize = true;
+            this.lbl_Video.Location = new System.Drawing.Point(11, 20);
+            this.lbl_Video.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Video.Name = "lbl_Video";
+            this.lbl_Video.Size = new System.Drawing.Size(48, 17);
+            this.lbl_Video.TabIndex = 0;
+            this.lbl_Video.Text = "Video ";
+            // 
+            // txt_videoplugin
+            // 
+            this.txt_videoplugin.Location = new System.Drawing.Point(128, 10);
+            this.txt_videoplugin.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_videoplugin.Name = "txt_videoplugin";
+            this.txt_videoplugin.Size = new System.Drawing.Size(132, 22);
+            this.txt_videoplugin.TabIndex = 0;
+            this.txt_videoplugin.TabStop = false;
+            // 
+            // lbl_RSP
+            // 
+            this.lbl_RSP.AutoSize = true;
+            this.lbl_RSP.Location = new System.Drawing.Point(11, 108);
+            this.lbl_RSP.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_RSP.Name = "lbl_RSP";
+            this.lbl_RSP.Size = new System.Drawing.Size(36, 17);
+            this.lbl_RSP.TabIndex = 0;
+            this.lbl_RSP.Text = "RSP";
+            // 
+            // txt_inputplugin
+            // 
+            this.txt_inputplugin.Location = new System.Drawing.Point(128, 39);
+            this.txt_inputplugin.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_inputplugin.Name = "txt_inputplugin";
+            this.txt_inputplugin.Size = new System.Drawing.Size(132, 22);
+            this.txt_inputplugin.TabIndex = 0;
+            this.txt_inputplugin.TabStop = false;
+            // 
+            // lbl_Audio
+            // 
+            this.lbl_Audio.AutoSize = true;
+            this.lbl_Audio.Location = new System.Drawing.Point(11, 79);
+            this.lbl_Audio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Audio.Name = "lbl_Audio";
+            this.lbl_Audio.Size = new System.Drawing.Size(44, 17);
+            this.lbl_Audio.TabIndex = 0;
+            this.lbl_Audio.Text = "Audio";
+            // 
+            // txtbox_Audioplugin
+            // 
+            this.txtbox_Audioplugin.Location = new System.Drawing.Point(128, 69);
+            this.txtbox_Audioplugin.Margin = new System.Windows.Forms.Padding(4);
+            this.txtbox_Audioplugin.Name = "txtbox_Audioplugin";
+            this.txtbox_Audioplugin.Size = new System.Drawing.Size(132, 22);
+            this.txtbox_Audioplugin.TabIndex = 0;
+            this.txtbox_Audioplugin.TabStop = false;
+            // 
+            // lbl_Input
+            // 
+            this.lbl_Input.AutoSize = true;
+            this.lbl_Input.Location = new System.Drawing.Point(11, 49);
+            this.lbl_Input.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Input.Name = "lbl_Input";
+            this.lbl_Input.Size = new System.Drawing.Size(39, 17);
+            this.lbl_Input.TabIndex = 0;
+            this.lbl_Input.Text = "Input";
+            // 
+            // txt_Rsp
+            // 
+            this.txt_Rsp.Location = new System.Drawing.Point(128, 98);
+            this.txt_Rsp.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_Rsp.Name = "txt_Rsp";
+            this.txt_Rsp.Size = new System.Drawing.Size(132, 22);
+            this.txt_Rsp.TabIndex = 0;
+            this.txt_Rsp.TabStop = false;
             // 
             // gp_input
             // 
@@ -820,8 +1283,6 @@ namespace MupenUtils
             // 
             this.ctx_Input_Debug.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.replacementToolStripMenuItem,
-            this.toolStripSeparator1,
             this.tsmi_TasStudioAllow,
             this.tsmi_AAJoystick,
             this.tsmi_SimpleMode,
@@ -832,19 +1293,7 @@ namespace MupenUtils
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 250);
-            // 
-            // replacementToolStripMenuItem
-            // 
-            this.replacementToolStripMenuItem.Name = "replacementToolStripMenuItem";
-            this.replacementToolStripMenuItem.Size = new System.Drawing.Size(211, 26);
-            this.replacementToolStripMenuItem.Text = "Replacement";
-            this.replacementToolStripMenuItem.Click += new System.EventHandler(this.replacementToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 218);
             // 
             // tsmi_TasStudioAllow
             // 
@@ -922,492 +1371,47 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big,
             this.tsmi_LiveTasStudio});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(211, 110);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(181, 82);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // tsmi_TasStudio_Big
             // 
             this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
-            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(142, 24);
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(180, 26);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
-            // 
-            // gp_header
-            // 
-            this.gp_header.Controls.Add(this.gp_User);
-            this.gp_header.Controls.Add(this.btn_Savem64);
-            this.gp_header.Controls.Add(this.gpRom);
-            this.gp_header.Controls.Add(this.gp_M64_misc);
-            this.gp_header.Controls.Add(this.gp_Plugins);
-            this.gp_header.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gp_header.Location = new System.Drawing.Point(4, 19);
-            this.gp_header.Name = "gp_header";
-            this.gp_header.Size = new System.Drawing.Size(554, 435);
-            this.gp_header.TabIndex = 0;
-            this.gp_header.TabStop = false;
-            this.gp_header.Text = "Header";
-            // 
-            // gp_Plugins
-            // 
-            this.gp_Plugins.Controls.Add(this.lbl_Video);
-            this.gp_Plugins.Controls.Add(this.txt_videoplugin);
-            this.gp_Plugins.Controls.Add(this.lbl_RSP);
-            this.gp_Plugins.Controls.Add(this.txt_inputplugin);
-            this.gp_Plugins.Controls.Add(this.lbl_Audio);
-            this.gp_Plugins.Controls.Add(this.txtbox_Audioplugin);
-            this.gp_Plugins.Controls.Add(this.lbl_Input);
-            this.gp_Plugins.Controls.Add(this.txt_Rsp);
-            this.gp_Plugins.Location = new System.Drawing.Point(275, 246);
-            this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
-            this.gp_Plugins.Name = "gp_Plugins";
-            this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_Plugins.Size = new System.Drawing.Size(267, 140);
-            this.gp_Plugins.TabIndex = 0;
-            this.gp_Plugins.TabStop = false;
-            this.gp_Plugins.Text = "Plugins";
-            // 
-            // txt_Rsp
-            // 
-            this.txt_Rsp.Location = new System.Drawing.Point(128, 98);
-            this.txt_Rsp.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_Rsp.Name = "txt_Rsp";
-            this.txt_Rsp.Size = new System.Drawing.Size(132, 22);
-            this.txt_Rsp.TabIndex = 0;
-            this.txt_Rsp.TabStop = false;
-            // 
-            // lbl_Input
-            // 
-            this.lbl_Input.AutoSize = true;
-            this.lbl_Input.Location = new System.Drawing.Point(11, 49);
-            this.lbl_Input.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Input.Name = "lbl_Input";
-            this.lbl_Input.Size = new System.Drawing.Size(39, 17);
-            this.lbl_Input.TabIndex = 0;
-            this.lbl_Input.Text = "Input";
-            // 
-            // txtbox_Audioplugin
-            // 
-            this.txtbox_Audioplugin.Location = new System.Drawing.Point(128, 69);
-            this.txtbox_Audioplugin.Margin = new System.Windows.Forms.Padding(4);
-            this.txtbox_Audioplugin.Name = "txtbox_Audioplugin";
-            this.txtbox_Audioplugin.Size = new System.Drawing.Size(132, 22);
-            this.txtbox_Audioplugin.TabIndex = 0;
-            this.txtbox_Audioplugin.TabStop = false;
-            // 
-            // lbl_Audio
-            // 
-            this.lbl_Audio.AutoSize = true;
-            this.lbl_Audio.Location = new System.Drawing.Point(11, 79);
-            this.lbl_Audio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Audio.Name = "lbl_Audio";
-            this.lbl_Audio.Size = new System.Drawing.Size(44, 17);
-            this.lbl_Audio.TabIndex = 0;
-            this.lbl_Audio.Text = "Audio";
-            // 
-            // txt_inputplugin
-            // 
-            this.txt_inputplugin.Location = new System.Drawing.Point(128, 39);
-            this.txt_inputplugin.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_inputplugin.Name = "txt_inputplugin";
-            this.txt_inputplugin.Size = new System.Drawing.Size(132, 22);
-            this.txt_inputplugin.TabIndex = 0;
-            this.txt_inputplugin.TabStop = false;
-            // 
-            // lbl_RSP
-            // 
-            this.lbl_RSP.AutoSize = true;
-            this.lbl_RSP.Location = new System.Drawing.Point(11, 108);
-            this.lbl_RSP.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_RSP.Name = "lbl_RSP";
-            this.lbl_RSP.Size = new System.Drawing.Size(36, 17);
-            this.lbl_RSP.TabIndex = 0;
-            this.lbl_RSP.Text = "RSP";
-            // 
-            // txt_videoplugin
-            // 
-            this.txt_videoplugin.Location = new System.Drawing.Point(128, 10);
-            this.txt_videoplugin.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_videoplugin.Name = "txt_videoplugin";
-            this.txt_videoplugin.Size = new System.Drawing.Size(132, 22);
-            this.txt_videoplugin.TabIndex = 0;
-            this.txt_videoplugin.TabStop = false;
-            // 
-            // lbl_Video
-            // 
-            this.lbl_Video.AutoSize = true;
-            this.lbl_Video.Location = new System.Drawing.Point(11, 20);
-            this.lbl_Video.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Video.Name = "lbl_Video";
-            this.lbl_Video.Size = new System.Drawing.Size(48, 17);
-            this.lbl_Video.TabIndex = 0;
-            this.lbl_Video.Text = "Video ";
-            // 
-            // gp_M64_misc
-            // 
-            this.gp_M64_misc.Controls.Add(this.cbox_startType);
-            this.gp_M64_misc.Controls.Add(this.txt_misc_UID);
-            this.gp_M64_misc.Controls.Add(this.txt_misc_Version);
-            this.gp_M64_misc.Controls.Add(this.txt_misc_Magic);
-            this.gp_M64_misc.Controls.Add(this.lbl_misc_uid);
-            this.gp_M64_misc.Controls.Add(this.lbl_misc_version);
-            this.gp_M64_misc.Controls.Add(this.lbl_misc_Magic);
-            this.gp_M64_misc.Controls.Add(this.txt_CTRLS);
-            this.gp_M64_misc.Controls.Add(this.lbl_Ctrls);
-            this.gp_M64_misc.Controls.Add(this.lbl_CtlFlags);
-            this.gp_M64_misc.Controls.Add(this.lb_starttype);
-            this.gp_M64_misc.Controls.Add(this.btn_CtlFlags);
-            this.gp_M64_misc.Location = new System.Drawing.Point(275, 30);
-            this.gp_M64_misc.Margin = new System.Windows.Forms.Padding(4);
-            this.gp_M64_misc.Name = "gp_M64_misc";
-            this.gp_M64_misc.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_M64_misc.Size = new System.Drawing.Size(267, 216);
-            this.gp_M64_misc.TabIndex = 0;
-            this.gp_M64_misc.TabStop = false;
-            this.gp_M64_misc.Text = "Miscellaneous";
-            // 
-            // btn_CtlFlags
-            // 
-            this.btn_CtlFlags.Location = new System.Drawing.Point(117, 174);
-            this.btn_CtlFlags.Name = "btn_CtlFlags";
-            this.btn_CtlFlags.Size = new System.Drawing.Size(132, 24);
-            this.btn_CtlFlags.TabIndex = 0;
-            this.btn_CtlFlags.TabStop = false;
-            this.btn_CtlFlags.Text = "Edit";
-            this.btn_CtlFlags.UseVisualStyleBackColor = true;
-            this.btn_CtlFlags.Click += new System.EventHandler(this.btn_CtlFlags_Click);
-            // 
-            // lb_starttype
-            // 
-            this.lb_starttype.AutoSize = true;
-            this.lb_starttype.Location = new System.Drawing.Point(21, 148);
-            this.lb_starttype.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lb_starttype.Name = "lb_starttype";
-            this.lb_starttype.Size = new System.Drawing.Size(74, 17);
-            this.lb_starttype.TabIndex = 0;
-            this.lb_starttype.Text = "Start Type";
-            // 
-            // lbl_CtlFlags
-            // 
-            this.lbl_CtlFlags.AutoSize = true;
-            this.lbl_CtlFlags.Location = new System.Drawing.Point(22, 179);
-            this.lbl_CtlFlags.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_CtlFlags.Name = "lbl_CtlFlags";
-            this.lbl_CtlFlags.Size = new System.Drawing.Size(69, 17);
-            this.lbl_CtlFlags.TabIndex = 0;
-            this.lbl_CtlFlags.Text = "Controller";
-            // 
-            // lbl_Ctrls
-            // 
-            this.lbl_Ctrls.AutoSize = true;
-            this.lbl_Ctrls.Location = new System.Drawing.Point(21, 118);
-            this.lbl_Ctrls.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Ctrls.Name = "lbl_Ctrls";
-            this.lbl_Ctrls.Size = new System.Drawing.Size(76, 17);
-            this.lbl_Ctrls.TabIndex = 0;
-            this.lbl_Ctrls.Text = "Controllers";
-            // 
-            // txt_CTRLS
-            // 
-            this.txt_CTRLS.Location = new System.Drawing.Point(117, 118);
-            this.txt_CTRLS.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_CTRLS.Name = "txt_CTRLS";
-            this.txt_CTRLS.Size = new System.Drawing.Size(132, 22);
-            this.txt_CTRLS.TabIndex = 0;
-            this.txt_CTRLS.TabStop = false;
-            this.txt_CTRLS.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
-            // 
-            // lbl_misc_Magic
-            // 
-            this.lbl_misc_Magic.AutoSize = true;
-            this.lbl_misc_Magic.Location = new System.Drawing.Point(21, 30);
-            this.lbl_misc_Magic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_misc_Magic.Name = "lbl_misc_Magic";
-            this.lbl_misc_Magic.Size = new System.Drawing.Size(45, 17);
-            this.lbl_misc_Magic.TabIndex = 0;
-            this.lbl_misc_Magic.Text = "Magic";
-            // 
-            // lbl_misc_version
-            // 
-            this.lbl_misc_version.AutoSize = true;
-            this.lbl_misc_version.Location = new System.Drawing.Point(21, 59);
-            this.lbl_misc_version.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_misc_version.Name = "lbl_misc_version";
-            this.lbl_misc_version.Size = new System.Drawing.Size(56, 17);
-            this.lbl_misc_version.TabIndex = 0;
-            this.lbl_misc_version.Text = "Version";
-            // 
-            // lbl_misc_uid
-            // 
-            this.lbl_misc_uid.AutoSize = true;
-            this.lbl_misc_uid.Location = new System.Drawing.Point(21, 89);
-            this.lbl_misc_uid.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_misc_uid.Name = "lbl_misc_uid";
-            this.lbl_misc_uid.Size = new System.Drawing.Size(31, 17);
-            this.lbl_misc_uid.TabIndex = 0;
-            this.lbl_misc_uid.Text = "UID";
-            // 
-            // txt_misc_Magic
-            // 
-            this.txt_misc_Magic.Location = new System.Drawing.Point(117, 30);
-            this.txt_misc_Magic.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_misc_Magic.Name = "txt_misc_Magic";
-            this.txt_misc_Magic.ReadOnly = true;
-            this.txt_misc_Magic.Size = new System.Drawing.Size(132, 22);
-            this.txt_misc_Magic.TabIndex = 0;
-            this.txt_misc_Magic.TabStop = false;
-            this.txt_misc_Magic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
-            // 
-            // txt_misc_Version
-            // 
-            this.txt_misc_Version.Location = new System.Drawing.Point(117, 59);
-            this.txt_misc_Version.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_misc_Version.Name = "txt_misc_Version";
-            this.txt_misc_Version.ReadOnly = true;
-            this.txt_misc_Version.Size = new System.Drawing.Size(132, 22);
-            this.txt_misc_Version.TabIndex = 0;
-            this.txt_misc_Version.TabStop = false;
-            this.txt_misc_Version.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
-            // 
-            // txt_misc_UID
-            // 
-            this.txt_misc_UID.Location = new System.Drawing.Point(117, 89);
-            this.txt_misc_UID.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_misc_UID.Name = "txt_misc_UID";
-            this.txt_misc_UID.ReadOnly = true;
-            this.txt_misc_UID.Size = new System.Drawing.Size(132, 22);
-            this.txt_misc_UID.TabIndex = 0;
-            this.txt_misc_UID.TabStop = false;
-            this.txt_misc_UID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.generic_ClickDisallowedProperty);
-            // 
-            // cbox_startType
-            // 
-            this.cbox_startType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbox_startType.FormattingEnabled = true;
-            this.cbox_startType.Location = new System.Drawing.Point(117, 145);
-            this.cbox_startType.Name = "cbox_startType";
-            this.cbox_startType.Size = new System.Drawing.Size(132, 24);
-            this.cbox_startType.TabIndex = 1;
-            // 
-            // gpRom
-            // 
-            this.gpRom.Controls.Add(this.txt_Rom);
-            this.gpRom.Controls.Add(this.txt_Crc);
-            this.gpRom.Controls.Add(this.txt_RomCountry);
-            this.gpRom.Controls.Add(this.lbl_ROMNAME);
-            this.gpRom.Controls.Add(this.lbl_ROMCRC);
-            this.gpRom.Controls.Add(this.lbl_RomCountry);
-            this.gpRom.Location = new System.Drawing.Point(6, 246);
-            this.gpRom.Margin = new System.Windows.Forms.Padding(4);
-            this.gpRom.Name = "gpRom";
-            this.gpRom.Padding = new System.Windows.Forms.Padding(4);
-            this.gpRom.Size = new System.Drawing.Size(267, 140);
-            this.gpRom.TabIndex = 0;
-            this.gpRom.TabStop = false;
-            this.gpRom.Text = "ROM";
-            // 
-            // lbl_RomCountry
-            // 
-            this.lbl_RomCountry.AutoSize = true;
-            this.lbl_RomCountry.Location = new System.Drawing.Point(10, 84);
-            this.lbl_RomCountry.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_RomCountry.Name = "lbl_RomCountry";
-            this.lbl_RomCountry.Size = new System.Drawing.Size(93, 17);
-            this.lbl_RomCountry.TabIndex = 0;
-            this.lbl_RomCountry.Text = "ROM Country";
-            // 
-            // lbl_ROMCRC
-            // 
-            this.lbl_ROMCRC.AutoSize = true;
-            this.lbl_ROMCRC.Location = new System.Drawing.Point(10, 54);
-            this.lbl_ROMCRC.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_ROMCRC.Name = "lbl_ROMCRC";
-            this.lbl_ROMCRC.Size = new System.Drawing.Size(72, 17);
-            this.lbl_ROMCRC.TabIndex = 0;
-            this.lbl_ROMCRC.Text = "ROM CRC";
-            // 
-            // lbl_ROMNAME
-            // 
-            this.lbl_ROMNAME.AutoSize = true;
-            this.lbl_ROMNAME.Location = new System.Drawing.Point(10, 25);
-            this.lbl_ROMNAME.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_ROMNAME.Name = "lbl_ROMNAME";
-            this.lbl_ROMNAME.Size = new System.Drawing.Size(81, 17);
-            this.lbl_ROMNAME.TabIndex = 0;
-            this.lbl_ROMNAME.Text = "ROM Name";
-            // 
-            // txt_RomCountry
-            // 
-            this.txt_RomCountry.Location = new System.Drawing.Point(128, 79);
-            this.txt_RomCountry.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_RomCountry.Name = "txt_RomCountry";
-            this.txt_RomCountry.ReadOnly = true;
-            this.txt_RomCountry.Size = new System.Drawing.Size(132, 22);
-            this.txt_RomCountry.TabIndex = 0;
-            this.txt_RomCountry.TabStop = false;
-            // 
-            // txt_Crc
-            // 
-            this.txt_Crc.Location = new System.Drawing.Point(128, 49);
-            this.txt_Crc.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_Crc.Name = "txt_Crc";
-            this.txt_Crc.ReadOnly = true;
-            this.txt_Crc.Size = new System.Drawing.Size(132, 22);
-            this.txt_Crc.TabIndex = 0;
-            this.txt_Crc.TabStop = false;
-            // 
-            // txt_Rom
-            // 
-            this.txt_Rom.Location = new System.Drawing.Point(128, 20);
-            this.txt_Rom.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_Rom.Name = "txt_Rom";
-            this.txt_Rom.Size = new System.Drawing.Size(132, 22);
-            this.txt_Rom.TabIndex = 0;
-            this.txt_Rom.TabStop = false;
-            // 
-            // btn_Savem64
-            // 
-            this.btn_Savem64.Location = new System.Drawing.Point(6, 390);
-            this.btn_Savem64.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_Savem64.Name = "btn_Savem64";
-            this.btn_Savem64.Size = new System.Drawing.Size(270, 28);
-            this.btn_Savem64.TabIndex = 0;
-            this.btn_Savem64.TabStop = false;
-            this.btn_Savem64.Text = "Save M64";
-            this.btn_Savem64.UseVisualStyleBackColor = true;
-            this.btn_Savem64.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Savem64_MouseClick);
-            // 
-            // gp_User
-            // 
-            this.gp_User.Controls.Add(this.txt_PathName);
-            this.gp_User.Controls.Add(this.lbl_Name);
-            this.gp_User.Controls.Add(this.txt_Desc);
-            this.gp_User.Controls.Add(this.lbl_Author);
-            this.gp_User.Controls.Add(this.txt_VIs);
-            this.gp_User.Controls.Add(this.lb_VIs);
-            this.gp_User.Controls.Add(this.txt_RR);
-            this.gp_User.Controls.Add(this.lbl_Desc);
-            this.gp_User.Controls.Add(this.lb_RR);
-            this.gp_User.Controls.Add(this.txt_Author);
-            this.gp_User.Location = new System.Drawing.Point(6, 30);
-            this.gp_User.Margin = new System.Windows.Forms.Padding(4);
-            this.gp_User.Name = "gp_User";
-            this.gp_User.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_User.Size = new System.Drawing.Size(267, 216);
-            this.gp_User.TabIndex = 0;
-            this.gp_User.TabStop = false;
-            this.gp_User.Text = "Specific";
-            // 
-            // txt_Author
-            // 
-            this.txt_Author.Location = new System.Drawing.Point(128, 59);
-            this.txt_Author.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_Author.Name = "txt_Author";
-            this.txt_Author.Size = new System.Drawing.Size(132, 22);
-            this.txt_Author.TabIndex = 0;
-            this.txt_Author.TabStop = false;
-            // 
-            // lb_RR
-            // 
-            this.lb_RR.AutoSize = true;
-            this.lb_RR.Location = new System.Drawing.Point(10, 120);
-            this.lb_RR.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lb_RR.Name = "lb_RR";
-            this.lb_RR.Size = new System.Drawing.Size(74, 17);
-            this.lb_RR.TabIndex = 0;
-            this.lb_RR.Text = "Rerecords";
-            // 
-            // lbl_Desc
-            // 
-            this.lbl_Desc.AutoSize = true;
-            this.lbl_Desc.Location = new System.Drawing.Point(11, 89);
-            this.lbl_Desc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Desc.Name = "lbl_Desc";
-            this.lbl_Desc.Size = new System.Drawing.Size(79, 17);
-            this.lbl_Desc.TabIndex = 0;
-            this.lbl_Desc.Text = "Description";
-            // 
-            // txt_RR
-            // 
-            this.txt_RR.Location = new System.Drawing.Point(128, 118);
-            this.txt_RR.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_RR.Name = "txt_RR";
-            this.txt_RR.Size = new System.Drawing.Size(132, 22);
-            this.txt_RR.TabIndex = 0;
-            this.txt_RR.TabStop = false;
-            this.txt_RR.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
-            // 
-            // lb_VIs
-            // 
-            this.lb_VIs.AutoSize = true;
-            this.lb_VIs.Location = new System.Drawing.Point(10, 150);
-            this.lb_VIs.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lb_VIs.Name = "lb_VIs";
-            this.lb_VIs.Size = new System.Drawing.Size(27, 17);
-            this.lb_VIs.TabIndex = 0;
-            this.lb_VIs.Text = "VIs";
-            // 
-            // txt_VIs
-            // 
-            this.txt_VIs.Location = new System.Drawing.Point(128, 148);
-            this.txt_VIs.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_VIs.Name = "txt_VIs";
-            this.txt_VIs.Size = new System.Drawing.Size(132, 22);
-            this.txt_VIs.TabIndex = 0;
-            this.txt_VIs.TabStop = false;
-            this.txt_VIs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
-            // 
-            // lbl_Author
-            // 
-            this.lbl_Author.AutoSize = true;
-            this.lbl_Author.Location = new System.Drawing.Point(11, 59);
-            this.lbl_Author.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Author.Name = "lbl_Author";
-            this.lbl_Author.Size = new System.Drawing.Size(50, 17);
-            this.lbl_Author.TabIndex = 0;
-            this.lbl_Author.Text = "Author";
-            // 
-            // txt_Desc
-            // 
-            this.txt_Desc.Location = new System.Drawing.Point(128, 89);
-            this.txt_Desc.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_Desc.Name = "txt_Desc";
-            this.txt_Desc.Size = new System.Drawing.Size(132, 22);
-            this.txt_Desc.TabIndex = 0;
-            this.txt_Desc.TabStop = false;
-            // 
-            // lbl_Name
-            // 
-            this.lbl_Name.AutoSize = true;
-            this.lbl_Name.Location = new System.Drawing.Point(11, 30);
-            this.lbl_Name.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_Name.Name = "lbl_Name";
-            this.lbl_Name.Size = new System.Drawing.Size(45, 17);
-            this.lbl_Name.TabIndex = 0;
-            this.lbl_Name.Text = "Name";
-            // 
-            // txt_PathName
-            // 
-            this.txt_PathName.Location = new System.Drawing.Point(128, 30);
-            this.txt_PathName.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_PathName.Name = "txt_PathName";
-            this.txt_PathName.Size = new System.Drawing.Size(132, 22);
-            this.txt_PathName.TabIndex = 0;
-            this.txt_PathName.TabStop = false;
             // 
             // tsmi_LiveTasStudio
             // 
             this.tsmi_LiveTasStudio.Checked = true;
             this.tsmi_LiveTasStudio.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_LiveTasStudio.Name = "tsmi_LiveTasStudio";
-            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(180, 26);
             this.tsmi_LiveTasStudio.Text = "Live TAS Studio";
             this.tsmi_LiveTasStudio.Click += new System.EventHandler(this.tsmi_LiveTasStudio_Click_1);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
+            // 
+            // rb_ReplacementSel
+            // 
+            this.rb_ReplacementSel.AutoSize = true;
+            this.rb_ReplacementSel.Location = new System.Drawing.Point(186, 50);
+            this.rb_ReplacementSel.Margin = new System.Windows.Forms.Padding(4);
+            this.rb_ReplacementSel.Name = "rb_ReplacementSel";
+            this.rb_ReplacementSel.Size = new System.Drawing.Size(112, 21);
+            this.rb_ReplacementSel.TabIndex = 0;
+            this.rb_ReplacementSel.Text = "Replacement";
+            this.rb_ReplacementSel.UseVisualStyleBackColor = true;
+            this.rb_ReplacementSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_Replacementsel_MouseDown);
             // 
             // MainForm
             // 
@@ -1435,6 +1439,15 @@ namespace MupenUtils
             this.st_Status.ResumeLayout(false);
             this.st_Status.PerformLayout();
             this.gp_M64.ResumeLayout(false);
+            this.gp_header.ResumeLayout(false);
+            this.gp_User.ResumeLayout(false);
+            this.gp_User.PerformLayout();
+            this.gpRom.ResumeLayout(false);
+            this.gpRom.PerformLayout();
+            this.gp_M64_misc.ResumeLayout(false);
+            this.gp_M64_misc.PerformLayout();
+            this.gp_Plugins.ResumeLayout(false);
+            this.gp_Plugins.PerformLayout();
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
             this.gp_TASStudio.ResumeLayout(false);
@@ -1443,15 +1456,6 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ctx_Input_Debug.ResumeLayout(false);
             this.ctx_TasStudio.ResumeLayout(false);
-            this.gp_header.ResumeLayout(false);
-            this.gp_Plugins.ResumeLayout(false);
-            this.gp_Plugins.PerformLayout();
-            this.gp_M64_misc.ResumeLayout(false);
-            this.gp_M64_misc.PerformLayout();
-            this.gpRom.ResumeLayout(false);
-            this.gpRom.PerformLayout();
-            this.gp_User.ResumeLayout(false);
-            this.gp_User.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1512,8 +1516,6 @@ namespace MupenUtils
         public System.Windows.Forms.DataGridView dgv_Main;
         private System.Windows.Forms.ContextMenuStrip ctx_TasStudio;
         private System.Windows.Forms.ToolStripMenuItem utilityToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem replacementToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudio_Big;
         private System.Windows.Forms.ToolStripMenuItem tsmi_AAJoystick;
         private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudioAllow;
@@ -1568,6 +1570,8 @@ namespace MupenUtils
         private System.Windows.Forms.Label lbl_Input;
         private System.Windows.Forms.TextBox txt_Rsp;
         private System.Windows.Forms.ToolStripMenuItem tsmi_LiveTasStudio;
+        private System.Windows.Forms.RadioButton rb_ReplacementSel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 
