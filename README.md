@@ -69,7 +69,7 @@ Hook into mupen64 process memory and view some data like version string.
 - more than 1 GB RAM
 
 ## Other
-⚠️This program automatically checks for updates when internet is connected.
+🌐This program automatically checks for updates when internet is connected.
 
 ⚠️This program accesses other program's memory and might be marked as unsafe. 
 
