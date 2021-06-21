@@ -23,7 +23,7 @@ namespace MupenUtils.Helpers
             "\'CTRL+H\' on TAS Studio to get a useful menu",
             "Some dialogs are disabled until loading a m64",
             "\'F11\' and \'ALT+ENTER\' will toggle fullscreen mode",
-            "Running this and Mupen64 will show a warning",
+            "Mupen64 can cause file access conflicts with Mupen Utilities",
             "There is an easter egg in the TAS Studio Utility dialog",
             "Debug target builds will print information to console",
             "The bit arhitecture is displayed in status bar",
@@ -33,11 +33,14 @@ namespace MupenUtils.Helpers
             "The \"More\" button has useful dialogs",
             "\'Simple Mode\' disables some technical features to make usage simpler",
             "Drag and drop is supported",
-            "Right clicking the \'New Tip\' button will show all tips"
+            "Right clicking the \'New Tip\' button will show all tips",
+            "CTRL+Scroll in TAS Studio will zoom in and out",
+            "Sending the debug log upon a crash helps me fix bugs",
+            "\'Live TAS Studio\' will keep TAS Studio up-to-date with your latest inputs"
         };
         public static string GetRandomTip()
         {
-            return tips[rng.Next(0,tips.Length)];
+            return tips[rng.Next(0, tips.Length)];
         }
     }
 }

@@ -36,11 +36,11 @@ namespace MupenUtils.Forms
             this.btn_Debug_Random = new System.Windows.Forms.Button();
             this.gp_Debug_Input = new System.Windows.Forms.GroupBox();
             this.gp_Debug_Hex = new System.Windows.Forms.GroupBox();
-            this.txt_Debug_Nthbyte = new System.Windows.Forms.TextBox();
-            this.lbl_Debug_Byten = new System.Windows.Forms.Label();
-            this.txt_Debug_Value = new System.Windows.Forms.TextBox();
             this.lbl_Debug_Value = new System.Windows.Forms.Label();
+            this.lbl_Debug_Byten = new System.Windows.Forms.Label();
             this.txt_Debug_HexByte = new System.Windows.Forms.TextBox();
+            this.txt_Debug_Value = new System.Windows.Forms.TextBox();
+            this.txt_Debug_Nthbyte = new System.Windows.Forms.TextBox();
             this.gp_Debug_Input.SuspendLayout();
             this.gp_Debug_Hex.SuspendLayout();
             this.SuspendLayout();
@@ -121,13 +121,14 @@ namespace MupenUtils.Forms
             this.gp_Debug_Hex.Text = "View raw";
             this.gp_Debug_Hex.Enter += new System.EventHandler(this.gp_Debug_Hex_Enter);
             // 
-            // txt_Debug_Nthbyte
+            // lbl_Debug_Value
             // 
-            this.txt_Debug_Nthbyte.Location = new System.Drawing.Point(64, 40);
-            this.txt_Debug_Nthbyte.Name = "txt_Debug_Nthbyte";
-            this.txt_Debug_Nthbyte.Size = new System.Drawing.Size(100, 22);
-            this.txt_Debug_Nthbyte.TabIndex = 0;
-            this.txt_Debug_Nthbyte.TextChanged += new System.EventHandler(this.txt_Debug_Nthbyte_TextChanged);
+            this.lbl_Debug_Value.AutoSize = true;
+            this.lbl_Debug_Value.Location = new System.Drawing.Point(16, 72);
+            this.lbl_Debug_Value.Name = "lbl_Debug_Value";
+            this.lbl_Debug_Value.Size = new System.Drawing.Size(44, 17);
+            this.lbl_Debug_Value.TabIndex = 0;
+            this.lbl_Debug_Value.Text = "Value";
             // 
             // lbl_Debug_Byten
             // 
@@ -138,6 +139,14 @@ namespace MupenUtils.Forms
             this.lbl_Debug_Byten.TabIndex = 0;
             this.lbl_Debug_Byten.Text = "Byte";
             // 
+            // txt_Debug_HexByte
+            // 
+            this.txt_Debug_HexByte.Location = new System.Drawing.Point(176, 72);
+            this.txt_Debug_HexByte.Name = "txt_Debug_HexByte";
+            this.txt_Debug_HexByte.ReadOnly = true;
+            this.txt_Debug_HexByte.Size = new System.Drawing.Size(100, 22);
+            this.txt_Debug_HexByte.TabIndex = 0;
+            // 
             // txt_Debug_Value
             // 
             this.txt_Debug_Value.Location = new System.Drawing.Point(64, 72);
@@ -147,27 +156,18 @@ namespace MupenUtils.Forms
             this.txt_Debug_Value.TabIndex = 0;
             this.txt_Debug_Value.TextChanged += new System.EventHandler(this.txt_Debug_Value_TextChanged);
             // 
-            // lbl_Debug_Value
+            // txt_Debug_Nthbyte
             // 
-            this.lbl_Debug_Value.AutoSize = true;
-            this.lbl_Debug_Value.Location = new System.Drawing.Point(16, 72);
-            this.lbl_Debug_Value.Name = "lbl_Debug_Value";
-            this.lbl_Debug_Value.Size = new System.Drawing.Size(44, 17);
-            this.lbl_Debug_Value.TabIndex = 0;
-            this.lbl_Debug_Value.Text = "Value";
-            // 
-            // txt_Debug_HexByte
-            // 
-            this.txt_Debug_HexByte.Location = new System.Drawing.Point(176, 72);
-            this.txt_Debug_HexByte.Name = "txt_Debug_HexByte";
-            this.txt_Debug_HexByte.ReadOnly = true;
-            this.txt_Debug_HexByte.Size = new System.Drawing.Size(100, 22);
-            this.txt_Debug_HexByte.TabIndex = 0;
+            this.txt_Debug_Nthbyte.Location = new System.Drawing.Point(64, 40);
+            this.txt_Debug_Nthbyte.Name = "txt_Debug_Nthbyte";
+            this.txt_Debug_Nthbyte.Size = new System.Drawing.Size(100, 22);
+            this.txt_Debug_Nthbyte.TabIndex = 0;
+            this.txt_Debug_Nthbyte.TextChanged += new System.EventHandler(this.txt_Debug_Nthbyte_TextChanged);
             // 
             // AdvancedDebugForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(664, 334);
             this.Controls.Add(this.gp_Debug_Hex);
             this.Controls.Add(this.gp_Debug_Input);

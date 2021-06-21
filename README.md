@@ -1,8 +1,9 @@
 # MupenUtilities
-### __This app is work in progress! Expect bugs which can heavily impact usability__
-![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/input-roll/screenshot1.PNG "Mupen64 Utilities")<br>
-Utility app for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/)<br>
-This can be seen as a continuation of the M64 Editor by [mkdasher](https://github.com/mkdasher/)
+### 🛡️ Feature-rich Utility application for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/) 🛡️
+
+
+![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG "Mupen64 Utilities")<br>
+This project is heavily inspired by [mkdasher's](https://github.com/mkdasher/) M64 Editor.
 
 ## M64
 The data of any M64 file is presented in a simple interface.
@@ -16,29 +17,64 @@ You can view and edit all meaningful M64 Header data such as
 - Plugin names
 - Author
 - Description
-- all else...
+- Controller Flags
+  - Enabled
+  - Mempak
+  - Rumblepak
+- All else...
+
 
 ### Input
-You can view and edit M64 Joystick Inputs on each frame in a clean, interactive TASInput style interface.
-There are no major QoL features for Inputting on Joystick or Buttons as this is not TASing software.
+You can view and edit all M64 Inputs on each frame in a clean, interactive TASInput style interface.
+Modifying the controller flags is possible too, for example enabling or disabling a controller, its' mempak and rumblepak
 
 ### Hex Viewer
 View any byte (offset) of the selected movie as hexadecimal string.
+
 This opens up limitless possibilities of finding data in a movie file.
 
-##### Frame Control
+### Frame Control
 You can seek back and forth, reverse playback, step frames and more intuitive controls.
+
 Playing the movie back in real-time (30 FPS) is also possible.
 
-##### Replacement
-Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of input frames from one movie to another. The N64 may or may not poll inputs a lot of times within a frame so make sure to 
+### Replacement
+Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of frames from one movie to another. 
 
 ### TAS Studio
-You can view all inputs in a neatly arranged grid
+You can view all inputs in a neatly arranged and compacter grid. 
+
+This is useful for those who don't want to waste time skimming through the movie
 
 ### Advanced
-You can dump a movie's raw input data to a file.
-You can change the raw input value at a frame using a unsafe debug menu.
+Dump a movie's raw input data to a file.
+
+Change the raw input value at any frame in a debug menu located under "More" button.
+
+Get the raw input value at any frame in a dialog located under "More" button. 
+
+## Savestate
+
+### RDRAM
+View and edit savestates' RDRAM section. You can save and block special addresses to make it easier to remember what goes where.
+
+## Mupen [WIP]
+Hook into mupen64 process memory and view some data like version string.
+
+### __Mupen hook might be unbearably slow or not work on some systems!__
+
+## Requirements
+- M64, ST or Mupen exe
+- OS newer than Windows 7
+- more than 1 GB RAM
 
 ## Other
-This program checks for updates
+🌐This program automatically checks for updates when internet is connected.
+
+⚠️This program accesses other program's memory and might be marked as unsafe. 
+
+🥚There is a easter egg in the TAS Studio utility dialog
+
+🧵This program is multithreaded
+
+🎛️This program does not fully support more than one controller

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -6,12 +6,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7E5AFCD6-5244-4064-9EB5-63344F34C7AA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MupenUtils</RootNamespace>
-    <AssemblyName>MupenUtils</AssemblyName>
+    <RootNamespace>MupenUtilities</RootNamespace>
+    <AssemblyName>MupenUtilities</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -68,12 +68,58 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mupengreen.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>0B49EBC41458F9F9BBB17A023AB6D368F4EBD522</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MupenUtils_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="MRG.Controls.UI">
+      <HintPath>..\..\..\..\Downloads\MRGLoadingCircledemo\MRG.WinForm.Test\bin\MRG.Controls.UI.dll</HintPath>
     </Reference>
     <Reference Include="Octokit, Version=0.50.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Octokit.0.50.0\lib\net46\Octokit.dll</HintPath>
@@ -104,11 +150,41 @@
     <Compile Include="Forms\AdvancedDebugForm.Designer.cs">
       <DependentUpon>AdvancedDebugForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ControllerFlagsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ControllerFlagsForm.Designer.cs">
+      <DependentUpon>ControllerFlagsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExceptionForm.Designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InputStatsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InputStatsForm.Designer.cs">
+      <DependentUpon>InputStatsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MupenHookForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MupenHookForm.Designer.cs">
+      <DependentUpon>MupenHookForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ReplacementForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ReplacementForm.Designer.cs">
       <DependentUpon>ReplacementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\STForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\STForm.Designer.cs">
+      <DependentUpon>STForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\TASStudioMoreForm.cs">
       <SubType>Form</SubType>
@@ -118,34 +194,49 @@
     </Compile>
     <Compile Include="Helpers\DataHelper.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
-    <Compile Include="Forms\Form1.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MoreForm.cs">
+    <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MoreForm.Designer.cs">
-      <DependentUpon>MoreForm.cs</DependentUpon>
+    <Compile Include="Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\TipProvider.cs" />
-    <Compile Include="Networking\UpdateNotifier.cs" />
+    <Compile Include="Networking\NetworkingManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UIHelper.cs" />
     <EmbeddedResource Include="Forms\AdvancedDebugForm.resx">
       <DependentUpon>AdvancedDebugForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ControllerFlagsForm.resx">
+      <DependentUpon>ControllerFlagsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MoreForm.resx">
-      <DependentUpon>MoreForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InputStatsForm.resx">
+      <DependentUpon>InputStatsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MupenHookForm.resx">
+      <DependentUpon>MupenHookForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReplacementForm.resx">
       <DependentUpon>ReplacementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\STForm.resx">
+      <DependentUpon>STForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TASStudioMoreForm.resx">
       <DependentUpon>TASStudioMoreForm.cs</DependentUpon>
@@ -161,7 +252,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="MupenUtils_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="VS\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -181,6 +274,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\obunga.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo.png" />
+    <None Include="Resources\mupenbw.png" />
+    <Content Include="mupengreen.ico" />
+    <Content Include="screenshot1.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

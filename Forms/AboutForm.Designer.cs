@@ -36,13 +36,17 @@ namespace MupenUtils
             this.btn_More_NewTip = new System.Windows.Forms.Button();
             this.gp_More_About = new System.Windows.Forms.GroupBox();
             this.btn_More_CheckUpdates = new System.Windows.Forms.Button();
+            this.lbl_Github = new System.Windows.Forms.Label();
             this.lbl_More_Related2 = new System.Windows.Forms.Label();
             this.lbl_More_Related = new System.Windows.Forms.Label();
             this.Llbl_More_MupenCringe = new System.Windows.Forms.LinkLabel();
+            this.Llbl_More_ReportBug = new System.Windows.Forms.LinkLabel();
+            this.Llbl_More_FeatureSuggestIssue = new System.Windows.Forms.LinkLabel();
             this.Llbl_More_Resources = new System.Windows.Forms.LinkLabel();
             this.Llbl_More_Mupen = new System.Windows.Forms.LinkLabel();
             this.txt_More_Info = new System.Windows.Forms.TextBox();
             this.pb_More_Logo = new System.Windows.Forms.PictureBox();
+            this.btn_News = new System.Windows.Forms.Button();
             this.gp_More_Tips.SuspendLayout();
             this.gp_More_About.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_More_Logo)).BeginInit();
@@ -94,10 +98,14 @@ namespace MupenUtils
             // 
             // gp_More_About
             // 
+            this.gp_More_About.Controls.Add(this.btn_News);
             this.gp_More_About.Controls.Add(this.btn_More_CheckUpdates);
+            this.gp_More_About.Controls.Add(this.lbl_Github);
             this.gp_More_About.Controls.Add(this.lbl_More_Related2);
             this.gp_More_About.Controls.Add(this.lbl_More_Related);
             this.gp_More_About.Controls.Add(this.Llbl_More_MupenCringe);
+            this.gp_More_About.Controls.Add(this.Llbl_More_ReportBug);
+            this.gp_More_About.Controls.Add(this.Llbl_More_FeatureSuggestIssue);
             this.gp_More_About.Controls.Add(this.Llbl_More_Resources);
             this.gp_More_About.Controls.Add(this.Llbl_More_Mupen);
             this.gp_More_About.Controls.Add(this.txt_More_Info);
@@ -120,6 +128,15 @@ namespace MupenUtils
             this.btn_More_CheckUpdates.Text = "Check for Updates";
             this.btn_More_CheckUpdates.UseVisualStyleBackColor = true;
             this.btn_More_CheckUpdates.Click += new System.EventHandler(this.btn_More_CheckUpdates_Click);
+            // 
+            // lbl_Github
+            // 
+            this.lbl_Github.AutoSize = true;
+            this.lbl_Github.Location = new System.Drawing.Point(16, 176);
+            this.lbl_Github.Name = "lbl_Github";
+            this.lbl_Github.Size = new System.Drawing.Size(50, 17);
+            this.lbl_Github.TabIndex = 0;
+            this.lbl_Github.Text = "Github";
             // 
             // lbl_More_Related2
             // 
@@ -153,6 +170,34 @@ namespace MupenUtils
             this.Llbl_More_MupenCringe.VisitedLinkColor = System.Drawing.Color.Blue;
             this.Llbl_More_MupenCringe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Llbl_More_MupenCringe_LinkClicked);
             // 
+            // Llbl_More_ReportBug
+            // 
+            this.Llbl_More_ReportBug.ActiveLinkColor = System.Drawing.Color.Blue;
+            this.Llbl_More_ReportBug.AutoSize = true;
+            this.Llbl_More_ReportBug.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Llbl_More_ReportBug.Location = new System.Drawing.Point(192, 176);
+            this.Llbl_More_ReportBug.Name = "Llbl_More_ReportBug";
+            this.Llbl_More_ReportBug.Size = new System.Drawing.Size(91, 17);
+            this.Llbl_More_ReportBug.TabIndex = 0;
+            this.Llbl_More_ReportBug.TabStop = true;
+            this.Llbl_More_ReportBug.Text = "Report a bug";
+            this.Llbl_More_ReportBug.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.Llbl_More_ReportBug.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Llbl_More_ReportBug_LinkClicked);
+            // 
+            // Llbl_More_FeatureSuggestIssue
+            // 
+            this.Llbl_More_FeatureSuggestIssue.ActiveLinkColor = System.Drawing.Color.Blue;
+            this.Llbl_More_FeatureSuggestIssue.AutoSize = true;
+            this.Llbl_More_FeatureSuggestIssue.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Llbl_More_FeatureSuggestIssue.Location = new System.Drawing.Point(72, 176);
+            this.Llbl_More_FeatureSuggestIssue.Name = "Llbl_More_FeatureSuggestIssue";
+            this.Llbl_More_FeatureSuggestIssue.Size = new System.Drawing.Size(121, 17);
+            this.Llbl_More_FeatureSuggestIssue.TabIndex = 0;
+            this.Llbl_More_FeatureSuggestIssue.TabStop = true;
+            this.Llbl_More_FeatureSuggestIssue.Text = "Suggest a feature";
+            this.Llbl_More_FeatureSuggestIssue.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.Llbl_More_FeatureSuggestIssue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Llbl_More_FeatureSuggestIssue_LinkClicked);
+            // 
             // Llbl_More_Resources
             // 
             this.Llbl_More_Resources.ActiveLinkColor = System.Drawing.Color.Blue;
@@ -172,7 +217,7 @@ namespace MupenUtils
             this.Llbl_More_Mupen.ActiveLinkColor = System.Drawing.Color.Blue;
             this.Llbl_More_Mupen.AutoSize = true;
             this.Llbl_More_Mupen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Llbl_More_Mupen.Location = new System.Drawing.Point(128, 128);
+            this.Llbl_More_Mupen.Location = new System.Drawing.Point(136, 128);
             this.Llbl_More_Mupen.Name = "Llbl_More_Mupen";
             this.Llbl_More_Mupen.Size = new System.Drawing.Size(104, 17);
             this.Llbl_More_Mupen.TabIndex = 0;
@@ -188,23 +233,34 @@ namespace MupenUtils
             this.txt_More_Info.Name = "txt_More_Info";
             this.txt_More_Info.ReadOnly = true;
             this.txt_More_Info.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_More_Info.Size = new System.Drawing.Size(408, 80);
+            this.txt_More_Info.Size = new System.Drawing.Size(408, 88);
             this.txt_More_Info.TabIndex = 0;
             this.txt_More_Info.TabStop = false;
             this.txt_More_Info.Text = resources.GetString("txt_More_Info.Text");
             // 
             // pb_More_Logo
             // 
-            this.pb_More_Logo.BackgroundImage = global::MupenUtils.Properties.Resources.logoPng;
-            this.pb_More_Logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pb_More_Logo.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
+            this.pb_More_Logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pb_More_Logo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pb_More_Logo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_More_Logo.Location = new System.Drawing.Point(16, 32);
             this.pb_More_Logo.Name = "pb_More_Logo";
-            this.pb_More_Logo.Size = new System.Drawing.Size(88, 80);
+            this.pb_More_Logo.Size = new System.Drawing.Size(88, 88);
             this.pb_More_Logo.TabIndex = 0;
             this.pb_More_Logo.TabStop = false;
             this.pb_More_Logo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_More_Logo_MouseDown);
+            // 
+            // btn_News
+            // 
+            this.btn_News.Location = new System.Drawing.Point(240, 224);
+            this.btn_News.Name = "btn_News";
+            this.btn_News.Size = new System.Drawing.Size(131, 31);
+            this.btn_News.TabIndex = 0;
+            this.btn_News.TabStop = false;
+            this.btn_News.Text = "What\'s new?";
+            this.btn_News.UseVisualStyleBackColor = true;
+            this.btn_News.Click += new System.EventHandler(this.btn_News_Click);
             // 
             // MoreForm
             // 
@@ -240,5 +296,9 @@ namespace MupenUtils
         private System.Windows.Forms.LinkLabel Llbl_More_Resources;
         private System.Windows.Forms.LinkLabel Llbl_More_MupenCringe;
         private System.Windows.Forms.Button btn_More_CheckUpdates;
+        private System.Windows.Forms.Label lbl_Github;
+        private System.Windows.Forms.LinkLabel Llbl_More_ReportBug;
+        private System.Windows.Forms.LinkLabel Llbl_More_FeatureSuggestIssue;
+        private System.Windows.Forms.Button btn_News;
     }
 }

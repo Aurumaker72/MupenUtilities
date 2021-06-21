@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MupenUtils.Properties {
+namespace MupenUtilities.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -56,6 +56,18 @@ namespace MupenUtils.Properties {
             }
             set {
                 this["LastPathReplaceTrg"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DarkMode {
+            get {
+                return ((bool)(this["DarkMode"]));
+            }
+            set {
+                this["DarkMode"] = value;
             }
         }
     }
