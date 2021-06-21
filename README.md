@@ -76,3 +76,5 @@ Hook into mupen64 process memory and view some data like version string.
 🥚There is a easter egg in the TAS Studio utility dialog
 
 🧵This program is multithreaded
+
+🎛️This program does not fully support more than one controller
