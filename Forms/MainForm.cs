@@ -96,6 +96,7 @@ namespace MupenUtils
         public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "[1]", "[2]", "X", "Y" };
 
         Thread m64load;
+        Thread tasStudioLoad;
         MoreForm moreForm = new MoreForm();
         AdvancedDebugForm debugForm = new AdvancedDebugForm();
         TASStudioMoreForm tasStudioForm = new TASStudioMoreForm();
@@ -247,6 +248,7 @@ namespace MupenUtils
         static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
         [DllImport("kernel32.dll", SetLastError=true)]
 
+
         static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
         public struct MEMORY_BASIC_INFORMATION
         {
@@ -272,6 +274,9 @@ namespace MupenUtils
             public ushort processorLevel;
             public ushort processorRevision;
         }
+
+            [DllImport("user32.dll")]
+    private static extern int SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
 
         #endregion
 
@@ -1121,51 +1126,70 @@ namespace MupenUtils
                 dgv_Main.Columns[i].Name = inputStructNames[i];
                 dgv_Main.Columns[i].Width = 50; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
             }
-
-
+            foreach (DataGridViewColumn c in dgv_Main.Columns)
+            {
+                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            }
+            
             gp_TASStudio.Text = "TAS Studio - Loading " + inputLists[selectedController].Count + " samples";
-            // populate with input data (this is cringe and painful and slow i dont care)
-            new Thread(() =>
-           {
-               while (dgv_Main.RecreatingHandle) ; // spin until handle is created
 
-               for (int y = 0; y < inputLists[selectedController].Count; y++)
-               {
-                   // for each frame
-                   dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Add()));
+            dgv_Main.ReadOnly = false;
+            
 
-                   for (int x = 0; x < inputStructNames.Length; x++)
-                   {
-                       // for each button
+            tasStudioLoad = new Thread(() => TasStudioCellsPreload());
+            tasStudioLoad.Start();
 
-
-                       // kind of stupid implementation
-                       // this is easily done faster but do i care?
-
-                       string cellValue = "";
-                       //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
-                       if (x < 16)
-                       {
-                           if ((inputLists[selectedController][y] & (int)Math.Pow(2, x)) != 0)
-                               cellValue = inputStructNames[x];
-                       }
-                       else
-                       {
-
-                           byte[] data = BitConverter.GetBytes(inputLists[selectedController][y]);
-
-                           if (x == 16)
-                               cellValue = ((sbyte)data[2]).ToString();
-                           else if (x == 17)
-                               cellValue = ((sbyte)-data[3]).ToString();
-                       }
-                       dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
-
-                   }
-               }
-               gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
-           }).Start();
         }
+
+        void TasStudioCellsPreload()
+        {
+            // run this on another thread or else
+
+            while (dgv_Main.RecreatingHandle) Thread.Sleep(1); // spin until handle is created
+
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.SuspendLayout()));
+
+            for (int y = 0; y < inputLists[selectedController].Count; y++)
+            {
+                // for each frame
+                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Add()));
+                
+
+                for (int x = 0; x < inputStructNames.Length; x++)
+                {
+                    // for each button
+
+
+                    // kind of stupid implementation
+                    // this is easily done faster but do i care?
+
+                    string cellValue = "";
+                    //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
+                    if (x < 16)
+                    {
+                        if ((inputLists[selectedController][y] & (int)Math.Pow(2, x)) != 0)
+                            cellValue = inputStructNames[x];
+                    }
+                    else
+                    {
+
+                        byte[] data = BitConverter.GetBytes(inputLists[selectedController][y]);
+
+                        if (x == 16)
+                            cellValue = ((sbyte)data[2]).ToString();
+                        else if (x == 17)
+                            cellValue = ((sbyte)-data[3]).ToString();
+                    }
+                    dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
+
+                }
+            }
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ResumeLayout(true)));
+            
+            gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ReadOnly = true));
+        }
+
 
 
 
@@ -1708,6 +1732,20 @@ namespace MupenUtils
             {
                 bool exit;
                 exit = MessageBox.Show("The m64 loading thread is still running. Are you sure you want to close the program and attempt to kill the thread? (might cause issues)",
+                "Thread running",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning) == DialogResult.Yes;
+                if (exit)
+                    m64load.Abort();
+                e.Cancel = !exit;
+
+
+                return;
+            }
+            if(tasStudioLoad != null && tasStudioLoad.IsAlive)
+            {
+                bool exit;
+                exit = MessageBox.Show("The TAS Studio preload thread is still running. Are you sure you want to close the program and attempt to kill the thread? (might cause issues)",
                 "Thread running",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning) == DialogResult.Yes;
