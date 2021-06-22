@@ -1034,7 +1034,7 @@ namespace MupenUtils
             {
                 string errReason = "";
 
-                if (!System.IO.Path.GetExtension(Path).Equals(".st", StringComparison.InvariantCultureIgnoreCase))
+                if (!System.IO.Path.GetExtension(Path).Equals(".st", StringComparison.InvariantCultureIgnoreCase) || !System.IO.Path.GetExtension(Path).Equals(".savestate", StringComparison.InvariantCultureIgnoreCase))
                     errReason += "Extension invalid. ";
                 if (String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path))
                     errReason += "Path invalid. ";
