@@ -61,13 +61,13 @@ namespace MupenUtilities.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DarkMode {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte UITheme {
             get {
-                return ((bool)(this["DarkMode"]));
+                return ((byte)(this["UITheme"]));
             }
             set {
-                this["DarkMode"] = value;
+                this["UITheme"] = value;
             }
         }
     }

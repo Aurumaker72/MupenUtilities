@@ -137,7 +137,10 @@ namespace MupenUtils
             this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_DarkMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Themes = new System.Windows.Forms.ToolStripMenuItem();
+            this.defaultLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
@@ -1310,7 +1313,7 @@ namespace MupenUtils
             this.tsmi_Agressive,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky,
-            this.tsmi_DarkMode});
+            this.tsmi_Themes});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
             this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 276);
             // 
@@ -1394,12 +1397,36 @@ namespace MupenUtils
             this.tsmi_Input_Sticky.Visible = false;
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
-            // tsmi_DarkMode
+            // tsmi_Themes
             // 
-            this.tsmi_DarkMode.Name = "tsmi_DarkMode";
-            this.tsmi_DarkMode.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_DarkMode.Text = "Dark Mode";
-            this.tsmi_DarkMode.Click += new System.EventHandler(this.tsmi_DarkMode_Click);
+            this.tsmi_Themes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.defaultLightToolStripMenuItem,
+            this.grayToolStripMenuItem,
+            this.darkToolStripMenuItem});
+            this.tsmi_Themes.Name = "tsmi_Themes";
+            this.tsmi_Themes.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_Themes.Text = "Themes";
+            // 
+            // defaultLightToolStripMenuItem
+            // 
+            this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.defaultLightToolStripMenuItem.Text = "Light";
+            this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
+            // 
+            // grayToolStripMenuItem
+            // 
+            this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.grayToolStripMenuItem.Text = "Gray";
+            this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
+            // 
+            // darkToolStripMenuItem
+            // 
+            this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.darkToolStripMenuItem.Text = "Dark";
+            this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // ctx_TasStudio
             // 
@@ -1600,7 +1627,10 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem inputStatisticsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem tsmi_DarkMode;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Themes;
+        private System.Windows.Forms.ToolStripMenuItem defaultLightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem grayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem darkToolStripMenuItem;
     }
 }
 

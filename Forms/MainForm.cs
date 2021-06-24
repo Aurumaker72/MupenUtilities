@@ -116,7 +116,6 @@ namespace MupenUtils
         bool loopInputs = true;
         bool forwardsPlayback = true;
         bool readOnly = true;
-        bool darkMode = false;
 
         /*TAS Studio*/
         public static int markedGoToFrame = 0;
@@ -234,6 +233,14 @@ namespace MupenUtils
         };
         UsageTypes UsageType = UsageTypes.M64;
 
+        public enum UIThemes
+        {
+            Default,
+            Gray,
+            Dark
+        };
+        UIThemes UITheme = UIThemes.Default;
+
         const int PROCESS_QUERY_INFORMATION = 0x0400;
         const int MEM_COMMIT = 0x00001000;
         const int PAGE_READWRITE = 0x04;
@@ -350,9 +357,12 @@ namespace MupenUtils
             originalGroupboxLocation[2] = gpRom.Location;
             originalGroupboxLocation[3] = gp_Plugins.Location;
 
-            tsmi_DarkMode.Checked = MupenUtilities.Properties.Settings.Default.DarkMode;
-            darkMode = tsmi_DarkMode.Checked;
-            if(darkMode) SetDarkMode(darkMode);
+            //tsmi_Themes.Checked = MupenUtilities.Properties.Settings.Default.DarkMode;
+            //darkMode = tsmi_Themes.Checked;
+            //if(darkMode) SetDarkMode(darkMode);
+
+            UITheme = (UIThemes)MupenUtilities.Properties.Settings.Default.UITheme; // doing this in C would be so painful
+            if (UITheme != UIThemes.Default) SetUITheme(UITheme);
 
 //#if DEBUG
             ctx_Input_Debug.Items.Add(new ToolStripSeparator());
@@ -382,46 +392,81 @@ namespace MupenUtils
 
         #region UI
 
-        void SetDarkMode(bool flag)
+        void SetUITheme(UIThemes uitheme)
         {
+            Color gp_BackColor  = Color.Red;
+            Color chk_BackColor = Color.Red;
+            Color btn_BackColor = Color.Red;
+            Color txt_BackColor = Color.Red;
+            Color dgv_BackColor = Color.Red;
+            Color dgv_GridColor = Color.Red;
+            Color miscColor     = Color.Red;
 
-            if (flag)
+
+            if (uitheme == UIThemes.Gray)
             {
-                this.ForAllControls(c =>
-                {
-                    if (c is GroupBox) c.BackColor = Color.Gray;
-                    if (c is CheckBox) c.Parent.BackColor = Color.Gray;
-                    if (c is Button) { Button b = c as Button; b.FlatStyle = FlatStyle.Flat; b.FlatAppearance.BorderSize = 0; b.BackColor = Color.DarkGray; }
-                    if (c is TextBox) c.BackColor = Color.DarkGray;
-
-                });
-                tr_MovieScrub.BackColor = Color.Gray;
-                this.BackColor = Color.Gray;
-                dgv_Main.BackgroundColor = Color.Gray;
-                dgv_Main.GridColor = Color.Black;
-                dgv_Main.ForeColor = Color.Black;
-                pb_JoystickPic.BackColor = Color.Transparent;
+                gp_BackColor =  Color.Gray;
+                chk_BackColor = Color.Gray;
+                btn_BackColor = Color.Gray;
+                txt_BackColor = Color.Gray;
+                miscColor =     Color.Gray;
+                dgv_BackColor = Color.Gray;
+                dgv_GridColor = Color.Black;
             }
-            else
+            else if(uitheme == UIThemes.Default)
             {
-                this.ForAllControls(c =>
-                {
-                    if (c is GroupBox) c.BackColor = Color.FromKnownColor(KnownColor.Control);
-                    if (c is CheckBox) c.Parent.BackColor = Color.FromKnownColor(KnownColor.Control);
-                    if (c is Button) {  Button b = c as Button; b.UseVisualStyleBackColor = true; b.FlatStyle = FlatStyle.Standard; b.FlatAppearance.BorderSize = 0; b.BackColor = Color.FromKnownColor(KnownColor.Control); }
-                    if (c is TextBox) c.BackColor = Color.FromKnownColor(KnownColor.Control);
-
-                });
-                tr_MovieScrub.BackColor = Color.FromKnownColor(KnownColor.Control);
-                this.BackColor = Color.FromKnownColor(KnownColor.Control);
-                dgv_Main.BackgroundColor = Color.FromKnownColor(KnownColor.Control);
-                dgv_Main.GridColor = Color.FromKnownColor(KnownColor.Black);
-                dgv_Main.ForeColor = Color.FromKnownColor(KnownColor.Black);
-                pb_JoystickPic.BackColor = Color.Transparent;
                 
-            }
-            st_Status.Visible = !darkMode;
+                gp_BackColor = Color.FromKnownColor(KnownColor.Control);
+                chk_BackColor = Color.FromKnownColor(KnownColor.Control);
+                btn_BackColor = Color.FromKnownColor(KnownColor.Control);
+                txt_BackColor = Color.FromKnownColor(KnownColor.Control);
+                miscColor = Color.FromKnownColor(KnownColor.Control);
+                dgv_BackColor = Color.FromKnownColor(KnownColor.Control);
+                dgv_GridColor = Color.Black;
 
+            } else if(uitheme == UIThemes.Dark)
+            {
+                gp_BackColor =  Color.FromArgb(255,50,50,50);
+                chk_BackColor = Color.FromArgb(255,50,50,50);
+                btn_BackColor = Color.FromArgb(255,50,50,50);
+                txt_BackColor = Color.FromArgb(255,50,50,50);
+                miscColor =     Color.FromArgb(255,50,50,50);
+                dgv_BackColor = Color.FromArgb(255,50,50,50);
+                dgv_GridColor = Color.Black;
+            }
+
+            this.ForAllControls(c =>
+                {
+                    if (c is GroupBox) c.BackColor = gp_BackColor;
+                    if (c is CheckBox) c.Parent.BackColor = chk_BackColor;
+                    if (c is Button)
+                    {
+                        Button b = c as Button;
+                        if (uitheme != UIThemes.Default)
+                        {
+                            b.FlatStyle = FlatStyle.Flat;
+                            b.FlatAppearance.BorderSize = 0;
+                        }
+                        else
+                            b.FlatStyle = FlatStyle.Standard;
+
+                        
+
+                        b.BackColor = btn_BackColor;
+                        b.UseVisualStyleBackColor = uitheme == UIThemes.Default;
+                    }
+                    if (c is TextBox) c.BackColor = txt_BackColor;
+                });
+
+            tr_MovieScrub.BackColor = miscColor;
+            this.BackColor = miscColor;
+            dgv_Main.BackgroundColor = dgv_BackColor;
+            dgv_Main.GridColor = dgv_GridColor;
+            dgv_Main.ForeColor = dgv_GridColor;
+
+            pb_JoystickPic.BackColor = Color.Transparent;
+
+            
         }
         void ResetTitle()
         {
@@ -837,7 +882,7 @@ namespace MupenUtils
                         if (ControllersEnabled[3])
                             inputListCtl4.Add(br.ReadInt32());
                     }
-                    catch { findx++; }
+                    catch {}
                     findx++;
                 }
             }
@@ -898,8 +943,9 @@ namespace MupenUtils
             if (magic_Raw != 439629389)
                 lbl_misc_Magic.ForeColor = Color.Red;
 
+            foreach (var _ in validCrcs.Where(crc => Crc32 != crc).Select(
             // check if crc is some widespread game like sm64, ssb64, kario mart, etc...
-            foreach (var _ in validCrcs.Where(crc => Crc32 != crc).Select(crc => new { }))
+            crc => new { }))
             {
                 lbl_ROMCRC.ForeColor = Color.Red;
                 break;
@@ -1845,7 +1891,51 @@ namespace MupenUtils
             liveTasStudio ^= true;
             tsmi_LiveTasStudio.Checked = liveTasStudio;
         }
+        
 
+        private void themeSelectedClick(object sender, MouseEventArgs e)
+        {
+            ToolStripMenuItem btn = sender as ToolStripMenuItem;
+
+            for (int i = 0; i < tsmi_Themes.DropDownItems.Count; i++)
+            {
+
+                
+                
+
+                for (int j = 0; j < tsmi_Themes.DropDownItems.Count; j++)
+                {
+                    // cry about the logically unoptimized implementation
+                    ToolStripMenuItem ts = tsmi_Themes.DropDownItems[i] as ToolStripMenuItem;
+                    ts.Checked = false;
+                }
+                
+
+                if (tsmi_Themes.DropDownItems[i] == btn)
+                {
+                    UITheme = (UIThemes)i;
+                    SetUITheme(UITheme);
+                    ToolStripMenuItem ts = tsmi_Themes.DropDownItems[i] as ToolStripMenuItem;
+                    ts.Checked = true;
+                    break;
+                }
+                    
+            }
+        }
+        private void inputStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InputStatsForm.inputCtl1 = inputListCtl1;
+            InputStatsForm.inputCtl2 = inputListCtl2;
+            InputStatsForm.inputCtl3 = inputListCtl3;
+            InputStatsForm.inputCtl4 = inputListCtl4;
+
+            inputStatisticsForm.ShowDialog();
+        }
+
+        private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            SetFrame(e.RowIndex+1);
+        }
         #endregion
 
         #region Joystick Behaviour
@@ -1933,41 +2023,23 @@ namespace MupenUtils
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
-        private void inputStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            InputStatsForm.inputCtl1 = inputListCtl1;
-            InputStatsForm.inputCtl2 = inputListCtl2;
-            InputStatsForm.inputCtl3 = inputListCtl3;
-            InputStatsForm.inputCtl4 = inputListCtl4;
-
-            inputStatisticsForm.ShowDialog();
-        }
-
-        private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            SetFrame(e.RowIndex+1);
-        }
-
-        private void tsmi_DarkMode_Click(object sender, EventArgs e)
-        {
-            darkMode ^= true;
-            tsmi_DarkMode.Checked = darkMode;
-            MupenUtilities.Properties.Settings.Default.DarkMode = darkMode;
-            MupenUtilities.Properties.Settings.Default.Save();
-            
-            SetDarkMode(darkMode);
-        }
-
+       
 
         private void DrawJoystick(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = JOY_SmoothingMode;
 
-            Pen linepen;
+            Pen linepen = Pens.Red;
+
             if (readOnly) linepen = new Pen(Color.Gray, 3);
-            if(darkMode) linepen = new Pen(Color.Black, 3);
-            else linepen = new Pen(Color.Blue, 3);
-            if (darkMode) e.Graphics.FillRectangle(Brushes.Gray, pb_JoystickPic.ClientRectangle);
+
+            if(UITheme == UIThemes.Default)      linepen = new Pen(Color.Blue, 3);
+            else if(UITheme == UIThemes.Gray)    linepen = new Pen(Color.Black, 3);
+            else if(UITheme == UIThemes.Dark)    linepen = new Pen(Color.Gray, 3);
+
+            if(UITheme == UIThemes.Default)   e.Graphics.FillRectangle(new SolidBrush(Color.FromKnownColor(KnownColor.Control)), pb_JoystickPic.ClientRectangle);
+            else if(UITheme == UIThemes.Gray) e.Graphics.FillRectangle(Brushes.Gray, pb_JoystickPic.ClientRectangle);
+            else if(UITheme == UIThemes.Dark) e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255,50,50,50)), pb_JoystickPic.ClientRectangle);
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
             if (lockType)
@@ -1983,28 +2055,39 @@ namespace MupenUtils
                 xy = RelativeToAbsolute(JOY_Rel);
             }
 
+            // branching in draw loop... you saw it here first folks
+
             if (!readOnly)
             {
-                if (darkMode)
+                if (UITheme == UIThemes.Default)
+                {
+                     e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                    e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                    e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+                }
+                else if(UITheme == UIThemes.Gray)
                 {
                     e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
                     e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
                     e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
                     e.Graphics.DrawLine(linepen, JOY_middle, xy);
                     e.Graphics.FillEllipse(Brushes.Black, xy.X - 4, xy.Y - 4, 8, 8);
+                   
                 }
-                else
+                else if(UITheme == UIThemes.Dark)
                 {
-                    e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                    e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                    e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                    e.Graphics.DrawEllipse(linepen, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawLine(linepen, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                    e.Graphics.DrawLine(linepen, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
                     e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                    e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+                    e.Graphics.FillEllipse(linepen.Brush, xy.X - 4, xy.Y - 4, 8, 8);
                 }
             }
             else
             {
-                if (darkMode)
+                if (UITheme == UIThemes.Default)
                 {
                     e.Graphics.DrawEllipse(Pens.DarkGray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
                     e.Graphics.DrawLine(Pens.DarkGray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
@@ -2012,13 +2095,21 @@ namespace MupenUtils
                     e.Graphics.DrawLine(linepen, JOY_middle, xy);
                     e.Graphics.FillEllipse(Brushes.DarkGray, xy.X - 4, xy.Y - 4, 8, 8);
                 }
-                else
+                else if (UITheme == UIThemes.Gray)
                 {
-                    e.Graphics.DrawEllipse(Pens.Gray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                    e.Graphics.DrawLine(Pens.Gray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                    e.Graphics.DrawLine(Pens.Gray, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                    e.Graphics.DrawEllipse(Pens.DarkGray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawLine(Pens.DarkGray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                    e.Graphics.DrawLine(Pens.DarkGray, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
                     e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                    e.Graphics.FillEllipse(Brushes.Gray, xy.X - 4, xy.Y - 4, 8, 8);
+                    e.Graphics.FillEllipse(Brushes.DarkGray, xy.X - 4, xy.Y - 4, 8, 8);
+                }
+                else if (UITheme == UIThemes.Dark)
+                {
+                    e.Graphics.DrawEllipse(linepen, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawLine(linepen, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+                    e.Graphics.DrawLine(linepen, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
+                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                    e.Graphics.FillEllipse(linepen.Brush, xy.X - 4, xy.Y - 4, 8, 8);
                 }
             }
             linepen.Dispose();
