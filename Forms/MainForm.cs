@@ -122,6 +122,7 @@ namespace MupenUtils
         public static int markedSizeCell = 10;
         public static bool forceGoto = false;
         public static bool forceResizeCell = false;
+        public static bool tasStudioBusy = false;
         int cellSize = 10;
 
         bool simpleMode = false;
@@ -130,12 +131,13 @@ namespace MupenUtils
 
         // M64 Data as Strings
         string Magic;
+        Int32 magic_Raw;
         string Version;
         Int32 UID;
         UInt32 VIs; // vis
         byte VI_s; // vi/s
         public static UInt32 frames;
-        UInt32 RRs;
+        public static UInt32 RRs;
         byte Controllers;
         bool[] ControllersEnabled = { false, false, false, false };
         Int16 StartType;
@@ -317,7 +319,7 @@ namespace MupenUtils
             chk_Cright, // R_CBUTTON           (CONTROL)
             chk_Cleft,  // L_CBUTTON           (CONTROL)
             chk_Cdown,  //D_CBUTTON            (CONTROL)
-            chk_Up,     //U_CBUTTON            (CONTROL)
+            chk_Cup,     //U_CBUTTON            (CONTROL)
 
             chk_R,      //R_TRIG               (CONTROL)
             chk_L,       //L_TRIG               (CONTROL)
@@ -819,7 +821,7 @@ namespace MupenUtils
             ResetLblColors();
 
             // Read header
-            Int32 magic_Raw = br.ReadInt32();
+            magic_Raw = br.ReadInt32();
             Magic = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(magic_Raw));
             Version = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
             UID = br.ReadInt32();
@@ -946,11 +948,19 @@ namespace MupenUtils
 
             EnableM64View_ThreadSafe(true);
 
+            CheckSuspiciousProperties();
+            //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
+
+            this.Invoke(new Action(() => PreloadTASStudio()));
+        }
+        void CheckSuspiciousProperties()
+        {
             if (Controllers > 1)
             {
                 lbl_Ctrls.ForeColor = Color.Red;
                 MessageBox.Show("Your movie has more than one controller plugged in. This might cause bugs and crashes.", PROGRAM_NAME + " - Too many controllers");
             }
+
             if (txt_RomCountry.Text.Contains("Unknown"))
                 lbl_RomCountry.ForeColor = Color.Red;
 
@@ -960,18 +970,24 @@ namespace MupenUtils
             if (magic_Raw != 439629389)
                 lbl_misc_Magic.ForeColor = Color.Red;
 
-            foreach (var _ in validCrcs.Where(crc => Crc32 != crc).Select(
-            // check if crc is some widespread game like sm64, ssb64, kario mart, etc...
-            crc => new { }))
+            if (VIs == 0 || VI_s == 0)
+                lb_VIs.ForeColor = Color.Red;
+
+            
+
+           
+
+           lbl_ROMCRC.ForeColor = Color.Red;
+           foreach(var crc in validCrcs)
             {
-                lbl_ROMCRC.ForeColor = Color.Red;
-                break;
+                if(Crc32 == crc)
+                {
+                    lbl_ROMCRC.ForeColor = Color.Black;
+                    break;
+                }
             }
-            //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
-            this.Invoke(new Action(() => PreloadTASStudio()));
         }
-
         void WriteM64()
         {
             Debug.WriteLine(String.Format("Begin Save M64: File loaded: {0}", FileLoaded));
@@ -1162,7 +1178,6 @@ namespace MupenUtils
 
         void PreloadTASStudio()
         {
-
             // nuke data
             // this crashes for some reason after the 2nd time
 
@@ -1191,7 +1206,7 @@ namespace MupenUtils
             new Thread(() =>
            {
                while (dgv_Main.RecreatingHandle) ; // spin until handle is created
-
+               tasStudioBusy = true;
                for (int y = 0; y < inputLists[selectedController].Count; y++)
                {
                    // for each frame
@@ -1227,6 +1242,7 @@ namespace MupenUtils
                    }
                }
                gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
+               tasStudioBusy = false;
            }).Start();
         }
 
@@ -1248,6 +1264,7 @@ namespace MupenUtils
         {
             if (!FileLoaded)
                 return;
+            if (tasStudioBusy) return;
             int value = 0XDD;
             try
             {

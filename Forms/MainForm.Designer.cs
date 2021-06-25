@@ -1007,6 +1007,7 @@ namespace MupenUtils
             // chk_restart
             // 
             this.chk_restart.AutoSize = true;
+            this.chk_restart.Enabled = false;
             this.chk_restart.Location = new System.Drawing.Point(96, 48);
             this.chk_restart.Name = "chk_restart";
             this.chk_restart.Size = new System.Drawing.Size(76, 21);
@@ -1410,21 +1411,21 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
