@@ -5,6 +5,49 @@ namespace MupenUtils
 {
     public static class DataHelper
     {
+        public static UInt32[] validCrcs = {
+            0x03048DE6,
+            0x11FB579B,
+            0xDD801954,
+            0x5CF7952A,
+            0xA1E15117,
+            0xBC9FF5F2,
+            0x3CE60709,
+            0x42C43204,
+            0x587DD983,
+            0x2AF50883,
+            0x6395C475,
+            0xA2DCF689,
+            0x7FE024C9,
+            0x4246EE14,
+            0x7FF42FD0,
+            0xC0345565,
+            0x3B53519F,
+            0x35958F55,
+            0x08287CC8,
+            0xF42BB75F,
+            0xCDF26D67,
+            0x356736C7,
+            0xE96779FA,
+            0xB2F04090,
+            0x45A91CB1,
+            0x7976248C,
+            0xEB97929E,
+            0xDD2DF6D9,
+            0xFAA6B083,
+            0x6787E212,
+            0x0248F6C3,
+            0x032625B0,
+            0x5D9696DF,
+            0x4711A9DC,
+            0x6CED6472,
+            0x26450AAB,
+            0x434389C1,
+            0x2BCEE11C,
+            0xDA98A5D3,
+            4281031267
+            };
+
         public static short GetMovieStartupTypeIndex(string stype)
         {
             short type;
