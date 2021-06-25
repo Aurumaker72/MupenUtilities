@@ -207,6 +207,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\TipProvider.cs" />
+    <Compile Include="Helpers\WinApiSpecialWrap.cs" />
     <Compile Include="Networking\NetworkingManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using MRG.Controls.UI;
+using MupenUtilities.Helpers;
 
 namespace MupenUtils.Forms
 {
@@ -34,6 +35,7 @@ namespace MupenUtils.Forms
             this.Text = MainForm.PROGRAM_NAME + " - Mupen64 Hook";
             if (MainForm.standardBitArh) this.Text += " (?)";
             this.TopMost = true;
+            WinApiSpecialWrap.TimeBeginPeriod(1);
         }
 
         private void MupenHookForm_Shown(object sender, EventArgs e)
@@ -49,7 +51,7 @@ namespace MupenUtils.Forms
                 
                 while (loading)
                 {
-                    Thread.Sleep(1);
+                    Thread.Sleep(100);
                 }
 
                 byte opacity = 0;
@@ -64,21 +66,21 @@ namespace MupenUtils.Forms
 
                 // everything is black and invisible now.. some time to put up controls
                 panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.Dock = DockStyle.None));
-                //panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.SendToBack()));
                 panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.BackColor = Color.FromArgb(0, Color.Black)));
-                
                 panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.Visible = false));
-                panel_MupenHook.Invoke((MethodInvoker)(() => panel_MupenHook.Visible = true));
+                
 
                 opacity = 255;
                 while (opacity > 0)
                 {
                     panel_MupenHook.Invoke((MethodInvoker)(() => panel_MupenHook.BackColor = Color.FromArgb(opacity, Color.Black)));
                     opacity--;
-                    Thread.Sleep(1);
+                    Thread.Sleep(5);
                 }
 
                 
+                
+                panel_MupenHook.Invoke((MethodInvoker)(() => panel_MupenHook.Visible = true));
 
                 lbl_ProcName.Invoke((MethodInvoker)(() => lbl_ProcName.Text += MupenData.PROCESS_NAME)); 
                 lbl_Name.Invoke((MethodInvoker)(() => lbl_Name.Text += MupenData.MUPEN_NAME)); 
