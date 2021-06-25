@@ -1900,15 +1900,7 @@ namespace MupenUtils
             for (int i = 0; i < tsmi_Themes.DropDownItems.Count; i++)
             {
 
-                
-                
-
-                for (int j = 0; j < tsmi_Themes.DropDownItems.Count; j++)
-                {
-                    // cry about the logically unoptimized implementation
-                    ToolStripMenuItem ts = tsmi_Themes.DropDownItems[i] as ToolStripMenuItem;
-                    ts.Checked = false;
-                }
+                foreach(ToolStripMenuItem ts in tsmi_Themes.DropDownItems) ts.Checked = false;
                 
 
                 if (tsmi_Themes.DropDownItems[i] == btn)
