@@ -364,6 +364,10 @@ namespace MupenUtils
             UITheme = (UIThemes)MupenUtilities.Properties.Settings.Default.UITheme; // doing this in C would be so painful
             if (UITheme != UIThemes.Default) SetUITheme(UITheme);
 
+            foreach(ToolStripMenuItem _ts in tsmi_Themes.DropDownItems) _ts.Checked = false;
+            ToolStripMenuItem ts = tsmi_Themes.DropDownItems[(int)UITheme] as ToolStripMenuItem;
+            ts.Checked = true;
+
 //#if DEBUG
             ctx_Input_Debug.Items.Add(new ToolStripSeparator());
             ToolStripMenuItem tsmi_DBG_Crash = new ToolStripMenuItem();
@@ -1897,12 +1901,10 @@ namespace MupenUtils
         {
             ToolStripMenuItem btn = sender as ToolStripMenuItem;
 
+            foreach(ToolStripMenuItem ts in tsmi_Themes.DropDownItems) ts.Checked = false;
+
             for (int i = 0; i < tsmi_Themes.DropDownItems.Count; i++)
             {
-
-                foreach(ToolStripMenuItem ts in tsmi_Themes.DropDownItems) ts.Checked = false;
-                
-
                 if (tsmi_Themes.DropDownItems[i] == btn)
                 {
                     UITheme = (UIThemes)i;
