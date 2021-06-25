@@ -78,3 +78,5 @@ Hook into mupen64 process memory and view some data like version string.
 🧵This program is multithreaded
 
 🎛️This program does not fully support more than one controller
+
+🖌️This application has themes
