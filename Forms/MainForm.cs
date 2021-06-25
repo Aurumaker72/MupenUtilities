@@ -499,6 +499,17 @@ namespace MupenUtils
                }).Start();
         }
 
+        void RedControlBack(Control ctrl)
+        {
+            Color tempcolor = ctrl.BackColor;
+            ctrl.BackColor = Color.Red;
+            new Thread(() =>
+               {
+                   Thread.Sleep(1000);
+                   ctrl.BackColor = tempcolor;
+               }).Start();
+        }
+
         void EnableM64View(bool flag, bool change)
         {
             
@@ -1849,7 +1860,7 @@ namespace MupenUtils
 
         private void generic_ClickDisallowedProperty(object sender, MouseEventArgs e)
         {
-            MessageBox.Show("This property is vital for the emulator to play back the movie correctly. You cannot change this in the simple GUI.", PROGRAM_NAME);
+            RedControlBack(sender as TextBox);
         }
 
         private void tsmi_Agressive_Click(object sender, EventArgs e)
