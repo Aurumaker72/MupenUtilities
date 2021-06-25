@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace MupenUtils
 {
     public static class DataHelper
     {
-        public static UInt32[] validCrcs = {
+        public static List<UInt32> validCrcs = new List<uint>()
+        {
             0x03048DE6,
             0x11FB579B,
             0xDD801954,
@@ -45,8 +49,9 @@ namespace MupenUtils
             0x434389C1,
             0x2BCEE11C,
             0xDA98A5D3,
-            4281031267
-            };
+            4281031267,
+            0xC76319D8,
+        };
 
         public static short GetMovieStartupTypeIndex(string stype)
         {
@@ -183,5 +188,40 @@ namespace MupenUtils
 
         }
 
+
+        public static void PopulateCRCsFromFile()
+        {
+            if (!File.Exists(@"crc.txt"))
+            {
+                System.Windows.Forms.MessageBox.Show("crc.txt couldn't be found");
+                return;
+            }
+            string data = File.ReadAllText(@"crc.txt");
+            for (int i = 0; i < data.Length; i++)
+            {
+
+                // this is so slow and stupid lol
+
+                if(data[i] == 'c' &&
+                  data[i+1] == 'r' &&
+                  data[i+2] == 'c')
+                {
+                    // found crc field
+                    StringBuilder sb = new StringBuilder()
+                        .Append(data[i + 4])
+                        .Append(data[i + 5])
+                        .Append(data[i + 6])
+                        .Append(data[i + 7])
+                        .Append(data[i + 8])
+                        .Append(data[i + 9])
+                        .Append(data[i + 10])
+                        .Append(data[i + 11]);
+
+                    //char[] chrs = sb.ToString().ToCharArray();
+                    
+                    validCrcs.Add(uint.Parse(sb.ToString(), System.Globalization.NumberStyles.HexNumber));
+                }
+            }
+        }
     }
 }

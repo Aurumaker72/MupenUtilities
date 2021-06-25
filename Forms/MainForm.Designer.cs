@@ -146,6 +146,8 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_LiveTasStudio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_CRCPopulate = new System.Windows.Forms.ToolStripMenuItem();
+            this.pb_RomCountry = new System.Windows.Forms.PictureBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -161,6 +163,7 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -492,7 +495,7 @@ namespace MupenUtils
             // 
             // btn_Savem64
             // 
-            this.btn_Savem64.Location = new System.Drawing.Point(6, 390);
+            this.btn_Savem64.Location = new System.Drawing.Point(6, 402);
             this.btn_Savem64.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Savem64.Name = "btn_Savem64";
             this.btn_Savem64.Size = new System.Drawing.Size(270, 28);
@@ -504,6 +507,7 @@ namespace MupenUtils
             // 
             // gpRom
             // 
+            this.gpRom.Controls.Add(this.pb_RomCountry);
             this.gpRom.Controls.Add(this.txt_Rom);
             this.gpRom.Controls.Add(this.txt_Crc);
             this.gpRom.Controls.Add(this.txt_RomCountry);
@@ -514,7 +518,7 @@ namespace MupenUtils
             this.gpRom.Margin = new System.Windows.Forms.Padding(4);
             this.gpRom.Name = "gpRom";
             this.gpRom.Padding = new System.Windows.Forms.Padding(4);
-            this.gpRom.Size = new System.Drawing.Size(267, 140);
+            this.gpRom.Size = new System.Drawing.Size(267, 156);
             this.gpRom.TabIndex = 0;
             this.gpRom.TabStop = false;
             this.gpRom.Text = "ROM";
@@ -738,7 +742,7 @@ namespace MupenUtils
             this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
             this.gp_Plugins.Name = "gp_Plugins";
             this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_Plugins.Size = new System.Drawing.Size(267, 140);
+            this.gp_Plugins.Size = new System.Drawing.Size(267, 156);
             this.gp_Plugins.TabIndex = 0;
             this.gp_Plugins.TabStop = false;
             this.gp_Plugins.Text = "Plugins";
@@ -1314,9 +1318,10 @@ namespace MupenUtils
             this.tsmi_Agressive,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_Input_Sticky,
-            this.tsmi_Themes});
+            this.tsmi_Themes,
+            this.tsmi_CRCPopulate});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 276);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 302);
             // 
             // tsmi_TasStudioAllow
             // 
@@ -1411,21 +1416,21 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
@@ -1466,6 +1471,21 @@ namespace MupenUtils
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
+            // 
+            // tsmi_CRCPopulate
+            // 
+            this.tsmi_CRCPopulate.Name = "tsmi_CRCPopulate";
+            this.tsmi_CRCPopulate.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_CRCPopulate.Text = "CRC Populate";
+            this.tsmi_CRCPopulate.Click += new System.EventHandler(this.tsmi_CRCPopulate_Click);
+            // 
+            // pb_RomCountry
+            // 
+            this.pb_RomCountry.Location = new System.Drawing.Point(12, 102);
+            this.pb_RomCountry.Name = "pb_RomCountry";
+            this.pb_RomCountry.Size = new System.Drawing.Size(50, 50);
+            this.pb_RomCountry.TabIndex = 1;
+            this.pb_RomCountry.TabStop = false;
             // 
             // MainForm
             // 
@@ -1510,6 +1530,7 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ctx_Input_Debug.ResumeLayout(false);
             this.ctx_TasStudio.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1632,6 +1653,8 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem defaultLightToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem darkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_CRCPopulate;
+        private System.Windows.Forms.PictureBox pb_RomCountry;
     }
 }
 

@@ -139,7 +139,7 @@ namespace MupenUtils
         public static UInt32 frames;
         public static UInt32 RRs;
         byte Controllers;
-        bool[] ControllersEnabled = { false, false, false, false };
+        public static bool[] ControllersEnabled = { false, false, false, false };
         Int16 StartType;
         string RomName;
         UInt32 Crc32;
@@ -940,11 +940,14 @@ namespace MupenUtils
            lbl_ROMCRC.ForeColor = Color.Red;
            foreach(var crc in DataHelper.validCrcs)
             {
-                if(Crc32 == crc)
+                //Debug.WriteLine("Crc32: " + Crc32.ToString("X2"));
+                //Debug.WriteLine("crc check: " + crc.ToString("X2"));
+                if(Crc32 == crc || Crc32.ToString("X2") == crc.ToString("X2")) // so much slower but might work 
                 {
                     lbl_ROMCRC.ForeColor = Color.Black;
                     break;
                 }
+                
             }
 
         }
@@ -1224,7 +1227,7 @@ namespace MupenUtils
         {
             if (!FileLoaded)
                 return;
-            if (tasStudioBusy) return;
+            //if (tasStudioBusy) return;
             int value = 0XDD;
             try
             {
@@ -1920,6 +1923,13 @@ namespace MupenUtils
         {
             SetFrame(e.RowIndex+1);
         }
+        private void tsmi_CRCPopulate_Click(object sender, EventArgs e)
+        {
+            int len = DataHelper.validCrcs.Count;
+            DataHelper.PopulateCRCsFromFile();
+            
+            MessageBox.Show("Added " + (DataHelper.validCrcs.Count - len) + " new CRCs");
+        }
         #endregion
 
         #region Joystick Behaviour
@@ -2007,7 +2017,7 @@ namespace MupenUtils
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
-       
+        
 
         private void DrawJoystick(PaintEventArgs e)
         {

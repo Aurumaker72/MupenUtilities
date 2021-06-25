@@ -30,9 +30,17 @@ namespace MupenUtils.Forms
         private void InitializeComponent()
         {
             this.gp_Stats = new System.Windows.Forms.GroupBox();
+            this.lbl_IsTAS = new System.Windows.Forms.Label();
+            this.lbl_ABC = new System.Windows.Forms.Label();
+            this.gp_joystick = new System.Windows.Forms.GroupBox();
+            this.txt_Y = new System.Windows.Forms.TextBox();
+            this.txt_X = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbl_SumX = new System.Windows.Forms.Label();
             this.gp_Buttons = new System.Windows.Forms.GroupBox();
             this.lbl_Res2 = new System.Windows.Forms.Label();
             this.lbl_Res1 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.lbl_Start = new System.Windows.Forms.Label();
             this.lbl_DDown = new System.Windows.Forms.Label();
             this.lbl_DRight = new System.Windows.Forms.Label();
@@ -49,17 +57,9 @@ namespace MupenUtils.Forms
             this.lbl_A = new System.Windows.Forms.Label();
             this.cbox_Ctl = new System.Windows.Forms.ComboBox();
             this.lbl_Ctl = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.gp_joystick = new System.Windows.Forms.GroupBox();
-            this.lbl_SumX = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txt_X = new System.Windows.Forms.TextBox();
-            this.txt_Y = new System.Windows.Forms.TextBox();
-            this.lbl_ABC = new System.Windows.Forms.Label();
-            this.lbl_IsTAS = new System.Windows.Forms.Label();
             this.gp_Stats.SuspendLayout();
-            this.gp_Buttons.SuspendLayout();
             this.gp_joystick.SuspendLayout();
+            this.gp_Buttons.SuspendLayout();
             this.SuspendLayout();
             // 
             // gp_Stats
@@ -78,9 +78,75 @@ namespace MupenUtils.Forms
             this.gp_Stats.TabStop = false;
             this.gp_Stats.Text = "Input Statistics";
             // 
+            // lbl_IsTAS
+            // 
+            this.lbl_IsTAS.AutoSize = true;
+            this.lbl_IsTAS.Location = new System.Drawing.Point(376, 32);
+            this.lbl_IsTAS.Name = "lbl_IsTAS";
+            this.lbl_IsTAS.Size = new System.Drawing.Size(53, 17);
+            this.lbl_IsTAS.TabIndex = 0;
+            this.lbl_IsTAS.Text = "Is TAS:";
+            // 
+            // lbl_ABC
+            // 
+            this.lbl_ABC.AutoSize = true;
+            this.lbl_ABC.Location = new System.Drawing.Point(248, 32);
+            this.lbl_ABC.Name = "lbl_ABC";
+            this.lbl_ABC.Size = new System.Drawing.Size(53, 17);
+            this.lbl_ABC.TabIndex = 0;
+            this.lbl_ABC.Text = "Is ABC:";
+            // 
+            // gp_joystick
+            // 
+            this.gp_joystick.Controls.Add(this.txt_Y);
+            this.gp_joystick.Controls.Add(this.txt_X);
+            this.gp_joystick.Controls.Add(this.label2);
+            this.gp_joystick.Controls.Add(this.lbl_SumX);
+            this.gp_joystick.Location = new System.Drawing.Point(8, 64);
+            this.gp_joystick.Name = "gp_joystick";
+            this.gp_joystick.Size = new System.Drawing.Size(208, 288);
+            this.gp_joystick.TabIndex = 0;
+            this.gp_joystick.TabStop = false;
+            this.gp_joystick.Text = "Joystick";
+            // 
+            // txt_Y
+            // 
+            this.txt_Y.Location = new System.Drawing.Point(16, 192);
+            this.txt_Y.Multiline = true;
+            this.txt_Y.Name = "txt_Y";
+            this.txt_Y.ReadOnly = true;
+            this.txt_Y.Size = new System.Drawing.Size(176, 80);
+            this.txt_Y.TabIndex = 1;
+            // 
+            // txt_X
+            // 
+            this.txt_X.Location = new System.Drawing.Point(16, 64);
+            this.txt_X.Multiline = true;
+            this.txt_X.Name = "txt_X";
+            this.txt_X.ReadOnly = true;
+            this.txt_X.Size = new System.Drawing.Size(176, 80);
+            this.txt_X.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 160);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(94, 17);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Sum of Y Axis";
+            // 
+            // lbl_SumX
+            // 
+            this.lbl_SumX.AutoSize = true;
+            this.lbl_SumX.Location = new System.Drawing.Point(16, 40);
+            this.lbl_SumX.Name = "lbl_SumX";
+            this.lbl_SumX.Size = new System.Drawing.Size(94, 17);
+            this.lbl_SumX.TabIndex = 0;
+            this.lbl_SumX.Text = "Sum of X Axis";
+            // 
             // gp_Buttons
             // 
-            this.gp_Buttons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.gp_Buttons.Controls.Add(this.lbl_Res2);
             this.gp_Buttons.Controls.Add(this.lbl_Res1);
             this.gp_Buttons.Controls.Add(this.label1);
@@ -122,6 +188,14 @@ namespace MupenUtils.Forms
             this.lbl_Res1.Size = new System.Drawing.Size(49, 17);
             this.lbl_Res1.TabIndex = 6;
             this.lbl_Res1.Text = "Res. 1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(304, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 17);
+            this.label1.TabIndex = 7;
             // 
             // lbl_Start
             // 
@@ -268,81 +342,6 @@ namespace MupenUtils.Forms
             this.lbl_Ctl.TabIndex = 0;
             this.lbl_Ctl.Text = "Controller";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(304, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 17);
-            this.label1.TabIndex = 7;
-            // 
-            // gp_joystick
-            // 
-            this.gp_joystick.Controls.Add(this.txt_Y);
-            this.gp_joystick.Controls.Add(this.txt_X);
-            this.gp_joystick.Controls.Add(this.label2);
-            this.gp_joystick.Controls.Add(this.lbl_SumX);
-            this.gp_joystick.Location = new System.Drawing.Point(8, 64);
-            this.gp_joystick.Name = "gp_joystick";
-            this.gp_joystick.Size = new System.Drawing.Size(208, 288);
-            this.gp_joystick.TabIndex = 0;
-            this.gp_joystick.TabStop = false;
-            this.gp_joystick.Text = "Joystick";
-            // 
-            // lbl_SumX
-            // 
-            this.lbl_SumX.AutoSize = true;
-            this.lbl_SumX.Location = new System.Drawing.Point(16, 40);
-            this.lbl_SumX.Name = "lbl_SumX";
-            this.lbl_SumX.Size = new System.Drawing.Size(94, 17);
-            this.lbl_SumX.TabIndex = 0;
-            this.lbl_SumX.Text = "Sum of X Axis";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 160);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 17);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Sum of Y Axis";
-            // 
-            // txt_X
-            // 
-            this.txt_X.Location = new System.Drawing.Point(16, 64);
-            this.txt_X.Multiline = true;
-            this.txt_X.Name = "txt_X";
-            this.txt_X.ReadOnly = true;
-            this.txt_X.Size = new System.Drawing.Size(176, 80);
-            this.txt_X.TabIndex = 1;
-            // 
-            // txt_Y
-            // 
-            this.txt_Y.Location = new System.Drawing.Point(16, 192);
-            this.txt_Y.Multiline = true;
-            this.txt_Y.Name = "txt_Y";
-            this.txt_Y.ReadOnly = true;
-            this.txt_Y.Size = new System.Drawing.Size(176, 80);
-            this.txt_Y.TabIndex = 1;
-            // 
-            // lbl_ABC
-            // 
-            this.lbl_ABC.AutoSize = true;
-            this.lbl_ABC.Location = new System.Drawing.Point(248, 32);
-            this.lbl_ABC.Name = "lbl_ABC";
-            this.lbl_ABC.Size = new System.Drawing.Size(53, 17);
-            this.lbl_ABC.TabIndex = 0;
-            this.lbl_ABC.Text = "Is ABC:";
-            // 
-            // lbl_IsTAS
-            // 
-            this.lbl_IsTAS.AutoSize = true;
-            this.lbl_IsTAS.Location = new System.Drawing.Point(376, 32);
-            this.lbl_IsTAS.Name = "lbl_IsTAS";
-            this.lbl_IsTAS.Size = new System.Drawing.Size(53, 17);
-            this.lbl_IsTAS.TabIndex = 0;
-            this.lbl_IsTAS.Text = "Is TAS:";
-            // 
             // InputStatsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -358,10 +357,10 @@ namespace MupenUtils.Forms
             this.Shown += new System.EventHandler(this.InputStatsForm_Shown);
             this.gp_Stats.ResumeLayout(false);
             this.gp_Stats.PerformLayout();
-            this.gp_Buttons.ResumeLayout(false);
-            this.gp_Buttons.PerformLayout();
             this.gp_joystick.ResumeLayout(false);
             this.gp_joystick.PerformLayout();
+            this.gp_Buttons.ResumeLayout(false);
+            this.gp_Buttons.PerformLayout();
             this.ResumeLayout(false);
 
         }

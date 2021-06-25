@@ -123,7 +123,18 @@ namespace MupenUtils.Forms
 
         private void InputStatsForm_Shown(object sender, EventArgs e)
         {
+            foreach (Control ctl in Controls)
+                ctl.Enabled = MainForm.FileLoaded;
+
             // extremely absolutely very efficient trust me
+
+            if (!MainForm.FileLoaded) return;
+            
+                cbox_Ctl.Items.Clear();
+
+                for (int i = 0; i < 4; i++)
+                    if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i+1));
+            
 
             Array.Clear(buttonStats, 0, buttonStats.Length);
 
