@@ -707,21 +707,23 @@ namespace MupenUtils
                 proc_min_address = new IntPtr(proc_min_address_l);
             }
 
-
-            const string MUPEN_VERSION = "Mupen 64 9.9.9";
-            const string MUPEN_SPLIT = "Mupen 64 1.";
+            
+            const string MUPEN_VERSION = "Mupen 64 1.0.9";
+            const string MUPEN_SPLIT = "Mupen 64";
             string finalName = "";
             string str = "";
-            str = ExtensionMethods.CharsToString(Encoding.UTF8.GetChars(buffer.ToArray()));
+            str = ExtensionMethods.CharsToString(Encoding.ASCII.GetChars(buffer.ToArray()));
             int baseIndex = str.IndexOf(MUPEN_SPLIT) - str.Length;
-
-            if (baseIndex != -1)
+            
+            if (baseIndex > 0)
             {
                 for (int i = 0; i < MUPEN_VERSION.Length; i++)
                 {
                     finalName = String.Concat(finalName, (char)buffer[i]);
                 }
             }
+
+            
 
             MupenHookForm.MupenDataStruct mupenData;
             mupenData.CONFIRMED = finalName != "";
