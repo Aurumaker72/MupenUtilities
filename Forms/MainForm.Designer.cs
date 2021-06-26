@@ -98,8 +98,8 @@ namespace MupenUtils
             this.btn_Input_Debug = new System.Windows.Forms.Button();
             this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.txt_Frame = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.lbl_Y = new System.Windows.Forms.Label();
+            this.lbl_X = new System.Windows.Forms.Label();
             this.txt_joyY = new System.Windows.Forms.TextBox();
             this.txt_joyX = new System.Windows.Forms.TextBox();
             this.chk_RESERVED2 = new System.Windows.Forms.CheckBox();
@@ -841,8 +841,8 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.btn_Input_Debug);
             this.gp_input.Controls.Add(this.pb_JoystickPic);
             this.gp_input.Controls.Add(this.txt_Frame);
-            this.gp_input.Controls.Add(this.label1);
             this.gp_input.Controls.Add(this.lbl_Y);
+            this.gp_input.Controls.Add(this.lbl_X);
             this.gp_input.Controls.Add(this.txt_joyY);
             this.gp_input.Controls.Add(this.txt_joyX);
             this.gp_input.Controls.Add(this.chk_RESERVED2);
@@ -967,23 +967,23 @@ namespace MupenUtils
             this.txt_Frame.TabStop = false;
             this.txt_Frame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Frame_KeyDown);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 155);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(17, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Y";
-            // 
             // lbl_Y
             // 
             this.lbl_Y.AutoSize = true;
-            this.lbl_Y.Location = new System.Drawing.Point(6, 130);
+            this.lbl_Y.Location = new System.Drawing.Point(6, 155);
             this.lbl_Y.Name = "lbl_Y";
             this.lbl_Y.Size = new System.Drawing.Size(17, 17);
             this.lbl_Y.TabIndex = 0;
-            this.lbl_Y.Text = "X";
+            this.lbl_Y.Text = "Y";
+            // 
+            // lbl_X
+            // 
+            this.lbl_X.AutoSize = true;
+            this.lbl_X.Location = new System.Drawing.Point(6, 130);
+            this.lbl_X.Name = "lbl_X";
+            this.lbl_X.Size = new System.Drawing.Size(17, 17);
+            this.lbl_X.TabIndex = 0;
+            this.lbl_X.Text = "X";
             // 
             // txt_joyY
             // 
@@ -1576,7 +1576,7 @@ namespace MupenUtils
         private System.Windows.Forms.TextBox txt_joyY;
         private System.Windows.Forms.TextBox txt_joyX;
         private System.Windows.Forms.CheckBox chk_restart;
-        private System.Windows.Forms.Label lbl_Y;
+        private System.Windows.Forms.Label lbl_X;
         private System.Windows.Forms.Button btn_PlayDirection;
         private System.Windows.Forms.TextBox txt_Frame;
         private System.Windows.Forms.PictureBox pb_JoystickPic;
@@ -1600,7 +1600,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_SimpleMode;
         private System.Windows.Forms.Button btn_Help;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Agressive;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbl_Y;
         private System.Windows.Forms.ComboBox cbox_Controllers;
         private System.Windows.Forms.ToolStripMenuItem tsmi_GetInput;
         private System.Windows.Forms.RadioButton rb_MUPSel;

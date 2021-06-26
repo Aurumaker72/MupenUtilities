@@ -1799,6 +1799,7 @@ namespace MupenUtils
             tsmi_SimpleMode.Checked = simpleMode;
             txt_joyX.Visible
                 = txt_joyY.Visible
+                = lbl_X.Visible
                 = lbl_Y.Visible
                 = txt_Frame.Visible
                 = btn_FrameBack2.Visible
