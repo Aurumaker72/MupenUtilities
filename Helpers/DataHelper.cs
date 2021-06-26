@@ -114,8 +114,19 @@ namespace MupenUtils
                     break;
 
                 case 0x41:
-                    code = "USA/Japan";
-                    image = MupenUtilities.Properties.Resources.usa;
+                    {
+                        // let's be fancy and merge the images
+                        code = "USA/Japan";
+                        Bitmap first = new Bitmap(MupenUtilities.Properties.Resources.usa);
+                        Bitmap second = ExtensionMethods.SetImageOpacity(MupenUtilities.Properties.Resources.japan, 0.5f);
+                        Bitmap result = new Bitmap(Math.Max(first.Width, second.Width), Math.Max(first.Height, second.Height));
+                        Console.WriteLine(first.Width);
+                        Graphics g = Graphics.FromImage(result);
+                        g.DrawImageUnscaled(first, 0, 0);
+                        g.DrawImageUnscaled(second, 0, 0);
+
+                        image = result;
+                    }
                     break;
 
                 /* Germany */
@@ -175,6 +186,9 @@ namespace MupenUtils
                     code = "Unknown (" + ccode + ")";
                     break;
             }
+
+            
+
             return new object[] { code, image };
         }
 
