@@ -186,9 +186,9 @@ namespace MupenUtils
                     code = "Unknown (" + ccode + ")";
                     break;
             }
-
-            
-
+            Bitmap bmp = new Bitmap(image);
+            bmp.MakeTransparent(Color.White);
+            image = bmp;
             return new object[] { code, image };
         }
 
