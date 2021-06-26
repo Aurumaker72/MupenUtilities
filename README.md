@@ -82,12 +82,22 @@ __Building__
 - WinSDK 10
 - VS .NET C# Packages
 
+*Will be autoinstalled by Visual Studio*
+
+- Octokit
+- NRG Winforms Control pack
+
 ## Building
 To build your own Mupen Utilities executable:
 - [Download](https://github.com/Aurumaker72/MupenUtilities/zipball/main) the repository
 - If needed, [Unblock](https://4sysops.com/wp-content/uploads/2015/01/Unblock-in-File-Explorer.png) the zip archive
 - Unzip/Unpack the archive
-- Double click on 
+- Double click on the .sln file
+- On the top, select "Release x86" [target](http://ladydebug.com/blog/myimages/dotnetcore-framework/applicationpropertiesdotnetcore.png)
+- Press CTRL+B
+- Wait for the build to finish
+
+In the bin/x86/Release folder you will find a MupenUtilities executable and the required dlls.
 
 ## Other
 🌐This program automatically checks for updates when internet is connected.
