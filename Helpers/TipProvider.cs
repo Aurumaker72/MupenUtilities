@@ -37,7 +37,7 @@ namespace MupenUtils.Helpers
             "CTRL+Scroll in TAS Studio will zoom in and out",
             "Sending the debug log upon a crash helps me fix bugs",
             "\'Live TAS Studio\' will keep TAS Studio up-to-date with your latest inputs",
-            MainForm.PROGRAM_NAME + " saves most Settings to Config"
+            MainForm.PROGRAM_NAME + " saves most Settings to Config" 
         };
 
         public static string GetRandomTip()
