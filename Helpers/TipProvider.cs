@@ -8,7 +8,7 @@ namespace MupenUtils.Helpers
         public static Random rng = new Random();
         public static string[] tips =
         {
-            "Right click the M64 radio button to bypass the file filter",
+            "Right click the selector buttons will enable Autodetect mode",
             "Press backslash to frame advance",
             "Right click on the joystick to make it follow your mouse",
             "Pressing Escape on the X and Y textboxes will unfocus them",
@@ -36,8 +36,10 @@ namespace MupenUtils.Helpers
             "Right clicking the \'New Tip\' button will show all tips",
             "CTRL+Scroll in TAS Studio will zoom in and out",
             "Sending the debug log upon a crash helps me fix bugs",
-            "\'Live TAS Studio\' will keep TAS Studio up-to-date with your latest inputs"
+            "\'Live TAS Studio\' will keep TAS Studio up-to-date with your latest inputs",
+            MainForm.PROGRAM_NAME + " saves most Settings to Config"
         };
+
         public static string GetRandomTip()
         {
             return tips[rng.Next(0, tips.Length)];

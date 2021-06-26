@@ -70,5 +70,29 @@ namespace MupenUtilities.Properties {
                 this["UITheme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte UsageType {
+            get {
+                return ((byte)(this["UsageType"]));
+            }
+            set {
+                this["UsageType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LiveTASStudio {
+            get {
+                return ((bool)(this["LiveTASStudio"]));
+            }
+            set {
+                this["LiveTASStudio"] = value;
+            }
+        }
     }
 }

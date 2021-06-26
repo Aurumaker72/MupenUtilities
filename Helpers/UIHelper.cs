@@ -13,7 +13,7 @@ namespace MupenUtils
         // Parameters:
         // 0 - Boolean (file/folder)
         public static object[] ShowFileDialog(MainForm.UsageTypes usageType)
-        {
+        {   
             Debug.WriteLine("file dialog!");
             
             string path = string.Empty;
@@ -23,6 +23,10 @@ namespace MupenUtils
             {
                 filter = "ST Files (*.st)|*.st|All Files (*.*)|*.*";
                 title = "Select ST";
+            }else if(usageType == MainForm.UsageTypes.Autodetect)
+            {
+                filter = "All Files (*.*)|*.*";
+                title = "Select";
             }
             OpenFileDialog openFileDialog = new OpenFileDialog
             {

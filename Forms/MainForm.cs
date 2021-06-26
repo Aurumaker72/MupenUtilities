@@ -191,7 +191,8 @@ namespace MupenUtils
             M64,
             ST,
             Mupen,
-            Replacement
+            Replacement,
+            Autodetect
         };
         UsageTypes UsageType = UsageTypes.M64;
 
@@ -345,13 +346,17 @@ namespace MupenUtils
                 MessageBox.Show("Your system is big-endian and this program might not work properly!");
             }
 
+            
 
+            
             UpdateReadOnly();
 
             EnableM64View(false, true);
 
 
-
+            UsageType = (UsageTypes)MupenUtilities.Properties.Settings.Default.UsageType;
+            Debug.WriteLine("loaded usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
+            UpdateVisualsTop(false);
         }
 
         #endregion
@@ -556,7 +561,7 @@ namespace MupenUtils
             }
         }
 
-        void UpdateVisualsTop()
+        void UpdateVisualsTop(bool serialize)
         {
             btn_LoadLatest.Enabled = true;
             string txt = "?";
@@ -569,19 +574,33 @@ namespace MupenUtils
                     break;
                 case UsageTypes.M64:
                     txt = "Browse M64";
+                    rb_M64sel.Checked = true;
                     break;
                 case UsageTypes.ST:
                     txt = "Browse ST";
+                    rb_STsel.Checked = true;
                     break;
                 case UsageTypes.Mupen:
                     txt = "Hook";
                     btn_LoadLatest.Enabled = false;
+                    rb_MUPSel.Checked = true;
                     break;
                 case UsageTypes.Replacement:
                     txt = "Replacement";
                     btn_LoadLatest.Enabled = false;
+                    rb_ReplacementSel.Checked = true;
                     break;
+                case UsageTypes.Autodetect:
+                    txt = "Autodetect";
+                    btn_LoadLatest.Enabled = false;
+                    break;
+            }
 
+            if (serialize)
+            {
+                MupenUtilities.Properties.Settings.Default.UsageType = (byte)UsageType;
+                MupenUtilities.Properties.Settings.Default.Save();
+                Debug.WriteLine("saved usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
             }
 
             btn_PathSel.Text = txt;
@@ -702,10 +721,9 @@ namespace MupenUtils
 
             loadedInvalidFile = true;
 
-            string title = "Failed to load ";
-            title += UsageType.ToString();
 
-            MessageBox.Show(title + " " + failReason, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            string msg = UsageType.ToString() + " - ";
+            MessageBox.Show(msg + " " + failReason, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
 
@@ -1074,9 +1092,11 @@ namespace MupenUtils
         {
             if (UsageType != UsageTypes.Any)
             {
+                Debug.WriteLine(Path);
+                Debug.WriteLine(System.IO.Path.GetExtension(Path));
                 string errReason = "";
 
-                if (!System.IO.Path.GetExtension(Path).Equals(".st", StringComparison.InvariantCultureIgnoreCase) || !System.IO.Path.GetExtension(Path).Equals(".savestate", StringComparison.InvariantCultureIgnoreCase))
+                if (System.IO.Path.GetExtension(Path).Equals(".st", StringComparison.InvariantCultureIgnoreCase) == false && System.IO.Path.GetExtension(Path).Equals(".savestate", StringComparison.InvariantCultureIgnoreCase) == false)
                     errReason += "Extension invalid. ";
                 if (String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path))
                     errReason += "Path invalid. ";
@@ -1555,6 +1575,7 @@ namespace MupenUtils
             txt_Path.Text = (string)result[0];
             Path = (string)result[0];
 
+            
             MupenUtilities.Properties.Settings.Default.LastPath = Path;
             MupenUtilities.Properties.Settings.Default.Save();
 
@@ -1565,6 +1586,40 @@ namespace MupenUtils
             }
             else if (UsageType == UsageTypes.ST)
                 LoadST();
+            else if (UsageType == UsageTypes.Autodetect)
+            {
+                
+                string ext = System.IO.Path.GetExtension(Path);
+                if (ext.Equals(".m64", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    m64load = new Thread(() => ReadM64());
+                    m64load.Start();
+
+                } 
+                else if (ext.Equals(".st", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".savestate", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    LoadST();
+                }
+                else if (ext.Equals(".exe", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    if (Path.Contains("mupen"))
+                    {
+                        Process.Start(Path);
+                        MupenHook();
+                    }
+                    else
+                    {
+                        ErrorProcessing("Executable not mupen");
+                        return;
+                    }
+                   
+                }
+                else
+                {
+                    ErrorProcessing("Unknown type " + ext);
+                    return;
+                }
+            }
         }
         private void btn_Last_MouseClick(object sender, MouseEventArgs e)
         {
@@ -1579,24 +1634,36 @@ namespace MupenUtils
         }
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
         {
+            if(e.Button == MouseButtons.Right)
+            UsageType = UsageTypes.Autodetect;
+            else if(e.Button == MouseButtons.Left)
             UsageType = UsageTypes.M64;
-            UpdateVisualsTop();
+            UpdateVisualsTop(true);
         }
         private void rb_STsel_MouseDown(object sender, MouseEventArgs e)
         {
+            if(e.Button == MouseButtons.Right)
+            UsageType = UsageTypes.Autodetect;
+            else if(e.Button == MouseButtons.Left)
             UsageType = UsageTypes.ST;
-            UpdateVisualsTop();
+            UpdateVisualsTop(true);
         }
 
         private void rb_MUPsel_MouseDown(object sender, MouseEventArgs e)
         {
+            if(e.Button == MouseButtons.Right)
+            UsageType = UsageTypes.Autodetect;
+            else if(e.Button == MouseButtons.Left)
             UsageType = UsageTypes.Mupen;
-            UpdateVisualsTop();
+            UpdateVisualsTop(true);
         }
         private void rb_Replacementsel_MouseDown(object sender, MouseEventArgs e)
         {
+            if(e.Button == MouseButtons.Right)
+            UsageType = UsageTypes.Autodetect;
+            else if(e.Button == MouseButtons.Left)
             UsageType = UsageTypes.Replacement;
-            UpdateVisualsTop();
+            UpdateVisualsTop(true);
         }
 
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
