@@ -1,9 +1,16 @@
-# MupenUtilities
-### 🛡️ Feature-rich Utility application for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/) 🛡️
 
+# MupenUtilities<img src="https://github.com/Aurumaker72/MupenUtilities/blob/main/Resources/mupengreen.png" align="right" />
+![Badge1](https://img.shields.io/github/downloads/Aurumaker72/MupenUtilities/latest/total?label=Latest%20Release&logoColor=green) ![Badge2](https://img.shields.io/github/last-commit/Aurumaker72/MupenUtilities?label=Latest%20Commit) ![Badge3](https://img.shields.io/github/license/Aurumaker72/MupenUtilities?label=License) ![Badge3](https://img.shields.io/badge/Maintained-yes-green) ![Badge4](https://img.shields.io/github/repo-size/Aurumaker72/MupenUtilities?label=Repo%20size)
+
+<h2>
+<p align="center">
+⚙️ Feature-rich Utility application for Mupen64 ⚙️
+</p>
+</h2>
 
 ![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG "Mupen64 Utilities")<br>
 This project is heavily inspired by [mkdasher's](https://github.com/mkdasher/) M64 Editor.
+
 
 ## M64
 The data of any M64 file is presented in a simple interface.
