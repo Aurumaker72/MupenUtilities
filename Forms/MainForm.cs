@@ -1144,6 +1144,12 @@ namespace MupenUtils
             // nuke data
             // this crashes for some reason after the 2nd time
 
+            while (tasStudioBusy)
+            {
+                Debug.WriteLine("tasstudio wait for tasstudio");
+                Application.DoEvents();
+                Thread.Sleep(100);
+            }
 
             dgv_Main.Rows.Clear();
             dgv_Main.Columns.Clear();
@@ -1169,6 +1175,7 @@ namespace MupenUtils
             new Thread(() =>
            {
                while (dgv_Main.RecreatingHandle) ; // spin until handle is created
+               while (tasStudioBusy) ;
                tasStudioBusy = true;
                for (int y = 0; y < inputLists[selectedController].Count; y++)
                {
@@ -1185,8 +1192,14 @@ namespace MupenUtils
 
                        string cellValue = "";
                        //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
+
+                       if (y > inputLists[selectedController].Count) continue; // desync! skip
+                       if (inputLists[selectedController].Count == 0) continue; // empty...
+
                        if (x < 16)
                        {
+
+
                            if ((inputLists[selectedController][y] & (int)Math.Pow(2, x)) != 0)
                                cellValue = inputStructNames[x];
                        }
@@ -1200,8 +1213,15 @@ namespace MupenUtils
                            else if (x == 17)
                                cellValue = ((sbyte)-data[3]).ToString();
                        }
-                       dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
-
+                       try
+                       {
+                           dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
+                       }
+                       catch
+                       {
+                           // desync...
+                           continue;
+                       }
                    }
                }
                gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
@@ -1233,11 +1253,11 @@ namespace MupenUtils
             {
                 value = inputLists[selectedController][frame];
             } // get value at that frame. If this fails then m64 is corrupted 
-            catch(IndexOutOfRangeException e)
+            catch
             {
                 EnableM64View(false, false);
                 stepFrameTimer.Enabled = false;
-                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart. (Is your M64 corrupted?)", PROGRAM_NAME + " - Fatal desync");
+                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.\nThis can be caused by a corrupted m64 or loading movies in quick succession", PROGRAM_NAME + " - Fatal desync");
                 return;
             }
 
