@@ -61,6 +61,7 @@ namespace MupenUtils
             this.txt_Author = new System.Windows.Forms.TextBox();
             this.btn_Savem64 = new System.Windows.Forms.Button();
             this.gpRom = new System.Windows.Forms.GroupBox();
+            this.pb_RomCountry = new System.Windows.Forms.PictureBox();
             this.txt_Rom = new System.Windows.Forms.TextBox();
             this.txt_Crc = new System.Windows.Forms.TextBox();
             this.txt_RomCountry = new System.Windows.Forms.TextBox();
@@ -141,19 +142,19 @@ namespace MupenUtils
             this.defaultLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_CRCPopulate = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_LiveTasStudio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_CRCPopulate = new System.Windows.Forms.ToolStripMenuItem();
-            this.pb_RomCountry = new System.Windows.Forms.PictureBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).BeginInit();
             this.gp_M64_misc.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_input.SuspendLayout();
@@ -163,7 +164,6 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -348,6 +348,7 @@ namespace MupenUtils
             // 
             // gp_M64
             // 
+            this.gp_M64.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.gp_M64.Controls.Add(this.gp_header);
             this.gp_M64.Controls.Add(this.gp_input);
             this.gp_M64.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -370,7 +371,7 @@ namespace MupenUtils
             this.gp_header.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_header.Location = new System.Drawing.Point(4, 19);
             this.gp_header.Name = "gp_header";
-            this.gp_header.Size = new System.Drawing.Size(554, 435);
+            this.gp_header.Size = new System.Drawing.Size(560, 435);
             this.gp_header.TabIndex = 0;
             this.gp_header.TabStop = false;
             this.gp_header.Text = "Header";
@@ -387,11 +388,11 @@ namespace MupenUtils
             this.gp_User.Controls.Add(this.lbl_Desc);
             this.gp_User.Controls.Add(this.lb_RR);
             this.gp_User.Controls.Add(this.txt_Author);
-            this.gp_User.Location = new System.Drawing.Point(6, 30);
+            this.gp_User.Location = new System.Drawing.Point(7, 30);
             this.gp_User.Margin = new System.Windows.Forms.Padding(4);
             this.gp_User.Name = "gp_User";
             this.gp_User.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_User.Size = new System.Drawing.Size(267, 216);
+            this.gp_User.Size = new System.Drawing.Size(269, 216);
             this.gp_User.TabIndex = 0;
             this.gp_User.TabStop = false;
             this.gp_User.Text = "Specific";
@@ -514,14 +515,23 @@ namespace MupenUtils
             this.gpRom.Controls.Add(this.lbl_ROMNAME);
             this.gpRom.Controls.Add(this.lbl_ROMCRC);
             this.gpRom.Controls.Add(this.lbl_RomCountry);
-            this.gpRom.Location = new System.Drawing.Point(6, 246);
+            this.gpRom.Location = new System.Drawing.Point(7, 246);
             this.gpRom.Margin = new System.Windows.Forms.Padding(4);
             this.gpRom.Name = "gpRom";
             this.gpRom.Padding = new System.Windows.Forms.Padding(4);
-            this.gpRom.Size = new System.Drawing.Size(267, 156);
+            this.gpRom.Size = new System.Drawing.Size(269, 156);
             this.gpRom.TabIndex = 0;
             this.gpRom.TabStop = false;
             this.gpRom.Text = "ROM";
+            // 
+            // pb_RomCountry
+            // 
+            this.pb_RomCountry.BackColor = System.Drawing.Color.Transparent;
+            this.pb_RomCountry.Location = new System.Drawing.Point(102, 84);
+            this.pb_RomCountry.Name = "pb_RomCountry";
+            this.pb_RomCountry.Size = new System.Drawing.Size(24, 24);
+            this.pb_RomCountry.TabIndex = 1;
+            this.pb_RomCountry.TabStop = false;
             // 
             // txt_Rom
             // 
@@ -596,7 +606,7 @@ namespace MupenUtils
             this.gp_M64_misc.Controls.Add(this.lbl_CtlFlags);
             this.gp_M64_misc.Controls.Add(this.lb_starttype);
             this.gp_M64_misc.Controls.Add(this.btn_CtlFlags);
-            this.gp_M64_misc.Location = new System.Drawing.Point(275, 30);
+            this.gp_M64_misc.Location = new System.Drawing.Point(282, 30);
             this.gp_M64_misc.Margin = new System.Windows.Forms.Padding(4);
             this.gp_M64_misc.Name = "gp_M64_misc";
             this.gp_M64_misc.Padding = new System.Windows.Forms.Padding(4);
@@ -738,7 +748,7 @@ namespace MupenUtils
             this.gp_Plugins.Controls.Add(this.txtbox_Audioplugin);
             this.gp_Plugins.Controls.Add(this.lbl_Input);
             this.gp_Plugins.Controls.Add(this.txt_Rsp);
-            this.gp_Plugins.Location = new System.Drawing.Point(275, 246);
+            this.gp_Plugins.Location = new System.Drawing.Point(282, 246);
             this.gp_Plugins.Margin = new System.Windows.Forms.Padding(4);
             this.gp_Plugins.Name = "gp_Plugins";
             this.gp_Plugins.Padding = new System.Windows.Forms.Padding(4);
@@ -860,11 +870,11 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.btn_FrameBack2);
             this.gp_input.Controls.Add(this.btn_FrameBack);
             this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_input.Location = new System.Drawing.Point(558, 19);
+            this.gp_input.Location = new System.Drawing.Point(564, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
             this.gp_input.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_input.Size = new System.Drawing.Size(740, 435);
+            this.gp_input.Size = new System.Drawing.Size(734, 435);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input - Controller 1";
@@ -886,7 +896,7 @@ namespace MupenUtils
             this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
             this.gp_TASStudio.Location = new System.Drawing.Point(372, 19);
             this.gp_TASStudio.Name = "gp_TASStudio";
-            this.gp_TASStudio.Size = new System.Drawing.Size(364, 412);
+            this.gp_TASStudio.Size = new System.Drawing.Size(358, 412);
             this.gp_TASStudio.TabIndex = 0;
             this.gp_TASStudio.TabStop = false;
             this.gp_TASStudio.Text = "TAS Studio";
@@ -901,7 +911,7 @@ namespace MupenUtils
             this.dgv_Main.Name = "dgv_Main";
             this.dgv_Main.RowHeadersWidth = 51;
             this.dgv_Main.RowTemplate.Height = 24;
-            this.dgv_Main.Size = new System.Drawing.Size(358, 391);
+            this.dgv_Main.Size = new System.Drawing.Size(352, 391);
             this.dgv_Main.TabIndex = 0;
             this.dgv_Main.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_Main_CellMouseDown);
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
@@ -1416,23 +1426,30 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
+            // 
+            // tsmi_CRCPopulate
+            // 
+            this.tsmi_CRCPopulate.Name = "tsmi_CRCPopulate";
+            this.tsmi_CRCPopulate.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_CRCPopulate.Text = "CRC Populate";
+            this.tsmi_CRCPopulate.Click += new System.EventHandler(this.tsmi_CRCPopulate_Click);
             // 
             // ctx_TasStudio
             // 
@@ -1472,21 +1489,6 @@ namespace MupenUtils
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
             // 
-            // tsmi_CRCPopulate
-            // 
-            this.tsmi_CRCPopulate.Name = "tsmi_CRCPopulate";
-            this.tsmi_CRCPopulate.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_CRCPopulate.Text = "CRC Populate";
-            this.tsmi_CRCPopulate.Click += new System.EventHandler(this.tsmi_CRCPopulate_Click);
-            // 
-            // pb_RomCountry
-            // 
-            this.pb_RomCountry.Location = new System.Drawing.Point(12, 102);
-            this.pb_RomCountry.Name = "pb_RomCountry";
-            this.pb_RomCountry.Size = new System.Drawing.Size(50, 50);
-            this.pb_RomCountry.TabIndex = 1;
-            this.pb_RomCountry.TabStop = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1518,6 +1520,7 @@ namespace MupenUtils
             this.gp_User.PerformLayout();
             this.gpRom.ResumeLayout(false);
             this.gpRom.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).EndInit();
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
             this.gp_Plugins.ResumeLayout(false);
@@ -1530,7 +1533,6 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ctx_Input_Debug.ResumeLayout(false);
             this.ctx_TasStudio.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

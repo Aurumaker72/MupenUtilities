@@ -910,7 +910,14 @@ namespace MupenUtils
 
             txt_Rom.Invoke((MethodInvoker)(() => txt_Rom.Text = RomName));
             txt_Crc.Invoke((MethodInvoker)(() => txt_Crc.Text = Crc32.ToString()));
-            txt_RomCountry.Invoke((MethodInvoker)(() => txt_RomCountry.Text = DataHelper.GetCountryCode(RomCountry)));
+
+            object[] countryData = DataHelper.GetCountryResource(RomCountry);
+            Image countryImage = (Image)countryData[1];
+
+            txt_RomCountry.Invoke((MethodInvoker)(() => txt_RomCountry.Text = (string)countryData[0]));
+            pb_RomCountry.Invoke((MethodInvoker)(() => pb_RomCountry.Size = countryImage.Size));
+            pb_RomCountry.Invoke((MethodInvoker)(() => pb_RomCountry.BackgroundImage = countryImage));
+            
 
             txt_PathName.Invoke((MethodInvoker)(() => txt_PathName.Text = M64Name));
             txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));

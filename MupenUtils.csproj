@@ -280,6 +280,17 @@
     <Content Include="logo.png" />
     <None Include="Resources\mupenbw.png" />
     <Content Include="mupengreen.ico" />
+    <None Include="Resources\austral.bmp" />
+    <None Include="Resources\demo.bmp" />
+    <None Include="Resources\europe.bmp" />
+    <None Include="Resources\france.bmp" />
+    <None Include="Resources\germany.bmp" />
+    <None Include="Resources\italy.bmp" />
+    <None Include="Resources\japan.bmp" />
+    <None Include="Resources\n64beta.bmp" />
+    <None Include="Resources\spain.bmp" />
+    <None Include="Resources\unknown.bmp" />
+    <None Include="Resources\usa.bmp" />
     <Content Include="screenshot1.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

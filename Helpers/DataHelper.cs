@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text;
 
@@ -93,57 +94,71 @@ namespace MupenUtils
             }
             return type;
         }
-        public static string GetCountryCode(ushort ccode)
+        // [0] String
+        // [1] Image
+        public static object[] GetCountryResource(ushort ccode)
         {
             string code = "Error";
+            Image image = MupenUtilities.Properties.Resources.unknown;
+
             switch (ccode & 0xFF)
             {
                 /* Demo */
                 case 0:
                     code = "Demo";
+                    image = MupenUtilities.Properties.Resources.demo;
                     break;
                 case '7':
                     code = "Beta";
+                    image = MupenUtilities.Properties.Resources.n64beta;
                     break;
 
                 case 0x41:
                     code = "USA/Japan";
+                    image = MupenUtilities.Properties.Resources.usa;
                     break;
 
                 /* Germany */
                 case 0x44:
                     code = "German";
+                    image = MupenUtilities.Properties.Resources.germany;
                     break;
 
                 /* USA */
                 case 0x45:
                 case 0x60:
                     code = "USA";
+                    image = MupenUtilities.Properties.Resources.usa;
                     break;
 
                 /* France */
                 case 0x46:
                     code = "France";
+                    image = MupenUtilities.Properties.Resources.france;
                     break;
 
                 /* Italy */
                 case 'I':
                     code = "Italy";
+                    image = MupenUtilities.Properties.Resources.italy;
                     break;
 
                 /* Japan */
                 case 0x4A:
                     code = "Japan";
+                    image = MupenUtilities.Properties.Resources.japan;
                     break;
 
                 case 'S':	/* Spain */
                     code = "Spain";
+                    image = MupenUtilities.Properties.Resources.spain;
                     break;
 
                 /* Australia */
                 case 0x55:
                 case 0x59:
                     code = "Australia";
+                    image = MupenUtilities.Properties.Resources.austral;
                     break;
 
                 case 0x50:
@@ -153,13 +168,14 @@ namespace MupenUtils
                 case 0x38:
                 case 0x70:
                     code = "Europe";
+                    image = MupenUtilities.Properties.Resources.europe;
                     break;
 
                 default:
                     code = "Unknown (" + ccode + ")";
                     break;
             }
-            return code;
+            return new object[] { code, image };
         }
 
         public static string GetFriendlyValue(int value)
