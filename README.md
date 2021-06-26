@@ -73,9 +73,21 @@ Hook into mupen64 process memory and view some data like version string.
 ### __Mupen hook might be unbearably slow or not work on some systems!__
 
 ## Requirements
+__Using__
 - M64, ST or Mupen exe
 - OS newer than Windows 7
 - more than 1 GB RAM
+__Building__
+- Visual Studio 2019
+- WinSDK 10
+- VS .NET C# Packages
+
+## Building
+To build your own Mupen Utilities executable:
+- [Download](https://github.com/Aurumaker72/MupenUtilities/zipball/main) the repository
+- If needed, [Unblock](https://4sysops.com/wp-content/uploads/2015/01/Unblock-in-File-Explorer.png) the zip archive
+- Unzip/Unpack the archive
+- Double click on 
 
 ## Other
 🌐This program automatically checks for updates when internet is connected.
