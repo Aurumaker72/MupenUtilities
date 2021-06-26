@@ -1167,6 +1167,7 @@ namespace MupenUtils
             {
                 dgv_Main.Columns[i].Name = inputStructNames[i];
                 dgv_Main.Columns[i].Width = 50; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
+                dgv_Main.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
 
