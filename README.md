@@ -1,9 +1,18 @@
-# MupenUtilities
-### 🛡️ Feature-rich Utility application for [Mupen64](https://github.com/mkdasher/mupen64-rr-lua-/) 🛡️
 
 
-![MupenUtilities](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG "Mupen64 Utilities")<br>
+# MupenUtilities<img src="https://github.com/Aurumaker72/MupenUtilities/blob/main/Resources/mupengreen.png" align="right" />
+![Badge1](https://img.shields.io/github/downloads/Aurumaker72/MupenUtilities/latest/total?label=Latest%20Release&logoColor=green) ![Badge2](https://img.shields.io/github/last-commit/Aurumaker72/MupenUtilities?label=Latest%20Commit) ![Badge3](https://img.shields.io/github/license/Aurumaker72/MupenUtilities?label=License) ![Badge3](https://img.shields.io/badge/Maintained-yes-green) ![Badge4](https://img.shields.io/github/repo-size/Aurumaker72/MupenUtilities?label=Repo%20size)
+
+<h2>
+<p align="center">
+	⚙️ <b>Feature-rich Utility application for Mupen64</b> ⚙️
+</p>
+</h2>
+
+![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG)
+
 This project is heavily inspired by [mkdasher's](https://github.com/mkdasher/) M64 Editor.
+
 
 ## M64
 The data of any M64 file is presented in a simple interface.
@@ -64,9 +73,31 @@ Hook into mupen64 process memory and view some data like version string.
 ### __Mupen hook might be unbearably slow or not work on some systems!__
 
 ## Requirements
+__Using__
 - M64, ST or Mupen exe
 - OS newer than Windows 7
 - more than 1 GB RAM
+__Building__
+- Visual Studio 2019
+- WinSDK 10
+- VS .NET C# Packages
+
+*Will be autoinstalled by Visual Studio*
+
+- Octokit
+- NRG Winforms Control pack
+
+## Building
+To build your own Mupen Utilities executable:
+- [Download](https://github.com/Aurumaker72/MupenUtilities/zipball/main) the repository
+- If needed, [Unblock](https://4sysops.com/wp-content/uploads/2015/01/Unblock-in-File-Explorer.png) the zip archive
+- Unzip/Unpack the archive
+- Double click on the .sln file
+- On the top, select "Release x86" [target](http://ladydebug.com/blog/myimages/dotnetcore-framework/applicationpropertiesdotnetcore.png)
+- Press CTRL+B
+- Wait for the build to finish
+
+In the bin/x86/Release folder you will find a MupenUtilities executable and the required dlls.
 
 ## Other
 🌐This program automatically checks for updates when internet is connected.
