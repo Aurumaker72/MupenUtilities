@@ -256,7 +256,7 @@ namespace MupenUtils
             this.btn_Override.Size = new System.Drawing.Size(36, 28);
             this.btn_Override.TabIndex = 0;
             this.btn_Override.TabStop = false;
-            this.btn_Override.Text = "v";
+            this.btn_Override.Text = "^";
             this.btn_Override.UseVisualStyleBackColor = true;
             this.btn_Override.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Override_MouseDown);
             // 

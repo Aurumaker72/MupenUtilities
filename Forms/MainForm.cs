@@ -74,7 +74,7 @@ namespace MupenUtils
     {
         #region Vars
 
-        public const string PROGRAM_VERSION = "1.6";
+        public const string PROGRAM_VERSION = "1.7";
         public const string PROGRAM_NAME = "Mupen Utilities";
 
         public const string M64_LOADED_TEXT = "M64 Loaded";
@@ -441,12 +441,16 @@ namespace MupenUtils
         }
         void ResetTitle()
         {
+#if DEBUG
             string bitarh;
-            bitarh = IntPtr.Size == 4 ? "(32 bit)" : "(64 bit)";
+            bitarh = IntPtr.Size == 4 ? "32 bit" : "64 bit";
             standardBitArh = IntPtr.Size == 4;
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
-#if DEBUG
-            this.Text += " DEBUG";
+            this.Text += " DEBUG clr ";
+            this.Text += Environment.Version;
+
+#else
+            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
 #endif
         }
 
@@ -488,7 +492,6 @@ namespace MupenUtils
             s = flag ? new Size(1320, 620) : new Size(100 + btn_Help.Location.X + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
-            this.SuspendLayout();
             btn_FrameBack.Enabled = FileLoaded;
             btn_FrameBack2.Enabled = FileLoaded;
             btn_FrameFront.Enabled = FileLoaded;
@@ -497,15 +500,23 @@ namespace MupenUtils
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
             txt_Frame.ReadOnly = !FileLoaded;
-            
+
+                SuspendLayout();
+    base.OnResizeBegin(null);
+
             this.MinimumSize = flag ? gp_M64.Size : new Size(1, 1);
+
             this.Size = s;
+
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             this.MaximizeBox = flag;
+
+                ResumeLayout();
+    base.OnResizeEnd(null);
+
             gp_M64.Visible = flag;
             st_Status.Visible = flag;
 
-            this.ResumeLayout();
         }
 
         private void ShowStatus_ThreadSafe(string txt)
