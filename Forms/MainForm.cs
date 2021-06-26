@@ -194,7 +194,7 @@ namespace MupenUtils
             Replacement,
             Autodetect
         };
-        UsageTypes UsageType = UsageTypes.M64;
+        public static UsageTypes UsageType = UsageTypes.M64;
 
         public enum UIThemes
         {
@@ -202,7 +202,7 @@ namespace MupenUtils
             Gray,
             Dark
         };
-        UIThemes UITheme = UIThemes.Default;
+        public static UIThemes UITheme = UIThemes.Default;
 
         const int PROCESS_QUERY_INFORMATION = 0x0400;
         const int MEM_COMMIT = 0x00001000;
@@ -1250,7 +1250,7 @@ namespace MupenUtils
                            if (x == 16)
                                cellValue = ((sbyte)data[2]).ToString();
                            else if (x == 17)
-                               cellValue = ((sbyte)-data[3]).ToString();
+                               cellValue = ((sbyte)data[3]).ToString();
                        }
                        try
                        {
@@ -1302,16 +1302,17 @@ namespace MupenUtils
 
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
-                Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | BUTTON: " + controllerButtonsChk[i].Text.ToString() + " | Checked: " + controllerButtonsChk[i].Checked.ToString());
+                //Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | BUTTON: " + controllerButtonsChk[i].Text.ToString() + " | Checked: " + controllerButtonsChk[i].Checked.ToString());
                 ExtensionMethods.SetBit(ref value, controllerButtonsChk[i].Checked, i);
             }
             byte[] joydata = BitConverter.GetBytes(value);
             joydata[2] = (byte)JOY_Rel.X;
-            joydata[3] = (byte)JOY_Rel.Y;
+            joydata[3] = (byte)-JOY_Rel.Y;
+            
 
             value = BitConverter.ToInt32(joydata, 0);
             lastValue = value;
-            inputListCtl1[frame] = value;
+            inputLists[selectedController][frame] = value;
             Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
 
             // update tas studio
@@ -1336,21 +1337,21 @@ namespace MupenUtils
 
                             byte[] data = BitConverter.GetBytes(inputLists[selectedController][frame]);
 
-                            if (i == 16)
-                                cellValue = ((sbyte)data[2]).ToString();
-                            else if (i == 17)
-                                cellValue = ((sbyte)-data[3]).ToString();
-
-                            
+                        if (i == 16)
+                            cellValue = ((sbyte)data[2]).ToString();
+                        else if (i == 17)
+                            //cellValue = ((sbyte)data[3]).ToString();
+                            cellValue = txt_joyY.Text;
                         }
 
-                        dgv_Main.Rows[frame].Cells[i].Value = cellValue;
+                    int index = frame - 1;
+                    if (index < 1) index = 1;
+                        dgv_Main.Rows[index].Cells[i].Value = cellValue;
                     }
                     dgv_Main.ReadOnly = true;
 
                 }
 
-            //GetInput(inputList[frame]); // also update visuals!
         }
         void GetInput(int value)
         {
@@ -1360,13 +1361,14 @@ namespace MupenUtils
             }
             byte[] data = BitConverter.GetBytes(value);
             sbyte joystickX = (sbyte)data[2];
-            sbyte joystickY = (sbyte)data[3];
+            sbyte joystickY = (sbyte)-data[3];
 
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = joystickY.ToString();
 
-            SetInput(frame);
+            
             SetJoystickValue(new Point(joystickX, joystickY), RELATIVE, false);
+            SetInput(frame);
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
@@ -1720,10 +1722,13 @@ namespace MupenUtils
 
             txt_Frame.Text = frame.ToString();
 
+            int index = frame-1;
+
             if (frame <= dgv_Main.Rows.Count)
             {
-                dgv_Main.CurrentCell = dgv_Main.Rows[frame].Cells[inputStructNames.Length / 2];
-                dgv_Main.Rows[frame].Selected = true;
+                
+                dgv_Main.CurrentCell = dgv_Main.Rows[index].Cells[0];
+                dgv_Main.Rows[index].Selected = true;
             }
             if (frame <= tr_MovieScrub.Maximum && frame >= tr_MovieScrub.Minimum)
                 tr_MovieScrub.Value = frame;
@@ -2074,7 +2079,7 @@ namespace MupenUtils
         Point AbsoluteToRelative(Point pt)
         {
             int x = (pt.X * 256 / pb_JoystickPic.Width - 128 + 1);
-            int y = -(pt.Y * 256 / pb_JoystickPic.Height - 128 + 1);
+            int y = (pt.Y * 256 / pb_JoystickPic.Height - 128 + 1);
             x = ExtensionMethods.Clamp(x, -128, 127);
             y = ExtensionMethods.Clamp(y, -127, 128);
             return new Point(x, y);
@@ -2097,7 +2102,8 @@ namespace MupenUtils
                 JOY_Abs = RelativeToAbsolute(pos);
             }
 
-            //if (user && !readOnly) SetInput(frame);
+            //if (user && !readOnly)  (frame);
+
 
 
             txt_joyX.Text = JOY_Rel.X.ToString();
@@ -2248,6 +2254,10 @@ namespace MupenUtils
             exStr += "file loaded: " + FileLoaded.ToString() + "\n";
             exStr += "mupen running: " + mupenRunning.ToString() + "\n";
             exStr += "loaded invalid file: " + loadedInvalidFile.ToString() + "\n";
+            exStr += "usage type: " + UsageType.ToString() + "\n";
+            exStr += "file path: " + Path + "\n";
+            exStr += "theme: " + UITheme.ToString() + "\n";
+
             File.WriteAllText(@"exception.log", exStr);
 
             return @"exception.log";
