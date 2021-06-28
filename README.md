@@ -6,9 +6,7 @@
 
 
 ![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG)
-
-This project is heavily inspired by [mkdasher's](https://github.com/mkdasher/) M64 Editor.
-
+`M64 Editor 2021 Refurbished Epic Edition`
 
 ## M64
 The data of any M64 file is presented in a simple interface.
