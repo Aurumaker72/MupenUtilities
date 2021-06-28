@@ -95,6 +95,8 @@ To build your own Mupen Utilities executable:
 
 In the bin/x86/Release folder you will find a MupenUtilities executable and the required dlls.
 
+**Important:** Do not separate the dlls and executable.
+
 ## Other
 🌐This program automatically checks for updates when internet is connected.
 
