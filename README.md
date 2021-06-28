@@ -1,18 +1,12 @@
-
-
 # MupenUtilities<img src="https://github.com/Aurumaker72/MupenUtilities/blob/main/Resources/mupengreen.png" align="right" />
 ![Badge1](https://img.shields.io/github/downloads/Aurumaker72/MupenUtilities/latest/total?label=Latest%20Release&logoColor=green) ![Badge2](https://img.shields.io/github/last-commit/Aurumaker72/MupenUtilities?label=Latest%20Commit) ![Badge3](https://img.shields.io/github/license/Aurumaker72/MupenUtilities?label=License) ![Badge3](https://img.shields.io/badge/Maintained-yes-green) ![Badge4](https://img.shields.io/github/repo-size/Aurumaker72/MupenUtilities?label=Repo%20size)
 
-<h2>
-<p align="center">
-	⚙️ <b>Feature-rich Utility application for Mupen64</b> ⚙️
-</p>
-</h2>
+
+## ⚙️ Feature-rich Utility application for Mupen64 ⚙️</b> 
+
 
 ![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG)
-
-This project is heavily inspired by [mkdasher's](https://github.com/mkdasher/) M64 Editor.
-
+`M64 Editor 2021 Refurbished Epic Edition`
 
 ## M64
 The data of any M64 file is presented in a simple interface.
@@ -77,15 +71,17 @@ __Using__
 - M64, ST or Mupen exe
 - OS newer than Windows 7
 - more than 1 GB RAM
+
 __Building__
+
+Points marked with ✔️ will be automatically installed by vs
+
 - Visual Studio 2019
 - WinSDK 10
-- VS .NET C# Packages
+- ✔️VS .NET C# Packages
+- [CircularProgressBar](https://github.com/falahati/CircularProgressBar)
+- ✔️Octokit
 
-*Will be autoinstalled by Visual Studio*
-
-- Octokit
-- NRG Winforms Control pack
 
 ## Building
 To build your own Mupen Utilities executable:
@@ -99,6 +95,8 @@ To build your own Mupen Utilities executable:
 
 In the bin/x86/Release folder you will find a MupenUtilities executable and the required dlls.
 
+**Important:** Do not separate the dlls and executable.
+
 ## Other
 🌐This program automatically checks for updates when internet is connected.
 
@@ -110,4 +108,4 @@ In the bin/x86/Release folder you will find a MupenUtilities executable and the 
 
 🎛️This program does not fully support more than one controller
 
-🖌️This application has themes
+🖌️This application supports themes
