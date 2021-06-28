@@ -71,15 +71,17 @@ __Using__
 - M64, ST or Mupen exe
 - OS newer than Windows 7
 - more than 1 GB RAM
+
 __Building__
+
+Points marked with ✔️ will be automatically installed by vs
+
 - Visual Studio 2019
 - WinSDK 10
-- VS .NET C# Packages
+- ✔️VS .NET C# Packages
+- [CircularProgressBar](https://github.com/falahati/CircularProgressBar)
+- ✔️Octokit
 
-*Will be autoinstalled by Visual Studio*
-
-- Octokit
-- NRG Winforms Control pack
 
 ## Building
 To build your own Mupen Utilities executable:
