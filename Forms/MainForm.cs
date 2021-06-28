@@ -1363,10 +1363,10 @@ namespace MupenUtils
             }
             byte[] data = BitConverter.GetBytes(value);
             sbyte joystickX = (sbyte)data[2];
-            sbyte joystickY = (sbyte)-data[3];
+            sbyte joystickY = (sbyte)data[3];
 
             txt_joyX.Text = joystickX.ToString();
-            txt_joyY.Text = joystickY.ToString();
+            txt_joyY.Text = (/*-*/joystickY).ToString();// lie to user
 
             
             SetJoystickValue(new Point(joystickX, joystickY), RELATIVE, false);
