@@ -2162,8 +2162,9 @@ namespace MupenUtils
                 xy = RelativeToAbsolute(JOY_Rel);
             }
 
-            // branching in draw loop... you saw it here first folks
 
+            // TODO: somehow optimize this because branching in wm_paint is not good
+            // but this isnt too bad because gdi+ isn't hardware accelerated, so no hardware waiting for eachother
             if (!readOnly)
             {
                 if (UITheme == UIThemes.Default)
