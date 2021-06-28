@@ -1331,7 +1331,7 @@ namespace MupenUtils
             this.tsmi_Themes,
             this.tsmi_CRCPopulate});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 302);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 330);
             // 
             // tsmi_TasStudioAllow
             // 
@@ -1374,7 +1374,7 @@ namespace MupenUtils
             // 
             this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
             this.tsmi_Input_SetInput.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_Input_SetInput.Text = "Set Input";
+            this.tsmi_Input_SetInput.Text = "Expert Tools";
             this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
             // inputStatisticsToolStripMenuItem

@@ -247,5 +247,14 @@ public static class ExtensionMethods
             return null;
         }
     }
-
+    public static string UnsafeAsciiBytesToString(byte[] buffer, int offset, int length)
+    {
+        unsafe
+        {
+            fixed (byte* pAscii = buffer)
+            {
+                return new String((sbyte*)pAscii, offset, length);
+            }
+        }
+    }
 }

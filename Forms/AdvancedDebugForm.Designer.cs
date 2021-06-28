@@ -36,13 +36,22 @@ namespace MupenUtils.Forms
             this.btn_Debug_Random = new System.Windows.Forms.Button();
             this.gp_Debug_Input = new System.Windows.Forms.GroupBox();
             this.gp_Debug_Hex = new System.Windows.Forms.GroupBox();
+            this.chk_RangeMode = new System.Windows.Forms.CheckBox();
+            this.gp_Range = new System.Windows.Forms.GroupBox();
+            this.rb_ASCII = new System.Windows.Forms.RadioButton();
+            this.rb_UTF8 = new System.Windows.Forms.RadioButton();
+            this.rb_Integer = new System.Windows.Forms.RadioButton();
+            this.rb_HexStr = new System.Windows.Forms.RadioButton();
+            this.txt_Encoded = new System.Windows.Forms.TextBox();
             this.lbl_Debug_Value = new System.Windows.Forms.Label();
             this.lbl_Debug_Byten = new System.Windows.Forms.Label();
             this.txt_Debug_HexByte = new System.Windows.Forms.TextBox();
             this.txt_Debug_Value = new System.Windows.Forms.TextBox();
-            this.txt_Debug_Nthbyte = new System.Windows.Forms.TextBox();
+            this.txt_Debug_Byteto = new System.Windows.Forms.TextBox();
+            this.txt_Debug_Bytefrom = new System.Windows.Forms.TextBox();
             this.gp_Debug_Input.SuspendLayout();
             this.gp_Debug_Hex.SuspendLayout();
+            this.gp_Range.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_Debug_Uvalue
@@ -107,19 +116,104 @@ namespace MupenUtils.Forms
             // 
             // gp_Debug_Hex
             // 
+            this.gp_Debug_Hex.Controls.Add(this.chk_RangeMode);
+            this.gp_Debug_Hex.Controls.Add(this.gp_Range);
             this.gp_Debug_Hex.Controls.Add(this.lbl_Debug_Value);
             this.gp_Debug_Hex.Controls.Add(this.lbl_Debug_Byten);
             this.gp_Debug_Hex.Controls.Add(this.txt_Debug_HexByte);
             this.gp_Debug_Hex.Controls.Add(this.txt_Debug_Value);
-            this.gp_Debug_Hex.Controls.Add(this.txt_Debug_Nthbyte);
+            this.gp_Debug_Hex.Controls.Add(this.txt_Debug_Byteto);
+            this.gp_Debug_Hex.Controls.Add(this.txt_Debug_Bytefrom);
             this.gp_Debug_Hex.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_Debug_Hex.Location = new System.Drawing.Point(312, 0);
             this.gp_Debug_Hex.Name = "gp_Debug_Hex";
             this.gp_Debug_Hex.Size = new System.Drawing.Size(352, 334);
             this.gp_Debug_Hex.TabIndex = 0;
             this.gp_Debug_Hex.TabStop = false;
-            this.gp_Debug_Hex.Text = "View raw";
-            this.gp_Debug_Hex.Enter += new System.EventHandler(this.gp_Debug_Hex_Enter);
+            this.gp_Debug_Hex.Text = "Raw";
+            // 
+            // chk_RangeMode
+            // 
+            this.chk_RangeMode.AutoSize = true;
+            this.chk_RangeMode.Location = new System.Drawing.Point(16, 104);
+            this.chk_RangeMode.Name = "chk_RangeMode";
+            this.chk_RangeMode.Size = new System.Drawing.Size(111, 21);
+            this.chk_RangeMode.TabIndex = 0;
+            this.chk_RangeMode.TabStop = false;
+            this.chk_RangeMode.Text = "Range Mode";
+            this.chk_RangeMode.UseVisualStyleBackColor = true;
+            this.chk_RangeMode.CheckedChanged += new System.EventHandler(this.chk_RangeMode_CheckedChanged);
+            // 
+            // gp_Range
+            // 
+            this.gp_Range.Controls.Add(this.rb_ASCII);
+            this.gp_Range.Controls.Add(this.rb_UTF8);
+            this.gp_Range.Controls.Add(this.rb_Integer);
+            this.gp_Range.Controls.Add(this.rb_HexStr);
+            this.gp_Range.Controls.Add(this.txt_Encoded);
+            this.gp_Range.Location = new System.Drawing.Point(16, 136);
+            this.gp_Range.Name = "gp_Range";
+            this.gp_Range.Size = new System.Drawing.Size(328, 120);
+            this.gp_Range.TabIndex = 0;
+            this.gp_Range.TabStop = false;
+            this.gp_Range.Text = "Encoder";
+            this.gp_Range.Visible = false;
+            // 
+            // rb_ASCII
+            // 
+            this.rb_ASCII.AutoSize = true;
+            this.rb_ASCII.Location = new System.Drawing.Point(8, 96);
+            this.rb_ASCII.Name = "rb_ASCII";
+            this.rb_ASCII.Size = new System.Drawing.Size(62, 21);
+            this.rb_ASCII.TabIndex = 0;
+            this.rb_ASCII.TabStop = true;
+            this.rb_ASCII.Text = "ASCII";
+            this.rb_ASCII.UseVisualStyleBackColor = true;
+            this.rb_ASCII.MouseUp += new System.Windows.Forms.MouseEventHandler(this.changedEncodeType);
+            // 
+            // rb_UTF8
+            // 
+            this.rb_UTF8.AutoSize = true;
+            this.rb_UTF8.Location = new System.Drawing.Point(8, 72);
+            this.rb_UTF8.Name = "rb_UTF8";
+            this.rb_UTF8.Size = new System.Drawing.Size(64, 21);
+            this.rb_UTF8.TabIndex = 1;
+            this.rb_UTF8.TabStop = true;
+            this.rb_UTF8.Text = "UTF8";
+            this.rb_UTF8.UseVisualStyleBackColor = true;
+            this.rb_UTF8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.changedEncodeType);
+            // 
+            // rb_Integer
+            // 
+            this.rb_Integer.AutoSize = true;
+            this.rb_Integer.Location = new System.Drawing.Point(8, 48);
+            this.rb_Integer.Name = "rb_Integer";
+            this.rb_Integer.Size = new System.Drawing.Size(73, 21);
+            this.rb_Integer.TabIndex = 0;
+            this.rb_Integer.Text = "Integer";
+            this.rb_Integer.UseVisualStyleBackColor = true;
+            this.rb_Integer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.changedEncodeType);
+            // 
+            // rb_HexStr
+            // 
+            this.rb_HexStr.AutoSize = true;
+            this.rb_HexStr.Location = new System.Drawing.Point(8, 24);
+            this.rb_HexStr.Name = "rb_HexStr";
+            this.rb_HexStr.Size = new System.Drawing.Size(94, 21);
+            this.rb_HexStr.TabIndex = 1;
+            this.rb_HexStr.TabStop = true;
+            this.rb_HexStr.Text = "Hex String";
+            this.rb_HexStr.UseVisualStyleBackColor = true;
+            this.rb_HexStr.MouseUp += new System.Windows.Forms.MouseEventHandler(this.changedEncodeType);
+            // 
+            // txt_Encoded
+            // 
+            this.txt_Encoded.Location = new System.Drawing.Point(176, 24);
+            this.txt_Encoded.Multiline = true;
+            this.txt_Encoded.Name = "txt_Encoded";
+            this.txt_Encoded.ReadOnly = true;
+            this.txt_Encoded.Size = new System.Drawing.Size(144, 88);
+            this.txt_Encoded.TabIndex = 0;
             // 
             // lbl_Debug_Value
             // 
@@ -154,15 +248,23 @@ namespace MupenUtils.Forms
             this.txt_Debug_Value.ReadOnly = true;
             this.txt_Debug_Value.Size = new System.Drawing.Size(100, 22);
             this.txt_Debug_Value.TabIndex = 0;
-            this.txt_Debug_Value.TextChanged += new System.EventHandler(this.txt_Debug_Value_TextChanged);
             // 
-            // txt_Debug_Nthbyte
+            // txt_Debug_Byteto
             // 
-            this.txt_Debug_Nthbyte.Location = new System.Drawing.Point(64, 40);
-            this.txt_Debug_Nthbyte.Name = "txt_Debug_Nthbyte";
-            this.txt_Debug_Nthbyte.Size = new System.Drawing.Size(100, 22);
-            this.txt_Debug_Nthbyte.TabIndex = 0;
-            this.txt_Debug_Nthbyte.TextChanged += new System.EventHandler(this.txt_Debug_Nthbyte_TextChanged);
+            this.txt_Debug_Byteto.Location = new System.Drawing.Point(176, 40);
+            this.txt_Debug_Byteto.Name = "txt_Debug_Byteto";
+            this.txt_Debug_Byteto.Size = new System.Drawing.Size(100, 22);
+            this.txt_Debug_Byteto.TabIndex = 0;
+            this.txt_Debug_Byteto.Visible = false;
+            this.txt_Debug_Byteto.TextChanged += new System.EventHandler(this.txt_Debug_Byteto_TextChanged);
+            // 
+            // txt_Debug_Bytefrom
+            // 
+            this.txt_Debug_Bytefrom.Location = new System.Drawing.Point(64, 40);
+            this.txt_Debug_Bytefrom.Name = "txt_Debug_Bytefrom";
+            this.txt_Debug_Bytefrom.Size = new System.Drawing.Size(100, 22);
+            this.txt_Debug_Bytefrom.TabIndex = 0;
+            this.txt_Debug_Bytefrom.TextChanged += new System.EventHandler(this.txt_Debug_Nthbyte_TextChanged);
             // 
             // AdvancedDebugForm
             // 
@@ -178,6 +280,8 @@ namespace MupenUtils.Forms
             this.gp_Debug_Input.PerformLayout();
             this.gp_Debug_Hex.ResumeLayout(false);
             this.gp_Debug_Hex.PerformLayout();
+            this.gp_Range.ResumeLayout(false);
+            this.gp_Range.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -192,9 +296,17 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.GroupBox gp_Debug_Input;
         private System.Windows.Forms.GroupBox gp_Debug_Hex;
         private System.Windows.Forms.Label lbl_Debug_Byten;
-        private System.Windows.Forms.TextBox txt_Debug_Nthbyte;
+        private System.Windows.Forms.TextBox txt_Debug_Bytefrom;
         private System.Windows.Forms.Label lbl_Debug_Value;
         private System.Windows.Forms.TextBox txt_Debug_Value;
         private System.Windows.Forms.TextBox txt_Debug_HexByte;
+        private System.Windows.Forms.GroupBox gp_Range;
+        private System.Windows.Forms.CheckBox chk_RangeMode;
+        private System.Windows.Forms.TextBox txt_Debug_Byteto;
+        private System.Windows.Forms.TextBox txt_Encoded;
+        private System.Windows.Forms.RadioButton rb_ASCII;
+        private System.Windows.Forms.RadioButton rb_UTF8;
+        private System.Windows.Forms.RadioButton rb_HexStr;
+        private System.Windows.Forms.RadioButton rb_Integer;
     }
 }

@@ -262,6 +262,8 @@ namespace MupenUtils
             // check for updates
             if (updateNotifier.CheckForInternetConnection())
                 updateNotifier.CheckForUpdates(UPDATE_UNKNOWN, true);
+
+            
         }
 
         void InitController()
@@ -290,7 +292,7 @@ namespace MupenUtils
         };
 
             stepFrameTimer.Tick += new EventHandler(AdvanceInputAuto);
-            stepFrameTimer.Interval = 32; // 30 fps
+            stepFrameTimer.Interval = 1000/30; // 30 fps
             stepFrameTimer.Stop();
 
             JOY_middle.X = pb_JoystickPic.Width / 2;
