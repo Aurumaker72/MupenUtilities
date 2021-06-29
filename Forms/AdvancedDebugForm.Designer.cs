@@ -273,10 +273,10 @@ namespace MupenUtils.Forms
             this.chk_Ignorenulterm.AutoSize = true;
             this.chk_Ignorenulterm.Location = new System.Drawing.Point(176, 120);
             this.chk_Ignorenulterm.Name = "chk_Ignorenulterm";
-            this.chk_Ignorenulterm.Size = new System.Drawing.Size(102, 21);
+            this.chk_Ignorenulterm.Size = new System.Drawing.Size(114, 21);
             this.chk_Ignorenulterm.TabIndex = 0;
             this.chk_Ignorenulterm.TabStop = false;
-            this.chk_Ignorenulterm.Text = "Ignore NUL";
+            this.chk_Ignorenulterm.Text = "Replace NUL";
             this.chk_Ignorenulterm.UseVisualStyleBackColor = true;
             this.chk_Ignorenulterm.CheckedChanged += new System.EventHandler(this.chk_Ignorenulterm_CheckedChanged);
             // 

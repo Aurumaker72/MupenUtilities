@@ -122,6 +122,10 @@ namespace MupenUtils.Forms
                 {
                     encoded = "Too big section\r\nTry a smaller range";
                 }
+                else if(bytesArr.Length < 8)
+                {
+                    encoded = "Too small section\r\nTry a bigger range";
+                }
                 else
                 {
                     // lol this is
