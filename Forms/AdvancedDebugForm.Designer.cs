@@ -49,6 +49,7 @@ namespace MupenUtils.Forms
             this.txt_Debug_Value = new System.Windows.Forms.TextBox();
             this.txt_Debug_Byteto = new System.Windows.Forms.TextBox();
             this.txt_Debug_Bytefrom = new System.Windows.Forms.TextBox();
+            this.chk_Ignorenulterm = new System.Windows.Forms.CheckBox();
             this.gp_Debug_Input.SuspendLayout();
             this.gp_Debug_Hex.SuspendLayout();
             this.gp_Range.SuspendLayout();
@@ -146,6 +147,7 @@ namespace MupenUtils.Forms
             // 
             // gp_Range
             // 
+            this.gp_Range.Controls.Add(this.chk_Ignorenulterm);
             this.gp_Range.Controls.Add(this.rb_ASCII);
             this.gp_Range.Controls.Add(this.rb_UTF8);
             this.gp_Range.Controls.Add(this.rb_Integer);
@@ -153,7 +155,7 @@ namespace MupenUtils.Forms
             this.gp_Range.Controls.Add(this.txt_Encoded);
             this.gp_Range.Location = new System.Drawing.Point(16, 136);
             this.gp_Range.Name = "gp_Range";
-            this.gp_Range.Size = new System.Drawing.Size(328, 120);
+            this.gp_Range.Size = new System.Drawing.Size(328, 152);
             this.gp_Range.TabIndex = 0;
             this.gp_Range.TabStop = false;
             this.gp_Range.Text = "Encoder";
@@ -266,6 +268,18 @@ namespace MupenUtils.Forms
             this.txt_Debug_Bytefrom.TabIndex = 0;
             this.txt_Debug_Bytefrom.TextChanged += new System.EventHandler(this.txt_Debug_Nthbyte_TextChanged);
             // 
+            // chk_Ignorenulterm
+            // 
+            this.chk_Ignorenulterm.AutoSize = true;
+            this.chk_Ignorenulterm.Location = new System.Drawing.Point(176, 120);
+            this.chk_Ignorenulterm.Name = "chk_Ignorenulterm";
+            this.chk_Ignorenulterm.Size = new System.Drawing.Size(102, 21);
+            this.chk_Ignorenulterm.TabIndex = 0;
+            this.chk_Ignorenulterm.TabStop = false;
+            this.chk_Ignorenulterm.Text = "Ignore NUL";
+            this.chk_Ignorenulterm.UseVisualStyleBackColor = true;
+            this.chk_Ignorenulterm.CheckedChanged += new System.EventHandler(this.chk_Ignorenulterm_CheckedChanged);
+            // 
             // AdvancedDebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -308,5 +322,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.RadioButton rb_UTF8;
         private System.Windows.Forms.RadioButton rb_HexStr;
         private System.Windows.Forms.RadioButton rb_Integer;
+        private System.Windows.Forms.CheckBox chk_Ignorenulterm;
     }
 }

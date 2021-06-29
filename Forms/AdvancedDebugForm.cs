@@ -15,6 +15,8 @@ namespace MupenUtils.Forms
         long selByte2;
 
         bool rangeMode;
+        bool ignoreNUL;
+
         public AdvancedDebugForm()
         {
             InitializeComponent();
@@ -95,6 +97,10 @@ namespace MupenUtils.Forms
             txt_Debug_Value.Visible   =
             txt_Debug_HexByte.Visible =
             !rangeMode;
+
+            if (rb_ASCII.Checked || rb_UTF8.Checked)
+                ignoreNUL = false;
+            chk_Ignorenulterm.Checked = ignoreNUL;
         }
 
         void UpdateEncoded()
@@ -139,6 +145,11 @@ namespace MupenUtils.Forms
             }
             else if (rb_UTF8.Checked)
             {
+                if (ignoreNUL)
+                    for (int i = 0; i < bytesArr.Length; i++)
+                        if (bytesArr[i] == 0)
+                            bytesArr[i] = (byte)'0';
+
                 // we run into a dilemma
                 // how to ignore nul terminator?
                 encoded = System.Text.Encoding.UTF8.GetString(bytesArr);
@@ -146,8 +157,13 @@ namespace MupenUtils.Forms
             }
             else if (rb_ASCII.Checked)
             {
-                //encoded = System.Text.Encoding.ASCII.GetString(bytesArr);
-                encoded = ExtensionMethods.UnsafeAsciiBytesToString(bytesArr, 0, bytesArr.Length);
+
+                if (ignoreNUL)
+                    for (int i = 0; i < bytesArr.Length; i++)
+                        if (bytesArr[i] == 0)
+                            bytesArr[i] = (byte)'0';
+
+                encoded = System.Text.Encoding.ASCII.GetString(bytesArr);
 
             }
             txt_Encoded.Text = encoded;
@@ -156,6 +172,12 @@ namespace MupenUtils.Forms
 
         private void changedEncodeType(object sender, MouseEventArgs e)
         {
+            UpdateEncoded();
+        }
+
+        private void chk_Ignorenulterm_CheckedChanged(object sender, EventArgs e)
+        {
+            ignoreNUL ^= true;
             UpdateEncoded();
         }
     }
