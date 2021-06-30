@@ -21,7 +21,9 @@ namespace MupenUtils.Forms
         {
             InitializeComponent();
             this.Text = MainForm.PROGRAM_NAME + " - Misc. Tools";
-
+            txt_Encoded.Multiline = true;
+            txt_Encoded.ScrollBars = ScrollBars.Vertical;
+            txt_Encoded.WordWrap = true;
         }
 
         private void txt_Debug_Uvalue_TextChanged(object sender, EventArgs e)
