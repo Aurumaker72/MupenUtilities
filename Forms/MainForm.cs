@@ -128,6 +128,7 @@ namespace MupenUtils
         bool simpleMode = false;
         public static bool mupenRunning = false;
         public static bool loadedInvalidFile = false;
+        public static bool m64loadBusy = false;
 
         // M64 Data as Strings
         string Magic;
@@ -743,6 +744,7 @@ namespace MupenUtils
         }
         void ReadM64()
         {
+            m64loadBusy = true;
             // Check for suspicious MupenUtilities.Properties
             Debug.WriteLine("Attempting to load m64...");
 
@@ -761,13 +763,16 @@ namespace MupenUtils
                 if (errReason != "")
                 {
                     ErrorProcessing(errReason);
+                    m64loadBusy = false;
                     return;
                 }
             }
             long len = new FileInfo(Path).Length;
             if (len < 1027)
             {
-                ErrorProcessing("File is too small to be a movie."); return;
+                ErrorProcessing("File is too small to be a movie."); 
+                m64loadBusy = false;
+                return;
             }
             foreach (Process procarr in Process.GetProcesses())
             {
@@ -789,6 +794,7 @@ namespace MupenUtils
             catch
             {
                 ErrorProcessing("File inaccessible.");
+                m64loadBusy = false;
                 return;
             }
             BinaryReader br = new BinaryReader(fs);
@@ -950,6 +956,8 @@ namespace MupenUtils
             //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
             this.Invoke(new Action(() => PreloadTASStudio()));
+
+            m64loadBusy = false;
         }
         void CheckSuspiciousProperties()
         {
@@ -1288,7 +1296,17 @@ namespace MupenUtils
         {
             if (!FileLoaded)
                 return;
-            //if (tasStudioBusy) return;
+            //while (tasStudioBusy)
+            //{
+            //    Debug.WriteLine("main waiting for tasstudio");
+            //    Application.DoEvents();
+            //    Thread.Sleep(1);
+            //}
+            if (tasStudioBusy || m64loadBusy)
+            {
+                Debug.WriteLine("setinput critical thread busy... return");
+                return;
+            }
             int value = 0XDD;
             try
             {
@@ -1464,6 +1482,12 @@ namespace MupenUtils
             {
                 if (rb_M64sel.Checked)
                 {
+                    while (m64loadBusy)
+                    {
+                        Debug.WriteLine("main wait for m64load");
+                        Application.DoEvents();
+                        Thread.Sleep(1);
+                    }
                     m64load = new Thread(() => ReadM64());
                     m64load.Start();
                 }
