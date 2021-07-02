@@ -103,9 +103,8 @@ namespace MupenUtils.Forms
                 }
             }
 
-            if (MainForm.RRs == 0) confidence -= 0.6;
-            else
-            confidence += MainForm.RRs / (inputList.Count/2);
+            if (MainForm.RRs < 4) confidence -= 0.6;
+            else confidence += MainForm.RRs / (inputList.Count/2);
 
             if (all > 0)
                 confidence += inputList.Count/all;

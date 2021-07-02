@@ -60,6 +60,7 @@ namespace MupenUtils.Forms
             {
                 //for(int i=0;i<file.Length;i++)file[i]=0;
                 file = File.ReadAllBytes(MainForm.Path);
+                gp_Debug_Input.Enabled = !MainForm.readOnly;
             }
         }
 

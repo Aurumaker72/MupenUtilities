@@ -115,7 +115,7 @@ namespace MupenUtils
         bool liveTasStudio = true;
         bool loopInputs = true;
         bool forwardsPlayback = true;
-        bool readOnly = true;
+        public static bool readOnly = true;
 
         /*TAS Studio*/
         public static int markedGoToFrame = 0;

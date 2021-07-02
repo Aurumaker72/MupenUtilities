@@ -38,6 +38,7 @@ namespace MupenUtils.Forms
             this.gp_Debug_Hex = new System.Windows.Forms.GroupBox();
             this.chk_RangeMode = new System.Windows.Forms.CheckBox();
             this.gp_Range = new System.Windows.Forms.GroupBox();
+            this.chk_Ignorenulterm = new System.Windows.Forms.CheckBox();
             this.rb_ASCII = new System.Windows.Forms.RadioButton();
             this.rb_UTF8 = new System.Windows.Forms.RadioButton();
             this.rb_Integer = new System.Windows.Forms.RadioButton();
@@ -49,7 +50,6 @@ namespace MupenUtils.Forms
             this.txt_Debug_Value = new System.Windows.Forms.TextBox();
             this.txt_Debug_Byteto = new System.Windows.Forms.TextBox();
             this.txt_Debug_Bytefrom = new System.Windows.Forms.TextBox();
-            this.chk_Ignorenulterm = new System.Windows.Forms.CheckBox();
             this.gp_Debug_Input.SuspendLayout();
             this.gp_Debug_Hex.SuspendLayout();
             this.gp_Range.SuspendLayout();
@@ -161,6 +161,18 @@ namespace MupenUtils.Forms
             this.gp_Range.Text = "Encoder";
             this.gp_Range.Visible = false;
             // 
+            // chk_Ignorenulterm
+            // 
+            this.chk_Ignorenulterm.AutoSize = true;
+            this.chk_Ignorenulterm.Location = new System.Drawing.Point(176, 120);
+            this.chk_Ignorenulterm.Name = "chk_Ignorenulterm";
+            this.chk_Ignorenulterm.Size = new System.Drawing.Size(114, 21);
+            this.chk_Ignorenulterm.TabIndex = 0;
+            this.chk_Ignorenulterm.TabStop = false;
+            this.chk_Ignorenulterm.Text = "Replace NUL";
+            this.chk_Ignorenulterm.UseVisualStyleBackColor = true;
+            this.chk_Ignorenulterm.CheckedChanged += new System.EventHandler(this.chk_Ignorenulterm_CheckedChanged);
+            // 
             // rb_ASCII
             // 
             this.rb_ASCII.AutoSize = true;
@@ -168,7 +180,6 @@ namespace MupenUtils.Forms
             this.rb_ASCII.Name = "rb_ASCII";
             this.rb_ASCII.Size = new System.Drawing.Size(62, 21);
             this.rb_ASCII.TabIndex = 0;
-            this.rb_ASCII.TabStop = true;
             this.rb_ASCII.Text = "ASCII";
             this.rb_ASCII.UseVisualStyleBackColor = true;
             this.rb_ASCII.MouseUp += new System.Windows.Forms.MouseEventHandler(this.changedEncodeType);
@@ -180,7 +191,6 @@ namespace MupenUtils.Forms
             this.rb_UTF8.Name = "rb_UTF8";
             this.rb_UTF8.Size = new System.Drawing.Size(64, 21);
             this.rb_UTF8.TabIndex = 1;
-            this.rb_UTF8.TabStop = true;
             this.rb_UTF8.Text = "UTF8";
             this.rb_UTF8.UseVisualStyleBackColor = true;
             this.rb_UTF8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.changedEncodeType);
@@ -199,6 +209,7 @@ namespace MupenUtils.Forms
             // rb_HexStr
             // 
             this.rb_HexStr.AutoSize = true;
+            this.rb_HexStr.Checked = true;
             this.rb_HexStr.Location = new System.Drawing.Point(8, 24);
             this.rb_HexStr.Name = "rb_HexStr";
             this.rb_HexStr.Size = new System.Drawing.Size(94, 21);
@@ -268,18 +279,6 @@ namespace MupenUtils.Forms
             this.txt_Debug_Bytefrom.TabIndex = 0;
             this.txt_Debug_Bytefrom.TextChanged += new System.EventHandler(this.txt_Debug_Nthbyte_TextChanged);
             // 
-            // chk_Ignorenulterm
-            // 
-            this.chk_Ignorenulterm.AutoSize = true;
-            this.chk_Ignorenulterm.Location = new System.Drawing.Point(176, 120);
-            this.chk_Ignorenulterm.Name = "chk_Ignorenulterm";
-            this.chk_Ignorenulterm.Size = new System.Drawing.Size(114, 21);
-            this.chk_Ignorenulterm.TabIndex = 0;
-            this.chk_Ignorenulterm.TabStop = false;
-            this.chk_Ignorenulterm.Text = "Replace NUL";
-            this.chk_Ignorenulterm.UseVisualStyleBackColor = true;
-            this.chk_Ignorenulterm.CheckedChanged += new System.EventHandler(this.chk_Ignorenulterm_CheckedChanged);
-            // 
             // AdvancedDebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -287,7 +286,10 @@ namespace MupenUtils.Forms
             this.ClientSize = new System.Drawing.Size(664, 334);
             this.Controls.Add(this.gp_Debug_Hex);
             this.Controls.Add(this.gp_Debug_Input);
+            this.IsMdiContainer = true;
+            this.MaximizeBox = false;
             this.Name = "AdvancedDebugForm";
+            this.ShowIcon = false;
             this.Text = "Debug";
             this.Shown += new System.EventHandler(this.AdvancedDebugForm_Shown_1);
             this.gp_Debug_Input.ResumeLayout(false);
