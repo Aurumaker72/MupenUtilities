@@ -31,18 +31,20 @@ namespace MupenUtils.Forms
         {
             this.gp_TasStudio_Help = new System.Windows.Forms.GroupBox();
             this.btn_TasStudio_EasterEggObunga = new System.Windows.Forms.Button();
+            this.txt_CellSize = new System.Windows.Forms.TextBox();
             this.txt_TasStudio_Frame = new System.Windows.Forms.TextBox();
             this.gp_TasStudio_Goto = new System.Windows.Forms.GroupBox();
             this.btn_TasStudio_Goto = new System.Windows.Forms.Button();
-            this.lbl_TasStudio_Frame = new System.Windows.Forms.Label();
-            this.txt_CellSize = new System.Windows.Forms.TextBox();
             this.lbl_CellSize = new System.Windows.Forms.Label();
+            this.lbl_TasStudio_Frame = new System.Windows.Forms.Label();
+            this.lbl_Success = new System.Windows.Forms.Label();
             this.gp_TasStudio_Help.SuspendLayout();
             this.gp_TasStudio_Goto.SuspendLayout();
             this.SuspendLayout();
             // 
             // gp_TasStudio_Help
             // 
+            this.gp_TasStudio_Help.Controls.Add(this.lbl_Success);
             this.gp_TasStudio_Help.Controls.Add(this.btn_TasStudio_EasterEggObunga);
             this.gp_TasStudio_Help.Controls.Add(this.txt_CellSize);
             this.gp_TasStudio_Help.Controls.Add(this.txt_TasStudio_Frame);
@@ -69,6 +71,15 @@ namespace MupenUtils.Forms
             this.btn_TasStudio_EasterEggObunga.TabStop = false;
             this.btn_TasStudio_EasterEggObunga.UseVisualStyleBackColor = false;
             this.btn_TasStudio_EasterEggObunga.Click += new System.EventHandler(this.btn_TasStudio_EasterEggObunga_Click);
+            // 
+            // txt_CellSize
+            // 
+            this.txt_CellSize.Location = new System.Drawing.Point(112, 56);
+            this.txt_CellSize.Name = "txt_CellSize";
+            this.txt_CellSize.Size = new System.Drawing.Size(160, 22);
+            this.txt_CellSize.TabIndex = 0;
+            this.txt_CellSize.TabStop = false;
+            this.txt_CellSize.TextChanged += new System.EventHandler(this.txt_CellSize_TextChanged);
             // 
             // txt_TasStudio_Frame
             // 
@@ -99,6 +110,15 @@ namespace MupenUtils.Forms
             this.btn_TasStudio_Goto.UseVisualStyleBackColor = true;
             this.btn_TasStudio_Goto.Click += new System.EventHandler(this.btn_TasStudio_Goto_Click);
             // 
+            // lbl_CellSize
+            // 
+            this.lbl_CellSize.AutoSize = true;
+            this.lbl_CellSize.Location = new System.Drawing.Point(16, 58);
+            this.lbl_CellSize.Name = "lbl_CellSize";
+            this.lbl_CellSize.Size = new System.Drawing.Size(62, 17);
+            this.lbl_CellSize.TabIndex = 1;
+            this.lbl_CellSize.Text = "Cell Size";
+            // 
             // lbl_TasStudio_Frame
             // 
             this.lbl_TasStudio_Frame.AutoSize = true;
@@ -108,23 +128,15 @@ namespace MupenUtils.Forms
             this.lbl_TasStudio_Frame.TabIndex = 1;
             this.lbl_TasStudio_Frame.Text = "Target Frame";
             // 
-            // txt_CellSize
+            // lbl_Success
             // 
-            this.txt_CellSize.Location = new System.Drawing.Point(112, 56);
-            this.txt_CellSize.Name = "txt_CellSize";
-            this.txt_CellSize.Size = new System.Drawing.Size(160, 22);
-            this.txt_CellSize.TabIndex = 0;
-            this.txt_CellSize.TabStop = false;
-            this.txt_CellSize.TextChanged += new System.EventHandler(this.txt_CellSize_TextChanged);
-            // 
-            // lbl_CellSize
-            // 
-            this.lbl_CellSize.AutoSize = true;
-            this.lbl_CellSize.Location = new System.Drawing.Point(16, 58);
-            this.lbl_CellSize.Name = "lbl_CellSize";
-            this.lbl_CellSize.Size = new System.Drawing.Size(62, 17);
-            this.lbl_CellSize.TabIndex = 1;
-            this.lbl_CellSize.Text = "Cell Size";
+            this.lbl_Success.AutoSize = true;
+            this.lbl_Success.Location = new System.Drawing.Point(16, 296);
+            this.lbl_Success.Name = "lbl_Success";
+            this.lbl_Success.Size = new System.Drawing.Size(224, 34);
+            this.lbl_Success.TabIndex = 0;
+            this.lbl_Success.Text = "Applied all settings. \r\nClose this dialog to see the effects";
+            this.lbl_Success.Visible = false;
             // 
             // TASStudioMoreForm
             // 
@@ -156,5 +168,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Button btn_TasStudio_EasterEggObunga;
         private System.Windows.Forms.TextBox txt_CellSize;
         private System.Windows.Forms.Label lbl_CellSize;
+        private System.Windows.Forms.Label lbl_Success;
     }
 }

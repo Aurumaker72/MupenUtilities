@@ -23,6 +23,7 @@ namespace MupenUtils.Forms
         {
             foreach (Control ctl in this.Controls)
                 ctl.Enabled = MainForm.FileLoaded;
+            lbl_Success.Visible = false;
         }
 
         private void txt_TasStudio_Frame_TextChanged(object sender, EventArgs e)
@@ -30,7 +31,7 @@ namespace MupenUtils.Forms
 
             string txt = txt_TasStudio_Frame.Text;
 
-            if (txt == "Invalid") { txt = "0"; txt_TasStudio_Frame.Text = txt; }
+            if (txt == "Invalid") { txt = "0"; }
 
             if (ExtensionMethods.ValidStringInt(txt, 0, MainForm.inputLists[MainForm.selectedController].Count))
                 selectedFrame = Int32.Parse(txt);
@@ -51,6 +52,8 @@ namespace MupenUtils.Forms
             
             MainForm.markedGoToFrame = selectedFrame;
             MainForm.markedSizeCell = cellSize;
+
+            lbl_Success.Visible = true;
         }
 
         private void btn_TasStudio_EasterEggObunga_Click(object sender, EventArgs e)
@@ -64,7 +67,7 @@ namespace MupenUtils.Forms
         {
             string txt = txt_CellSize.Text;
 
-            if (txt == "Invalid") { txt = "0"; txt_CellSize.Text = txt; }
+            if (txt == "Invalid") { txt = "0"; }
 
             if (ExtensionMethods.ValidStringInt(txt, 1, 256))
                 cellSize = Int32.Parse(txt);
