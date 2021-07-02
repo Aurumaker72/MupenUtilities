@@ -110,3 +110,5 @@ In the bin/x86/Release folder you will find a MupenUtilities executable and the 
 🎛️This program does not fully support more than one controller
 
 🖌️This application supports themes
+
+🔌This application has a special exception handler which allows fast reporting of bugs
