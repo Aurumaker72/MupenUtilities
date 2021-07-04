@@ -114,4 +114,4 @@ In the bin/x86/Release folder you will find a MupenUtilities executable and the 
 
 🖌️This application supports themes
 
-🔌This application has a special exception handler which allows fast reporting of bugs
+🔌This application features a special exception handler which allows fast reporting of bugs
