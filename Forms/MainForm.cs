@@ -96,15 +96,15 @@ namespace MupenUtils
         public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "[1]", "[2]", "X", "Y" };
 
         Thread m64load;
-        MoreForm moreForm = new MoreForm();
-        AdvancedDebugForm debugForm = new AdvancedDebugForm();
-        TASStudioMoreForm tasStudioForm = new TASStudioMoreForm();
-        ReplacementForm replacementForm = new ReplacementForm();
-        ControllerFlagsForm controllerFlagsForm = new ControllerFlagsForm();
-        MupenHookForm mupenHookForm = new MupenHookForm();
-        STForm stForm = new STForm();
-        static ExceptionForm exceptionForm = new ExceptionForm();
-        InputStatsForm inputStatisticsForm = new InputStatsForm();
+        MoreForm             moreForm           ;//= new MoreForm();
+        AdvancedDebugForm    debugForm          ;//= new AdvancedDebugForm();
+        TASStudioMoreForm    tasStudioForm      ;//= new TASStudioMoreForm();
+        ReplacementForm      replacementForm    ;//= new ReplacementForm();
+        ControllerFlagsForm  controllerFlagsForm;//= new ControllerFlagsForm();
+        MupenHookForm        mupenHookForm      ;//= new MupenHookForm();
+        STForm               stForm             ;//= new STForm();
+        static ExceptionForm exceptionForm      ;//= new ExceptionForm();
+        InputStatsForm inputStatisticsForm      ; //= new InputStatsForm();
 
         List<Color> ctlColor = new List<Color>();
 
@@ -330,18 +330,18 @@ namespace MupenUtils
             UITheme = (UIThemes)MupenUtilities.Properties.Settings.Default.UITheme; // doing this in C would be so painful
             if (UITheme != UIThemes.Default) SetUITheme(UITheme);
 
-            foreach(ToolStripMenuItem _ts in tsmi_Themes.DropDownItems) _ts.Checked = false;
+            foreach (ToolStripMenuItem _ts in tsmi_Themes.DropDownItems) _ts.Checked = false;
             ToolStripMenuItem ts = tsmi_Themes.DropDownItems[(int)UITheme] as ToolStripMenuItem;
             ts.Checked = true;
 
-//#if DEBUG
+            //#if DEBUG
             ctx_Input_Debug.Items.Add(new ToolStripSeparator());
             ToolStripMenuItem tsmi_DBG_Crash = new ToolStripMenuItem();
             tsmi_DBG_Crash.MouseDown += (s, e) => throw new Exception("Intentional crash");
             tsmi_DBG_Crash.Text = "Debug - Crash";
             ctx_Input_Debug.Items.Add(tsmi_DBG_Crash);
-            
-//#endif
+
+            //#endif
             if (!BitConverter.IsLittleEndian)
             {
                 // incompatible because this program is somewhat endian dependent
@@ -349,9 +349,9 @@ namespace MupenUtils
                 MessageBox.Show("Your system is big-endian and this program might not work properly!");
             }
 
-            
 
-            
+
+
             UpdateReadOnly();
 
             EnableM64View(false, true);
@@ -360,6 +360,14 @@ namespace MupenUtils
             UsageType = (UsageTypes)MupenUtilities.Properties.Settings.Default.UsageType;
             Debug.WriteLine("loaded usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
             UpdateVisualsTop(false);
+
+            
+            
+            
+            
+            exceptionForm = new ExceptionForm();
+            
+
         }
 
         #endregion
@@ -459,6 +467,9 @@ namespace MupenUtils
 
         void ShowTipsForm()
         {
+            if(moreForm == null)
+            moreForm = new MoreForm();
+
             moreForm.ShowDialog();
         }
 
@@ -662,7 +673,12 @@ namespace MupenUtils
                     return;
                 }
             }
+
             MupenHookForm.loading = true;
+
+            if(mupenHookForm == null)
+                mupenHookForm = new MupenHookForm();
+
             mupenHookForm.Show();
             
 
@@ -805,9 +821,9 @@ namespace MupenUtils
             inputListCtl3.Clear();
             inputListCtl4.Clear();
 
-            frame = 0;
-            lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "0"));
-            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = "0"));
+            frame = 1;
+            lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "Frame " + frame.ToString()));
+            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = frame.ToString()));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = 1));
             gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
@@ -1174,6 +1190,7 @@ namespace MupenUtils
             tmpPath = tmpPath + ".st";
             STForm.Path = tmpPath;
 
+            if(stForm==null)stForm = new STForm();
 
             stForm.ShowDialog(); // main ui thread here pauses because of modal popup (execution does not continue)
             
@@ -1534,6 +1551,8 @@ namespace MupenUtils
 
         private void tsmi_Input_SetInput_Click(object sender, EventArgs e)
         {
+            if(debugForm == null)
+            debugForm = new AdvancedDebugForm();
             debugForm.ShowDialog();
         }
         private void dgv_Main_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -1548,7 +1567,12 @@ namespace MupenUtils
         private void dgv_Main_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.H && e.Modifiers == Keys.Control)
+            {
+
+                if(tasStudioForm == null)
+                tasStudioForm = new TASStudioMoreForm();
                 tasStudioForm.ShowDialog();
+            }
 
         }
 
@@ -1587,7 +1611,8 @@ namespace MupenUtils
 
         private void utilityToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if(tasStudioForm == null)
+                tasStudioForm = new TASStudioMoreForm();
             tasStudioForm.ShowDialog();
         }
 
@@ -1607,6 +1632,8 @@ namespace MupenUtils
             }
             if(UsageType == UsageTypes.Replacement)
             {
+                if (replacementForm == null)
+                    replacementForm = new ReplacementForm();
                 replacementForm.ShowDialog();
                 return;
             }
@@ -1750,13 +1777,14 @@ namespace MupenUtils
 
             int index = frame-1;
 
-            if (frame <= dgv_Main.Rows.Count)
+            if (index <= dgv_Main.Rows.Count)
             {
                 
                 dgv_Main.CurrentCell = dgv_Main.Rows[index].Cells[0];
+
                 dgv_Main.Rows[index].Selected = true;
             }
-            if (frame <= tr_MovieScrub.Maximum && frame >= tr_MovieScrub.Minimum)
+            if (index <= tr_MovieScrub.Maximum && index >= tr_MovieScrub.Minimum)
                 tr_MovieScrub.Value = frame;
 
         }
@@ -2004,6 +2032,8 @@ namespace MupenUtils
 
         private void btn_CtlFlags_Click(object sender, EventArgs e)
         {
+            if(controllerFlagsForm == null)
+            controllerFlagsForm = new ControllerFlagsForm();
             controllerFlagsForm.ShowDialog();
         }
         private void tsmi_GetInput_Click(object sender, EventArgs e)
@@ -2054,6 +2084,8 @@ namespace MupenUtils
             InputStatsForm.inputCtl3 = inputListCtl3;
             InputStatsForm.inputCtl4 = inputListCtl4;
 
+            if(inputStatisticsForm == null)
+            inputStatisticsForm = new InputStatsForm();
             inputStatisticsForm.ShowDialog();
         }
 
