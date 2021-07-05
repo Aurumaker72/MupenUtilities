@@ -1277,7 +1277,7 @@ namespace MupenUtils
                            if (x == 16)
                                cellValue = ((sbyte)data[2]).ToString();
                            else if (x == 17)
-                               cellValue = ((sbyte)data[3]).ToString();
+                               cellValue = ((sbyte)-data[3]).ToString(); // flip
                        }
                        try
                        {
@@ -1377,8 +1377,8 @@ namespace MupenUtils
                         if (i == 16)
                             cellValue = ((sbyte)data[2]).ToString();
                         else if (i == 17)
-                            //cellValue = ((sbyte)data[3]).ToString();
-                            cellValue = txt_joyY.Text;
+                            cellValue = ((sbyte)-data[3]).ToString(); // flip
+                            //cellValue = txt_joyY.Text;
                         }
 
                     int index = frame - 1;
@@ -1398,7 +1398,7 @@ namespace MupenUtils
             }
             byte[] data = BitConverter.GetBytes(value);
             sbyte joystickX = (sbyte)data[2];
-            sbyte joystickY = (sbyte)data[3];
+            sbyte joystickY = (sbyte)-data[3]; // flip
 
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = (/*-*/joystickY).ToString();// lie to user
