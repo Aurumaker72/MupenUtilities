@@ -9,6 +9,22 @@ namespace MupenUtils.Networking
 {
     public class UpdateNotifier
     {
+        string latestReleaseTitle;
+        public string GetLatestReleaseTitle()
+        {
+            if (latestReleaseTitle != null) return latestReleaseTitle;
+
+            try
+            {
+                latestReleaseTitle = new GitHubClient(new ProductHeaderValue("muputils")).Repository.Release.GetAll("Aurumaker72", "MupenUtilities").Result[0].Name;
+            }
+            catch
+            {
+                return latestReleaseTitle;
+            }
+
+            return latestReleaseTitle;
+        }
         public void CheckForUpdates(byte versionResult, bool silenced)
         {
             if (versionResult == MainForm.UPDATE_UNKNOWN)

@@ -457,8 +457,7 @@ namespace MupenUtils
             bitarh = IntPtr.Size == 4 ? "32 bit" : "64 bit";
             standardBitArh = IntPtr.Size == 4;
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
-            this.Text += " DEBUG clr ";
-            this.Text += Environment.Version;
+            this.Text += " DEBUG ";
 
 #else
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
