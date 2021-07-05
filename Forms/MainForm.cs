@@ -175,9 +175,8 @@ namespace MupenUtils
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
 
         // Joystick input
-        //int JOY_Relx, JOY_Rely, JOY_Absx, JOY_Absy;
         Point JOY_Rel, JOY_Abs, JOY_middle;
-        bool JOY_mouseDown, JOY_followMouse;
+        bool JOY_mouseDown, JOY_followMouse, JOY_Keyboard;
         bool lockType;
         UpdateNotifier updateNotifier = new UpdateNotifier();
         SmoothingMode JOY_SmoothingMode = SmoothingMode.HighQuality;
@@ -361,7 +360,8 @@ namespace MupenUtils
             Debug.WriteLine("loaded usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
             UpdateVisualsTop(false);
 
-            
+            JOY_Keyboard = MupenUtilities.Properties.Settings.Default.JoystickKeyboard;
+            tsmi_JoyKeyboard.Checked = JOY_Keyboard;
             
             
             
@@ -1377,8 +1377,7 @@ namespace MupenUtils
                         if (i == 16)
                             cellValue = ((sbyte)data[2]).ToString();
                         else if (i == 17)
-                            cellValue = ((sbyte)-data[3]).ToString(); // flip
-                            //cellValue = txt_joyY.Text;
+                            cellValue = txt_joyY.Text;
                         }
 
                     int index = frame - 1;
@@ -1418,7 +1417,7 @@ namespace MupenUtils
             //lbl_FrameSelected.ForeColor = Color.Black;
             //SetInput(inputList[frame]);
 
-
+            
             SetFrame(frame + stepAmount);
         }
         bool checkAllowedStep(int stepAmount)
@@ -1804,7 +1803,7 @@ namespace MupenUtils
             {
                 ExtensionMethods.FullScreen(this);
             }
-            if (!readOnly)
+            if (!readOnly && JOY_Keyboard)
             {
                 switch (e.KeyCode)
                 {
@@ -2188,7 +2187,13 @@ namespace MupenUtils
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
-        
+        private void tsmi_JoyKeyboard_Click(object sender, EventArgs e)
+        {
+            JOY_Keyboard ^= true;
+            tsmi_JoyKeyboard.Checked = JOY_Keyboard;
+            MupenUtilities.Properties.Settings.Default.JoystickKeyboard = JOY_Keyboard;
+                MupenUtilities.Properties.Settings.Default.Save();
+        }
 
         private void DrawJoystick(PaintEventArgs e)
         {

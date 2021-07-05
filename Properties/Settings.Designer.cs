@@ -94,5 +94,17 @@ namespace MupenUtilities.Properties {
                 this["LiveTASStudio"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool JoystickKeyboard {
+            get {
+                return ((bool)(this["JoystickKeyboard"]));
+            }
+            set {
+                this["JoystickKeyboard"] = value;
+            }
+        }
     }
 }
