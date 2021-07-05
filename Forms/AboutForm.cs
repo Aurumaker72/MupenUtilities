@@ -26,8 +26,11 @@ namespace MupenUtils
 
             if (!updateNotifier.CheckForInternetConnection())
             {
-                btn_More_CheckUpdates.Enabled = false;
-                btn_More_CheckUpdates.Text = "No Internet";
+                btn_More_CheckUpdates.Enabled =
+                btn_News.Enabled =              false;
+
+                btn_More_CheckUpdates.Text = 
+                btn_News.Text =             "No Internet";
             }
             
 
