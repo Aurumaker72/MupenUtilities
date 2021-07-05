@@ -1805,6 +1805,8 @@ namespace MupenUtils
             }
             if (!readOnly && JOY_Keyboard)
             {
+                if (this.ActiveControl is TextBox) return;
+                
                 switch (e.KeyCode)
                 {
                     case Keys.W:
