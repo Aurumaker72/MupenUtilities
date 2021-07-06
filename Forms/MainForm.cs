@@ -1048,7 +1048,8 @@ namespace MupenUtils
             BinaryWriter br = new BinaryWriter(fs);
             //ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
-            byte[] magic = new byte[5] { 0x4D, 0x36, 0x34, 0x1A, 0x03};
+            byte[] magic = new byte[4] { 0x4D, 0x36, 0x34, 0x1A};
+            //Array.Reverse(magic);
             //magic[0] = 0x4D;
             //magic[1] = 0x36;
             //magic[2] = 0x34;
@@ -1069,7 +1070,8 @@ namespace MupenUtils
             Author = txt_Author.Text;
             Description = txt_Desc.Text;
 
-            br.Write(BitConverter.ToInt32(magic,0)); // Int32 - Magic (4D36341A)
+            // lol cringe
+            br.Write(magic); // Int32 - Magic (4D36341A)
             br.Write(0x3); // UInt32 - Version number (3)
             br.Write(UID); // UInt32 - UID
             br.Write((UInt32)VIs); // UInt32 - VIs
@@ -1126,7 +1128,10 @@ namespace MupenUtils
             br.Flush();
             br.Close();
             fs.Close();
+
+            MessageBox.Show("Finished saving M64 at " + SavePath, PROGRAM_NAME + " - Saved M64");
             //ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
+
         }
 
 
