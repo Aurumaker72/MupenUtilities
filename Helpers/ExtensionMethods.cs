@@ -153,6 +153,10 @@ public static class ExtensionMethods
 
         return sb.ToString();
     }
+    public static int GetByte(int val, int bytepos)
+    {
+        return (val >> (8*bytepos)) & 0xFF;
+    }
     public static void SetDoubleBuffered(System.Windows.Forms.Control c)
     {
         //https://stackoverflow.com/questions/76993/how-to-double-buffer-net-controls-on-a-form

@@ -125,7 +125,6 @@ namespace MupenUtils
         public static int markedSizeCell = 10;
         public static bool forceGoto = false;
         public static bool forceResizeCell = false;
-        public static bool tasStudioBusy = false;
         int cellSize = 10;
 
         bool simpleMode = false;
@@ -212,6 +211,10 @@ namespace MupenUtils
         const int PAGE_READWRITE = 0x04;
         const int PROCESS_WM_READ = 0x0010;
 
+        [DllImport("user32.dll")]
+        private static extern int SendMessage(IntPtr hWnd, Int32 wMsg, bool wParam, Int32 lParam);
+        private const int WM_SETREDRAW = 11;
+
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
         [DllImport("kernel32.dll")]
@@ -219,6 +222,8 @@ namespace MupenUtils
         [DllImport("kernel32.dll")]
         static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
         [DllImport("kernel32.dll", SetLastError=true)]
+
+        
 
         static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
         public struct MEMORY_BASIC_INFORMATION
@@ -342,6 +347,9 @@ namespace MupenUtils
             tsmi_DBG_Crash.MouseDown += (s, e) => throw new Exception("Intentional crash");
             tsmi_DBG_Crash.Text = "Debug - Crash";
             ctx_Input_Debug.Items.Add(tsmi_DBG_Crash);
+
+            dgv_Main.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(dgv_Main, true, null);
+
 
             //#endif
             if (!BitConverter.IsLittleEndian)
@@ -762,8 +770,8 @@ namespace MupenUtils
         }
         void ReadM64()
         {
+
             m64loadBusy = true;
-            // Check for suspicious MupenUtilities.Properties
             Debug.WriteLine("Attempting to load m64...");
 
             loadedInvalidFile = false;
@@ -968,12 +976,15 @@ namespace MupenUtils
 
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
 
+            PreloadTASStudio();
+            
+
             EnableM64View_ThreadSafe(true);
 
             CheckSuspiciousProperties();
             //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
-            this.Invoke(new Action(() => PreloadTASStudio()));
+            
 
             m64loadBusy = false;
         }
@@ -1209,97 +1220,83 @@ namespace MupenUtils
 
         #region Input & Frames
 
-        // TODO: Maybe refactor. This is a mess and order of execution is very hard to trace!
 
         void PreloadTASStudio()
         {
-            // nuke data
-            // this crashes for some reason after the 2nd time
+            
+            // nuke all old data
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Clear()));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns.Clear()));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ClearSelection()));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ColumnCount = 18));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ColumnHeadersVisible = true));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ReadOnly = true));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Refresh()));
 
-            while (tasStudioBusy)
-            {
-                Debug.WriteLine("tasstudio wait for tasstudio");
-                Application.DoEvents();
-                Thread.Sleep(100);
-            }
+            // adjust some properties for faster loaing
+            // store old properties and reapply them
+            bool cacheRowHeadersVisible = dgv_Main.RowHeadersVisible;
+            DataGridViewRowHeadersWidthSizeMode cacheSizeMode = dgv_Main.RowHeadersWidthSizeMode;
 
-            dgv_Main.Rows.Clear();
-            dgv_Main.Columns.Clear();
-            dgv_Main.ClearSelection();
-            dgv_Main.Refresh();
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersVisible = false));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing)); 
 
-
-            dgv_Main.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(dgv_Main, true, null);
-            dgv_Main.ColumnCount = 18; // 16 buttons + joystick X Y
-            dgv_Main.ColumnHeadersVisible = true;
-            dgv_Main.ReadOnly = true; // lol 
-
-
+            // resize header sizes back to original
             for (byte i = 0; i < inputStructNames.Length; i++)
             {
-                dgv_Main.Columns[i].Name = inputStructNames[i];
-                dgv_Main.Columns[i].Width = 50; // bad! why do in loop s mh hshshshsjadhasuo d273781 !!
-                dgv_Main.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].Name = inputStructNames[i]));
+                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].Width = 50));
+                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable));
+                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None));
             }
 
+            gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio - Loading " + inputLists[selectedController].Count + " samples"));
 
-            gp_TASStudio.Text = "TAS Studio - Loading " + inputLists[selectedController].Count + " samples";
-            // populate with input data (this is cringe and painful and slow i dont care)
-            new Thread(() =>
-           {
-               while (dgv_Main.RecreatingHandle) ; // spin until handle is created
-               while (tasStudioBusy) ;
-               tasStudioBusy = true;
-               for (int y = 0; y < inputLists[selectedController].Count; y++)
-               {
-                   // for each frame
-                   dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Add()));
+            while (dgv_Main.RecreatingHandle) ;
 
-                   for (int x = 0; x < inputStructNames.Length; x++)
-                   {
-                       // for each button
+            List<DataGridViewRow> rows = new List<DataGridViewRow>();
+            object[] buffer = new object[inputStructNames.Length];
+            
+
+            for (int y = 0; y < inputLists[selectedController].Count; y++)
+            {
+                // for each frame
+                rows.Add(new DataGridViewRow());
+
+                // this can be done in a nested loop, but somehow this is faster
+                // todo: replace this to only one condition to minimize branching (here we are doing if else for each button, meaning 30 branches)
+                // e.g:
+                // if(bit(inputlist[y])
+                // buffer[0] = names[0];
+                buffer[0] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 0)) != 0 ? inputStructNames[0] : "";
+                buffer[1] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 1)) != 0 ? inputStructNames[1] : "";
+                buffer[2] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 2)) != 0 ? inputStructNames[2] : "";
+                buffer[3] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 3)) != 0 ? inputStructNames[3] : "";
+                buffer[4] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 4)) != 0 ? inputStructNames[4] : "";
+                buffer[5] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 5)) != 0 ? inputStructNames[5] : "";
+                buffer[7] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 6)) != 0 ? inputStructNames[6] : "";
+                buffer[6] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 7)) != 0 ? inputStructNames[7] : "";
+                buffer[8] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 8)) != 0 ? inputStructNames[8] : "";
+                buffer[9] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 9)) != 0 ? inputStructNames[9] : "";
+                buffer[10] = (inputLists[selectedController][y] & (int)Math.Pow(2, 10)) != 0 ? inputStructNames[10] : "";
+                buffer[11] = (inputLists[selectedController][y] & (int)Math.Pow(2, 11)) != 0 ? inputStructNames[11] : "";
+                buffer[12] = (inputLists[selectedController][y] & (int)Math.Pow(2, 12)) != 0 ? inputStructNames[12] : "";
+                buffer[13] = (inputLists[selectedController][y] & (int)Math.Pow(2, 13)) != 0 ? inputStructNames[13] : "";
+                buffer[14] = (inputLists[selectedController][y] & (int)Math.Pow(2, 14)) != 0 ? inputStructNames[14] : "";
+                buffer[15] = (inputLists[selectedController][y] & (int)Math.Pow(2, 15)) != 0 ? inputStructNames[15] : "";
+
+                buffer[16] = ((sbyte)ExtensionMethods.GetByte(inputLists[selectedController][y], 2)).ToString();
+                buffer[17] = ((sbyte)ExtensionMethods.GetByte(inputLists[selectedController][y], 3)).ToString();
+                
+                rows[rows.Count - 1].CreateCells(dgv_Main, buffer);
+                
+            }
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersVisible = false));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing)); 
 
 
-                       // kind of stupid implementation
-                       // this is easily done faster but do i care?
-
-                       string cellValue = "";
-                       //Debug.WriteLine("X: " + x + " (" + inputStructNames[x] + ")");
-
-                       if (y > inputLists[selectedController].Count) continue; // desync! skip
-                       if (inputLists[selectedController].Count == 0) continue; // empty...
-
-                       if (x < 16)
-                       {
-
-
-                           if ((inputLists[selectedController][y] & (int)Math.Pow(2, x)) != 0)
-                               cellValue = inputStructNames[x];
-                       }
-                       else
-                       {
-
-                           byte[] data = BitConverter.GetBytes(inputLists[selectedController][y]);
-
-                           if (x == 16)
-                               cellValue = ((sbyte)data[2]).ToString();
-                           else if (x == 17)
-                               cellValue = ((sbyte)-data[3]).ToString(); // flip
-                       }
-                       try
-                       {
-                           dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows[y].Cells[x].Value = cellValue));
-                       }
-                       catch
-                       {
-                           // desync...
-                           continue;
-                       }
-                   }
-               }
-               gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
-               tasStudioBusy = false;
-           }).Start();
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
+            gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
 
 
@@ -1326,7 +1323,7 @@ namespace MupenUtils
             //    Application.DoEvents();
             //    Thread.Sleep(1);
             //}
-            if (tasStudioBusy || m64loadBusy)
+            if (m64loadBusy)
             {
                 Debug.WriteLine("setinput critical thread busy... return");
                 return;
