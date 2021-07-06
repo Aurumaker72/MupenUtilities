@@ -143,12 +143,12 @@ namespace MupenUtils
             this.grayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_CRCPopulate = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_JoyKeyboard = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_LiveTasStudio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_JoyKeyboard = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -1333,7 +1333,7 @@ namespace MupenUtils
             this.tsmi_CRCPopulate,
             this.tsmi_JoyKeyboard});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 356);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 328);
             // 
             // tsmi_TasStudioAllow
             // 
@@ -1428,21 +1428,21 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
@@ -1452,6 +1452,13 @@ namespace MupenUtils
             this.tsmi_CRCPopulate.Size = new System.Drawing.Size(211, 26);
             this.tsmi_CRCPopulate.Text = "CRC Populate";
             this.tsmi_CRCPopulate.Click += new System.EventHandler(this.tsmi_CRCPopulate_Click);
+            // 
+            // tsmi_JoyKeyboard
+            // 
+            this.tsmi_JoyKeyboard.Name = "tsmi_JoyKeyboard";
+            this.tsmi_JoyKeyboard.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_JoyKeyboard.Text = "Joystick Keyboard";
+            this.tsmi_JoyKeyboard.Click += new System.EventHandler(this.tsmi_JoyKeyboard_Click);
             // 
             // ctx_TasStudio
             // 
@@ -1491,13 +1498,6 @@ namespace MupenUtils
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
             // 
-            // tsmi_JoyKeyboard
-            // 
-            this.tsmi_JoyKeyboard.Name = "tsmi_JoyKeyboard";
-            this.tsmi_JoyKeyboard.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_JoyKeyboard.Text = "Joystick Keyboard";
-            this.tsmi_JoyKeyboard.Click += new System.EventHandler(this.tsmi_JoyKeyboard_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1518,6 +1518,7 @@ namespace MupenUtils
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.GotFocus += new System.EventHandler(this.MainForm_Focus);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.gp_Path.ResumeLayout(false);
             this.gp_Path.PerformLayout();

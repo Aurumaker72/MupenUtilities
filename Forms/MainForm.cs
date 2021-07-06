@@ -67,6 +67,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Input;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
+using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
 namespace MupenUtils
 {
@@ -1129,7 +1132,7 @@ namespace MupenUtils
             br.Close();
             fs.Close();
 
-            MessageBox.Show("Finished saving M64 at " + SavePath, PROGRAM_NAME + " - Saved M64");
+            MessageBox.Show("Finished saving M64 at " + SavePath + "\n(Relative path from this exe's location)", PROGRAM_NAME + " - Saved M64");
             //ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
 
         }
@@ -1520,13 +1523,13 @@ namespace MupenUtils
 
         private void btn_Input_Debug_Click(object sender, EventArgs e)
         {
-            ctx_Input_Debug.Show(Cursor.Position);
+            ctx_Input_Debug.Show(MousePosition);
         }
 
         private void dgv_Main_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-                ctx_TasStudio.Show(Cursor.Position);
+                ctx_TasStudio.Show(MousePosition);
         }
         private void dgv_Main_MouseWheel(object sender, MouseEventArgs e)
         {
@@ -1810,29 +1813,59 @@ namespace MupenUtils
             if (!readOnly && JOY_Keyboard)
             {
                 if (this.ActiveControl is TextBox) return;
-                
-                switch (e.KeyCode)
+
+                int x = 0, y = 0;
+                Point target = new Point(0,0);
+
+                //cringe 
+                if(Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.Up))
                 {
-                    case Keys.W:
-                    case Keys.Up:
-                        SetJoystickValue(new Point(0, -127), false, false);
-                        break;
-                    case Keys.A:
-                    case Keys.Left:
-                        SetJoystickValue(new Point(-128, 0), false, false);
-                        break;
-                    case Keys.S:
-                    case Keys.Down:
-                        SetJoystickValue(new Point(0,127/*-127 actually but this is inaccuracy which will be fixed*/), false, false);
-                        break;
-                    case Keys.D:
-                    case Keys.Right:
-                        SetJoystickValue(new Point(127, 0), false, false);
-                        break;
+                    target = new Point(0, -127);
+
                 }
+                if(Keyboard.IsKeyDown(Key.A) || Keyboard.IsKeyDown(Key.Left))
+                {
+                    target = new Point(-128, 0);
+                }
+                if(Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.Down))
+                {
+                    target = new Point(0, 127);
+                }
+                if (Keyboard.IsKeyDown(Key.D) || Keyboard.IsKeyDown(Key.Right))
+                {
+                    target = new Point(127, 0);
+                }
+
+                
+                SetJoystickValue(new Point(x,y), false, false);
+
+                
             }
         }
 
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(!readOnly && JOY_Keyboard)
+            {
+                if (   Keyboard.IsKeyUp(Key.D) 
+                    || Keyboard.IsKeyUp(Key.Right) 
+                    || Keyboard.IsKeyUp(Key.S) 
+                    || Keyboard.IsKeyUp(Key.Down)
+                    || Keyboard.IsKeyUp(Key.A) 
+                    || Keyboard.IsKeyUp(Key.Left)
+                    || Keyboard.IsKeyUp(Key.W) 
+                    || Keyboard.IsKeyUp(Key.Up))
+                SetJoystickValue(new Point(0,0), false, false);
+            }
+        }
+
+        private void tsmi_JoyKeyboard_Click(object sender, EventArgs e)
+        {
+            JOY_Keyboard ^= true;
+            tsmi_JoyKeyboard.Checked = JOY_Keyboard;
+            MupenUtilities.Properties.Settings.Default.JoystickKeyboard = JOY_Keyboard;
+                MupenUtilities.Properties.Settings.Default.Save();
+        }
 
         private void btn_PlayPause_Click(object sender, EventArgs e)
         {
@@ -2193,13 +2226,6 @@ namespace MupenUtils
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
-        private void tsmi_JoyKeyboard_Click(object sender, EventArgs e)
-        {
-            JOY_Keyboard ^= true;
-            tsmi_JoyKeyboard.Checked = JOY_Keyboard;
-            MupenUtilities.Properties.Settings.Default.JoystickKeyboard = JOY_Keyboard;
-                MupenUtilities.Properties.Settings.Default.Save();
-        }
 
         private void DrawJoystick(PaintEventArgs e)
         {
