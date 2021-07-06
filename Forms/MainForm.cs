@@ -1790,7 +1790,7 @@ namespace MupenUtils
 
                 dgv_Main.Rows[index].Selected = true;
             }
-            if (index <= tr_MovieScrub.Maximum && index >= tr_MovieScrub.Minimum)
+            if (index < tr_MovieScrub.Maximum && index > tr_MovieScrub.Minimum)
                 tr_MovieScrub.Value = frame;
 
         }
