@@ -1223,7 +1223,7 @@ namespace MupenUtils
 
         void PreloadTASStudio()
         {
-            
+
             // nuke all old data
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Clear()));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns.Clear()));
@@ -1232,14 +1232,6 @@ namespace MupenUtils
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ColumnHeadersVisible = true));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ReadOnly = true));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Refresh()));
-
-            // adjust some properties for faster loaing
-            // store old properties and reapply them
-            bool cacheRowHeadersVisible = dgv_Main.RowHeadersVisible;
-            DataGridViewRowHeadersWidthSizeMode cacheSizeMode = dgv_Main.RowHeadersWidthSizeMode;
-
-            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersVisible = false));
-            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing)); 
 
             // resize header sizes back to original
             for (byte i = 0; i < inputStructNames.Length; i++)
@@ -1256,7 +1248,7 @@ namespace MupenUtils
 
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
             object[] buffer = new object[inputStructNames.Length];
-            
+
 
             for (int y = 0; y < inputLists[selectedController].Count; y++)
             {
@@ -1268,16 +1260,16 @@ namespace MupenUtils
                 // e.g:
                 // if(bit(inputlist[y])
                 // buffer[0] = names[0];
-                buffer[0] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 0)) != 0 ? inputStructNames[0] : "";
-                buffer[1] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 1)) != 0 ? inputStructNames[1] : "";
-                buffer[2] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 2)) != 0 ? inputStructNames[2] : "";
-                buffer[3] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 3)) != 0 ? inputStructNames[3] : "";
-                buffer[4] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 4)) != 0 ? inputStructNames[4] : "";
-                buffer[5] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 5)) != 0 ? inputStructNames[5] : "";
-                buffer[7] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 6)) != 0 ? inputStructNames[6] : "";
-                buffer[6] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 7)) != 0 ? inputStructNames[7] : "";
-                buffer[8] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 8)) != 0 ? inputStructNames[8] : "";
-                buffer[9] = (inputLists[selectedController][y] &  (int)Math.Pow(2, 9)) != 0 ? inputStructNames[9] : "";
+                buffer[0] = (inputLists[selectedController][y] & (int)Math.Pow(2, 0)) != 0 ? inputStructNames[0] : "";
+                buffer[1] = (inputLists[selectedController][y] & (int)Math.Pow(2, 1)) != 0 ? inputStructNames[1] : "";
+                buffer[2] = (inputLists[selectedController][y] & (int)Math.Pow(2, 2)) != 0 ? inputStructNames[2] : "";
+                buffer[3] = (inputLists[selectedController][y] & (int)Math.Pow(2, 3)) != 0 ? inputStructNames[3] : "";
+                buffer[4] = (inputLists[selectedController][y] & (int)Math.Pow(2, 4)) != 0 ? inputStructNames[4] : "";
+                buffer[5] = (inputLists[selectedController][y] & (int)Math.Pow(2, 5)) != 0 ? inputStructNames[5] : "";
+                buffer[7] = (inputLists[selectedController][y] & (int)Math.Pow(2, 6)) != 0 ? inputStructNames[6] : "";
+                buffer[6] = (inputLists[selectedController][y] & (int)Math.Pow(2, 7)) != 0 ? inputStructNames[7] : "";
+                buffer[8] = (inputLists[selectedController][y] & (int)Math.Pow(2, 8)) != 0 ? inputStructNames[8] : "";
+                buffer[9] = (inputLists[selectedController][y] & (int)Math.Pow(2, 9)) != 0 ? inputStructNames[9] : "";
                 buffer[10] = (inputLists[selectedController][y] & (int)Math.Pow(2, 10)) != 0 ? inputStructNames[10] : "";
                 buffer[11] = (inputLists[selectedController][y] & (int)Math.Pow(2, 11)) != 0 ? inputStructNames[11] : "";
                 buffer[12] = (inputLists[selectedController][y] & (int)Math.Pow(2, 12)) != 0 ? inputStructNames[12] : "";
@@ -1287,15 +1279,18 @@ namespace MupenUtils
 
                 buffer[16] = ((sbyte)ExtensionMethods.GetByte(inputLists[selectedController][y], 2)).ToString();
                 buffer[17] = ((sbyte)ExtensionMethods.GetByte(inputLists[selectedController][y], 3)).ToString();
-                
+
                 rows[rows.Count - 1].CreateCells(dgv_Main, buffer);
-                
+
             }
-            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersVisible = false));
-            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing)); 
-
-
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
+
+
+            for (byte i = 0; i < dgv_Main.Columns.Count; i++)
+            {
+                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells));
+            }
+
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
 
