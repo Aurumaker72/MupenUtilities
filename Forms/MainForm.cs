@@ -1288,7 +1288,8 @@ namespace MupenUtils
 
             for (byte i = 0; i < dgv_Main.Columns.Count; i++)
             {
-                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells));
+                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].Width = 50));
+                // make sure nothing changed
             }
 
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
