@@ -242,10 +242,10 @@ namespace MupenUtils
             this.chk_readonly.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chk_readonly.Location = new System.Drawing.Point(300, 50);
             this.chk_readonly.Name = "chk_readonly";
-            this.chk_readonly.Size = new System.Drawing.Size(95, 21);
+            this.chk_readonly.Size = new System.Drawing.Size(90, 21);
             this.chk_readonly.TabIndex = 0;
             this.chk_readonly.TabStop = false;
-            this.chk_readonly.Text = "Read-only";
+            this.chk_readonly.Text = "Readonly";
             this.chk_readonly.UseVisualStyleBackColor = true;
             this.chk_readonly.CheckedChanged += new System.EventHandler(this.chk_readonly_CheckedChanged);
             // 
