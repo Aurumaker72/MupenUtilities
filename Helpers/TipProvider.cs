@@ -16,7 +16,6 @@ namespace MupenUtils.Helpers
             "\'Dump Inputs\' will dump all input data to a file",
             "Try pressing \'Page up\' and \'Page down\' on the trackbar",
             "Check for updates with the button below",
-            "You are on version " + MainForm.PROGRAM_VERSION,
             "Text will turn red if the program deems the property suspicious",
             "\'Set Input\' will allow you to set the raw input data for a frame",
             "Right click TAS Studio to get a useful menu",
@@ -27,7 +26,6 @@ namespace MupenUtils.Helpers
             "There is an easter egg in the TAS Studio Utility dialog",
             "Debug target builds will print information to console",
             "The bit arhitecture is displayed in status bar",
-            "This app has been running since " + Process.GetCurrentProcess().StartTime.ToUniversalTime(),
             "Non-plaintext values are displayed in hexadecimal",
             "Some values are unmodifiable",
             "The \"More\" button has useful dialogs",
@@ -37,7 +35,7 @@ namespace MupenUtils.Helpers
             "CTRL+Scroll in TAS Studio will zoom in and out",
             "Sending the debug log upon a crash helps me fix bugs",
             "\'Live TAS Studio\' will keep TAS Studio up-to-date with your latest inputs",
-            MainForm.PROGRAM_NAME + " saves most Settings to Config",
+            "Most modifiable settings are saved to config",
             "Right click the movie trackbar to change its properties"
         };
 
