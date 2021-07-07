@@ -956,6 +956,7 @@ namespace MupenUtils
             this.pb_JoystickPic.TabStop = false;
             this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
             this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
+            this.pb_JoystickPic.MouseLeave += new System.EventHandler(this.pb_JoystickPic_MouseLeave);
             this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
             this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
             // 

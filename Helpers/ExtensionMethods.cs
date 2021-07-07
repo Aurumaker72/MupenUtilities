@@ -18,6 +18,12 @@ public static class ExtensionMethods
     //    if (value > -1) value--;
     //    else value++;
     //}
+
+    public unsafe static void SetByte(int* val, byte b, int pos) {
+        *val &= ~((int)0xff << (8 * pos)); 
+        *val |= ((int)b << (8 * pos)); 
+    }
+
     public static bool ValidStringInt(string str, int min, int max)
     {
         if (str.Length == 0 || String.IsNullOrEmpty(str) || String.IsNullOrWhiteSpace(str)) return false;

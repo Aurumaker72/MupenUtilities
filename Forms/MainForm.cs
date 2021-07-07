@@ -63,6 +63,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -1221,10 +1222,9 @@ namespace MupenUtils
 
         #region Input & Frames
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void PreloadTASStudio()
         {
-
             // nuke all old data
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Clear()));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns.Clear()));
@@ -1286,13 +1286,6 @@ namespace MupenUtils
             }
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
 
-
-            for (byte i = 0; i < dgv_Main.Columns.Count; i++)
-            {
-                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].Width = 50));
-                // make sure nothing changed
-            }
-
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
 
@@ -1310,22 +1303,18 @@ namespace MupenUtils
             }
             return value;
         }
-        void SetInput(int frame)
+
+        
+        unsafe void SetInput(int frame)
         {
-            if (!FileLoaded)
-                return;
-            //while (tasStudioBusy)
-            //{
-            //    Debug.WriteLine("main waiting for tasstudio");
-            //    Application.DoEvents();
-            //    Thread.Sleep(1);
-            //}
+            if (!FileLoaded) return;
             if (m64loadBusy)
             {
                 Debug.WriteLine("setinput critical thread busy... return");
                 return;
             }
-            int value = 0XDD;
+
+            int value;
             try
             {
                 value = inputLists[selectedController][frame];
@@ -1340,54 +1329,48 @@ namespace MupenUtils
 
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
-                //Debug.WriteLine("[INSIDE LOOP] FRAME " + frame + " | VALUE: " + value.ToString("X") + " | BUTTON: " + controllerButtonsChk[i].Text.ToString() + " | Checked: " + controllerButtonsChk[i].Checked.ToString());
                 ExtensionMethods.SetBit(ref value, controllerButtonsChk[i].Checked, i);
             }
-            byte[] joydata = BitConverter.GetBytes(value);
-            joydata[2] = (byte)JOY_Rel.X;
-            joydata[3] = (byte)-JOY_Rel.Y;
-            
-
-            value = BitConverter.ToInt32(joydata, 0);
+            ExtensionMethods.SetByte(&value, (byte)JOY_Rel.X, 2);
+            ExtensionMethods.SetByte(&value, (byte)-JOY_Rel.Y, 3);
             lastValue = value;
             inputLists[selectedController][frame] = value;
-            Debug.WriteLine("[METHOD END] FRAME " + frame + " | VALUE: " + value.ToString("X"));
 
             // update tas studio
-                if (liveTasStudio)
+            if (liveTasStudio)
+            {
+                dgv_Main.ReadOnly = false;
+                // workaround because windows controls are fucked
+
+                for (int i = 0; i < inputStructNames.Length; i++)
                 {
-                    dgv_Main.ReadOnly = false;
-                    // workaround because windows controls are fucked
+                    string cellValue = "";
 
-                    for (int i = 0; i < inputStructNames.Length; i++)
+                    if (i < 16)
                     {
-                        string cellValue = "";
 
-                        if (i < 16)
-                        {
-                            
-                            if ((inputLists[selectedController][frame] & (int)Math.Pow(2, i)) != 0)
+                        if ((inputLists[selectedController][frame] & (int)Math.Pow(2, i)) != 0)
                             cellValue = inputStructNames[i];
 
-                        }
-                        else
-                        {
+                    }
+                    else
+                    {
 
-                            byte[] data = BitConverter.GetBytes(inputLists[selectedController][frame]);
+                        byte[] data = BitConverter.GetBytes(inputLists[selectedController][frame]);
 
                         if (i == 16)
                             cellValue = ((sbyte)data[2]).ToString();
                         else if (i == 17)
                             cellValue = txt_joyY.Text;
-                        }
+                    }
 
                     int index = frame - 1;
                     if (index < 1) index = 1;
-                        dgv_Main.Rows[index].Cells[i].Value = cellValue;
-                    }
-                    dgv_Main.ReadOnly = true;
-
+                    dgv_Main.Rows[index].Cells[i].Value = cellValue;
                 }
+                dgv_Main.ReadOnly = true;
+
+            }
 
         }
         void GetInput(int value)
@@ -1806,8 +1789,8 @@ namespace MupenUtils
             }
             if (!readOnly && JOY_Keyboard)
             {
-                if (this.ActiveControl is TextBox) return;
-
+                if (this.ActiveControl == pb_JoystickPic) return;
+                Debug.Write("key\n");
                 int x = 0, y = 0;
                 Point target = new Point(0,0);
 
@@ -2123,6 +2106,7 @@ namespace MupenUtils
 
         private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
+            if (e.RowIndex+1 > 0 && e.RowIndex+1 < inputLists[selectedController].Count)
             SetFrame(e.RowIndex+1);
         }
         private void tsmi_CRCPopulate_Click(object sender, EventArgs e)
@@ -2212,8 +2196,15 @@ namespace MupenUtils
             if (JOY_mouseDown) SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
+        private void pb_JoystickPic_MouseLeave(object sender, EventArgs e)
+        {
+            this.ActiveControl = null;
+        }
+
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
+            this.ActiveControl = pb_JoystickPic;
+
             JOY_followMouse = e.Button != MouseButtons.Right || !JOY_followMouse;
             JOY_followMouse = !(e.Button == MouseButtons.Left && JOY_followMouse);
             JOY_mouseDown = true;
