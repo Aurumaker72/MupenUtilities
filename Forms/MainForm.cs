@@ -719,7 +719,7 @@ namespace MupenUtils
                     byte[] tmp = new byte[mem_basic_info.RegionSize];
                     ReadProcessMemory((int)processHandle, mem_basic_info.BaseAddress, tmp, mem_basic_info.RegionSize, ref bytesRead);
                     
-                    foreach (Byte b in tmp)
+                    foreach (byte b in tmp)
                         buffer.Add(b);
                 }
 
@@ -729,7 +729,8 @@ namespace MupenUtils
             }
 
             
-            const string MUPEN_VERSION = "Mupen 64 1.0.9";
+            
+            const string MUPEN_VERSION = "Mupen 64 1.0.9\0";
             const string MUPEN_SPLIT = "Mupen 64";
             string finalName = "";
             string str = "";
@@ -1277,8 +1278,8 @@ namespace MupenUtils
                 buffer[14] = (inputLists[selectedController][y] & (int)Math.Pow(2, 14)) != 0 ? inputStructNames[14] : "";
                 buffer[15] = (inputLists[selectedController][y] & (int)Math.Pow(2, 15)) != 0 ? inputStructNames[15] : "";
 
-                buffer[16] = ((sbyte)ExtensionMethods.GetByte(inputLists[selectedController][y], 2)).ToString();
-                buffer[17] = ((sbyte)ExtensionMethods.GetByte(inputLists[selectedController][y], 3)).ToString();
+                buffer[16] = (ExtensionMethods.GetByte(inputLists[selectedController][y], 2)).ToString();
+                buffer[17] = (ExtensionMethods.GetByte(inputLists[selectedController][y], 3)).ToString();
 
                 rows[rows.Count - 1].CreateCells(dgv_Main, buffer);
 
@@ -2193,10 +2194,10 @@ namespace MupenUtils
 
             //if (user && !readOnly)  (frame);
 
-
-
+            SuspendLayout(); // freeze form repaint
             txt_joyX.Text = JOY_Rel.X.ToString();
             txt_joyY.Text = JOY_Rel.Y.ToString();
+            ResumeLayout(true);
 
             pb_JoystickPic.Refresh();
 
