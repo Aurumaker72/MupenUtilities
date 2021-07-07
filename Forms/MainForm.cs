@@ -95,6 +95,8 @@ namespace MupenUtils
         public const bool RELATIVE = false;
         public const bool ABSOLUTE = true;
 
+        public const int MINIMUM_FRAME = 1;
+
         public static bool standardBitArh;
         // [] means reserved, <^>v is direction
         public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "[1]", "[2]", "X", "Y" };
@@ -836,8 +838,8 @@ namespace MupenUtils
             frame = 1;
             lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "Frame " + frame.ToString()));
             txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = frame.ToString()));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = 1));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = MINIMUM_FRAME));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = MINIMUM_FRAME));
             gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
             Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = readOnly));
@@ -970,7 +972,7 @@ namespace MupenUtils
             txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
 
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = 1));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = MINIMUM_FRAME));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
 
             for (int i = 0; i < Controllers; i++)
@@ -1250,7 +1252,7 @@ namespace MupenUtils
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
             object[] buffer = new object[inputStructNames.Length];
 
-
+            SuspendLayout();
             for (int y = 0; y < inputLists[selectedController].Count; y++)
             {
                 // for each frame
@@ -1284,26 +1286,11 @@ namespace MupenUtils
                 rows[rows.Count - 1].CreateCells(dgv_Main, buffer);
 
             }
+            
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
-
+            ResumeLayout(true);
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
-
-
-
-        int GetChkboxes()
-        {
-            int value = 0;
-            for (int i = 0; i < controllerButtonsChk.Length; i++)
-            {
-                if (controllerButtonsChk[i].Checked)
-                {
-                    value |= (int)Math.Pow(2, i);
-                }
-            }
-            return value;
-        }
-
         
         unsafe void SetInput(int frame)
         {
@@ -1348,10 +1335,8 @@ namespace MupenUtils
 
                     if (i < 16)
                     {
-
-                        if ((inputLists[selectedController][frame] & (int)Math.Pow(2, i)) != 0)
+                        if(ExtensionMethods.GetBit(inputLists[selectedController][frame], i))
                             cellValue = inputStructNames[i];
-
                     }
                     else
                     {
@@ -1406,14 +1391,14 @@ namespace MupenUtils
         }
         bool checkAllowedStep(int stepAmount)
         {
-            if (frame > frames || frame < 0)
+            if (frame > frames || frame < MINIMUM_FRAME)
             {
                 if (!loopInputs)
                 {
                     if (frame > frames)
                         frame = (int)frames;
-                    else if (frame < 0)
-                        frame = 0;
+                    else if (frame < MINIMUM_FRAME)
+                        frame = MINIMUM_FRAME;
                 }
                 else
                 {
@@ -1421,7 +1406,7 @@ namespace MupenUtils
                     {
                         frame = 0;
                     }
-                    else if (frame < 0)
+                    else if (frame < MINIMUM_FRAME)
                     {
                         frame = (int)frames - 1;
                     }
@@ -2106,7 +2091,7 @@ namespace MupenUtils
 
         private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex+1 > 0 && e.RowIndex+1 < inputLists[selectedController].Count)
+            if (e.RowIndex+1 >= MINIMUM_FRAME && e.RowIndex+1 < inputLists[selectedController].Count)
             SetFrame(e.RowIndex+1);
         }
         private void tsmi_CRCPopulate_Click(object sender, EventArgs e)
@@ -2115,6 +2100,28 @@ namespace MupenUtils
             DataHelper.PopulateCRCsFromFile();
             
             MessageBox.Show("Added " + (DataHelper.validCrcs.Count - len) + " new CRCs");
+        }
+        private void tr_MovieScrub_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                ctx_MovieScrub.Show(MousePosition);
+
+        }
+        private void tsmi_movieScrubStep_KeyDown(object sender, KeyEventArgs e)
+        {
+            //KeysConverter kc = new KeysConverter();
+            //e.Handled = !char.IsDigit((char)kc.ConvertToString(e.KeyCode)) && !char.IsControl((char)kc.ConvertToString(e.KeyCode));
+            try { tr_MovieScrub.SmallChange = int.Parse(tsmi_movieScrubStep.Text); } catch { }
+        }
+        private void tsmi_movieScrubStepLarge_KeyDown(object sender, KeyEventArgs e)
+        {
+            try { tr_MovieScrub.LargeChange = int.Parse(tsmi_movieScrubStepLarge.Text); } catch { }
+        }
+        private void tsmi_movieScrubStep_Click(object sender, EventArgs e)
+        {
+            if (!(sender is ToolStripTextBox)) return;
+            ToolStripTextBox tsmi = sender as ToolStripTextBox;
+            if (tsmi.Text.Contains("Change")) tsmi.Text = "";
         }
         #endregion
 
@@ -2200,6 +2207,8 @@ namespace MupenUtils
         {
             this.ActiveControl = null;
         }
+
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

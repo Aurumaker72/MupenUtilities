@@ -149,6 +149,9 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_LiveTasStudio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
+            this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -165,6 +168,7 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
+            this.ctx_MovieScrub.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -369,7 +373,7 @@ namespace MupenUtils
             this.gp_header.Controls.Add(this.gpRom);
             this.gp_header.Controls.Add(this.gp_M64_misc);
             this.gp_header.Controls.Add(this.gp_Plugins);
-            this.gp_header.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gp_header.Dock = System.Windows.Forms.DockStyle.Left;
             this.gp_header.Location = new System.Drawing.Point(4, 19);
             this.gp_header.Name = "gp_header";
             this.gp_header.Size = new System.Drawing.Size(560, 435);
@@ -871,11 +875,11 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.btn_FrameBack2);
             this.gp_input.Controls.Add(this.btn_FrameBack);
             this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_input.Location = new System.Drawing.Point(564, 19);
+            this.gp_input.Location = new System.Drawing.Point(570, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
             this.gp_input.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_input.Size = new System.Drawing.Size(734, 435);
+            this.gp_input.Size = new System.Drawing.Size(728, 435);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input - Controller 1";
@@ -894,8 +898,7 @@ namespace MupenUtils
             // gp_TASStudio
             // 
             this.gp_TASStudio.Controls.Add(this.dgv_Main);
-            this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_TASStudio.Location = new System.Drawing.Point(372, 19);
+            this.gp_TASStudio.Location = new System.Drawing.Point(366, 18);
             this.gp_TASStudio.Name = "gp_TASStudio";
             this.gp_TASStudio.Size = new System.Drawing.Size(358, 412);
             this.gp_TASStudio.TabIndex = 0;
@@ -934,6 +937,7 @@ namespace MupenUtils
             this.tr_MovieScrub.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tr_MovieScrub.Value = 1;
             this.tr_MovieScrub.Scroll += new System.EventHandler(this.tr_MovieScrub_Scroll);
+            this.tr_MovieScrub.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tr_MovieScrub_MouseDown);
             // 
             // btn_Input_Debug
             // 
@@ -1499,6 +1503,34 @@ namespace MupenUtils
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
             // 
+            // ctx_MovieScrub
+            // 
+            this.ctx_MovieScrub.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ctx_MovieScrub.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_movieScrubStep,
+            this.tsmi_movieScrubStepLarge});
+            this.ctx_MovieScrub.Name = "ctx_MovieScrub";
+            this.ctx_MovieScrub.Size = new System.Drawing.Size(211, 90);
+            // 
+            // tsmi_movieScrubStep
+            // 
+            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
+            this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
+            this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
+            this.tsmi_movieScrubStep.ToolTipText = "Small Change";
+            this.tsmi_movieScrubStep.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStep_KeyDown);
+            this.tsmi_movieScrubStep.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
+            // 
+            // tsmi_movieScrubStepLarge
+            // 
+            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
+            this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
+            this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
+            this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
+            this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1544,6 +1576,8 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ctx_Input_Debug.ResumeLayout(false);
             this.ctx_TasStudio.ResumeLayout(false);
+            this.ctx_MovieScrub.ResumeLayout(false);
+            this.ctx_MovieScrub.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1669,6 +1703,9 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_CRCPopulate;
         private System.Windows.Forms.PictureBox pb_RomCountry;
         private System.Windows.Forms.ToolStripMenuItem tsmi_JoyKeyboard;
+        private System.Windows.Forms.ContextMenuStrip ctx_MovieScrub;
+        private System.Windows.Forms.ToolStripTextBox tsmi_movieScrubStep;
+        private System.Windows.Forms.ToolStripTextBox tsmi_movieScrubStepLarge;
     }
 }
 
