@@ -1799,7 +1799,7 @@ namespace MupenUtils
                 }
 
                 
-                SetJoystickValue(new Point(x,y), false, false);
+                SetJoystickValue(target, false, false);
 
                 
             }
