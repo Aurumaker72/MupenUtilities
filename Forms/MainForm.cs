@@ -390,6 +390,14 @@ namespace MupenUtils
 
         #region UI
 
+        void SetTASStudioBig()
+        {
+            gp_TASStudio.Dock = gp_TASStudio.Dock == DockStyle.Right ? DockStyle.Fill : DockStyle.Right;
+            tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
+            tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
+            cbox_Controllers.Visible = gp_TASStudio.Dock != DockStyle.Fill;
+        }
+        
         void SetUITheme(UIThemes uitheme)
         {
             Color gp_BackColor  = Color.Red;
@@ -1302,7 +1310,7 @@ namespace MupenUtils
                 return;
             }
 
-            inputLists[selectedController][frameTarget] = value;
+            inputLists[selectedController][frameTarget] |= value;
 
             GetInput(inputLists[selectedController][frameTarget], false);
 
@@ -1871,12 +1879,9 @@ namespace MupenUtils
         }
         private void tsmi_TasStudio_Big_Click(object sender, EventArgs e)
         {
-            gp_TASStudio.Dock = gp_TASStudio.Dock == DockStyle.Right ? DockStyle.Fill : DockStyle.Right;
-            tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
-            tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
-            cbox_Controllers.Visible = gp_TASStudio.Dock != DockStyle.Fill;
+            SetTASStudioBig();
         }
-
+        
         private void tsmi_AAJoystick_Click(object sender, EventArgs e)
         {
             JOY_SmoothingMode = JOY_SmoothingMode == SmoothingMode.HighQuality ? SmoothingMode.None : SmoothingMode.HighQuality;
@@ -2172,12 +2177,13 @@ namespace MupenUtils
                 return;
             }
 
-            //if (cell.Value is string) cell.Value = cell.Value.ToString() == inputStructNames[structIndex] ? "" : inputStructNames[structIndex];
+            if (cell.Value is string) cell.Value = cell.Value.ToString() == inputStructNames[structIndex] ? "" : inputStructNames[structIndex];
 
-            bool toggled = cell.Value.ToString() != "" ^ true;
+            bool toggled = cell.Value.ToString() != "";
             int buffer = inputLists[selectedController][index];
             ExtensionMethods.SetBit(ref buffer, toggled, structIndex);
 
+            Debug.Write(index + "\n");
             SetInputPure(index + 1, buffer);
         }
 
