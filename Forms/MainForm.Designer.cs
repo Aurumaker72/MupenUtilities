@@ -152,6 +152,7 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.tsmi_Autoscroll = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.st_Status.SuspendLayout();
             this.gp_M64.SuspendLayout();
@@ -211,7 +212,7 @@ namespace MupenUtils
             this.gp_Path.Margin = new System.Windows.Forms.Padding(4);
             this.gp_Path.Name = "gp_Path";
             this.gp_Path.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_Path.Size = new System.Drawing.Size(1302, 89);
+            this.gp_Path.Size = new System.Drawing.Size(1420, 89);
             this.gp_Path.TabIndex = 2;
             this.gp_Path.TabStop = false;
             this.gp_Path.Text = "Selection";
@@ -334,7 +335,7 @@ namespace MupenUtils
             this.st_Status.Location = new System.Drawing.Point(0, 547);
             this.st_Status.Name = "st_Status";
             this.st_Status.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.st_Status.Size = new System.Drawing.Size(1302, 26);
+            this.st_Status.Size = new System.Drawing.Size(1420, 26);
             this.st_Status.Stretch = false;
             this.st_Status.TabIndex = 0;
             this.st_Status.Text = "STATUSBAR";
@@ -361,7 +362,7 @@ namespace MupenUtils
             this.gp_M64.Margin = new System.Windows.Forms.Padding(4);
             this.gp_M64.Name = "gp_M64";
             this.gp_M64.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_M64.Size = new System.Drawing.Size(1302, 458);
+            this.gp_M64.Size = new System.Drawing.Size(1420, 458);
             this.gp_M64.TabIndex = 0;
             this.gp_M64.TabStop = false;
             this.gp_M64.Text = "M64";
@@ -879,7 +880,7 @@ namespace MupenUtils
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
             this.gp_input.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_input.Size = new System.Drawing.Size(728, 435);
+            this.gp_input.Size = new System.Drawing.Size(846, 435);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input - Controller 1";
@@ -898,9 +899,10 @@ namespace MupenUtils
             // gp_TASStudio
             // 
             this.gp_TASStudio.Controls.Add(this.dgv_Main);
-            this.gp_TASStudio.Location = new System.Drawing.Point(366, 18);
+            this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gp_TASStudio.Location = new System.Drawing.Point(372, 19);
             this.gp_TASStudio.Name = "gp_TASStudio";
-            this.gp_TASStudio.Size = new System.Drawing.Size(358, 412);
+            this.gp_TASStudio.Size = new System.Drawing.Size(470, 412);
             this.gp_TASStudio.TabIndex = 0;
             this.gp_TASStudio.TabStop = false;
             this.gp_TASStudio.Text = "TAS Studio";
@@ -915,8 +917,9 @@ namespace MupenUtils
             this.dgv_Main.Name = "dgv_Main";
             this.dgv_Main.RowHeadersWidth = 51;
             this.dgv_Main.RowTemplate.Height = 24;
-            this.dgv_Main.Size = new System.Drawing.Size(352, 391);
+            this.dgv_Main.Size = new System.Drawing.Size(464, 391);
             this.dgv_Main.TabIndex = 0;
+            this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Main_CellDoubleClick);
             this.dgv_Main.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_Main_CellMouseDown);
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
             this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_Main_KeyDown);
@@ -1471,21 +1474,22 @@ namespace MupenUtils
             this.ctx_TasStudio.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.utilityToolStripMenuItem,
             this.tsmi_TasStudio_Big,
-            this.tsmi_LiveTasStudio});
+            this.tsmi_LiveTasStudio,
+            this.tsmi_Autoscroll});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(181, 82);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(211, 136);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // tsmi_TasStudio_Big
             // 
             this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
-            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(210, 26);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
@@ -1494,7 +1498,7 @@ namespace MupenUtils
             this.tsmi_LiveTasStudio.Checked = true;
             this.tsmi_LiveTasStudio.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_LiveTasStudio.Name = "tsmi_LiveTasStudio";
-            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(210, 26);
             this.tsmi_LiveTasStudio.Text = "Live TAS Studio";
             this.tsmi_LiveTasStudio.Click += new System.EventHandler(this.tsmi_LiveTasStudio_Click_1);
             // 
@@ -1510,7 +1514,7 @@ namespace MupenUtils
             this.tsmi_movieScrubStep,
             this.tsmi_movieScrubStepLarge});
             this.ctx_MovieScrub.Name = "ctx_MovieScrub";
-            this.ctx_MovieScrub.Size = new System.Drawing.Size(211, 90);
+            this.ctx_MovieScrub.Size = new System.Drawing.Size(161, 62);
             // 
             // tsmi_movieScrubStep
             // 
@@ -1531,11 +1535,18 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
+            // tsmi_Autoscroll
+            // 
+            this.tsmi_Autoscroll.Name = "tsmi_Autoscroll";
+            this.tsmi_Autoscroll.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Autoscroll.Text = "Autoscroll";
+            this.tsmi_Autoscroll.Click += new System.EventHandler(this.tsmi_Autoscroll_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1302, 573);
+            this.ClientSize = new System.Drawing.Size(1420, 573);
             this.Controls.Add(this.gp_M64);
             this.Controls.Add(this.st_Status);
             this.Controls.Add(this.gp_Path);
@@ -1706,6 +1717,7 @@ namespace MupenUtils
         private System.Windows.Forms.ContextMenuStrip ctx_MovieScrub;
         private System.Windows.Forms.ToolStripTextBox tsmi_movieScrubStep;
         private System.Windows.Forms.ToolStripTextBox tsmi_movieScrubStepLarge;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Autoscroll;
     }
 }
 

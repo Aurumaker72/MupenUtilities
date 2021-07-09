@@ -97,6 +97,7 @@ namespace MupenUtils
 
         public const int MINIMUM_FRAME = 1;
 
+        public Size BIG_SIZE = new Size(1438, 620);
         public static bool standardBitArh;
         // [] means reserved, <^>v is direction
         public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "[1]", "[2]", "X", "Y" };
@@ -128,6 +129,7 @@ namespace MupenUtils
         public static int markedSizeCell = 10;
         public static bool forceGoto = false;
         public static bool forceResizeCell = false;
+        public static bool tasStudioAutoScroll = true;
         int cellSize = 10;
 
         bool simpleMode = false;
@@ -516,7 +518,7 @@ namespace MupenUtils
             if (change) FileLoaded = flag;
 
             
-            s = flag ? new Size(1320, 620) : new Size(100 + btn_Help.Location.X + 20, 150);
+            s = flag ? BIG_SIZE : new Size(100 + btn_Help.Location.X + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_FrameBack.Enabled = FileLoaded;
@@ -557,7 +559,7 @@ namespace MupenUtils
             Size s;
             FileLoaded = flag;
             gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
-            s = flag ? new Size(1320, 620) : new Size(100 + btn_Help.Location.X + 20, 150);
+            s = flag ? BIG_SIZE : new Size(100 + btn_Help.Location.X + 20, 150);
             this.Invoke((MethodInvoker)(() => this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
             gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill));
             st_Status.Invoke((MethodInvoker)(() => gp_Path.Visible = flag));
@@ -1233,14 +1235,13 @@ namespace MupenUtils
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ClearSelection()));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ColumnCount = 18));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ColumnHeadersVisible = true));
-            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ReadOnly = true));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Refresh()));
 
             // resize header sizes back to original
             for (byte i = 0; i < inputStructNames.Length; i++)
             {
                 dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].Name = inputStructNames[i]));
-                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].Width = 50));
+                dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].Width = 40));
                 dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable));
                 dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None));
             }
@@ -1292,6 +1293,22 @@ namespace MupenUtils
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
         
+        unsafe void SetInputPure(int frameTarget, int value)
+        {
+            if (!FileLoaded) return;
+            if (m64loadBusy)
+            {
+                Debug.WriteLine("setinput critical thread busy... return");
+                return;
+            }
+
+            inputLists[selectedController][frameTarget] = value;
+
+            GetInput(inputLists[selectedController][frameTarget], false);
+
+
+            UpdateTASStudio(frameTarget, true);
+        }
         unsafe void SetInput(int frame)
         {
             if (!FileLoaded) return;
@@ -1324,6 +1341,11 @@ namespace MupenUtils
             inputLists[selectedController][frame] = value;
 
             // update tas studio
+            UpdateTASStudio(frame, true);
+
+        }
+        void UpdateTASStudio(int frameTarget, bool retargetIndex)
+        {
             if (liveTasStudio)
             {
                 dgv_Main.ReadOnly = false;
@@ -1335,30 +1357,33 @@ namespace MupenUtils
 
                     if (i < 16)
                     {
-                        if(ExtensionMethods.GetBit(inputLists[selectedController][frame], i))
+                        if(ExtensionMethods.GetBit(inputLists[selectedController][frameTarget], i))
                             cellValue = inputStructNames[i];
                     }
                     else
                     {
 
-                        byte[] data = BitConverter.GetBytes(inputLists[selectedController][frame]);
+                        byte[] data = BitConverter.GetBytes(inputLists[selectedController][frameTarget]);
 
                         if (i == 16)
                             cellValue = ((sbyte)data[2]).ToString();
                         else if (i == 17)
                             cellValue = txt_joyY.Text;
                     }
+                    int index = frameTarget;
 
-                    int index = frame - 1;
+                    if(retargetIndex)
+                    index = frameTarget - 1;
+
                     if (index < 1) index = 1;
+
                     dgv_Main.Rows[index].Cells[i].Value = cellValue;
                 }
                 dgv_Main.ReadOnly = true;
 
             }
-
         }
-        void GetInput(int value)
+        void GetInput(int value, bool setinput)
         {
             for (int i = 0; i < controllerButtonsChk.Length; i++)
             {
@@ -1373,7 +1398,10 @@ namespace MupenUtils
 
             
             SetJoystickValue(new Point(joystickX, joystickY), RELATIVE, false);
+
+            if(setinput)
             SetInput(frame);
+
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
         }
@@ -1429,7 +1457,7 @@ namespace MupenUtils
                 stepFrameTimer.Enabled = false;
                 return;
             }
-            GetInput(inputLists[selectedController][frame]);
+            GetInput(inputLists[selectedController][frame], true);
             UpdateFrameControlUI();
         }
         #endregion
@@ -1994,6 +2022,7 @@ namespace MupenUtils
                     chk.Enabled = !readOnly;
                 }
             }
+            dgv_Main.ReadOnly = readOnly;
         }
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
@@ -2026,7 +2055,7 @@ namespace MupenUtils
             selectedController = Convert.ToByte(cbox_Controllers.SelectedIndex);
 
         update:
-            GetInput(frame);
+            GetInput(frame, true);
             cbox_Controllers.SelectedIndex = selectedController;
         }
 
@@ -2091,6 +2120,8 @@ namespace MupenUtils
 
         private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
+            if (!tasStudioAutoScroll) return;
+
             if (e.RowIndex+1 >= MINIMUM_FRAME && e.RowIndex+1 < inputLists[selectedController].Count)
             SetFrame(e.RowIndex+1);
         }
@@ -2123,6 +2154,52 @@ namespace MupenUtils
             ToolStripTextBox tsmi = sender as ToolStripTextBox;
             if (tsmi.Text.Contains("Change")) tsmi.Text = "";
         }
+
+        private void dgv_Main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (readOnly)
+            {
+                RedControl(dgv_Main);
+                RedControlBack(dgv_Main);
+                return;
+            }
+
+            if (sender is DataGridView dgv)
+            {
+                int structIndex = e.ColumnIndex;
+                int index = e.RowIndex;
+
+                DataGridViewCell cell = dgv.Rows[index].Cells[e.ColumnIndex];
+
+                if (structIndex < 16) // only for buttons
+                {
+                    //if(cell.Value is string)
+                    //if (cell.Value.ToString() == inputStructNames[structIndex])
+                    //{
+                    //    cell.Value = "";
+                    //}
+                    //else
+                    //{
+                    //    cell.Value = inputStructNames[structIndex];
+                    //}
+
+                    bool toggled = cell.Value.ToString() != "" ^ true;
+                    int buffer = inputLists[selectedController][index];
+                    ExtensionMethods.SetBit(ref buffer, toggled, structIndex);
+                    
+                    SetInputPure(index+1, buffer);
+                }
+                else
+                {
+                    MessageBox.Show("Please use the joystick to perform this action", PROGRAM_NAME + " - TAS Studio Warning");
+                }
+
+                
+
+                
+            }
+        }
+
         #endregion
 
         #region Joystick Behaviour
@@ -2208,7 +2285,11 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        
+        private void tsmi_Autoscroll_Click(object sender, EventArgs e)
+        {
+            tasStudioAutoScroll ^= true;
+            tsmi_Autoscroll.Checked = tasStudioAutoScroll;
+        }
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
