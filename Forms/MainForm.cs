@@ -2157,47 +2157,28 @@ namespace MupenUtils
 
         private void dgv_Main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (readOnly)
+            if (readOnly) return;
+            if (!(sender is DataGridView dgv)) return;
+
+            int structIndex = e.ColumnIndex;
+            int index = e.RowIndex;
+
+            DataGridViewCell cell = dgv.Rows[index].Cells[e.ColumnIndex];
+
+            if (structIndex >= 16)
             {
-                RedControl(dgv_Main);
-                RedControlBack(dgv_Main);
+                // if you are trying to change joystick
+                MessageBox.Show("Please use the joystick to perform this action", PROGRAM_NAME + " - TAS Studio Warning");
                 return;
             }
 
-            if (sender is DataGridView dgv)
-            {
-                int structIndex = e.ColumnIndex;
-                int index = e.RowIndex;
+            //if (cell.Value is string) cell.Value = cell.Value.ToString() == inputStructNames[structIndex] ? "" : inputStructNames[structIndex];
 
-                DataGridViewCell cell = dgv.Rows[index].Cells[e.ColumnIndex];
+            bool toggled = cell.Value.ToString() != "" ^ true;
+            int buffer = inputLists[selectedController][index];
+            ExtensionMethods.SetBit(ref buffer, toggled, structIndex);
 
-                if (structIndex < 16) // only for buttons
-                {
-                    //if(cell.Value is string)
-                    //if (cell.Value.ToString() == inputStructNames[structIndex])
-                    //{
-                    //    cell.Value = "";
-                    //}
-                    //else
-                    //{
-                    //    cell.Value = inputStructNames[structIndex];
-                    //}
-
-                    bool toggled = cell.Value.ToString() != "" ^ true;
-                    int buffer = inputLists[selectedController][index];
-                    ExtensionMethods.SetBit(ref buffer, toggled, structIndex);
-                    
-                    SetInputPure(index+1, buffer);
-                }
-                else
-                {
-                    MessageBox.Show("Please use the joystick to perform this action", PROGRAM_NAME + " - TAS Studio Warning");
-                }
-
-                
-
-                
-            }
+            SetInputPure(index + 1, buffer);
         }
 
         #endregion
