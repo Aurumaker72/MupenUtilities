@@ -524,7 +524,8 @@ namespace MupenUtils
 
         void EnableM64View(bool flag, bool change)
         {
-            
+            if (m64loadBusy) return;
+
             Size s;
             ExpandedMenu = flag;
             if (change) FileLoaded = flag;
@@ -1247,9 +1248,9 @@ namespace MupenUtils
 
         #region Input & Frames
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void PreloadTASStudio()
         {
+
             // nuke all old data
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Clear()));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns.Clear()));
@@ -1268,8 +1269,7 @@ namespace MupenUtils
             }
 
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio - Loading " + inputLists[selectedController].Count + " samples"));
-
-            while (dgv_Main.RecreatingHandle) ;
+            txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = "Loading... Please wait"));
 
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
             object[] buffer = new object[inputStructNames.Length];
@@ -1311,6 +1311,7 @@ namespace MupenUtils
             }
             
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
+            txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
             ResumeLayout(true);
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
