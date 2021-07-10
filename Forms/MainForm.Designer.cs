@@ -34,9 +34,6 @@ namespace MupenUtils
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
             this.gp_Path = new System.Windows.Forms.GroupBox();
-            this.btn_Help = new System.Windows.Forms.Button();
-            this.btn_SaveAs = new System.Windows.Forms.Button();
-            this.btn_Save = new System.Windows.Forms.Button();
             this.btn_Tips = new System.Windows.Forms.Button();
             this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.btn_Override = new System.Windows.Forms.Button();
@@ -45,6 +42,8 @@ namespace MupenUtils
             this.rb_STsel = new System.Windows.Forms.RadioButton();
             this.rb_M64sel = new System.Windows.Forms.RadioButton();
             this.btn_LoadLatest = new System.Windows.Forms.Button();
+            this.btn_SaveAs = new System.Windows.Forms.Button();
+            this.btn_Save = new System.Windows.Forms.Button();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.gp_header = new System.Windows.Forms.GroupBox();
             this.gp_User = new System.Windows.Forms.GroupBox();
@@ -193,7 +192,6 @@ namespace MupenUtils
             // 
             // gp_Path
             // 
-            this.gp_Path.Controls.Add(this.btn_Help);
             this.gp_Path.Controls.Add(this.btn_Tips);
             this.gp_Path.Controls.Add(this.chk_readonly);
             this.gp_Path.Controls.Add(this.btn_Override);
@@ -213,42 +211,6 @@ namespace MupenUtils
             this.gp_Path.TabIndex = 2;
             this.gp_Path.TabStop = false;
             this.gp_Path.Text = "File";
-            // 
-            // btn_Help
-            // 
-            this.btn_Help.Location = new System.Drawing.Point(504, 45);
-            this.btn_Help.Name = "btn_Help";
-            this.btn_Help.Size = new System.Drawing.Size(55, 28);
-            this.btn_Help.TabIndex = 0;
-            this.btn_Help.TabStop = false;
-            this.btn_Help.Text = "Help";
-            this.btn_Help.UseVisualStyleBackColor = true;
-            this.btn_Help.Click += new System.EventHandler(this.btn_Tips_Click);
-            // 
-            // btn_SaveAs
-            // 
-            this.btn_SaveAs.Location = new System.Drawing.Point(139, 448);
-            this.btn_SaveAs.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_SaveAs.Name = "btn_SaveAs";
-            this.btn_SaveAs.Size = new System.Drawing.Size(98, 28);
-            this.btn_SaveAs.TabIndex = 0;
-            this.btn_SaveAs.TabStop = false;
-            this.btn_SaveAs.Text = "Save As";
-            this.btn_SaveAs.UseVisualStyleBackColor = true;
-            this.btn_SaveAs.Click += new System.EventHandler(this.btn_SaveAs_Click);
-            // 
-            // btn_Save
-            // 
-            this.btn_Save.Location = new System.Drawing.Point(25, 448);
-            this.btn_Save.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_Save.Name = "btn_Save";
-            this.btn_Save.Size = new System.Drawing.Size(98, 28);
-            this.btn_Save.TabIndex = 0;
-            this.btn_Save.TabStop = false;
-            this.btn_Save.Text = "Save";
-            this.btn_Save.UseVisualStyleBackColor = true;
-            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
-            this.btn_Save.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Savem64_MouseClick);
             // 
             // btn_Tips
             // 
@@ -280,10 +242,10 @@ namespace MupenUtils
             this.btn_Override.Location = new System.Drawing.Point(466, 45);
             this.btn_Override.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Override.Name = "btn_Override";
-            this.btn_Override.Size = new System.Drawing.Size(36, 28);
+            this.btn_Override.Size = new System.Drawing.Size(93, 28);
             this.btn_Override.TabIndex = 0;
             this.btn_Override.TabStop = false;
-            this.btn_Override.Text = "^";
+            this.btn_Override.Text = "Expand";
             this.btn_Override.UseVisualStyleBackColor = true;
             this.btn_Override.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Override_MouseDown);
             // 
@@ -346,6 +308,30 @@ namespace MupenUtils
             this.btn_LoadLatest.Text = "Last";
             this.btn_LoadLatest.UseVisualStyleBackColor = true;
             this.btn_LoadLatest.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Last_MouseClick);
+            // 
+            // btn_SaveAs
+            // 
+            this.btn_SaveAs.Location = new System.Drawing.Point(139, 448);
+            this.btn_SaveAs.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_SaveAs.Name = "btn_SaveAs";
+            this.btn_SaveAs.Size = new System.Drawing.Size(98, 28);
+            this.btn_SaveAs.TabIndex = 0;
+            this.btn_SaveAs.TabStop = false;
+            this.btn_SaveAs.Text = "Save As";
+            this.btn_SaveAs.UseVisualStyleBackColor = true;
+            this.btn_SaveAs.Click += new System.EventHandler(this.btn_SaveAs_Click);
+            // 
+            // btn_Save
+            // 
+            this.btn_Save.Location = new System.Drawing.Point(25, 448);
+            this.btn_Save.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Save.Name = "btn_Save";
+            this.btn_Save.Size = new System.Drawing.Size(98, 28);
+            this.btn_Save.TabIndex = 0;
+            this.btn_Save.TabStop = false;
+            this.btn_Save.Text = "Save";
+            this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_Savem64_MouseClick);
             // 
             // gp_M64
             // 
@@ -866,7 +852,7 @@ namespace MupenUtils
             this.gp_input.Size = new System.Drawing.Size(832, 461);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
-            this.gp_input.Text = "Input - Controller 1";
+            this.gp_input.Text = "Input";
             // 
             // cbox_Controllers
             // 
@@ -1508,6 +1494,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
+            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1517,6 +1504,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
+            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
@@ -1628,7 +1616,6 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudioAllow;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmi_SimpleMode;
-        private System.Windows.Forms.Button btn_Help;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Agressive;
         private System.Windows.Forms.Label lbl_Y;
         private System.Windows.Forms.ComboBox cbox_Controllers;

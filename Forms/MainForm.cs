@@ -530,7 +530,7 @@ namespace MupenUtils
             if (change) FileLoaded = flag;
 
             
-            s = flag ? BIG_SIZE : new Size(100 + btn_Help.Location.X + 20, 150);
+            s = flag ? BIG_SIZE : new Size(100 + btn_Override.Location.X + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_FrameBack.Enabled = FileLoaded;
@@ -563,7 +563,7 @@ namespace MupenUtils
             Size s;
             FileLoaded = flag;
             gp_M64.Invoke((MethodInvoker)(() => gp_M64.Visible = flag));
-            s = flag ? BIG_SIZE : new Size(100 + btn_Help.Location.X + 20, 150);
+            s = flag ? BIG_SIZE : new Size(100 + btn_Override.Location.X + 20, 150);
             this.Invoke((MethodInvoker)(() => this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle));
             gp_Path.Invoke((MethodInvoker)(() => gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill));
             this.Invoke((MethodInvoker)(() => this.MaximizeBox = flag));
@@ -1735,7 +1735,7 @@ namespace MupenUtils
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
             EnableM64View(!ExpandedMenu, false);
-            btn_Override.Text = ExpandedMenu ? "v" : "^";
+            btn_Override.Text = ExpandedMenu ? "Collapse" : "Expand";
         }
         private void btn_FrameFront_Click(object sender, EventArgs e)
         {
@@ -2183,6 +2183,11 @@ namespace MupenUtils
             SetInputPure(index + 1, buffer);
         }
 
+
+        private void btn_Help_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
         #region Joystick Behaviour
@@ -2274,10 +2279,7 @@ namespace MupenUtils
             tsmi_Autoscroll.Checked = tasStudioAutoScroll;
         }
 
-        private void btn_Save_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
