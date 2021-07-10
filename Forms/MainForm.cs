@@ -779,7 +779,12 @@ namespace MupenUtils
         }
         void ReadM64()
         {
-
+            if (m64loadBusy)
+            {
+                MessageBox.Show("Failed to start M64 loading subroutine.", PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                m64loadBusy = false;
+                return;
+            }
             m64loadBusy = true;
             Debug.WriteLine("Attempting to load m64...");
 
@@ -1490,19 +1495,10 @@ namespace MupenUtils
 
             if (UsageType == UsageTypes.M64)
             {
-                if (rb_M64sel.Checked)
-                {
-                    while (m64loadBusy)
-                    {
-                        Debug.WriteLine("main wait for m64load");
-                        Application.DoEvents();
-                        Thread.Sleep(0);
-                    }
-                    m64load = new Thread(() => ReadM64());
-                    m64load.Start();
-                }
+                m64load = new Thread(() => ReadM64());
+                m64load.Start();
             }
-            else if(UsageType == UsageTypes.ST)
+            else if (UsageType == UsageTypes.ST)
             {
                 LoadST();
             }
