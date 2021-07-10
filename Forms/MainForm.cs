@@ -1275,6 +1275,7 @@ namespace MupenUtils
             object[] buffer = new object[inputStructNames.Length];
 
             SuspendLayout();
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             for (int y = 0; y < inputLists[selectedController].Count; y++)
             {
@@ -1313,6 +1314,7 @@ namespace MupenUtils
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
             ResumeLayout(true);
+            this.FormBorderStyle = FormBorderStyle.Sizable;
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
         void SetInputPure(int frameTarget, int value)
