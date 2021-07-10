@@ -1215,6 +1215,11 @@ namespace MupenUtils
             deStream = new GZipStream(origFs, CompressionMode.Decompress);
             deStream.CopyTo(defFs);
 
+            if(defFs.Length < 10485760)
+            {
+                ErrorProcessing("Too small.");
+                return;
+            }
             BinaryReader br = new BinaryReader(defFs);
 
             //defFs.Read(STForm.savestateRDRAM, 0, (int)deStream.BaseStream.Length);
