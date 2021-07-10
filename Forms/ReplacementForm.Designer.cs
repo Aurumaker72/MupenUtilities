@@ -66,6 +66,7 @@ namespace MupenUtils.Forms
             // gp_Repl_Commands
             // 
             this.gp_Repl_Commands.Controls.Add(this.chk_Repl_All);
+            this.gp_Repl_Commands.Controls.Add(this.lbl_Repl_Status);
             this.gp_Repl_Commands.Controls.Add(this.btn_Repl_Go);
             this.gp_Repl_Commands.Controls.Add(this.lbl_Repl_Fto);
             this.gp_Repl_Commands.Controls.Add(this.txt_Repl_Fto);
@@ -82,9 +83,9 @@ namespace MupenUtils.Forms
             // chk_Repl_All
             // 
             this.chk_Repl_All.AutoSize = true;
-            this.chk_Repl_All.Location = new System.Drawing.Point(16, 112);
+            this.chk_Repl_All.Location = new System.Drawing.Point(19, 112);
             this.chk_Repl_All.Name = "chk_Repl_All";
-            this.chk_Repl_All.Size = new System.Drawing.Size(45, 21);
+            this.chk_Repl_All.Size = new System.Drawing.Size(44, 20);
             this.chk_Repl_All.TabIndex = 0;
             this.chk_Repl_All.TabStop = false;
             this.chk_Repl_All.Text = "All";
@@ -107,7 +108,7 @@ namespace MupenUtils.Forms
             this.lbl_Repl_Fto.AutoSize = true;
             this.lbl_Repl_Fto.Location = new System.Drawing.Point(16, 80);
             this.lbl_Repl_Fto.Name = "lbl_Repl_Fto";
-            this.lbl_Repl_Fto.Size = new System.Drawing.Size(25, 17);
+            this.lbl_Repl_Fto.Size = new System.Drawing.Size(24, 16);
             this.lbl_Repl_Fto.TabIndex = 0;
             this.lbl_Repl_Fto.Text = "To";
             // 
@@ -124,7 +125,7 @@ namespace MupenUtils.Forms
             this.lbl_Repl_FFrom.AutoSize = true;
             this.lbl_Repl_FFrom.Location = new System.Drawing.Point(16, 40);
             this.lbl_Repl_FFrom.Name = "lbl_Repl_FFrom";
-            this.lbl_Repl_FFrom.Size = new System.Drawing.Size(40, 17);
+            this.lbl_Repl_FFrom.Size = new System.Drawing.Size(38, 16);
             this.lbl_Repl_FFrom.TabIndex = 0;
             this.lbl_Repl_FFrom.Text = "From";
             // 
@@ -139,7 +140,6 @@ namespace MupenUtils.Forms
             // gp_Repl_File
             // 
             this.gp_Repl_File.Controls.Add(this.chk_Repl_Trg);
-            this.gp_Repl_File.Controls.Add(this.lbl_Repl_Status);
             this.gp_Repl_File.Controls.Add(this.btn_Repl_BrowseTrg);
             this.gp_Repl_File.Controls.Add(this.btn_Repl_BrowseSrc);
             this.gp_Repl_File.Controls.Add(this.txt_Repl_Trg);
@@ -159,21 +159,20 @@ namespace MupenUtils.Forms
             this.chk_Repl_Trg.AutoSize = true;
             this.chk_Repl_Trg.Checked = true;
             this.chk_Repl_Trg.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_Repl_Trg.Location = new System.Drawing.Point(280, 84);
+            this.chk_Repl_Trg.Location = new System.Drawing.Point(281, 84);
             this.chk_Repl_Trg.Name = "chk_Repl_Trg";
             this.chk_Repl_Trg.Size = new System.Drawing.Size(18, 17);
             this.chk_Repl_Trg.TabIndex = 0;
             this.chk_Repl_Trg.TabStop = false;
             this.chk_Repl_Trg.UseVisualStyleBackColor = true;
-            this.chk_Repl_Trg.Visible = false;
             this.chk_Repl_Trg.CheckedChanged += new System.EventHandler(this.chk_Repl_Trg_CheckedChanged);
             // 
             // lbl_Repl_Status
             // 
             this.lbl_Repl_Status.AutoSize = true;
-            this.lbl_Repl_Status.Location = new System.Drawing.Point(16, 184);
+            this.lbl_Repl_Status.Location = new System.Drawing.Point(16, 183);
             this.lbl_Repl_Status.Name = "lbl_Repl_Status";
-            this.lbl_Repl_Status.Size = new System.Drawing.Size(30, 17);
+            this.lbl_Repl_Status.Size = new System.Drawing.Size(29, 16);
             this.lbl_Repl_Status.TabIndex = 0;
             this.lbl_Repl_Status.Text = "Idle";
             // 
@@ -220,7 +219,7 @@ namespace MupenUtils.Forms
             this.gp_Repl_Trg.AutoSize = true;
             this.gp_Repl_Trg.Location = new System.Drawing.Point(16, 80);
             this.gp_Repl_Trg.Name = "gp_Repl_Trg";
-            this.gp_Repl_Trg.Size = new System.Drawing.Size(50, 17);
+            this.gp_Repl_Trg.Size = new System.Drawing.Size(47, 16);
             this.gp_Repl_Trg.TabIndex = 0;
             this.gp_Repl_Trg.Text = "Target";
             // 
@@ -229,7 +228,7 @@ namespace MupenUtils.Forms
             this.gp_Repl_Src.AutoSize = true;
             this.gp_Repl_Src.Location = new System.Drawing.Point(16, 40);
             this.gp_Repl_Src.Name = "gp_Repl_Src";
-            this.gp_Repl_Src.Size = new System.Drawing.Size(53, 17);
+            this.gp_Repl_Src.Size = new System.Drawing.Size(50, 16);
             this.gp_Repl_Src.TabIndex = 0;
             this.gp_Repl_Src.Text = "Source";
             // 

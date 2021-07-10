@@ -26,6 +26,7 @@ namespace MupenUtils.Forms
         int[,] buttonStats = new int[4, 16];
         int[] sumX = new int[4];
         int[] sumY = new int[4];
+        int[] emptyFrames = new int[4];
 
         public static Label[] labels = new Label[MainForm.inputStructNames.Length];
 
@@ -57,6 +58,72 @@ namespace MupenUtils.Forms
         }
         void UpdateInfos()
         {
+            if (!MainForm.FileLoaded) return;
+
+            cbox_Ctl.Items.Clear();
+
+            for (int i1 = 0; i1 < sumX.Length; i1++)
+                sumX[i1] = 0;
+            for (int i1 = 0; i1 < sumY.Length; i1++)
+                sumY[i1] = 0;
+            for (int i1 = 0; i1 < emptyFrames.Length; i1++)
+                emptyFrames[i1] = 0;
+            
+            for (int i = 0; i < 4; i++)
+                if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i + 1));
+
+
+            Array.Clear(buttonStats, 0, buttonStats.Length);
+
+            for (int i = 0; i < inputCtl1.Count; i++)
+            {
+                if (inputCtl1[i] == 0) emptyFrames[0]++;
+
+                for (int x = 0; x < 16; x++)
+                    if (ExtensionMethods.GetBit(inputCtl1[i], x))
+                        buttonStats[0, x]++;
+
+                byte[] data = BitConverter.GetBytes(inputCtl1[i]);
+                sumX[0] += data[2];
+                sumY[0] += data[3];
+            }
+            for (int i = 0; i < inputCtl2.Count; i++)
+            {
+                if (inputCtl2[i] == 0) emptyFrames[1]++;
+
+                for (int x = 0; x < 16; x++)
+                    if (ExtensionMethods.GetBit(inputCtl2[i], x))
+                        buttonStats[1, x]++;
+
+                byte[] data = BitConverter.GetBytes(inputCtl2[i]);
+                sumX[1] += data[2];
+                sumY[1] += data[3];
+            }
+            for (int i = 0; i < inputCtl3.Count; i++)
+            {
+                if (inputCtl3[i] == 0) emptyFrames[2]++;
+
+                for (int x = 0; x < 16; x++)
+                    if (ExtensionMethods.GetBit(inputCtl3[i], x))
+                        buttonStats[2, x]++;
+
+                byte[] data = BitConverter.GetBytes(inputCtl3[i]);
+                sumX[2] += data[2];
+                sumY[2] += data[3];
+            }
+            for (int i = 0; i < inputCtl4.Count; i++)
+            {
+                if (inputCtl4[i] == 0) emptyFrames[3]++;
+
+                for (int x = 0; x < 16; x++)
+                    if (ExtensionMethods.GetBit(inputCtl4[i], x))
+                        buttonStats[3, x]++;
+
+                byte[] data = BitConverter.GetBytes(inputCtl4[i]);
+                sumX[3] += data[2];
+                sumY[3] += data[3];
+            }
+
             selectedController = cbox_Ctl.SelectedIndex;
             if(selectedController < 0)
             {
@@ -73,7 +140,7 @@ namespace MupenUtils.Forms
 
 
             lbl_ABC.Text = buttonStats[selectedController, 7] == 0 ? "Is ABC: Yes" : "Is ABC: No";
-
+            lbl_EmptyFrames.Text = "Empty Frames: " + emptyFrames[selectedController].ToString();
 
             // is TAS
 
@@ -116,8 +183,7 @@ namespace MupenUtils.Forms
         }
         private void cbox_Ctl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateInfos();
-
+            //UpdateInfos();
         }
 
         private void InputStatsForm_Shown(object sender, EventArgs e)
@@ -125,61 +191,13 @@ namespace MupenUtils.Forms
             foreach (Control ctl in Controls)
                 ctl.Enabled = MainForm.FileLoaded;
 
-            // extremely absolutely very efficient trust me
-
-            if (!MainForm.FileLoaded) return;
-            
-                cbox_Ctl.Items.Clear();
-
-                for (int i = 0; i < 4; i++)
-                    if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i+1));
-            
-
-            Array.Clear(buttonStats, 0, buttonStats.Length);
-
-            for (int i = 0; i < inputCtl1.Count; i++)
-            {
-                for (int x = 0; x < 16; x++)
-                    if (ExtensionMethods.GetBit(inputCtl1[i], x))
-                        buttonStats[0, x]++;
-
-                byte[] data = BitConverter.GetBytes(inputCtl1[i]);
-                sumX[0] += data[2];
-                sumY[0] += data[3];
-            }
-            for (int i = 0; i < inputCtl2.Count; i++)
-            {
-                for (int x = 0; x < 16; x++)
-                    if (ExtensionMethods.GetBit(inputCtl2[i], x))
-                        buttonStats[1, x]++;
-
-                byte[] data = BitConverter.GetBytes(inputCtl2[i]);
-                sumX[1] += data[2];
-                sumY[1] += data[3];
-            }
-            for (int i = 0; i < inputCtl3.Count; i++)
-            {
-                for (int x = 0; x < 16; x++)
-                    if (ExtensionMethods.GetBit(inputCtl3[i], x))
-                        buttonStats[2, x]++;
-
-                byte[] data = BitConverter.GetBytes(inputCtl3[i]);
-                sumX[2] += data[2];
-                sumY[2] += data[3];
-            }
-            for (int i = 0; i < inputCtl4.Count; i++)
-            {
-                for (int x = 0; x < 16; x++)
-                    if (ExtensionMethods.GetBit(inputCtl4[i], x))
-                        buttonStats[3, x]++;
-
-                byte[] data = BitConverter.GetBytes(inputCtl4[i]);
-                sumX[3] += data[2];
-                sumY[3] += data[3];
-            }
-
             UpdateInfos();
 
+        }
+
+        private void btn_Refresh_Click(object sender, EventArgs e)
+        {
+            UpdateInfos();
         }
     }
 }

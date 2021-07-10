@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -110,6 +111,11 @@ public static class ExtensionMethods
     public static void SetBit(ref int value, bool bitval, int bitpos)
     {
         if (!bitval) value &= ~(1 << bitpos); else value |= 1 << bitpos;
+    }
+    public static int SetBitAlt(int value, int bitpos, bool flag)
+    {
+        if(!flag) return (value & ~bitpos);
+        else return (value | bitpos);
     }
     public static bool GetBit(int value, int bitpos)
     {
