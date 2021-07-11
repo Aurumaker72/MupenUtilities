@@ -30,8 +30,16 @@ namespace MupenUtils.Forms
         private void InitializeComponent()
         {
             this.gp_st = new System.Windows.Forms.GroupBox();
-            this.gp_RDRAM = new System.Windows.Forms.GroupBox();
+            this.cmb_Editmode = new System.Windows.Forms.ComboBox();
             this.btn_SaveST = new System.Windows.Forms.Button();
+            this.gp_Values = new System.Windows.Forms.GroupBox();
+            this.nud_Coins = new System.Windows.Forms.NumericUpDown();
+            this.lbl_Coins = new System.Windows.Forms.Label();
+            this.nud_Lives = new System.Windows.Forms.NumericUpDown();
+            this.lbl_Lives = new System.Windows.Forms.Label();
+            this.nud_Stars = new System.Windows.Forms.NumericUpDown();
+            this.lbl_Star = new System.Windows.Forms.Label();
+            this.gp_RDRAM = new System.Windows.Forms.GroupBox();
             this.btn_Disallow = new System.Windows.Forms.Button();
             this.btn_Remove = new System.Windows.Forms.Button();
             this.btn_Save = new System.Windows.Forms.Button();
@@ -44,21 +52,16 @@ namespace MupenUtils.Forms
             this.lbl_RDRAMOff = new System.Windows.Forms.Label();
             this.txt_rdramoffset = new System.Windows.Forms.TextBox();
             this.ls_SAVED = new System.Windows.Forms.ListBox();
-            this.gp_Values = new System.Windows.Forms.GroupBox();
-            this.nud_Stars = new System.Windows.Forms.NumericUpDown();
-            this.lbl_Star = new System.Windows.Forms.Label();
-            this.lbl_Lives = new System.Windows.Forms.Label();
-            this.nud_Lives = new System.Windows.Forms.NumericUpDown();
-            this.lbl_Coins = new System.Windows.Forms.Label();
-            this.nud_Coins = new System.Windows.Forms.NumericUpDown();
-            this.cmb_Editmode = new System.Windows.Forms.ComboBox();
             this.lbl_MOde = new System.Windows.Forms.Label();
+            this.lbl_Health = new System.Windows.Forms.Label();
+            this.nud_Health = new System.Windows.Forms.NumericUpDown();
             this.gp_st.SuspendLayout();
-            this.gp_RDRAM.SuspendLayout();
             this.gp_Values.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_Stars)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_Lives)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Coins)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Lives)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Stars)).BeginInit();
+            this.gp_RDRAM.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Health)).BeginInit();
             this.SuspendLayout();
             // 
             // gp_st
@@ -75,6 +78,109 @@ namespace MupenUtils.Forms
             this.gp_st.TabIndex = 1;
             this.gp_st.TabStop = false;
             this.gp_st.Text = "Savestate";
+            // 
+            // cmb_Editmode
+            // 
+            this.cmb_Editmode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_Editmode.FormattingEnabled = true;
+            this.cmb_Editmode.Location = new System.Drawing.Point(192, 405);
+            this.cmb_Editmode.Name = "cmb_Editmode";
+            this.cmb_Editmode.Size = new System.Drawing.Size(121, 24);
+            this.cmb_Editmode.TabIndex = 0;
+            this.cmb_Editmode.TabStop = false;
+            this.cmb_Editmode.SelectedIndexChanged += new System.EventHandler(this.cmb_Editmode_SelectedIndexChanged);
+            // 
+            // btn_SaveST
+            // 
+            this.btn_SaveST.Location = new System.Drawing.Point(6, 405);
+            this.btn_SaveST.Name = "btn_SaveST";
+            this.btn_SaveST.Size = new System.Drawing.Size(129, 42);
+            this.btn_SaveST.TabIndex = 0;
+            this.btn_SaveST.TabStop = false;
+            this.btn_SaveST.Text = "Save ST";
+            this.btn_SaveST.UseVisualStyleBackColor = true;
+            this.btn_SaveST.Click += new System.EventHandler(this.btn_SaveST_Click);
+            // 
+            // gp_Values
+            // 
+            this.gp_Values.Controls.Add(this.nud_Health);
+            this.gp_Values.Controls.Add(this.nud_Coins);
+            this.gp_Values.Controls.Add(this.lbl_Health);
+            this.gp_Values.Controls.Add(this.lbl_Coins);
+            this.gp_Values.Controls.Add(this.nud_Lives);
+            this.gp_Values.Controls.Add(this.lbl_Lives);
+            this.gp_Values.Controls.Add(this.nud_Stars);
+            this.gp_Values.Controls.Add(this.lbl_Star);
+            this.gp_Values.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gp_Values.Location = new System.Drawing.Point(451, 18);
+            this.gp_Values.Name = "gp_Values";
+            this.gp_Values.Size = new System.Drawing.Size(308, 432);
+            this.gp_Values.TabIndex = 0;
+            this.gp_Values.TabStop = false;
+            this.gp_Values.Text = "Super Mario 64 USA";
+            // 
+            // nud_Coins
+            // 
+            this.nud_Coins.Location = new System.Drawing.Point(126, 89);
+            this.nud_Coins.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.nud_Coins.Name = "nud_Coins";
+            this.nud_Coins.Size = new System.Drawing.Size(120, 22);
+            this.nud_Coins.TabIndex = 0;
+            // 
+            // lbl_Coins
+            // 
+            this.lbl_Coins.AutoSize = true;
+            this.lbl_Coins.Location = new System.Drawing.Point(6, 92);
+            this.lbl_Coins.Name = "lbl_Coins";
+            this.lbl_Coins.Size = new System.Drawing.Size(41, 16);
+            this.lbl_Coins.TabIndex = 0;
+            this.lbl_Coins.Text = "Coins";
+            // 
+            // nud_Lives
+            // 
+            this.nud_Lives.Location = new System.Drawing.Point(126, 55);
+            this.nud_Lives.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.nud_Lives.Name = "nud_Lives";
+            this.nud_Lives.Size = new System.Drawing.Size(120, 22);
+            this.nud_Lives.TabIndex = 0;
+            // 
+            // lbl_Lives
+            // 
+            this.lbl_Lives.AutoSize = true;
+            this.lbl_Lives.Location = new System.Drawing.Point(6, 58);
+            this.lbl_Lives.Name = "lbl_Lives";
+            this.lbl_Lives.Size = new System.Drawing.Size(39, 16);
+            this.lbl_Lives.TabIndex = 0;
+            this.lbl_Lives.Text = "Lives";
+            // 
+            // nud_Stars
+            // 
+            this.nud_Stars.Location = new System.Drawing.Point(126, 31);
+            this.nud_Stars.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.nud_Stars.Name = "nud_Stars";
+            this.nud_Stars.Size = new System.Drawing.Size(120, 22);
+            this.nud_Stars.TabIndex = 0;
+            // 
+            // lbl_Star
+            // 
+            this.lbl_Star.AutoSize = true;
+            this.lbl_Star.Location = new System.Drawing.Point(6, 34);
+            this.lbl_Star.Name = "lbl_Star";
+            this.lbl_Star.Size = new System.Drawing.Size(38, 16);
+            this.lbl_Star.TabIndex = 0;
+            this.lbl_Star.Text = "Stars";
             // 
             // gp_RDRAM
             // 
@@ -96,17 +202,6 @@ namespace MupenUtils.Forms
             this.gp_RDRAM.TabIndex = 1;
             this.gp_RDRAM.TabStop = false;
             this.gp_RDRAM.Text = "RDRAM";
-            // 
-            // btn_SaveST
-            // 
-            this.btn_SaveST.Location = new System.Drawing.Point(6, 405);
-            this.btn_SaveST.Name = "btn_SaveST";
-            this.btn_SaveST.Size = new System.Drawing.Size(129, 42);
-            this.btn_SaveST.TabIndex = 0;
-            this.btn_SaveST.TabStop = false;
-            this.btn_SaveST.Text = "Save ST";
-            this.btn_SaveST.UseVisualStyleBackColor = true;
-            this.btn_SaveST.Click += new System.EventHandler(this.btn_SaveST_Click);
             // 
             // btn_Disallow
             // 
@@ -226,96 +321,6 @@ namespace MupenUtils.Forms
             this.ls_SAVED.Size = new System.Drawing.Size(303, 116);
             this.ls_SAVED.TabIndex = 0;
             // 
-            // gp_Values
-            // 
-            this.gp_Values.Controls.Add(this.nud_Coins);
-            this.gp_Values.Controls.Add(this.lbl_Coins);
-            this.gp_Values.Controls.Add(this.nud_Lives);
-            this.gp_Values.Controls.Add(this.lbl_Lives);
-            this.gp_Values.Controls.Add(this.nud_Stars);
-            this.gp_Values.Controls.Add(this.lbl_Star);
-            this.gp_Values.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_Values.Location = new System.Drawing.Point(451, 18);
-            this.gp_Values.Name = "gp_Values";
-            this.gp_Values.Size = new System.Drawing.Size(308, 432);
-            this.gp_Values.TabIndex = 0;
-            this.gp_Values.TabStop = false;
-            this.gp_Values.Text = "Super Mario 64 USA";
-            // 
-            // nud_Stars
-            // 
-            this.nud_Stars.Location = new System.Drawing.Point(126, 31);
-            this.nud_Stars.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.nud_Stars.Name = "nud_Stars";
-            this.nud_Stars.Size = new System.Drawing.Size(120, 22);
-            this.nud_Stars.TabIndex = 0;
-            // 
-            // lbl_Star
-            // 
-            this.lbl_Star.AutoSize = true;
-            this.lbl_Star.Location = new System.Drawing.Point(6, 34);
-            this.lbl_Star.Name = "lbl_Star";
-            this.lbl_Star.Size = new System.Drawing.Size(38, 16);
-            this.lbl_Star.TabIndex = 0;
-            this.lbl_Star.Text = "Stars";
-            // 
-            // lbl_Lives
-            // 
-            this.lbl_Lives.AutoSize = true;
-            this.lbl_Lives.Location = new System.Drawing.Point(6, 58);
-            this.lbl_Lives.Name = "lbl_Lives";
-            this.lbl_Lives.Size = new System.Drawing.Size(39, 16);
-            this.lbl_Lives.TabIndex = 0;
-            this.lbl_Lives.Text = "Lives";
-            // 
-            // nud_Lives
-            // 
-            this.nud_Lives.Location = new System.Drawing.Point(126, 55);
-            this.nud_Lives.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.nud_Lives.Name = "nud_Lives";
-            this.nud_Lives.Size = new System.Drawing.Size(120, 22);
-            this.nud_Lives.TabIndex = 0;
-            // 
-            // lbl_Coins
-            // 
-            this.lbl_Coins.AutoSize = true;
-            this.lbl_Coins.Location = new System.Drawing.Point(6, 92);
-            this.lbl_Coins.Name = "lbl_Coins";
-            this.lbl_Coins.Size = new System.Drawing.Size(41, 16);
-            this.lbl_Coins.TabIndex = 0;
-            this.lbl_Coins.Text = "Coins";
-            // 
-            // nud_Coins
-            // 
-            this.nud_Coins.Location = new System.Drawing.Point(126, 89);
-            this.nud_Coins.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.nud_Coins.Name = "nud_Coins";
-            this.nud_Coins.Size = new System.Drawing.Size(120, 22);
-            this.nud_Coins.TabIndex = 0;
-            // 
-            // cmb_Editmode
-            // 
-            this.cmb_Editmode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_Editmode.FormattingEnabled = true;
-            this.cmb_Editmode.Location = new System.Drawing.Point(192, 405);
-            this.cmb_Editmode.Name = "cmb_Editmode";
-            this.cmb_Editmode.Size = new System.Drawing.Size(121, 24);
-            this.cmb_Editmode.TabIndex = 0;
-            this.cmb_Editmode.TabStop = false;
-            this.cmb_Editmode.SelectedIndexChanged += new System.EventHandler(this.cmb_Editmode_SelectedIndexChanged);
-            // 
             // lbl_MOde
             // 
             this.lbl_MOde.AutoSize = true;
@@ -325,6 +330,27 @@ namespace MupenUtils.Forms
             this.lbl_MOde.TabIndex = 0;
             this.lbl_MOde.Text = "Mode";
             this.lbl_MOde.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lbl_Health
+            // 
+            this.lbl_Health.AutoSize = true;
+            this.lbl_Health.Location = new System.Drawing.Point(6, 117);
+            this.lbl_Health.Name = "lbl_Health";
+            this.lbl_Health.Size = new System.Drawing.Size(46, 16);
+            this.lbl_Health.TabIndex = 0;
+            this.lbl_Health.Text = "Health";
+            // 
+            // nud_Health
+            // 
+            this.nud_Health.Location = new System.Drawing.Point(126, 115);
+            this.nud_Health.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.nud_Health.Name = "nud_Health";
+            this.nud_Health.Size = new System.Drawing.Size(120, 22);
+            this.nud_Health.TabIndex = 0;
             // 
             // STForm
             // 
@@ -341,13 +367,14 @@ namespace MupenUtils.Forms
             this.Shown += new System.EventHandler(this.STForm_Shown);
             this.gp_st.ResumeLayout(false);
             this.gp_st.PerformLayout();
-            this.gp_RDRAM.ResumeLayout(false);
-            this.gp_RDRAM.PerformLayout();
             this.gp_Values.ResumeLayout(false);
             this.gp_Values.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_Stars)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_Lives)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Coins)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Lives)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Stars)).EndInit();
+            this.gp_RDRAM.ResumeLayout(false);
+            this.gp_RDRAM.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Health)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -377,5 +404,7 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Label lbl_Lives;
         private System.Windows.Forms.ComboBox cmb_Editmode;
         private System.Windows.Forms.Label lbl_MOde;
+        private System.Windows.Forms.NumericUpDown nud_Health;
+        private System.Windows.Forms.Label lbl_Health;
     }
 }

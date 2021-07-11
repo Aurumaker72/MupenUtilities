@@ -1216,7 +1216,7 @@ namespace MupenUtils
             br.BaseStream.Seek(0x1B0, SeekOrigin.Begin); // have fun figuring this out without docs
             STForm.savestateRDRAM = br.ReadBytes(8388608);
             br.BaseStream.Seek(0, SeekOrigin.Begin);
-            STForm.savestate = decompressed.ToList();
+            STForm.savestate = decompressed;
 
             br.Close();
 

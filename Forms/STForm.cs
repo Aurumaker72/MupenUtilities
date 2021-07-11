@@ -15,7 +15,7 @@ namespace MupenUtils.Forms
 {
     public partial class STForm : Form
     {
-        public static List<byte> savestate = new List<byte>();
+        public static byte[] savestate = new byte[10496988];
 
         public static byte[] savestateRDRAM = new byte[8388608];
 
@@ -33,8 +33,8 @@ namespace MupenUtils.Forms
         public const uint LIVES_DISPLAY_ADDRESS = 0x0033B412;
         public const uint HEALTH_ADDRESS = 0x0033B3CD;
 
-        Int16 coins;
-        Int16 stars;
+        short coins;
+        short stars;
         sbyte lives;
         sbyte health;
 
@@ -146,16 +146,22 @@ namespace MupenUtils.Forms
             nud_Coins.Value = coins;
             nud_Stars.Value = stars;
             nud_Lives.Value = lives;
-            
+            nud_Health.Value = health;
         }
         void SM64Push()
         {
+            Array.Copy(BitConverter.GetBytes(coins),  0,  savestate,  COINS_COUNT_ADDRESS, System.Runtime.InteropServices.Marshal.SizeOf(coins));
+            Array.Copy(BitConverter.GetBytes(stars),  0,  savestate,  STARS_COUNT_ADDRESS, System.Runtime.InteropServices.Marshal.SizeOf(stars));
+            Array.Copy(BitConverter.GetBytes(lives),  0,  savestate,  LIVES_COUNT_ADDRESS, System.Runtime.InteropServices.Marshal.SizeOf(lives));
+            Array.Copy(BitConverter.GetBytes(health), 0,  savestate,  HEALTH_ADDRESS,     System.Runtime.InteropServices.Marshal.SizeOf(health));
 
         }
         #endregion
 
         private void btn_SaveST_Click(object sender, EventArgs e)
         {
+            //SM64Push();
+
             byte[] st = savestate.ToArray();
             Array.Copy(savestateRDRAM, 0, st, 0x1B0, 8388608);
 
