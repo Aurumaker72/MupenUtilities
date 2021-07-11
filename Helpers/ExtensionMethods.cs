@@ -112,6 +112,34 @@ public static class ExtensionMethods
 
     }
 
+    public static byte[] Compress(byte[] input)
+    {
+        MemoryStream mem = new MemoryStream(input);
+        GZipOutputStream gs = new GZipOutputStream(mem);
+        gs.Write(input, 0, input.Length);
+
+        gs.Flush(); gs.Close(); mem.Flush(); mem.Close();
+
+        return mem.ToArray();
+    }
+    public static byte[] Compress2(byte[] input)
+    {
+        using (var result = new MemoryStream())
+        {
+            var lengthBytes = BitConverter.GetBytes(input.Length);
+            result.Write(lengthBytes, 0, 4);
+
+            using (var compressionStream = new GZipStream(result,
+                CompressionMode.Compress))
+            {
+                compressionStream.Write(input, 0, input.Length);
+                compressionStream.Flush();
+
+            }
+            return result.ToArray();
+        }
+    }
+
     public static byte[] Decompress(byte[] compressed)
     {
         using (MemoryStream memory = new MemoryStream(compressed))

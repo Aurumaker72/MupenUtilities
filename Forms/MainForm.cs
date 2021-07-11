@@ -1210,11 +1210,13 @@ namespace MupenUtils
                 return;
             }
 
-            BinaryReader br = new BinaryReader(new FileStream(Path, FileMode.Open));
+            
+            BinaryReader br = new BinaryReader(new MemoryStream(decompressed));
 
             //defFs.Read(STForm.savestateRDRAM, 0, (int)deStream.BaseStream.Length);
             br.BaseStream.Seek(0x1B0, SeekOrigin.Begin); // have fun figuring this out without docs
             STForm.savestateRDRAM = br.ReadBytes(8388608);
+            
             br.BaseStream.Seek(0, SeekOrigin.Begin);
             STForm.savestate = decompressed;
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO;
+using System.Buffers.Binary;
 
 namespace MupenUtils.Forms
 {
@@ -150,20 +151,23 @@ namespace MupenUtils.Forms
         }
         void SM64Push()
         {
-            Array.Copy(BitConverter.GetBytes(coins),  0,  savestate,  COINS_COUNT_ADDRESS, System.Runtime.InteropServices.Marshal.SizeOf(coins));
-            Array.Copy(BitConverter.GetBytes(stars),  0,  savestate,  STARS_COUNT_ADDRESS, System.Runtime.InteropServices.Marshal.SizeOf(stars));
-            Array.Copy(BitConverter.GetBytes(lives),  0,  savestate,  LIVES_COUNT_ADDRESS, System.Runtime.InteropServices.Marshal.SizeOf(lives));
-            Array.Copy(BitConverter.GetBytes(health), 0,  savestate,  HEALTH_ADDRESS,     System.Runtime.InteropServices.Marshal.SizeOf(health));
-
+            Array.Copy(BitConverter.GetBytes(coins),  0,  savestate,  COINS_COUNT_ADDRESS, 2 );
+            Array.Copy(BitConverter.GetBytes(stars),  0,  savestate,  STARS_COUNT_ADDRESS, 2 );
+            savestate[LIVES_COUNT_ADDRESS] = (byte)lives;
+            savestate[HEALTH_ADDRESS]      = (byte)health;
         }
         #endregion
 
         private void btn_SaveST_Click(object sender, EventArgs e)
         {
-            //SM64Push();
+            SM64Push();
 
             byte[] st = savestate.ToArray();
+
             Array.Copy(savestateRDRAM, 0, st, 0x1B0, 8388608);
+
+            // compress st array
+            st = ExtensionMethods.Compress(st);
 
             FileStream fs = File.Open(Path, FileMode.OpenOrCreate);
             BinaryWriter br = new BinaryWriter(fs);
@@ -171,8 +175,8 @@ namespace MupenUtils.Forms
 
             br.Flush();  br.Close(); fs.Close();
 
+
             MessageBox.Show(String.Format("Dumped {0} bytes savestate at {1}", st.Length, Path));
-            ExtensionMethods.OpenFolderAndSelectItem(System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(Path)), Path);
         }
 
         private void cmb_Editmode_SelectedIndexChanged(object sender, EventArgs e)
@@ -194,6 +198,15 @@ namespace MupenUtils.Forms
                 gp_Values.Show();
                 SM64Load();
             }
+        }
+
+        private void gamePropertyChanged(object sender, MouseEventArgs e)
+        {
+            Debug.WriteLine("st update value");
+            coins = (short)nud_Coins.Value;
+            stars = (short)nud_Stars.Value;
+            lives = (sbyte)nud_Lives.Value;
+            health = (sbyte)nud_Health.Value;
         }
     }
 }
