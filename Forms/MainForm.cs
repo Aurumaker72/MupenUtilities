@@ -149,9 +149,9 @@ namespace MupenUtils
         byte Controllers;
         public static bool[] ControllersEnabled = { false, false, false, false };
         Int16 StartType;
-        string RomName;
+        public static string RomName;
         UInt32 Crc32;
-        UInt16 RomCountry;
+        public static UInt16 RomCountry;
         string VideoPlugin;
         string InputPlugin;
         string AudioPlugin;
@@ -1200,36 +1200,24 @@ namespace MupenUtils
                 }
             }
 
-            FileInfo f = new FileInfo(Path);
-            FileStream origFs, defFs;
-            GZipStream deStream;
-            string newFs;
-            origFs = f.OpenRead();
+            byte[] decompressed;
 
+            decompressed = ExtensionMethods.Decompress(File.ReadAllBytes(Path));
 
-            string curFs = f.FullName;
-            newFs = curFs.Remove(curFs.Length - f.Extension.Length) + ".bin";
-
-            defFs = File.Create(newFs);
-
-            deStream = new GZipStream(origFs, CompressionMode.Decompress);
-            deStream.CopyTo(defFs);
-
-            if(defFs.Length < 10485760)
+            if(decompressed.Length < 10485760)
             {
                 ErrorProcessing("Too small.");
                 return;
             }
-            BinaryReader br = new BinaryReader(defFs);
+
+            BinaryReader br = new BinaryReader(new FileStream(Path, FileMode.Open));
 
             //defFs.Read(STForm.savestateRDRAM, 0, (int)deStream.BaseStream.Length);
             br.BaseStream.Seek(0x1B0, SeekOrigin.Begin); // have fun figuring this out without docs
             STForm.savestateRDRAM = br.ReadBytes(8388608);
+            br.BaseStream.Seek(0, SeekOrigin.Begin);
+            STForm.savestate = decompressed.ToList();
 
-            STForm.savestate = ExtensionMethods.ReadAllBytes(br.BaseStream).ToList();
-
-            defFs.Close();
-            origFs.Close();
             br.Close();
 
             string tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
@@ -1280,7 +1268,6 @@ namespace MupenUtils
             object[] buffer = new object[inputStructNames.Length];
 
             SuspendLayout();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             for (int y = 0; y < inputLists[selectedController].Count; y++)
             {
@@ -1319,7 +1306,6 @@ namespace MupenUtils
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
             ResumeLayout(true);
-            this.FormBorderStyle = FormBorderStyle.Sizable;
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
         void SetInputPure(int frameTarget, int value)

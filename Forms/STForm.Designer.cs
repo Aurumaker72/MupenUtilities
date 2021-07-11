@@ -44,13 +44,30 @@ namespace MupenUtils.Forms
             this.lbl_RDRAMOff = new System.Windows.Forms.Label();
             this.txt_rdramoffset = new System.Windows.Forms.TextBox();
             this.ls_SAVED = new System.Windows.Forms.ListBox();
+            this.gp_Values = new System.Windows.Forms.GroupBox();
+            this.nud_Stars = new System.Windows.Forms.NumericUpDown();
+            this.lbl_Star = new System.Windows.Forms.Label();
+            this.lbl_Lives = new System.Windows.Forms.Label();
+            this.nud_Lives = new System.Windows.Forms.NumericUpDown();
+            this.lbl_Coins = new System.Windows.Forms.Label();
+            this.nud_Coins = new System.Windows.Forms.NumericUpDown();
+            this.cmb_Editmode = new System.Windows.Forms.ComboBox();
+            this.lbl_MOde = new System.Windows.Forms.Label();
             this.gp_st.SuspendLayout();
             this.gp_RDRAM.SuspendLayout();
+            this.gp_Values.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Stars)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Lives)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Coins)).BeginInit();
             this.SuspendLayout();
             // 
             // gp_st
             // 
+            this.gp_st.Controls.Add(this.cmb_Editmode);
+            this.gp_st.Controls.Add(this.btn_SaveST);
+            this.gp_st.Controls.Add(this.gp_Values);
             this.gp_st.Controls.Add(this.gp_RDRAM);
+            this.gp_st.Controls.Add(this.lbl_MOde);
             this.gp_st.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_st.Location = new System.Drawing.Point(0, 0);
             this.gp_st.Name = "gp_st";
@@ -61,7 +78,6 @@ namespace MupenUtils.Forms
             // 
             // gp_RDRAM
             // 
-            this.gp_RDRAM.Controls.Add(this.btn_SaveST);
             this.gp_RDRAM.Controls.Add(this.btn_Disallow);
             this.gp_RDRAM.Controls.Add(this.btn_Remove);
             this.gp_RDRAM.Controls.Add(this.btn_Save);
@@ -74,19 +90,18 @@ namespace MupenUtils.Forms
             this.gp_RDRAM.Controls.Add(this.lbl_RDRAMOff);
             this.gp_RDRAM.Controls.Add(this.txt_rdramoffset);
             this.gp_RDRAM.Controls.Add(this.ls_SAVED);
-            this.gp_RDRAM.Dock = System.Windows.Forms.DockStyle.Left;
             this.gp_RDRAM.Location = new System.Drawing.Point(3, 18);
             this.gp_RDRAM.Name = "gp_RDRAM";
-            this.gp_RDRAM.Size = new System.Drawing.Size(437, 432);
+            this.gp_RDRAM.Size = new System.Drawing.Size(442, 369);
             this.gp_RDRAM.TabIndex = 1;
             this.gp_RDRAM.TabStop = false;
             this.gp_RDRAM.Text = "RDRAM";
             // 
             // btn_SaveST
             // 
-            this.btn_SaveST.Location = new System.Drawing.Point(352, 400);
+            this.btn_SaveST.Location = new System.Drawing.Point(6, 405);
             this.btn_SaveST.Name = "btn_SaveST";
-            this.btn_SaveST.Size = new System.Drawing.Size(75, 23);
+            this.btn_SaveST.Size = new System.Drawing.Size(129, 42);
             this.btn_SaveST.TabIndex = 0;
             this.btn_SaveST.TabStop = false;
             this.btn_SaveST.Text = "Save ST";
@@ -95,7 +110,7 @@ namespace MupenUtils.Forms
             // 
             // btn_Disallow
             // 
-            this.btn_Disallow.Location = new System.Drawing.Point(128, 40);
+            this.btn_Disallow.Location = new System.Drawing.Point(133, 55);
             this.btn_Disallow.Name = "btn_Disallow";
             this.btn_Disallow.Size = new System.Drawing.Size(75, 24);
             this.btn_Disallow.TabIndex = 0;
@@ -106,7 +121,7 @@ namespace MupenUtils.Forms
             // 
             // btn_Remove
             // 
-            this.btn_Remove.Location = new System.Drawing.Point(352, 200);
+            this.btn_Remove.Location = new System.Drawing.Point(357, 215);
             this.btn_Remove.Name = "btn_Remove";
             this.btn_Remove.Size = new System.Drawing.Size(75, 24);
             this.btn_Remove.TabIndex = 0;
@@ -117,7 +132,7 @@ namespace MupenUtils.Forms
             // 
             // btn_Save
             // 
-            this.btn_Save.Location = new System.Drawing.Point(208, 40);
+            this.btn_Save.Location = new System.Drawing.Point(213, 55);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(75, 24);
             this.btn_Save.TabIndex = 0;
@@ -128,7 +143,7 @@ namespace MupenUtils.Forms
             // 
             // txt_Edit
             // 
-            this.txt_Edit.Location = new System.Drawing.Point(288, 16);
+            this.txt_Edit.Location = new System.Drawing.Point(293, 31);
             this.txt_Edit.MaxLength = 4;
             this.txt_Edit.Name = "txt_Edit";
             this.txt_Edit.Size = new System.Drawing.Size(136, 22);
@@ -138,7 +153,7 @@ namespace MupenUtils.Forms
             // 
             // txt_RDRAM
             // 
-            this.txt_RDRAM.Location = new System.Drawing.Point(128, 16);
+            this.txt_RDRAM.Location = new System.Drawing.Point(133, 31);
             this.txt_RDRAM.Name = "txt_RDRAM";
             this.txt_RDRAM.ReadOnly = true;
             this.txt_RDRAM.Size = new System.Drawing.Size(154, 22);
@@ -148,9 +163,9 @@ namespace MupenUtils.Forms
             // lbl_Saved
             // 
             this.lbl_Saved.AutoSize = true;
-            this.lbl_Saved.Location = new System.Drawing.Point(8, 80);
+            this.lbl_Saved.Location = new System.Drawing.Point(13, 95);
             this.lbl_Saved.Name = "lbl_Saved";
-            this.lbl_Saved.Size = new System.Drawing.Size(95, 17);
+            this.lbl_Saved.Size = new System.Drawing.Size(92, 16);
             this.lbl_Saved.TabIndex = 0;
             this.lbl_Saved.Text = "Saved Values";
             this.lbl_Saved.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -158,18 +173,18 @@ namespace MupenUtils.Forms
             // lbl_Interact
             // 
             this.lbl_Interact.AutoSize = true;
-            this.lbl_Interact.Location = new System.Drawing.Point(8, 40);
+            this.lbl_Interact.Location = new System.Drawing.Point(13, 55);
             this.lbl_Interact.Name = "lbl_Interact";
-            this.lbl_Interact.Size = new System.Drawing.Size(57, 17);
+            this.lbl_Interact.Size = new System.Drawing.Size(54, 16);
             this.lbl_Interact.TabIndex = 0;
             this.lbl_Interact.Text = "Change";
             // 
             // lbl_live
             // 
             this.lbl_live.AutoSize = true;
-            this.lbl_live.Location = new System.Drawing.Point(8, 16);
+            this.lbl_live.Location = new System.Drawing.Point(13, 31);
             this.lbl_live.Name = "lbl_live";
-            this.lbl_live.Size = new System.Drawing.Size(67, 17);
+            this.lbl_live.Size = new System.Drawing.Size(64, 16);
             this.lbl_live.TabIndex = 2;
             this.lbl_live.Text = "Live View";
             // 
@@ -189,7 +204,7 @@ namespace MupenUtils.Forms
             this.lbl_RDRAMOff.AutoSize = true;
             this.lbl_RDRAMOff.Location = new System.Drawing.Point(40, 339);
             this.lbl_RDRAMOff.Name = "lbl_RDRAMOff";
-            this.lbl_RDRAMOff.Size = new System.Drawing.Size(97, 17);
+            this.lbl_RDRAMOff.Size = new System.Drawing.Size(92, 16);
             this.lbl_RDRAMOff.TabIndex = 0;
             this.lbl_RDRAMOff.Text = "RDRAM offset";
             // 
@@ -206,15 +221,115 @@ namespace MupenUtils.Forms
             // 
             this.ls_SAVED.FormattingEnabled = true;
             this.ls_SAVED.ItemHeight = 16;
-            this.ls_SAVED.Location = new System.Drawing.Point(128, 80);
+            this.ls_SAVED.Location = new System.Drawing.Point(133, 95);
             this.ls_SAVED.Name = "ls_SAVED";
             this.ls_SAVED.Size = new System.Drawing.Size(303, 116);
             this.ls_SAVED.TabIndex = 0;
             // 
+            // gp_Values
+            // 
+            this.gp_Values.Controls.Add(this.nud_Coins);
+            this.gp_Values.Controls.Add(this.lbl_Coins);
+            this.gp_Values.Controls.Add(this.nud_Lives);
+            this.gp_Values.Controls.Add(this.lbl_Lives);
+            this.gp_Values.Controls.Add(this.nud_Stars);
+            this.gp_Values.Controls.Add(this.lbl_Star);
+            this.gp_Values.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gp_Values.Location = new System.Drawing.Point(451, 18);
+            this.gp_Values.Name = "gp_Values";
+            this.gp_Values.Size = new System.Drawing.Size(308, 432);
+            this.gp_Values.TabIndex = 0;
+            this.gp_Values.TabStop = false;
+            this.gp_Values.Text = "Super Mario 64 USA";
+            // 
+            // nud_Stars
+            // 
+            this.nud_Stars.Location = new System.Drawing.Point(126, 31);
+            this.nud_Stars.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.nud_Stars.Name = "nud_Stars";
+            this.nud_Stars.Size = new System.Drawing.Size(120, 22);
+            this.nud_Stars.TabIndex = 0;
+            // 
+            // lbl_Star
+            // 
+            this.lbl_Star.AutoSize = true;
+            this.lbl_Star.Location = new System.Drawing.Point(6, 34);
+            this.lbl_Star.Name = "lbl_Star";
+            this.lbl_Star.Size = new System.Drawing.Size(38, 16);
+            this.lbl_Star.TabIndex = 0;
+            this.lbl_Star.Text = "Stars";
+            // 
+            // lbl_Lives
+            // 
+            this.lbl_Lives.AutoSize = true;
+            this.lbl_Lives.Location = new System.Drawing.Point(6, 58);
+            this.lbl_Lives.Name = "lbl_Lives";
+            this.lbl_Lives.Size = new System.Drawing.Size(39, 16);
+            this.lbl_Lives.TabIndex = 0;
+            this.lbl_Lives.Text = "Lives";
+            // 
+            // nud_Lives
+            // 
+            this.nud_Lives.Location = new System.Drawing.Point(126, 55);
+            this.nud_Lives.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.nud_Lives.Name = "nud_Lives";
+            this.nud_Lives.Size = new System.Drawing.Size(120, 22);
+            this.nud_Lives.TabIndex = 0;
+            // 
+            // lbl_Coins
+            // 
+            this.lbl_Coins.AutoSize = true;
+            this.lbl_Coins.Location = new System.Drawing.Point(6, 92);
+            this.lbl_Coins.Name = "lbl_Coins";
+            this.lbl_Coins.Size = new System.Drawing.Size(41, 16);
+            this.lbl_Coins.TabIndex = 0;
+            this.lbl_Coins.Text = "Coins";
+            // 
+            // nud_Coins
+            // 
+            this.nud_Coins.Location = new System.Drawing.Point(126, 89);
+            this.nud_Coins.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.nud_Coins.Name = "nud_Coins";
+            this.nud_Coins.Size = new System.Drawing.Size(120, 22);
+            this.nud_Coins.TabIndex = 0;
+            // 
+            // cmb_Editmode
+            // 
+            this.cmb_Editmode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_Editmode.FormattingEnabled = true;
+            this.cmb_Editmode.Location = new System.Drawing.Point(192, 405);
+            this.cmb_Editmode.Name = "cmb_Editmode";
+            this.cmb_Editmode.Size = new System.Drawing.Size(121, 24);
+            this.cmb_Editmode.TabIndex = 0;
+            this.cmb_Editmode.TabStop = false;
+            this.cmb_Editmode.SelectedIndexChanged += new System.EventHandler(this.cmb_Editmode_SelectedIndexChanged);
+            // 
+            // lbl_MOde
+            // 
+            this.lbl_MOde.AutoSize = true;
+            this.lbl_MOde.Location = new System.Drawing.Point(144, 408);
+            this.lbl_MOde.Name = "lbl_MOde";
+            this.lbl_MOde.Size = new System.Drawing.Size(42, 16);
+            this.lbl_MOde.TabIndex = 0;
+            this.lbl_MOde.Text = "Mode";
+            this.lbl_MOde.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // STForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(762, 453);
             this.Controls.Add(this.gp_st);
             this.MaximizeBox = false;
@@ -225,8 +340,14 @@ namespace MupenUtils.Forms
             this.Text = "STForm";
             this.Shown += new System.EventHandler(this.STForm_Shown);
             this.gp_st.ResumeLayout(false);
+            this.gp_st.PerformLayout();
             this.gp_RDRAM.ResumeLayout(false);
             this.gp_RDRAM.PerformLayout();
+            this.gp_Values.ResumeLayout(false);
+            this.gp_Values.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Stars)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Lives)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Coins)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -247,5 +368,14 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Label lbl_Interact;
         private System.Windows.Forms.TextBox txt_Edit;
         private System.Windows.Forms.Button btn_SaveST;
+        private System.Windows.Forms.GroupBox gp_Values;
+        private System.Windows.Forms.NumericUpDown nud_Stars;
+        private System.Windows.Forms.Label lbl_Star;
+        private System.Windows.Forms.NumericUpDown nud_Coins;
+        private System.Windows.Forms.Label lbl_Coins;
+        private System.Windows.Forms.NumericUpDown nud_Lives;
+        private System.Windows.Forms.Label lbl_Lives;
+        private System.Windows.Forms.ComboBox cmb_Editmode;
+        private System.Windows.Forms.Label lbl_MOde;
     }
 }

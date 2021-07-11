@@ -25,6 +25,19 @@ namespace MupenUtils.Forms
 
         public static string Path;
 
+        public const uint COINS_COUNT_ADDRESS = 0x0033B3CA;
+        public const uint STARS_COUNT_ADDRESS = 0x0033B3C8;
+        public const uint LIVES_COUNT_ADDRESS = 0x0033B3CE;
+        public const uint COINS_DISPLAY_ADDRESS = 0x0033B410;
+        public const uint STARS_DISPLAY_ADDRESS = 0x0033B416;
+        public const uint LIVES_DISPLAY_ADDRESS = 0x0033B412;
+        public const uint HEALTH_ADDRESS = 0x0033B3CD;
+
+        Int16 coins;
+        Int16 stars;
+        sbyte lives;
+        sbyte health;
+
         public STForm()
         {
             InitializeComponent();
@@ -33,8 +46,17 @@ namespace MupenUtils.Forms
 
         private void STForm_Shown(object sender, EventArgs e)
         {
+            cmb_Editmode.Items.Clear();
+            cmb_Editmode.Items.Add("Full");
+            cmb_Editmode.Items.Add("RDRAM");
+            cmb_Editmode.Items.Add("Super Mario 64 USA");
+
+            cmb_Editmode.SelectedIndex = 0;
+            
+
         }
 
+        #region RDRAM utility
         private void txt_rdramoffset_TextChanged(object sender, EventArgs e)
         {
             txt_rdramoffset.ForeColor = Color.Black;
@@ -83,13 +105,10 @@ namespace MupenUtils.Forms
             if(ls_SAVED.SelectedIndex != -1)
             ls_SAVED.Items.RemoveAt(ls_SAVED.SelectedIndex);
         }
-
         private void btn_Disallow_Click(object sender, EventArgs e)
         {
             ls_SAVED.Items.Remove(selectedOffset.ToString("X2") + " | " + savestateRDRAM[selectedOffset].ToString("X2"));
-
             for(int i=0;i<disallowedOffsets.Count;i++)if(selectedOffset==disallowedOffsets[i])disallowedOffsets.RemoveAt(i);
-
             disallowedOffsets.Add(selectedOffset);
         }
 
@@ -114,20 +133,61 @@ namespace MupenUtils.Forms
             savestateRDRAM[selectedOffset] = final;
             txt_RDRAM.Text = savestateRDRAM[selectedOffset].ToString("X2");
         }
+        #endregion
+
+        #region SM64
+        void SM64Load()
+        {
+            coins = ExtensionMethods.ToInt16(savestate.ToArray(), COINS_COUNT_ADDRESS);
+            stars = ExtensionMethods.ToInt16(savestate.ToArray(), STARS_COUNT_ADDRESS);
+            lives = (sbyte)savestate.ToArray()[LIVES_COUNT_ADDRESS];
+            health = (sbyte)savestate.ToArray()[HEALTH_ADDRESS]; 
+
+            nud_Coins.Value = coins;
+            nud_Stars.Value = stars;
+            nud_Lives.Value = lives;
+            
+        }
+        void SM64Push()
+        {
+
+        }
+        #endregion
 
         private void btn_SaveST_Click(object sender, EventArgs e)
         {
             byte[] st = savestate.ToArray();
+            Array.Copy(savestateRDRAM, 0, st, 0x1B0, 8388608);
 
             FileStream fs = File.Open(Path, FileMode.OpenOrCreate);
             BinaryWriter br = new BinaryWriter(fs);
-            br.Write(st, 0, 0x1A0);
-            br.Write(savestateRDRAM);
-            br.Write(st, 0x8001B0, st.Length);
+            br.Write(st);
 
             br.Flush();  br.Close(); fs.Close();
 
             MessageBox.Show(String.Format("Dumped {0} bytes savestate at {1}", st.Length, Path));
+            ExtensionMethods.OpenFolderAndSelectItem(System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(Path)), Path);
+        }
+
+        private void cmb_Editmode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cmb_Editmode.SelectedIndex == 0)
+            {
+                gp_RDRAM.Show();
+                gp_Values.Show();
+                SM64Load();
+            }
+            else if(cmb_Editmode.SelectedIndex == 1)
+            {
+                gp_RDRAM.Show();
+                gp_Values.Hide();
+            }
+            else if (cmb_Editmode.SelectedIndex == 2)
+            {
+                gp_RDRAM.Hide();
+                gp_Values.Show();
+                SM64Load();
+            }
         }
     }
 }

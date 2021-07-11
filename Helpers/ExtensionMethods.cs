@@ -1,14 +1,29 @@
+using ICSharpCode.SharpZipLib.GZip;
 using System;
 using System.Collections;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.IO.Compression;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 public static class ExtensionMethods
 {
+    [DllImport("shell32.dll", SetLastError = true)]
+    public static extern int SHOpenFolderAndSelectItems(IntPtr pidlFolder, uint cidl, [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] apidl, uint dwFlags);
+
+    [DllImport("shell32.dll", SetLastError = true)]
+    public static extern void SHParseDisplayName([MarshalAs(UnmanagedType.LPWStr)] string name, IntPtr bindingContext, [Out] out IntPtr pidl, uint sfgaoIn, [Out] out uint psfgaoOut);
+
+#if BIGENDIAN
+        public static readonly bool IsLittleEndian /* = false */;
+#else
+    public static readonly bool IsLittleEndian = true;
+#endif
+
     public static int LowWord(this int number) => number & 0x0000FFFF;
     public static int LowWord(this int number, int newValue) => (int)((number & 0xFFFF0000) + (newValue & 0x0000FFFF));
     public static int HighWord(this int number) => (int)(number & 0xFFFF0000);
@@ -19,6 +34,42 @@ public static class ExtensionMethods
     //    if (value > -1) value--;
     //    else value++;
     //}
+
+    // https://stackoverflow.com/questions/334630/opening-a-folder-in-explorer-and-selecting-a-file/334645
+    public static void OpenFolderAndSelectItem(string folderPath, string file)
+    {
+        IntPtr nativeFolder;
+        uint psfgaoOut;
+        SHParseDisplayName(folderPath, IntPtr.Zero, out nativeFolder, 0, out psfgaoOut);
+
+        if (nativeFolder == IntPtr.Zero)
+        {
+            // Log error, can't find folder
+            return;
+        }
+
+        IntPtr nativeFile;
+        SHParseDisplayName(Path.Combine(folderPath, file), IntPtr.Zero, out nativeFile, 0, out psfgaoOut);
+
+        IntPtr[] fileArray;
+        if (nativeFile == IntPtr.Zero)
+        {
+            // Open the folder without the file selected if we can't find the file
+            fileArray = new IntPtr[0];
+        }
+        else
+        {
+            fileArray = new IntPtr[] { nativeFile };
+        }
+
+        SHOpenFolderAndSelectItems(nativeFolder, (uint)fileArray.Length, fileArray, 0);
+
+        Marshal.FreeCoTaskMem(nativeFolder);
+        if (nativeFile != IntPtr.Zero)
+        {
+            Marshal.FreeCoTaskMem(nativeFile);
+        }
+    }
 
     public unsafe static void SetByte(int* val, byte b, int pos) {
         *val &= ~((int)0xff << (8 * pos)); 
@@ -35,11 +86,81 @@ public static class ExtensionMethods
         return false;
     }
 
-    public static byte[] ReadAllBytes(Stream stream)
+    // stolen from ms
+
+    // Converts an array of bytes into a short.  
+    public static unsafe short ToInt16(byte[] value, uint startIndex)
     {
-        using (var ms = new MemoryStream())
+        fixed (byte* pbyte = &value[startIndex])
         {
-            stream.CopyTo(ms);
+            if (startIndex % 2 == 0)
+            { // data is aligned 
+                return *((short*)pbyte);
+            }
+            else
+            {
+                if (IsLittleEndian)
+                {
+                    return (short)((*pbyte) | (*(pbyte + 1) << 8));
+                }
+                else
+                {
+                    return (short)((*pbyte << 8) | (*(pbyte + 1)));
+                }
+            }
+        }
+
+    }
+
+    public static byte[] Decompress(byte[] compressed)
+    {
+        using (MemoryStream memory = new MemoryStream(compressed))
+        {
+            using (var gzipStream = new GZipInputStream(memory))
+            {
+                using (MemoryStream unzip = new MemoryStream())
+                {
+                    gzipStream.CopyTo(unzip);
+                    return unzip.GetBuffer();
+                }
+            }
+        }
+    }
+    public static byte[] Decompress2(byte[] gzip)
+    {
+        // Create a GZIP stream with decompression mode.
+        // ... Then create a buffer and write into while reading from the GZIP stream.
+        using (GZipStream stream = new GZipStream(new MemoryStream(gzip),
+            CompressionMode.Decompress))
+        {
+            const int size = 4096;
+            byte[] buffer = new byte[size];
+            using (MemoryStream memory = new MemoryStream())
+            {
+                int count = 0;
+                do
+                {
+                    count = stream.Read(buffer, 0, size);
+                    if (count > 0)
+                    {
+                        memory.Write(buffer, 0, count);
+                    }
+                }
+                while (count > 0);
+                return memory.ToArray();
+            }
+        }
+    }
+    public static byte[] ReadFully(Stream input)
+    {
+        byte[] buffer = new byte[16 * 1024];
+        using (MemoryStream ms = new MemoryStream())
+        {
+            int read;
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                ms.Write(buffer, 0, read);
+            }
             return ms.ToArray();
         }
     }
