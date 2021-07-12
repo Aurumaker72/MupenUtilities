@@ -225,15 +225,12 @@ namespace MupenUtils.Forms
             this.cmb_Mode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmb_Mode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_Mode.FormattingEnabled = true;
-            this.cmb_Mode.Items.AddRange(new object[] {
-            "Overwrite",
-            "Logical AND",
-            "Logical OR"});
             this.cmb_Mode.Location = new System.Drawing.Point(3, 18);
             this.cmb_Mode.Name = "cmb_Mode";
             this.cmb_Mode.Size = new System.Drawing.Size(311, 24);
             this.cmb_Mode.TabIndex = 0;
             this.cmb_Mode.TabStop = false;
+            this.cmb_Mode.SelectedIndexChanged += new System.EventHandler(this.cmb_Mode_SelectedIndexChanged);
             // 
             // gp_Mode
             // 

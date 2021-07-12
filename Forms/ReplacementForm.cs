@@ -13,23 +13,38 @@ namespace MupenUtils.Forms
 
         bool generateNew = false;
 
+        enum ReplaceModes
+        {
+            Assign,
+            Or,
+            And,
+            Xor
+        };
+        ReplaceModes ReplaceMode = ReplaceModes.Assign;
+
         public ReplacementForm()
         {
             InitializeComponent();
             this.Text = MainForm.PROGRAM_NAME + " - Replacement";
 
             this.MinimumSize = gpBox_Repl_Replacement.Size;
+
+            foreach (var item in Enum.GetValues(typeof(ReplaceModes)))
+            {
+                cmb_Mode.Items.Add(item);
+            }
+            cmb_Mode.SelectedIndex = 0;
         }
         private void ReplacementForm_Shown(object sender, EventArgs e)
         {
-            //foreach (Control ctl in this.Controls)
-            //    ctl.Enabled = MainForm.FileLoaded;
 
             if (ExtensionMethods.ValidPath(MupenUtilities.Properties.Settings.Default.LastPathReplaceSrc))
                 txt_Repl_Src.Text = MupenUtilities.Properties.Settings.Default.LastPathReplaceSrc;
 
             if (ExtensionMethods.ValidPath(MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg))
                 txt_Repl_Trg.Text = MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg;
+
+
         }
 
         private void btn_Repl_BrowseSrc_Click(object sender, EventArgs e)
@@ -106,16 +121,39 @@ namespace MupenUtils.Forms
             {
                 lbl_Repl_Status.Text = "Failed int parse";
             }
+            if (chk_Repl_All.Checked)
+            {
+                to = src.Length;
+            }
             if(to-from < 0 || from >= to)
             {
                 lbl_Repl_Status.Text = "Invalid from/to";
                 return;
             }
 
-            for (int i = INPUT_BEGIN+from; i < to; i++)
+            switch (ReplaceMode)
             {
-                trg[i] = src[i];
+                case ReplaceModes.Assign:
+                    for (int i = INPUT_BEGIN + from; i < to; i++)
+                        trg[i] = src[i];
+                    break;
+                case ReplaceModes.Or:
+                    for (int i = INPUT_BEGIN + from; i < to; i++)
+                        trg[i] |= src[i];
+                    break;
+                case ReplaceModes.And:
+                    for (int i = INPUT_BEGIN + from; i < to; i++)
+                        trg[i] &= src[i];
+                    break;
+                case ReplaceModes.Xor:
+                    for (int i = INPUT_BEGIN + from; i < to; i++)
+                        trg[i] ^= src[i];
+                    break;
+                default:
+                    MessageBox.Show("error");
+                    break;
             }
+            
 
             lbl_Repl_Status.Text = "Idle";
 
@@ -132,6 +170,9 @@ namespace MupenUtils.Forms
             lbl_Repl_FFrom.Enabled = lbl_Repl_Fto.Enabled = txt_Repl_FFrom.Enabled = txt_Repl_Fto.Enabled = !chk_Repl_All.Checked;
         }
 
-
+        private void cmb_Mode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ReplaceMode = (ReplaceModes)cmb_Mode.SelectedIndex;
+        }
     }
 }
