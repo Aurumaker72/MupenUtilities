@@ -66,10 +66,6 @@ namespace MupenUtils.Forms
                 lbl_Repl_Status.Text = "Identical paths";
         }
 
-        private void chk_Repl_Trg_CheckedChanged(object sender, EventArgs e)
-        {
-            btn_Repl_BrowseTrg.Enabled = txt_Repl_Trg.Enabled = generateNew = chk_Repl_Trg.Checked;
-        }
 
         private void btn_Repl_Go_Click(object sender, EventArgs e)
         {
@@ -93,11 +89,11 @@ namespace MupenUtils.Forms
 
             if (trg.Length < src.Length)
             {
-                lbl_Repl_Status.Text = "Target file too small";
+                lbl_Repl_Status.Text = "Target movie is too short";
                 return;
             }
 
-            const int basePosition = 1024; // input begin (byte)
+            const int INPUT_BEGIN = 1024;
 
             int from = 0;
             int to = 0;
@@ -108,35 +104,16 @@ namespace MupenUtils.Forms
             }
             catch
             {
-                lbl_Repl_Status.Text = "Failed (from/to)";
+                lbl_Repl_Status.Text = "Failed int parse";
+            }
+            if(to-from < 0 || from >= to)
+            {
+                lbl_Repl_Status.Text = "Invalid from/to";
+                return;
             }
 
-
-            //if (!ExtensionMethods.ValidStringInt(txt_Repl_FFrom.Text, 0, src.Length / 4 - 1024/*length of input data*/))
-            //{
-            //    lbl_Repl_Status.Text = "Failed (OOB)";
-            //    return;
-            //}
-            //
-            //if (!ExtensionMethods.ValidStringInt(txt_Repl_Fto.Text, 0, src.Length / 4 - 1024/*length of input data*/))
-            //{
-            //    lbl_Repl_Status.Text = "Failed (OOB)";
-            //    return;
-            //}
-
-            if (chk_Repl_All.Checked)
+            for (int i = INPUT_BEGIN+from; i < to; i++)
             {
-                from = basePosition;
-                to = src.Length;
-            }
-            else
-            {
-                from -= 1024;
-            }
-
-            for (int i = from; i < to; i++)
-            {
-                lbl_Repl_Status.Text = "Copying " + i;
                 trg[i] = src[i];
             }
 
