@@ -36,13 +36,17 @@ namespace MupenUtils.Forms
 
         private void MupenHookForm_Shown(object sender, EventArgs e)
         {
+            
             lbl_ProcName.Text += MupenData.PROCESS_NAME;
             lbl_NameVer.Text += MupenData.MUPEN_NAME;
             if (!MupenData.CONFIRMED)
             {
                 MessageBox.Show("The mupen64 name string could\'nt be found.\nVersions older than 1.0.4 are not supported", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //this.Hide();
+                return;
             }
-
+            lbl_Name.Text += MupenData.MUPEN_NAME.Remove(MupenData.MUPEN_NAME.Length - 5);
+            lbl_Ver.Text += MupenData.MUPEN_NAME.Remove(0, MainForm.MUPEN_SPLIT.Length+1);
         }
 
         private void MupenHookForm_Load(object sender, EventArgs e)

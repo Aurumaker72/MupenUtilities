@@ -98,6 +98,9 @@ namespace MupenUtils
 
         public const int MINIMUM_FRAME = 1;
 
+        public const string MUPEN_VERSION = "Mupen 64 1.0.0";
+        public const string MUPEN_SPLIT = "Mupen 64";
+
         public Size BIG_SIZE = new Size(1438, 620);
         public static bool standardBitArh;
         // [] means reserved, <^>v is direction
@@ -692,14 +695,8 @@ namespace MupenUtils
                 }
             }
 
-            MupenHookForm.loading = true;
 
-            if(mupenHookForm == null)
-                mupenHookForm = new MupenHookForm();
-
-            mupenHookForm.Show();
-
-
+            
             SYSTEM_INFO sys_info = new SYSTEM_INFO();
             GetSystemInfo(out sys_info);
 
@@ -746,11 +743,18 @@ namespace MupenUtils
 
 
 
-            const string MUPEN_VERSION = "Mupen 64 1.0.0";
-            const string MUPEN_SPLIT = "Mupen 64";
+            
             string str = ExtensionMethods.CharsToString(Encoding.ASCII.GetChars(procMem.ToArray()));
+            string search = MUPEN_SPLIT;
+            int searched = 0;
 
-            int[] indexes = ExtensionMethods.AllIndexesOf(str, MUPEN_SPLIT);
+            goSearch:
+            if(searched > 4 && searched < 7) // already tried to find new mupen type name... try old one
+                search = "Mupen 64 rr";
+            if (searched > 8) // overwrite again
+                search = "Mupen 64 rr Lua";
+
+            int[] indexes = ExtensionMethods.AllIndexesOf(str, search);
             string finalName = "";
 
             for (int i1 = 0; i1 < indexes.Length; i1++)
@@ -762,7 +766,15 @@ namespace MupenUtils
                 }
                 finalName = a;
             }
-            
+
+            if (finalName == "" && searched < 10)
+            {
+                searched++;
+                goto goSearch;
+            }
+
+            if (mupenHookForm == null)
+                mupenHookForm = new MupenHookForm();
 
             MupenHookForm.MupenDataStruct mupenData;
             mupenData.CONFIRMED = finalName != "";
@@ -770,7 +782,7 @@ namespace MupenUtils
             mupenData.PROCESS_NAME = procName;
             MupenHookForm.MupenData = mupenData;
 
-            MupenHookForm.loading = false;
+            mupenHookForm.Show();
         }
 
         void ErrorProcessing(string failReason)
