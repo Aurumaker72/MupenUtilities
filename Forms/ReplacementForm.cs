@@ -21,6 +21,7 @@ namespace MupenUtils.Forms
             Xor
         };
         ReplaceModes ReplaceMode = ReplaceModes.Assign;
+        bool ReplaceUseNOT = false;
 
         public ReplacementForm()
         {
@@ -89,6 +90,8 @@ namespace MupenUtils.Forms
 
         void Replace()
         {
+            ReplaceUseNOT = chk_Invert.Checked;
+
             lbl_Repl_Status.Text = "Replacing";
 
             byte[] src;
@@ -134,20 +137,52 @@ namespace MupenUtils.Forms
             switch (ReplaceMode)
             {
                 case ReplaceModes.Assign:
-                    for (int i = INPUT_BEGIN + from; i < to; i++)
-                        trg[i] = src[i];
+                    if (ReplaceUseNOT)
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                            trg[i] = src[i];
+                    }
+                    else
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                            trg[i] = (byte)~(src[i]);
+                    }
                     break;
                 case ReplaceModes.Or:
-                    for (int i = INPUT_BEGIN + from; i < to; i++)
-                        trg[i] |= src[i];
+                    if (ReplaceUseNOT)
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                            trg[i] |= src[i];
+                    }
+                    else
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                            trg[i] |= (byte)~(src[i]);
+                    }
                     break;
                 case ReplaceModes.And:
-                    for (int i = INPUT_BEGIN + from; i < to; i++)
-                        trg[i] &= src[i];
+                    if (ReplaceUseNOT)
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                            trg[i] &= src[i];
+                    }
+                    else
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                            trg[i] &= (byte)~(src[i]);
+                    }
                     break;
                 case ReplaceModes.Xor:
-                    for (int i = INPUT_BEGIN + from; i < to; i++)
-                        trg[i] ^= src[i];
+                    if (ReplaceUseNOT)
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                            trg[i] ^= src[i];
+                    }
+                    else
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                            trg[i] ^= (byte)~(src[i]);
+                    }
                     break;
                 default:
                     MessageBox.Show("error");

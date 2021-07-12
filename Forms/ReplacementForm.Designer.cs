@@ -47,6 +47,7 @@ namespace MupenUtils.Forms
             this.gp_Repl_Src = new System.Windows.Forms.Label();
             this.cmb_Mode = new System.Windows.Forms.ComboBox();
             this.gp_Mode = new System.Windows.Forms.GroupBox();
+            this.chk_Invert = new System.Windows.Forms.CheckBox();
             this.gpBox_Repl_Replacement.SuspendLayout();
             this.gp_Repl_Commands.SuspendLayout();
             this.gp_Repl_File.SuspendLayout();
@@ -56,6 +57,7 @@ namespace MupenUtils.Forms
             // gpBox_Repl_Replacement
             // 
             this.gpBox_Repl_Replacement.Controls.Add(this.gp_Mode);
+            this.gpBox_Repl_Replacement.Controls.Add(this.lbl_Repl_Status);
             this.gpBox_Repl_Replacement.Controls.Add(this.gp_Repl_Commands);
             this.gpBox_Repl_Replacement.Controls.Add(this.gp_Repl_File);
             this.gpBox_Repl_Replacement.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -69,16 +71,14 @@ namespace MupenUtils.Forms
             // gp_Repl_Commands
             // 
             this.gp_Repl_Commands.Controls.Add(this.chk_Repl_All);
-            this.gp_Repl_Commands.Controls.Add(this.lbl_Repl_Status);
             this.gp_Repl_Commands.Controls.Add(this.btn_Repl_Go);
             this.gp_Repl_Commands.Controls.Add(this.lbl_Repl_Fto);
             this.gp_Repl_Commands.Controls.Add(this.txt_Repl_Fto);
             this.gp_Repl_Commands.Controls.Add(this.lbl_Repl_FFrom);
             this.gp_Repl_Commands.Controls.Add(this.txt_Repl_FFrom);
-            this.gp_Repl_Commands.Dock = System.Windows.Forms.DockStyle.Right;
             this.gp_Repl_Commands.Location = new System.Drawing.Point(332, 18);
             this.gp_Repl_Commands.Name = "gp_Repl_Commands";
-            this.gp_Repl_Commands.Size = new System.Drawing.Size(209, 216);
+            this.gp_Repl_Commands.Size = new System.Drawing.Size(209, 160);
             this.gp_Repl_Commands.TabIndex = 0;
             this.gp_Repl_Commands.TabStop = false;
             this.gp_Repl_Commands.Text = "Commands";
@@ -86,7 +86,7 @@ namespace MupenUtils.Forms
             // chk_Repl_All
             // 
             this.chk_Repl_All.AutoSize = true;
-            this.chk_Repl_All.Location = new System.Drawing.Point(19, 112);
+            this.chk_Repl_All.Location = new System.Drawing.Point(19, 134);
             this.chk_Repl_All.Name = "chk_Repl_All";
             this.chk_Repl_All.Size = new System.Drawing.Size(44, 20);
             this.chk_Repl_All.TabIndex = 0;
@@ -98,7 +98,7 @@ namespace MupenUtils.Forms
             // lbl_Repl_Status
             // 
             this.lbl_Repl_Status.AutoSize = true;
-            this.lbl_Repl_Status.Location = new System.Drawing.Point(16, 183);
+            this.lbl_Repl_Status.Location = new System.Drawing.Point(343, 193);
             this.lbl_Repl_Status.Name = "lbl_Repl_Status";
             this.lbl_Repl_Status.Size = new System.Drawing.Size(29, 16);
             this.lbl_Repl_Status.TabIndex = 0;
@@ -106,7 +106,7 @@ namespace MupenUtils.Forms
             // 
             // btn_Repl_Go
             // 
-            this.btn_Repl_Go.Location = new System.Drawing.Point(96, 176);
+            this.btn_Repl_Go.Location = new System.Drawing.Point(109, 123);
             this.btn_Repl_Go.Name = "btn_Repl_Go";
             this.btn_Repl_Go.Size = new System.Drawing.Size(91, 31);
             this.btn_Repl_Go.TabIndex = 0;
@@ -126,7 +126,7 @@ namespace MupenUtils.Forms
             // 
             // txt_Repl_Fto
             // 
-            this.txt_Repl_Fto.Location = new System.Drawing.Point(67, 80);
+            this.txt_Repl_Fto.Location = new System.Drawing.Point(88, 80);
             this.txt_Repl_Fto.Name = "txt_Repl_Fto";
             this.txt_Repl_Fto.Size = new System.Drawing.Size(112, 22);
             this.txt_Repl_Fto.TabIndex = 0;
@@ -143,7 +143,7 @@ namespace MupenUtils.Forms
             // 
             // txt_Repl_FFrom
             // 
-            this.txt_Repl_FFrom.Location = new System.Drawing.Point(67, 40);
+            this.txt_Repl_FFrom.Location = new System.Drawing.Point(88, 40);
             this.txt_Repl_FFrom.Name = "txt_Repl_FFrom";
             this.txt_Repl_FFrom.Size = new System.Drawing.Size(112, 22);
             this.txt_Repl_FFrom.TabIndex = 0;
@@ -222,18 +222,19 @@ namespace MupenUtils.Forms
             // 
             // cmb_Mode
             // 
-            this.cmb_Mode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmb_Mode.Dock = System.Windows.Forms.DockStyle.Left;
             this.cmb_Mode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_Mode.FormattingEnabled = true;
             this.cmb_Mode.Location = new System.Drawing.Point(3, 18);
             this.cmb_Mode.Name = "cmb_Mode";
-            this.cmb_Mode.Size = new System.Drawing.Size(311, 24);
+            this.cmb_Mode.Size = new System.Drawing.Size(211, 24);
             this.cmb_Mode.TabIndex = 0;
             this.cmb_Mode.TabStop = false;
             this.cmb_Mode.SelectedIndexChanged += new System.EventHandler(this.cmb_Mode_SelectedIndexChanged);
             // 
             // gp_Mode
             // 
+            this.gp_Mode.Controls.Add(this.chk_Invert);
             this.gp_Mode.Controls.Add(this.cmb_Mode);
             this.gp_Mode.Location = new System.Drawing.Point(3, 184);
             this.gp_Mode.Name = "gp_Mode";
@@ -241,6 +242,17 @@ namespace MupenUtils.Forms
             this.gp_Mode.TabIndex = 0;
             this.gp_Mode.TabStop = false;
             this.gp_Mode.Text = "Mode";
+            // 
+            // chk_Invert
+            // 
+            this.chk_Invert.AutoSize = true;
+            this.chk_Invert.Location = new System.Drawing.Point(220, 20);
+            this.chk_Invert.Name = "chk_Invert";
+            this.chk_Invert.Size = new System.Drawing.Size(70, 20);
+            this.chk_Invert.TabIndex = 0;
+            this.chk_Invert.TabStop = false;
+            this.chk_Invert.Text = "Not (~)";
+            this.chk_Invert.UseVisualStyleBackColor = true;
             // 
             // ReplacementForm
             // 
@@ -255,11 +267,13 @@ namespace MupenUtils.Forms
             this.Text = "ReplacementForm";
             this.Shown += new System.EventHandler(this.ReplacementForm_Shown);
             this.gpBox_Repl_Replacement.ResumeLayout(false);
+            this.gpBox_Repl_Replacement.PerformLayout();
             this.gp_Repl_Commands.ResumeLayout(false);
             this.gp_Repl_Commands.PerformLayout();
             this.gp_Repl_File.ResumeLayout(false);
             this.gp_Repl_File.PerformLayout();
             this.gp_Mode.ResumeLayout(false);
+            this.gp_Mode.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -284,5 +298,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.CheckBox chk_Repl_All;
         private System.Windows.Forms.GroupBox gp_Mode;
         private System.Windows.Forms.ComboBox cmb_Mode;
+        private System.Windows.Forms.CheckBox chk_Invert;
     }
 }
