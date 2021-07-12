@@ -15,6 +15,7 @@ namespace MupenUtils.Forms
 
         enum ReplaceModes
         {
+            Default,
             Assign,
             Or,
             And,
@@ -136,6 +137,10 @@ namespace MupenUtils.Forms
 
             switch (ReplaceMode)
             {
+                case ReplaceModes.Default:
+                    for (int i = INPUT_BEGIN + from; i < to; i++)
+                        trg[i] = src[i];
+                    break;
                 case ReplaceModes.Assign:
                     if (ReplaceUseNOT)
                     {
