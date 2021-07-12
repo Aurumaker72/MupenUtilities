@@ -41,7 +41,7 @@ namespace MupenUtils.Forms
             lbl_NameVer.Text += MupenData.MUPEN_NAME;
             if (!MupenData.CONFIRMED)
             {
-                MessageBox.Show("The mupen64 name string could\'nt be found.\nVersions older than 1.0.4 are not supported", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("The mupen64 name string could\'nt be found.\nVersions older than 1.0.5 are not supported", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //this.Hide();
                 return;
             }
