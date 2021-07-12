@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -91,6 +92,9 @@ namespace MupenUtils.Forms
 
         void Replace()
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             ReplaceUseNOT = chk_Invert.Checked;
 
             lbl_Repl_Status.Text = "Replacing";
@@ -193,16 +197,17 @@ namespace MupenUtils.Forms
                     MessageBox.Show("error");
                     break;
             }
-            
-
-            lbl_Repl_Status.Text = "Idle";
 
 
-
-            File.WriteAllBytes(pathTarget + "-targetted.m64", trg);
+            string finalPath;
+            finalPath = Path.GetFileNameWithoutExtension(pathTarget) + "-replaced.m64";
 
 
 
+            File.WriteAllBytes(finalPath, trg);
+
+            stopwatch.Stop();
+            lbl_Repl_Status.Text = "Finished in " + stopwatch.ElapsedMilliseconds.ToString() + "ms";
         }
 
         private void chk_Repl_All_CheckedChanged(object sender, EventArgs e)
