@@ -162,6 +162,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\HelpButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\AdvancedDebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,5 +314,6 @@
     <None Include="Resources\usa.bmp" />
     <Content Include="screenshot1.PNG" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

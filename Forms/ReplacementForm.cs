@@ -8,12 +8,14 @@ namespace MupenUtils.Forms
 {
     public partial class ReplacementForm : Form
     {
+        const string HELP_COPYMODES = "The copy mode dictates how the inputs get copied from one movie to another.\nDefault - Simple copy\nAssign - Simple copy\nOR - Perform a bitwise OR on the source\nAND - Perform a bitwise AND on the source\nXOR - Perform a bitwise XOR on the source\nThe \'Not (~)\' checkbox is a modifier which, when checked, performs a bitwise NOT on the source before all other operations.";
+
         string pathSource = string.Empty;
         string pathTarget = string.Empty;
         public static List<int> inputSrc = new List<int>();
 
         bool generateNew = false;
-
+        
         enum ReplaceModes
         {
             Default,
@@ -102,8 +104,19 @@ namespace MupenUtils.Forms
             byte[] src;
             byte[] trg;
 
+            if (ExtensionMethods.ValidPath(MupenUtilities.Properties.Settings.Default.LastPathReplaceSrc))
+            {
+                pathSource = txt_Repl_Src.Text = MupenUtilities.Properties.Settings.Default.LastPathReplaceSrc;
+            }
+            if (ExtensionMethods.ValidPath(MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg))
+            {
+                pathTarget = txt_Repl_Trg.Text = MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg;
+            }
+
+
             if (string.IsNullOrEmpty(pathSource) || string.IsNullOrWhiteSpace(pathSource) || string.IsNullOrEmpty(pathTarget) || string.IsNullOrWhiteSpace(pathTarget))
             {
+                
                 lbl_Repl_Status.Text = "Failed (invalid path)";
                 return;
             }
@@ -219,6 +232,21 @@ namespace MupenUtils.Forms
         {
             ReplaceMode = (ReplaceModes)cmb_Mode.SelectedIndex;
             chk_Invert.Enabled = ReplaceMode != ReplaceModes.Default;
+        }
+
+        private void gp_Repl_Commands_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_HelpMode_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(HELP_COPYMODES, this.Text);
+        }
+
+        private void ReplacementForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
