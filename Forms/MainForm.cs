@@ -123,7 +123,7 @@ namespace MupenUtils
         bool liveTasStudio = true;
         bool forwardsPlayback = true;
         public static bool readOnly = true;
-
+        public static bool rehookMupen = false;
         /*TAS Studio*/
         public static int markedGoToFrame = 0;
         public static int markedSizeCell = 10;
@@ -679,7 +679,6 @@ namespace MupenUtils
         }
         public void MupenHook()
         {
-        go:
             string procName = "mupen64";
 
             if (Process.GetProcessesByName("mupen64").Length == 0)
@@ -699,10 +698,10 @@ namespace MupenUtils
                 mupenHookForm = new MupenHookForm();
 
             mupenHookForm.Show();
-            
+
 
             SYSTEM_INFO sys_info = new SYSTEM_INFO();
-            GetSystemInfo(out sys_info);  
+            GetSystemInfo(out sys_info);
 
             IntPtr proc_min_address = sys_info.minimumApplicationAddress;
             IntPtr proc_max_address = sys_info.maximumApplicationAddress;
@@ -711,25 +710,33 @@ namespace MupenUtils
             long proc_max_address_l = (long)proc_max_address;
 
             Process process = Process.GetProcessesByName(procName)[0];
-            IntPtr processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_WM_READ, false, process.Id);
+
+            IntPtr processHandle =
+            OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_WM_READ, false, process.Id);
+
             MEMORY_BASIC_INFORMATION mem_basic_info = new MEMORY_BASIC_INFORMATION();
 
             int bytesRead = 0;
-            //byte[] buffer = new byte[400]; // shouldnt be bigger that 64mb or something
-            List<byte> buffer = new List<byte>();
+            List<byte> procMem = new List<byte>();
 
             while (proc_min_address_l < proc_max_address_l)
             {
+                // 28 = sizeof(MEMORY_BASIC_INFORMATION)
                 VirtualQueryEx(processHandle, proc_min_address, out mem_basic_info, 28);
 
                 // if this memory chunk is accessible
-                if (mem_basic_info.Protect == PAGE_READWRITE && mem_basic_info.State == MEM_COMMIT)
+                if (mem_basic_info.Protect ==
+                PAGE_READWRITE && mem_basic_info.State == MEM_COMMIT)
                 {
-                    byte[] tmp = new byte[mem_basic_info.RegionSize];
-                    ReadProcessMemory((int)processHandle, mem_basic_info.BaseAddress, tmp, mem_basic_info.RegionSize, ref bytesRead);
-                    
-                    foreach (byte b in tmp)
-                        buffer.Add(b);
+                    byte[] buffer = new byte[mem_basic_info.RegionSize];
+
+                    // read everything in the buffer above
+                    ReadProcessMemory((int)processHandle,
+                    mem_basic_info.BaseAddress, buffer, mem_basic_info.RegionSize, ref bytesRead);
+
+                    foreach (byte b in buffer)
+                        procMem.Add(b);
+
                 }
 
                 // move to the next memory chunk
@@ -737,23 +744,24 @@ namespace MupenUtils
                 proc_min_address = new IntPtr(proc_min_address_l);
             }
 
-            
-            
-            const string MUPEN_VERSION = "Mupen 64 1.0.9\0";
+
+
+            const string MUPEN_VERSION = "Mupen 64 1.0.0";
             const string MUPEN_SPLIT = "Mupen 64";
+            string str = ExtensionMethods.CharsToString(Encoding.ASCII.GetChars(procMem.ToArray()));
+
+            int[] indexes = ExtensionMethods.AllIndexesOf(str, MUPEN_SPLIT);
             string finalName = "";
-            string str = "";
-            str = ExtensionMethods.CharsToString(Encoding.ASCII.GetChars(buffer.ToArray()));
-            int baseIndex = str.IndexOf(MUPEN_SPLIT) - str.Length;
-            
-            if (baseIndex > 0)
+
+            for (int i1 = 0; i1 < indexes.Length; i1++)
             {
+                string a = "";
                 for (int i = 0; i < MUPEN_VERSION.Length; i++)
                 {
-                    finalName = String.Concat(finalName, (char)buffer[i]);
+                    a += str[indexes[i1] + i];
                 }
+                finalName = a;
             }
-
             
 
             MupenHookForm.MupenDataStruct mupenData;
@@ -1591,7 +1599,6 @@ namespace MupenUtils
 
                 notifiedReupdateControllerFlags = false;
             }
-
         }
 
         private void utilityToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 using ICSharpCode.SharpZipLib.GZip;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -192,7 +193,24 @@ public static class ExtensionMethods
             return ms.ToArray();
         }
     }
+    public static int[] AllIndexesOf(string str, string substr, bool ignoreCase = false)
+    {
+        if (string.IsNullOrWhiteSpace(str) ||
+            string.IsNullOrWhiteSpace(substr))
+        {
+            throw new ArgumentException("String or substring is not specified.");
+        }
 
+        var indexes = new List<int>();
+        int index = 0;
+
+        while ((index = str.IndexOf(substr, index, ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)) != -1)
+        {
+            indexes.Add(index++);
+        }
+
+        return indexes.ToArray();
+    }
     public static bool ValidHexStringInt(string str, int min, int max)
     {
         //str = str.ToUpper();

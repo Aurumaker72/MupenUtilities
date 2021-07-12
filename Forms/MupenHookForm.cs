@@ -30,65 +30,18 @@ namespace MupenUtils.Forms
         public MupenHookForm()
         {
             InitializeComponent();
-            ExtensionMethods.SetDoubleBuffered(panel_LoadingMupen);
-            ExtensionMethods.SetDoubleBuffered(panel_MupenHook);
             this.Text = MainForm.PROGRAM_NAME + " - Mupen64 Hook";
-            if (MainForm.standardBitArh) this.Text += " (?)";
-            this.TopMost = true;
-            WinApiSpecialWrap.TimeBeginPeriod(1);
+            if (!MainForm.standardBitArh) this.Text += " (?)";
         }
 
         private void MupenHookForm_Shown(object sender, EventArgs e)
         {
-            panel_MupenHook.Invoke((MethodInvoker)(() => panel_MupenHook.Visible = false));
-            panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.Visible = true));
-            panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.Dock = DockStyle.Fill));
-            panel_MupenHook.Invoke((MethodInvoker)(() => panel_MupenHook.Dock = DockStyle.Fill));
-            lbl_Name.Invoke((MethodInvoker)(() => lbl_Name.ForeColor = Color.Black));
-            new Thread(() =>
+            lbl_ProcName.Text += MupenData.PROCESS_NAME;
+            lbl_NameVer.Text += MupenData.MUPEN_NAME;
+            if (!MupenData.CONFIRMED)
             {
-                
-                
-                while (loading)
-                {
-                    Thread.Sleep(100);
-                }
-
-                byte opacity = 0;
-                while (opacity < 255)
-                {     
-                    panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.BackColor = Color.FromArgb(opacity, Color.Black)));
-                    //if(opacity % 15 == 0)
-                    //lc_Loading.Invoke((MethodInvoker)(() => lc_Loading.RotationSpeed = opacity));
-                    opacity++;
-                    Thread.Sleep(1);
-                }
-
-                // everything is black and invisible now.. some time to put up controls
-                panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.Dock = DockStyle.None));
-                panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.BackColor = Color.FromArgb(0, Color.Black)));
-                panel_LoadingMupen.Invoke((MethodInvoker)(() => panel_LoadingMupen.Visible = false));
-                
-
-                opacity = 255;
-                while (opacity > 0)
-                {
-                    panel_MupenHook.Invoke((MethodInvoker)(() => panel_MupenHook.BackColor = Color.FromArgb(opacity, Color.Black)));
-                    opacity--;
-                    Thread.Sleep(5);
-                }
-
-                
-                
-                panel_MupenHook.Invoke((MethodInvoker)(() => panel_MupenHook.Visible = true));
-
-                lbl_ProcName.Invoke((MethodInvoker)(() => lbl_ProcName.Text += MupenData.PROCESS_NAME)); 
-                lbl_Name.Invoke((MethodInvoker)(() => lbl_Name.Text += MupenData.MUPEN_NAME)); 
-                if (!MupenData.CONFIRMED)
-                {
-                    lbl_Name.Invoke((MethodInvoker)(() => lbl_Name.ForeColor = Color.Orange)); 
-                }
-            }).Start();
+                MessageBox.Show("The mupen64 name string could\'nt be found.\nVersions older than 1.0.4 are not supported", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 
@@ -97,9 +50,17 @@ namespace MupenUtils.Forms
 
         }
 
-        private void btn_Rehook_Click(object sender, EventArgs e)
+        
+
+        private void btn_Stop_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
+        }
+
+        private void btn_Retry_Click(object sender, EventArgs e)
+        {
+            MainForm.rehookMupen = true;
+            this.Hide();
         }
     }
 }
