@@ -213,6 +213,7 @@ namespace MupenUtils.Forms
         private void cmb_Mode_SelectedIndexChanged(object sender, EventArgs e)
         {
             ReplaceMode = (ReplaceModes)cmb_Mode.SelectedIndex;
+            chk_Invert.Enabled = ReplaceMode != ReplaceModes.Default;
         }
     }
 }
