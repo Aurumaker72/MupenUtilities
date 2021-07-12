@@ -146,7 +146,7 @@ namespace MupenUtils.Forms
             {
                 to = src.Length;
             }
-            if(to-from < 0 || from >= to)
+            if(to-from < 0 || from >= to || to > src.Length)
             {
                 lbl_Repl_Status.Text = "Invalid from/to";
                 return;
