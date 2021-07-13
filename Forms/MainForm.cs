@@ -1335,7 +1335,7 @@ namespace MupenUtils
             if (!FileLoaded) return;
             if (m64loadBusy) return;
             
-            inputLists[selectedController][frameTarget] |= value;
+            inputLists[selectedController][frameTarget] /*|*/= value;
 
 
             GetInput(inputLists[selectedController][frameTarget], false, frameTarget);

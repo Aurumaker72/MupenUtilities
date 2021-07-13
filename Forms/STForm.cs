@@ -163,6 +163,7 @@ namespace MupenUtils.Forms
             SM64Push();
 
             byte[] st = savestate.ToArray();
+            long oldSize = st.Length;
 
             Array.Copy(savestateRDRAM, 0, st, 0x1B0, 8388608);
 
@@ -176,7 +177,9 @@ namespace MupenUtils.Forms
             br.Flush();  br.Close(); fs.Close();
 
 
-            MessageBox.Show(String.Format("Dumped {0} savestate at {1}", ExtensionMethods.FormatBytes(st.Length), Path));
+            MessageBox.Show(String.Format("Dumped savestate at {0}\nUncompressed size: {1}\nCompressed size: {2}", Path, 
+                ExtensionMethods.FormatBytes(oldSize),
+                ExtensionMethods.FormatBytes(st.Length)));
             
         }
 
