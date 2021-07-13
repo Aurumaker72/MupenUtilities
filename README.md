@@ -49,9 +49,7 @@ Playing the movie back in real-time (30 FPS) is also possible.
 Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of frames from one movie to another. 
 
 ### TAS Studio
-You can view all inputs in a neatly arranged and compacter grid. 
-
-This is useful for those who don't want to waste time skimming through the movie
+You can view and edit all inputs in a neatly arranged and compact grid.
 
 ### Advanced
 Dump a movie's raw input data to a file.
