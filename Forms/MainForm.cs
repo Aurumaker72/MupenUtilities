@@ -557,7 +557,7 @@ namespace MupenUtils
             btn_PlayDirection.Enabled = FileLoaded;
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
-            txt_Frame.ReadOnly = !FileLoaded;
+            txt_Frame.Enabled = FileLoaded;
 
             SuspendLayout();
 
@@ -593,7 +593,8 @@ namespace MupenUtils
             btn_PlayDirection.Invoke((MethodInvoker)(() => btn_PlayDirection.Enabled = flag));
             btn_PlayPause.Invoke((MethodInvoker)(() => btn_PlayPause.Enabled = flag));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = flag));
-            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.ReadOnly = flag));
+            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Enabled = flag));
+
             this.Invoke((MethodInvoker)(() => this.MinimumSize = flag ? new Size(200,200) : new Size(1, 1)));
             this.Invoke((MethodInvoker)(() => this.Size = s));
 
@@ -1660,7 +1661,7 @@ namespace MupenUtils
             }
 
             object[] result = UIHelper.ShowFileDialog(UsageType);
-            if ((string)result[0] == "FAIL" && (bool)result[1] == false)
+            if ((string)result[0] == "FAIL" || (bool)result[1] == false)
             {
                 Debug.WriteLine("failed dialog");
                 return;
