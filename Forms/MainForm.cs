@@ -96,7 +96,7 @@ namespace MupenUtils
         public const bool RELATIVE = false;
         public const bool ABSOLUTE = true;
 
-        public const int MINIMUM_FRAME = 1;
+        public const int MINIMUM_FRAME = 0;
 
         public const string MUPEN_VERSION = "Mupen 64 1.0.0";
         public const string MUPEN_SPLIT = "Mupen 64";
@@ -1341,7 +1341,7 @@ namespace MupenUtils
             GetInput(inputLists[selectedController][frameTarget], false, frameTarget);
 
             
-            UpdateTASStudio(frameTarget, true);
+            UpdateTASStudio(frameTarget);
 
         }
         unsafe void SetInput(int frame)
@@ -1372,10 +1372,10 @@ namespace MupenUtils
             inputLists[selectedController][frame] = value;
 
             // update tas studio
-            UpdateTASStudio(frame, true);
+            UpdateTASStudio(frame);
 
         }
-        void UpdateTASStudio(int frameTarget, bool retargetIndex)
+        void UpdateTASStudio(int frameTarget)
         {
             if (liveTasStudio)
             {
@@ -1401,14 +1401,8 @@ namespace MupenUtils
                         else if (i == 17)
                             cellValue = txt_joyY.Text;
                     }
-                    int index = frameTarget;
 
-                    if(retargetIndex)
-                    index = frameTarget - 1;
-
-                    if (index < 1) index = 1;
-
-                    dgv_Main.Rows[index].Cells[i].Value = cellValue;
+                    dgv_Main.Rows[frameTarget].Cells[i].Value = cellValue;
                 }
                 dgv_Main.ReadOnly = true;
 
@@ -1534,14 +1528,11 @@ namespace MupenUtils
         {
             if (Control.ModifierKeys != Keys.Control) return;
 
-
             cellSize += Math.Sign(e.Delta)*5;
 
             for (int i = 0; i < dgv_Main.Columns.Count; i++)
-            {
-                DataGridViewColumn c = dgv_Main.Columns[i];
-                c.Width = cellSize;
-            }
+                dgv_Main.Columns[i].Width = cellSize;
+
         }
         private void tsmi_Input_Debug_DumpData_Click(object sender, EventArgs e)
         {
@@ -1566,7 +1557,7 @@ namespace MupenUtils
 
             using (SolidBrush b = new SolidBrush(dgv_Main.RowHeadersDefaultCellStyle.ForeColor))
             {
-                e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
+                e.Graphics.DrawString((e.RowIndex).ToString(), e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
             }
         }
         private void dgv_Main_KeyDown(object sender, KeyEventArgs e)
@@ -1779,7 +1770,7 @@ namespace MupenUtils
 
             txt_Frame.Text = frame.ToString();
 
-            int index = frame-1;
+            int index = frame;
 
             if (index <= dgv_Main.Rows.Count)
             {
@@ -2129,8 +2120,8 @@ namespace MupenUtils
         {
             if (!tasStudioAutoScroll) return;
 
-            if (e.RowIndex+1 >= MINIMUM_FRAME && e.RowIndex+1 < inputLists[selectedController].Count)
-            SetFrame(e.RowIndex+1);
+            if (e.RowIndex >= MINIMUM_FRAME && e.RowIndex < inputLists[selectedController].Count)
+            SetFrame(e.RowIndex);
         }
         private void tsmi_CRCPopulate_Click(object sender, EventArgs e)
         {
@@ -2191,7 +2182,7 @@ namespace MupenUtils
 
             Debug.WriteLine(ExtensionMethods.GetBit(buffer, index));
 
-            SetInputPure(index + 1, buffer);
+            SetInputPure(index, buffer);
         }
 
 
