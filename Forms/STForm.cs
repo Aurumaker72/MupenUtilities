@@ -176,7 +176,8 @@ namespace MupenUtils.Forms
             br.Flush();  br.Close(); fs.Close();
 
 
-            MessageBox.Show(String.Format("Dumped {0} bytes savestate at {1}", st.Length, Path));
+            MessageBox.Show(String.Format("Dumped {0} savestate at {1}", ExtensionMethods.FormatBytes(st.Length), Path));
+            
         }
 
         private void cmb_Editmode_SelectedIndexChanged(object sender, EventArgs e)

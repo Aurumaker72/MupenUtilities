@@ -2122,7 +2122,9 @@ namespace MupenUtils
 
             if (e.RowIndex >= MINIMUM_FRAME && e.RowIndex < inputLists[selectedController].Count)
             SetFrame(e.RowIndex);
+            
         }
+        
         private void tsmi_CRCPopulate_Click(object sender, EventArgs e)
         {
             int len = DataHelper.validCrcs.Count;
