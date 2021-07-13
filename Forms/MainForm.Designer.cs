@@ -942,7 +942,7 @@ namespace MupenUtils
             // 
             // txt_Frame
             // 
-            this.txt_Frame.Location = new System.Drawing.Point(270, 327);
+            this.txt_Frame.Location = new System.Drawing.Point(270, 328);
             this.txt_Frame.Name = "txt_Frame";
             this.txt_Frame.Size = new System.Drawing.Size(35, 22);
             this.txt_Frame.TabIndex = 0;
@@ -1315,7 +1315,7 @@ namespace MupenUtils
             this.tsmi_CRCPopulate,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 362);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 334);
             // 
             // tsmi_TasStudioAllow
             // 
@@ -1411,21 +1411,21 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
@@ -1500,7 +1500,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1510,7 +1509,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";

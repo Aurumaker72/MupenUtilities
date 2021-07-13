@@ -1320,7 +1320,7 @@ namespace MupenUtils
             ((ISupportInitialize)dgv_Main).BeginInit();
             
             
-            for (int y = 0; y < inputLists[selectedController].Count; y++)
+            for (int y = 0; y < inputLists[selectedController].Count-1/*???*/; y++)
             {
                 // for each frame
                 rows.Add(new DataGridViewRow());
