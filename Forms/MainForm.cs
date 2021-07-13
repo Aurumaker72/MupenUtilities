@@ -1581,8 +1581,6 @@ namespace MupenUtils
         }
         private void dgv_Main_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
-            
-
             using (SolidBrush b = new SolidBrush(dgv_Main.RowHeadersDefaultCellStyle.ForeColor))
             {
                 e.Graphics.DrawString((e.RowIndex).ToString(), e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
