@@ -1381,7 +1381,16 @@ namespace MupenUtils
             int value;
             try
             {
-                value = inputLists[selectedController][frame];
+                int pos = frame;
+
+                // normalize
+                if (pos > inputLists[selectedController].Count) pos = inputLists[selectedController].Count - 1;
+                if (pos < 0) pos = 0;
+
+                 value = inputLists[selectedController][pos];
+                
+                
+
             } // get value at that frame. If this fails then m64 is corrupted 
             catch
             {
