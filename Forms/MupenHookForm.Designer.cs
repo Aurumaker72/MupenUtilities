@@ -35,8 +35,8 @@ namespace MupenUtils.Forms
             this.lbl_Ver = new System.Windows.Forms.Label();
             this.lbl_Name = new System.Windows.Forms.Label();
             this.lbl_NameVer = new System.Windows.Forms.Label();
-            this.btn_Retry = new System.Windows.Forms.Button();
             this.btn_Stop = new System.Windows.Forms.Button();
+            this.btn_SaveLog = new System.Windows.Forms.Button();
             this.panel_MupenHook.SuspendLayout();
             this.gp_General.SuspendLayout();
             this.SuspendLayout();
@@ -44,7 +44,7 @@ namespace MupenUtils.Forms
             // panel_MupenHook
             // 
             this.panel_MupenHook.Controls.Add(this.gp_General);
-            this.panel_MupenHook.Controls.Add(this.btn_Retry);
+            this.panel_MupenHook.Controls.Add(this.btn_SaveLog);
             this.panel_MupenHook.Controls.Add(this.btn_Stop);
             this.panel_MupenHook.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_MupenHook.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -110,21 +110,6 @@ namespace MupenUtils.Forms
             this.lbl_NameVer.TabIndex = 0;
             this.lbl_NameVer.Text = "Name and Version: ";
             // 
-            // btn_Retry
-            // 
-            this.btn_Retry.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btn_Retry.FlatAppearance.BorderSize = 0;
-            this.btn_Retry.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Retry.Location = new System.Drawing.Point(365, 117);
-            this.btn_Retry.Name = "btn_Retry";
-            this.btn_Retry.Size = new System.Drawing.Size(80, 32);
-            this.btn_Retry.TabIndex = 0;
-            this.btn_Retry.TabStop = false;
-            this.btn_Retry.Text = "Retry";
-            this.btn_Retry.UseVisualStyleBackColor = false;
-            this.btn_Retry.Visible = false;
-            this.btn_Retry.Click += new System.EventHandler(this.btn_Retry_Click);
-            // 
             // btn_Stop
             // 
             this.btn_Stop.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -138,6 +123,20 @@ namespace MupenUtils.Forms
             this.btn_Stop.Text = "Exit";
             this.btn_Stop.UseVisualStyleBackColor = false;
             this.btn_Stop.Click += new System.EventHandler(this.btn_Stop_Click);
+            // 
+            // btn_SaveLog
+            // 
+            this.btn_SaveLog.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btn_SaveLog.FlatAppearance.BorderSize = 0;
+            this.btn_SaveLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_SaveLog.Location = new System.Drawing.Point(365, 117);
+            this.btn_SaveLog.Name = "btn_SaveLog";
+            this.btn_SaveLog.Size = new System.Drawing.Size(80, 32);
+            this.btn_SaveLog.TabIndex = 0;
+            this.btn_SaveLog.TabStop = false;
+            this.btn_SaveLog.Text = "Save";
+            this.btn_SaveLog.UseVisualStyleBackColor = false;
+            this.btn_SaveLog.Click += new System.EventHandler(this.btn_SaveLog_Click);
             // 
             // MupenHookForm
             // 
@@ -170,6 +169,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.GroupBox gp_General;
         private System.Windows.Forms.Label lbl_Ver;
         private System.Windows.Forms.Label lbl_Name;
-        private System.Windows.Forms.Button btn_Retry;
+        private System.Windows.Forms.Button btn_SaveLog;
     }
 }

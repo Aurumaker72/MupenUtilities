@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -65,6 +66,18 @@ namespace MupenUtils.Forms
         {
             MainForm.rehookMupen = true;
             this.Hide();
+        }
+
+        private void btn_SaveLog_Click(object sender, EventArgs e)
+        {
+            const string PATH = @"mupen_info.log";
+            string exStr = "";
+            exStr += "--- Mupen64 Basic Information Dump ---" + "\n";
+            exStr += "Process Name: " + MupenData.PROCESS_NAME + "\n";
+            exStr += "Name: " + MupenData.MUPEN_NAME + "\n";
+            exStr += "--- end ---" + "\n";
+            File.WriteAllText(PATH, exStr);
+            Process.Start(PATH);
         }
     }
 }
