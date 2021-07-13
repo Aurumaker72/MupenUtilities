@@ -1699,7 +1699,7 @@ namespace MupenUtils
                 }
                 else
                 {
-                    ErrorProcessing("Unknown type " + ext);
+                    ErrorProcessing("Type " + ext + " could not be resolved to any usage type");
                     return;
                 }
             }
