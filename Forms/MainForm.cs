@@ -382,7 +382,7 @@ namespace MupenUtils
 
             UpdateReadOnly();
 
-            EnableM64View(false, true);
+            EnableM64View(false, true, false);
 
 
             UsageType = (UsageTypes)MupenUtilities.Properties.Settings.Default.UsageType;
@@ -531,10 +531,11 @@ namespace MupenUtils
                }).Start();
         }
 
-        void EnableM64View(bool flag, bool change)
+        
+        void EnableM64View(bool flag, bool change, bool force)
         {
             if (m64loadBusy) return;
-
+            if (!force && UsageType != UsageTypes.M64) return;
             Size s;
             ExpandedMenu = flag;
             if (change) FileLoaded = flag;
@@ -552,7 +553,7 @@ namespace MupenUtils
             tr_MovieScrub.Enabled = FileLoaded;
             txt_Frame.ReadOnly = !FileLoaded;
 
-                SuspendLayout();
+            SuspendLayout();
 
             this.MinimumSize = flag ? new Size(200,200) : new Size(1, 1);
 
@@ -617,6 +618,7 @@ namespace MupenUtils
         void UpdateVisualsTop(bool serialize)
         {
             btn_LoadLatest.Enabled = true;
+            btn_Override.Enabled = UsageType == UsageTypes.M64;
             string txt = "?";
 
             switch (UsageType)
@@ -655,7 +657,10 @@ namespace MupenUtils
                 MupenUtilities.Properties.Settings.Default.Save();
                 Debug.WriteLine("saved usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
             }
-
+            if(UsageType != UsageTypes.M64)
+            {
+                EnableM64View(false, false, true);
+            }
             btn_PathSel.Text = txt;
         }
 
@@ -1366,7 +1371,7 @@ namespace MupenUtils
             } // get value at that frame. If this fails then m64 is corrupted 
             catch
             {
-                EnableM64View(false, false);
+                EnableM64View(false, false, false);
                 stepFrameTimer.Enabled = false;
                 MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.\nThis can be caused by a corrupted m64 or loading movies in quick succession", PROGRAM_NAME + " - Fatal desync");
                 return;
@@ -1746,7 +1751,7 @@ namespace MupenUtils
 
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
-            EnableM64View(!ExpandedMenu, false);
+            EnableM64View(!ExpandedMenu, false, false);
             btn_Override.Text = ExpandedMenu ? "Collapse" : "Expand";
         }
         private void btn_FrameFront_Click(object sender, EventArgs e)
