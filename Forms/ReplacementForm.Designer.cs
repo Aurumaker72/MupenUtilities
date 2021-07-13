@@ -31,34 +31,39 @@ namespace MupenUtils.Forms
         {
             this.gpBox_Repl_Replacement = new System.Windows.Forms.GroupBox();
             this.gp_Repl_Commands = new System.Windows.Forms.GroupBox();
+            this.gp_Special = new System.Windows.Forms.GroupBox();
             this.cmb_Mode = new System.Windows.Forms.ComboBox();
+            this.btn_HelpMode = new System.Windows.Forms.Button();
             this.chk_Invert = new System.Windows.Forms.CheckBox();
+            this.lbl_Repl_Mode = new System.Windows.Forms.Label();
             this.chk_Repl_All = new System.Windows.Forms.CheckBox();
             this.btn_Repl_Go = new System.Windows.Forms.Button();
             this.lbl_Repl_Fto = new System.Windows.Forms.Label();
             this.txt_Repl_Fto = new System.Windows.Forms.TextBox();
             this.lbl_Repl_FFrom = new System.Windows.Forms.Label();
             this.txt_Repl_FFrom = new System.Windows.Forms.TextBox();
-            this.gp_Repl_File = new System.Windows.Forms.GroupBox();
-            this.btn_Repl_BrowseTrg = new System.Windows.Forms.Button();
+            this.lbl_Substatus = new System.Windows.Forms.Label();
             this.lbl_Repl_Status = new System.Windows.Forms.Label();
+            this.gp_Repl_File = new System.Windows.Forms.GroupBox();
+            this.btn_BrowseOut = new System.Windows.Forms.Button();
+            this.btn_Repl_BrowseTrg = new System.Windows.Forms.Button();
+            this.txt_Output = new System.Windows.Forms.TextBox();
             this.btn_Repl_BrowseSrc = new System.Windows.Forms.Button();
             this.txt_Repl_Trg = new System.Windows.Forms.TextBox();
             this.txt_Repl_Src = new System.Windows.Forms.TextBox();
+            this.lbl_Output = new System.Windows.Forms.Label();
             this.gp_Repl_Trg = new System.Windows.Forms.Label();
             this.gp_Repl_Src = new System.Windows.Forms.Label();
-            this.lbl_Repl_Mode = new System.Windows.Forms.Label();
-            this.btn_HelpMode = new System.Windows.Forms.Button();
-            this.gp_Special = new System.Windows.Forms.GroupBox();
             this.gpBox_Repl_Replacement.SuspendLayout();
             this.gp_Repl_Commands.SuspendLayout();
-            this.gp_Repl_File.SuspendLayout();
             this.gp_Special.SuspendLayout();
+            this.gp_Repl_File.SuspendLayout();
             this.SuspendLayout();
             // 
             // gpBox_Repl_Replacement
             // 
             this.gpBox_Repl_Replacement.Controls.Add(this.gp_Repl_Commands);
+            this.gpBox_Repl_Replacement.Controls.Add(this.lbl_Substatus);
             this.gpBox_Repl_Replacement.Controls.Add(this.lbl_Repl_Status);
             this.gpBox_Repl_Replacement.Controls.Add(this.gp_Repl_File);
             this.gpBox_Repl_Replacement.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -84,7 +89,19 @@ namespace MupenUtils.Forms
             this.gp_Repl_Commands.TabIndex = 0;
             this.gp_Repl_Commands.TabStop = false;
             this.gp_Repl_Commands.Text = "Commands";
-            this.gp_Repl_Commands.Enter += new System.EventHandler(this.gp_Repl_Commands_Enter);
+            // 
+            // gp_Special
+            // 
+            this.gp_Special.Controls.Add(this.cmb_Mode);
+            this.gp_Special.Controls.Add(this.btn_HelpMode);
+            this.gp_Special.Controls.Add(this.chk_Invert);
+            this.gp_Special.Controls.Add(this.lbl_Repl_Mode);
+            this.gp_Special.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.gp_Special.Location = new System.Drawing.Point(3, 155);
+            this.gp_Special.Name = "gp_Special";
+            this.gp_Special.Size = new System.Drawing.Size(209, 94);
+            this.gp_Special.TabIndex = 0;
+            this.gp_Special.TabStop = false;
             // 
             // cmb_Mode
             // 
@@ -97,6 +114,17 @@ namespace MupenUtils.Forms
             this.cmb_Mode.TabStop = false;
             this.cmb_Mode.SelectedIndexChanged += new System.EventHandler(this.cmb_Mode_SelectedIndexChanged);
             // 
+            // btn_HelpMode
+            // 
+            this.btn_HelpMode.Location = new System.Drawing.Point(85, 20);
+            this.btn_HelpMode.Name = "btn_HelpMode";
+            this.btn_HelpMode.Size = new System.Drawing.Size(30, 27);
+            this.btn_HelpMode.TabIndex = 0;
+            this.btn_HelpMode.TabStop = false;
+            this.btn_HelpMode.Text = "?";
+            this.btn_HelpMode.UseVisualStyleBackColor = true;
+            this.btn_HelpMode.Click += new System.EventHandler(this.btn_HelpMode_Click);
+            // 
             // chk_Invert
             // 
             this.chk_Invert.AutoSize = true;
@@ -107,6 +135,15 @@ namespace MupenUtils.Forms
             this.chk_Invert.TabStop = false;
             this.chk_Invert.Text = "Not (~)";
             this.chk_Invert.UseVisualStyleBackColor = true;
+            // 
+            // lbl_Repl_Mode
+            // 
+            this.lbl_Repl_Mode.AutoSize = true;
+            this.lbl_Repl_Mode.Location = new System.Drawing.Point(5, 25);
+            this.lbl_Repl_Mode.Name = "lbl_Repl_Mode";
+            this.lbl_Repl_Mode.Size = new System.Drawing.Size(77, 16);
+            this.lbl_Repl_Mode.TabIndex = 0;
+            this.lbl_Repl_Mode.Text = "Copy Mode";
             // 
             // chk_Repl_All
             // 
@@ -165,12 +202,35 @@ namespace MupenUtils.Forms
             this.txt_Repl_FFrom.TabIndex = 0;
             this.txt_Repl_FFrom.TabStop = false;
             // 
+            // lbl_Substatus
+            // 
+            this.lbl_Substatus.AutoSize = true;
+            this.lbl_Substatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Substatus.Location = new System.Drawing.Point(8, 218);
+            this.lbl_Substatus.Name = "lbl_Substatus";
+            this.lbl_Substatus.Size = new System.Drawing.Size(29, 16);
+            this.lbl_Substatus.TabIndex = 0;
+            this.lbl_Substatus.Text = "Idle";
+            // 
+            // lbl_Repl_Status
+            // 
+            this.lbl_Repl_Status.AutoSize = true;
+            this.lbl_Repl_Status.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Repl_Status.Location = new System.Drawing.Point(6, 193);
+            this.lbl_Repl_Status.Name = "lbl_Repl_Status";
+            this.lbl_Repl_Status.Size = new System.Drawing.Size(43, 25);
+            this.lbl_Repl_Status.TabIndex = 0;
+            this.lbl_Repl_Status.Text = "Idle";
+            // 
             // gp_Repl_File
             // 
+            this.gp_Repl_File.Controls.Add(this.btn_BrowseOut);
             this.gp_Repl_File.Controls.Add(this.btn_Repl_BrowseTrg);
+            this.gp_Repl_File.Controls.Add(this.txt_Output);
             this.gp_Repl_File.Controls.Add(this.btn_Repl_BrowseSrc);
             this.gp_Repl_File.Controls.Add(this.txt_Repl_Trg);
             this.gp_Repl_File.Controls.Add(this.txt_Repl_Src);
+            this.gp_Repl_File.Controls.Add(this.lbl_Output);
             this.gp_Repl_File.Controls.Add(this.gp_Repl_Trg);
             this.gp_Repl_File.Controls.Add(this.gp_Repl_Src);
             this.gp_Repl_File.Location = new System.Drawing.Point(3, 18);
@@ -179,6 +239,17 @@ namespace MupenUtils.Forms
             this.gp_Repl_File.TabIndex = 0;
             this.gp_Repl_File.TabStop = false;
             this.gp_Repl_File.Text = "File";
+            // 
+            // btn_BrowseOut
+            // 
+            this.btn_BrowseOut.Location = new System.Drawing.Point(200, 120);
+            this.btn_BrowseOut.Name = "btn_BrowseOut";
+            this.btn_BrowseOut.Size = new System.Drawing.Size(75, 23);
+            this.btn_BrowseOut.TabIndex = 0;
+            this.btn_BrowseOut.TabStop = false;
+            this.btn_BrowseOut.Text = "Browse";
+            this.btn_BrowseOut.UseVisualStyleBackColor = true;
+            this.btn_BrowseOut.Click += new System.EventHandler(this.btn_BrowseOut_Click);
             // 
             // btn_Repl_BrowseTrg
             // 
@@ -191,15 +262,14 @@ namespace MupenUtils.Forms
             this.btn_Repl_BrowseTrg.UseVisualStyleBackColor = true;
             this.btn_Repl_BrowseTrg.Click += new System.EventHandler(this.btn_Repl_BrowseTrg_Click);
             // 
-            // lbl_Repl_Status
+            // txt_Output
             // 
-            this.lbl_Repl_Status.AutoSize = true;
-            this.lbl_Repl_Status.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Repl_Status.Location = new System.Drawing.Point(6, 242);
-            this.lbl_Repl_Status.Name = "lbl_Repl_Status";
-            this.lbl_Repl_Status.Size = new System.Drawing.Size(43, 25);
-            this.lbl_Repl_Status.TabIndex = 0;
-            this.lbl_Repl_Status.Text = "Idle";
+            this.txt_Output.Location = new System.Drawing.Point(80, 120);
+            this.txt_Output.Name = "txt_Output";
+            this.txt_Output.Size = new System.Drawing.Size(112, 22);
+            this.txt_Output.TabIndex = 0;
+            this.txt_Output.TabStop = false;
+            this.txt_Output.TextChanged += new System.EventHandler(this.txt_Output_TextChanged);
             // 
             // btn_Repl_BrowseSrc
             // 
@@ -216,6 +286,7 @@ namespace MupenUtils.Forms
             // 
             this.txt_Repl_Trg.Location = new System.Drawing.Point(80, 80);
             this.txt_Repl_Trg.Name = "txt_Repl_Trg";
+            this.txt_Repl_Trg.ReadOnly = true;
             this.txt_Repl_Trg.Size = new System.Drawing.Size(112, 22);
             this.txt_Repl_Trg.TabIndex = 0;
             this.txt_Repl_Trg.TabStop = false;
@@ -224,14 +295,25 @@ namespace MupenUtils.Forms
             // 
             this.txt_Repl_Src.Location = new System.Drawing.Point(80, 40);
             this.txt_Repl_Src.Name = "txt_Repl_Src";
+            this.txt_Repl_Src.ReadOnly = true;
             this.txt_Repl_Src.Size = new System.Drawing.Size(112, 22);
             this.txt_Repl_Src.TabIndex = 0;
             this.txt_Repl_Src.TabStop = false;
             // 
+            // lbl_Output
+            // 
+            this.lbl_Output.AutoSize = true;
+            this.lbl_Output.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_Output.Location = new System.Drawing.Point(16, 120);
+            this.lbl_Output.Name = "lbl_Output";
+            this.lbl_Output.Size = new System.Drawing.Size(65, 32);
+            this.lbl_Output.TabIndex = 0;
+            this.lbl_Output.Text = "Output\r\n(Optional)\r\n";
+            // 
             // gp_Repl_Trg
             // 
             this.gp_Repl_Trg.AutoSize = true;
-            this.gp_Repl_Trg.Location = new System.Drawing.Point(16, 80);
+            this.gp_Repl_Trg.Location = new System.Drawing.Point(16, 83);
             this.gp_Repl_Trg.Name = "gp_Repl_Trg";
             this.gp_Repl_Trg.Size = new System.Drawing.Size(47, 16);
             this.gp_Repl_Trg.TabIndex = 0;
@@ -240,44 +322,11 @@ namespace MupenUtils.Forms
             // gp_Repl_Src
             // 
             this.gp_Repl_Src.AutoSize = true;
-            this.gp_Repl_Src.Location = new System.Drawing.Point(16, 40);
+            this.gp_Repl_Src.Location = new System.Drawing.Point(16, 43);
             this.gp_Repl_Src.Name = "gp_Repl_Src";
             this.gp_Repl_Src.Size = new System.Drawing.Size(50, 16);
             this.gp_Repl_Src.TabIndex = 0;
             this.gp_Repl_Src.Text = "Source";
-            // 
-            // lbl_Repl_Mode
-            // 
-            this.lbl_Repl_Mode.AutoSize = true;
-            this.lbl_Repl_Mode.Location = new System.Drawing.Point(5, 25);
-            this.lbl_Repl_Mode.Name = "lbl_Repl_Mode";
-            this.lbl_Repl_Mode.Size = new System.Drawing.Size(77, 16);
-            this.lbl_Repl_Mode.TabIndex = 0;
-            this.lbl_Repl_Mode.Text = "Copy Mode";
-            // 
-            // btn_HelpMode
-            // 
-            this.btn_HelpMode.Location = new System.Drawing.Point(85, 20);
-            this.btn_HelpMode.Name = "btn_HelpMode";
-            this.btn_HelpMode.Size = new System.Drawing.Size(30, 27);
-            this.btn_HelpMode.TabIndex = 0;
-            this.btn_HelpMode.TabStop = false;
-            this.btn_HelpMode.Text = "?";
-            this.btn_HelpMode.UseVisualStyleBackColor = true;
-            this.btn_HelpMode.Click += new System.EventHandler(this.btn_HelpMode_Click);
-            // 
-            // gp_Special
-            // 
-            this.gp_Special.Controls.Add(this.cmb_Mode);
-            this.gp_Special.Controls.Add(this.btn_HelpMode);
-            this.gp_Special.Controls.Add(this.chk_Invert);
-            this.gp_Special.Controls.Add(this.lbl_Repl_Mode);
-            this.gp_Special.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gp_Special.Location = new System.Drawing.Point(3, 155);
-            this.gp_Special.Name = "gp_Special";
-            this.gp_Special.Size = new System.Drawing.Size(209, 94);
-            this.gp_Special.TabIndex = 0;
-            this.gp_Special.TabStop = false;
             // 
             // ReplacementForm
             // 
@@ -290,16 +339,15 @@ namespace MupenUtils.Forms
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "ReplacementForm";
-            this.Load += new System.EventHandler(this.ReplacementForm_Load);
             this.Shown += new System.EventHandler(this.ReplacementForm_Shown);
             this.gpBox_Repl_Replacement.ResumeLayout(false);
             this.gpBox_Repl_Replacement.PerformLayout();
             this.gp_Repl_Commands.ResumeLayout(false);
             this.gp_Repl_Commands.PerformLayout();
-            this.gp_Repl_File.ResumeLayout(false);
-            this.gp_Repl_File.PerformLayout();
             this.gp_Special.ResumeLayout(false);
             this.gp_Special.PerformLayout();
+            this.gp_Repl_File.ResumeLayout(false);
+            this.gp_Repl_File.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -327,5 +375,9 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Label lbl_Repl_Mode;
         private System.Windows.Forms.Button btn_HelpMode;
         private System.Windows.Forms.GroupBox gp_Special;
+        private System.Windows.Forms.Button btn_BrowseOut;
+        private System.Windows.Forms.TextBox txt_Output;
+        private System.Windows.Forms.Label lbl_Output;
+        private System.Windows.Forms.Label lbl_Substatus;
     }
 }

@@ -12,6 +12,7 @@ namespace MupenUtils.Forms
 
         string pathSource = string.Empty;
         string pathTarget = string.Empty;
+        string pathOutput = string.Empty;
         public static List<int> inputSrc = new List<int>();
 
         bool generateNew = false;
@@ -54,6 +55,7 @@ namespace MupenUtils.Forms
 
         private void btn_Repl_BrowseSrc_Click(object sender, EventArgs e)
         {
+            btn_Repl_Go.Enabled = pathSource != pathTarget;
             lbl_Repl_Status.Text = "Choosing file";
 
             object[] res = UIHelper.OpenFileDialog("Select Source M64");
@@ -71,6 +73,8 @@ namespace MupenUtils.Forms
 
         private void btn_Repl_BrowseTrg_Click(object sender, EventArgs e)
         {
+            btn_Repl_Go.Enabled = pathSource != pathTarget;
+
             lbl_Repl_Status.Text = "Choosing file";
 
             object[] res = UIHelper.OpenFileDialog("Select Target M64");
@@ -117,7 +121,8 @@ namespace MupenUtils.Forms
             if (string.IsNullOrEmpty(pathSource) || string.IsNullOrWhiteSpace(pathSource) || string.IsNullOrEmpty(pathTarget) || string.IsNullOrWhiteSpace(pathTarget))
             {
                 
-                lbl_Repl_Status.Text = "Failed (invalid path)";
+                lbl_Repl_Status.Text = "Failed";
+                lbl_Substatus.Text = "Invalid path";
                 return;
             }
             src = File.ReadAllBytes(pathSource);
@@ -125,7 +130,8 @@ namespace MupenUtils.Forms
 
             if (trg.Length < src.Length)
             {
-                lbl_Repl_Status.Text = "Target movie is too short";
+                lbl_Repl_Status.Text = "Failed";
+                lbl_Substatus.Text = "Target movie is shorter than source movie";
                 return;
             }
 
@@ -140,15 +146,23 @@ namespace MupenUtils.Forms
             }
             catch
             {
-                lbl_Repl_Status.Text = "Failed int parse";
+                lbl_Repl_Status.Text = "Failed";
+                lbl_Substatus.Text = "Integer parsing error";
             }
             if (chk_Repl_All.Checked)
             {
                 to = src.Length;
             }
-            if(to-from < 0 || from >= to || to > src.Length)
+            if (to - from < 0 || from >= to || to > src.Length)
             {
-                lbl_Repl_Status.Text = "Invalid from/to";
+                lbl_Repl_Status.Text = "Failed";
+                lbl_Substatus.Text = "Invalid from/to value. ";
+
+                if(from >= to || to-from<0)
+                    lbl_Substatus.Text += "Begin frame value is larger than end frame value. ";
+                if(to > src.Length)
+                    lbl_Substatus.Text += "End frame value is larger than movie. ";
+
                 return;
             }
 
@@ -207,20 +221,21 @@ namespace MupenUtils.Forms
                     }
                     break;
                 default:
-                    MessageBox.Show("error");
+                    MessageBox.Show("Replace mode not found. Try again with another mode combination.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
             }
 
 
-            string finalPath;
+            string finalPath = pathOutput;
+
+            if(pathOutput == string.Empty)
             finalPath = Path.GetFileNameWithoutExtension(pathTarget) + "-replaced.m64";
-
-
 
             File.WriteAllBytes(finalPath, trg);
 
             stopwatch.Stop();
             lbl_Repl_Status.Text = "Finished in " + stopwatch.ElapsedMilliseconds.ToString() + "ms";
+            lbl_Substatus.Text = "Saved at " + finalPath;
         }
 
         private void chk_Repl_All_CheckedChanged(object sender, EventArgs e)
@@ -234,19 +249,31 @@ namespace MupenUtils.Forms
             chk_Invert.Enabled = ReplaceMode != ReplaceModes.Default;
         }
 
-        private void gp_Repl_Commands_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_HelpMode_Click(object sender, EventArgs e)
         {
             MessageBox.Show(HELP_COPYMODES, this.Text);
         }
 
-        private void ReplacementForm_Load(object sender, EventArgs e)
+        private void txt_Output_TextChanged(object sender, EventArgs e)
         {
+            if (ExtensionMethods.ValidPath(txt_Output.Text))
+                pathOutput = txt_Output.Text;
+        }
+
+        private void btn_BrowseOut_Click(object sender, EventArgs e)
+        {
+            
+            lbl_Repl_Status.Text = "Choosing output";
+
+            object[] res = UIHelper.SaveFileDialog("Select Output");
+            if ((string)res[0] != "FAIL" && (bool)res[1])
+                pathOutput = (string)res[0];
+
+            txt_Output.Text = pathOutput;
+            lbl_Repl_Status.Text = "Idle";
 
         }
+
+
     }
 }

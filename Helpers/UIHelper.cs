@@ -57,8 +57,6 @@ namespace MupenUtils
                 FilterIndex = 2
             };
             saveFileDialog.Title = title;
-            saveFileDialog.CheckFileExists =
-            saveFileDialog.CheckPathExists =
             saveFileDialog.RestoreDirectory = true;
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
