@@ -57,6 +57,7 @@ using MupenUtils.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -79,7 +80,7 @@ namespace MupenUtils
     {
         #region Vars
 
-        public const string PROGRAM_VERSION = "1.7";
+        public const string PROGRAM_VERSION = "1.7.1";
         public const string PROGRAM_NAME = "Mupen Utilities";
 
         public const string M64_LOADED_TEXT = "M64 Loaded";
@@ -104,7 +105,7 @@ namespace MupenUtils
         public Size BIG_SIZE = new Size(1438, 620);
         public static bool standardBitArh;
         // [] means reserved, <^>v is direction
-        public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "Start", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "[1]", "[2]", "X", "Y" };
+        public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "S", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "1", "2", "X", "Y" };
 
         Thread m64load;
         MoreForm             moreForm           ;//= new MoreForm();
@@ -360,8 +361,13 @@ namespace MupenUtils
             tsmi_DBG_Crash.Text = "Debug - Crash";
             ctx_Input_Debug.Items.Add(tsmi_DBG_Crash);
 
-            dgv_Main.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(dgv_Main, true, null);
-
+            if (!System.Windows.Forms.SystemInformation.TerminalServerSession)
+            {
+                Type dgvType = dgv_Main.GetType();
+                PropertyInfo pi = dgvType.GetProperty("DoubleBuffered",
+                  BindingFlags.Instance | BindingFlags.NonPublic);
+                pi.SetValue(dgv_Main, true, null);
+            }
 
             //#endif
             if (!BitConverter.IsLittleEndian)
@@ -1272,6 +1278,10 @@ namespace MupenUtils
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ClearSelection()));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ColumnCount = 18));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ColumnHeadersVisible = true));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing));
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Refresh()));
 
             // resize header sizes back to original
@@ -1282,15 +1292,15 @@ namespace MupenUtils
                 dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable));
                 dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None));
             }
-
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio - Loading " + inputLists[selectedController].Count + " samples"));
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = "Loading... Please wait"));
 
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
             object[] buffer = new object[inputStructNames.Length];
 
-            SuspendLayout();
-
+            ((ISupportInitialize)dgv_Main).BeginInit();
+            
+            
             for (int y = 0; y < inputLists[selectedController].Count; y++)
             {
                 // for each frame
@@ -1327,7 +1337,7 @@ namespace MupenUtils
             
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
-            ResumeLayout(true);
+            ((ISupportInitialize)dgv_Main).EndInit();
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
         void SetInputPure(int frameTarget, int value)
