@@ -252,7 +252,7 @@ namespace MupenUtils.Forms
 
         private void chk_Repl_All_CheckedChanged(object sender, EventArgs e)
         {
-            tr_From.Enabled = tr_To.Enabled = lbl_Repl_FFrom.Enabled = lbl_Repl_Fto.Enabled = txt_Repl_FFrom.Enabled = txt_Repl_Fto.Enabled = !chk_Repl_All.Checked;
+            lbl_Repl_FFrom.Enabled = lbl_Repl_Fto.Enabled = txt_Repl_FFrom.Enabled = txt_Repl_Fto.Enabled = !chk_Repl_All.Checked;
         }
 
         private void cmb_Mode_SelectedIndexChanged(object sender, EventArgs e)
