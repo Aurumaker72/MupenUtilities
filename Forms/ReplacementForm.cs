@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace MupenUtils.Forms
 {
     public partial class ReplacementForm : Form
     {
-        const string HELP_COPYMODES = "The copy mode dictates how the inputs get copied from one movie to another.\nDefault - Simple copy\nAssign - Simple copy\nOR - Perform a bitwise OR on the source\nAND - Perform a bitwise AND on the source\nXOR - Perform a bitwise XOR on the source\nThe \'Not (~)\' checkbox is a modifier which, when checked, performs a bitwise NOT on the source before all other operations.";
+        const string HELP_COPYMODES = "The copy mode dictates how the inputs get copied from one movie to another.\nDefault - Simple copy\nAssign - Simple copy\nOR - Perform a bitwise OR on the source\nAND - Perform a bitwise AND on the source\nXOR - Perform a bitwise XOR on the source\nThe \'NOT\' checkbox is a modifier which, when checked, performs a bitwise NOT on the source before all other operations.";
 
         string pathSource = string.Empty;
         string pathTarget = string.Empty;
@@ -159,9 +160,9 @@ namespace MupenUtils.Forms
                 lbl_Substatus.Text = "Invalid from/to value. ";
 
                 if(from >= to || to-from<0)
-                    lbl_Substatus.Text += "Begin frame value is larger than end frame value. ";
+                    lbl_Substatus.Text += "\nBegin frame value is larger than end frame value. ";
                 if(to > src.Length)
-                    lbl_Substatus.Text += "End frame value is larger than movie. ";
+                    lbl_Substatus.Text += "\nEnd frame value is larger than movie. ";
 
                 return;
             }
@@ -233,9 +234,20 @@ namespace MupenUtils.Forms
 
             File.WriteAllBytes(finalPath, trg);
 
+            if (chk_EraseOrig.Checked)
+            {
+                for (int i = INPUT_BEGIN + from; i < to; i++)
+                    src[i] = 0;
+                File.WriteAllBytes(pathSource, src);
+                
+            }
+
             stopwatch.Stop();
-            lbl_Repl_Status.Text = "Finished in " + stopwatch.ElapsedMilliseconds.ToString() + "ms";
-            lbl_Substatus.Text = "Saved at " + finalPath;
+
+            lbl_Repl_Status.Text = "Finished";
+            lbl_Substatus.Text = "Saved at " + finalPath + "\nFinished in " + stopwatch.ElapsedMilliseconds.ToString() + "ms";
+            if (chk_EraseOrig.Checked)
+                lbl_Substatus.Text += "\nNuked " + (to-from) + " frames in source movie.";
         }
 
         private void chk_Repl_All_CheckedChanged(object sender, EventArgs e)
@@ -246,7 +258,8 @@ namespace MupenUtils.Forms
         private void cmb_Mode_SelectedIndexChanged(object sender, EventArgs e)
         {
             ReplaceMode = (ReplaceModes)cmb_Mode.SelectedIndex;
-            chk_Invert.Enabled = ReplaceMode != ReplaceModes.Default;
+            chk_EraseOrig.Enabled = chk_Invert.Enabled = ReplaceMode != ReplaceModes.Default;
+            
         }
 
         private void btn_HelpMode_Click(object sender, EventArgs e)
