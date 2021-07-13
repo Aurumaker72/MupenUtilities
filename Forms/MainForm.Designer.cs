@@ -150,6 +150,7 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -1305,14 +1306,15 @@ namespace MupenUtils
             this.tsmi_Input_SetInput,
             this.inputStatisticsToolStripMenuItem,
             this.toolStripSeparator3,
-            this.tsmi_Agressive,
-            this.tsmi_Input_Debug_DumpData,
-            this.tsmi_Input_Sticky,
             this.tsmi_Themes,
+            this.toolStripSeparator4,
+            this.tsmi_Agressive,
+            this.tsmi_JoyKeyboard,
+            this.tsmi_Input_Debug_DumpData,
             this.tsmi_CRCPopulate,
-            this.tsmi_JoyKeyboard});
+            this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 328);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 362);
             // 
             // tsmi_TasStudioAllow
             // 
@@ -1513,6 +1515,11 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(208, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1682,6 +1689,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripTextBox tsmi_movieScrubStepLarge;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Autoscroll;
         private System.Windows.Forms.Button btn_SaveAs;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

@@ -129,6 +129,7 @@ namespace MupenUtils
         public static bool readOnly = true;
         public static bool rehookMupen = false;
         /*TAS Studio*/
+        public static bool TASStudioAllowed = true;
         public static int markedGoToFrame = 0;
         public static int markedSizeCell = 10;
         public static bool forceGoto = false;
@@ -391,9 +392,11 @@ namespace MupenUtils
 
             JOY_Keyboard = MupenUtilities.Properties.Settings.Default.JoystickKeyboard;
             tsmi_JoyKeyboard.Checked = JOY_Keyboard;
-            
-            
-            
+
+            TASStudioAllowed = MupenUtilities.Properties.Settings.Default.TASStudio;
+            tsmi_TasStudioAllow.Checked = TASStudioAllowed;
+            gp_TASStudio.Visible = TASStudioAllowed;
+            MessageBox.Show(TASStudioAllowed.ToString());
             exceptionForm = new ExceptionForm();
             
 
@@ -813,7 +816,8 @@ namespace MupenUtils
         {
             if (m64loadBusy)
             {
-                MessageBox.Show("Failed to start M64 loading subroutine.", PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // spawn on main thread to block ui
+                this.Invoke((MethodInvoker)(() => MessageBox.Show("A movie is already loading.", PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Warning)));
                 m64loadBusy = false;
                 return;
             }
@@ -829,6 +833,9 @@ namespace MupenUtils
                     errReason += "Extension invalid. ";
                 if(String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path))
                     errReason += "Path invalid. ";
+
+
+
                 if (!File.Exists(Path))
                     errReason += "File does not exist. ";
 
@@ -1022,7 +1029,9 @@ namespace MupenUtils
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
             ResumeLayout(true);
 
+            if(TASStudioAllowed)
             PreloadTASStudio();
+
             CheckSuspiciousProperties();
 
             EnableM64View_ThreadSafe(true);
@@ -1392,7 +1401,7 @@ namespace MupenUtils
         }
         void UpdateTASStudio(int frameTarget)
         {
-            if (liveTasStudio)
+            if (liveTasStudio && TASStudioAllowed)
             {
                 dgv_Main.ReadOnly = false;
                 // workaround because windows controls are fucked
@@ -1786,16 +1795,16 @@ namespace MupenUtils
             txt_Frame.Text = frame.ToString();
 
             int index = frame;
-
-            if (index <= dgv_Main.Rows.Count)
+            if (TASStudioAllowed)
             {
-                
-                dgv_Main.CurrentCell = dgv_Main.Rows[index].Cells[0];
-
-                dgv_Main.Rows[index].Selected = true;
+                if (index <= dgv_Main.Rows.Count)
+                {
+                    dgv_Main.CurrentCell = dgv_Main.Rows[index].Cells[0];
+                    dgv_Main.Rows[index].Selected = true;
+                }
             }
-            if (index < tr_MovieScrub.Maximum && index > tr_MovieScrub.Minimum)
-                tr_MovieScrub.Value = frame;
+
+            if (index < tr_MovieScrub.Maximum && index > tr_MovieScrub.Minimum) tr_MovieScrub.Value = frame;
 
         }
         void AdvanceInputAuto(object obj, EventArgs e)
@@ -1899,7 +1908,9 @@ namespace MupenUtils
         {
             gp_TASStudio.Visible = !gp_TASStudio.Visible;
             tsmi_TasStudioAllow.Checked = gp_TASStudio.Visible;
-            if (gp_TASStudio.Visible) gp_TASStudio.Refresh();
+            TASStudioAllowed = tsmi_TasStudioAllow.Checked;
+            MupenUtilities.Properties.Settings.Default.TASStudio = TASStudioAllowed;
+            MupenUtilities.Properties.Settings.Default.Save(); 
         }
 
         private void tsmi_SimpleMode_Click(object sender, EventArgs e)
