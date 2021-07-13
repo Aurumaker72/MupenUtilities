@@ -150,13 +150,14 @@ namespace MupenUtils.Forms
             // chk_Repl_All
             // 
             this.chk_Repl_All.AutoSize = true;
-            this.chk_Repl_All.Location = new System.Drawing.Point(5, 129);
+            this.chk_Repl_All.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Repl_All.Location = new System.Drawing.Point(11, 129);
             this.chk_Repl_All.Name = "chk_Repl_All";
             this.chk_Repl_All.Size = new System.Drawing.Size(98, 20);
             this.chk_Repl_All.TabIndex = 0;
             this.chk_Repl_All.TabStop = false;
             this.chk_Repl_All.Text = "Replace all";
-            this.chk_Repl_All.UseVisualStyleBackColor = true;
+            this.chk_Repl_All.UseVisualStyleBackColor = false;
             this.chk_Repl_All.CheckedChanged += new System.EventHandler(this.chk_Repl_All_CheckedChanged);
             // 
             // btn_Repl_Go
@@ -203,6 +204,7 @@ namespace MupenUtils.Forms
             this.txt_Repl_FFrom.Size = new System.Drawing.Size(112, 22);
             this.txt_Repl_FFrom.TabIndex = 0;
             this.txt_Repl_FFrom.TabStop = false;
+            this.txt_Repl_FFrom.TextChanged += new System.EventHandler(this.txt_Repl_FFrom_TextChanged);
             // 
             // lbl_Substatus
             // 
@@ -266,7 +268,7 @@ namespace MupenUtils.Forms
             // 
             // txt_Output
             // 
-            this.txt_Output.Location = new System.Drawing.Point(80, 120);
+            this.txt_Output.Location = new System.Drawing.Point(82, 120);
             this.txt_Output.Name = "txt_Output";
             this.txt_Output.Size = new System.Drawing.Size(112, 22);
             this.txt_Output.TabIndex = 0;
@@ -286,7 +288,7 @@ namespace MupenUtils.Forms
             // 
             // txt_Repl_Trg
             // 
-            this.txt_Repl_Trg.Location = new System.Drawing.Point(80, 80);
+            this.txt_Repl_Trg.Location = new System.Drawing.Point(82, 80);
             this.txt_Repl_Trg.Name = "txt_Repl_Trg";
             this.txt_Repl_Trg.ReadOnly = true;
             this.txt_Repl_Trg.Size = new System.Drawing.Size(112, 22);
@@ -295,7 +297,7 @@ namespace MupenUtils.Forms
             // 
             // txt_Repl_Src
             // 
-            this.txt_Repl_Src.Location = new System.Drawing.Point(80, 40);
+            this.txt_Repl_Src.Location = new System.Drawing.Point(82, 40);
             this.txt_Repl_Src.Name = "txt_Repl_Src";
             this.txt_Repl_Src.ReadOnly = true;
             this.txt_Repl_Src.Size = new System.Drawing.Size(112, 22);
