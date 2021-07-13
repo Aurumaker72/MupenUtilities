@@ -888,9 +888,11 @@ namespace MupenUtils
             this.dgv_Main.RowTemplate.Height = 24;
             this.dgv_Main.Size = new System.Drawing.Size(464, 417);
             this.dgv_Main.TabIndex = 0;
+            this.dgv_Main.TabStop = false;
             this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Main_CellDoubleClick);
             this.dgv_Main.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_Main_CellMouseDown);
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
+            this.dgv_Main.SelectionChanged += new System.EventHandler(this.dgv_Main_SelectionChanged);
             this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_Main_KeyDown);
             this.dgv_Main.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_Main_MouseClick);
             this.dgv_Main.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.dgv_Main_MouseWheel);

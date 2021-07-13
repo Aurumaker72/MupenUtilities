@@ -2128,13 +2128,29 @@ namespace MupenUtils
 
         private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
+            //if (!tasStudioAutoScroll) return;
+            //
+            //if (e.RowIndex >= MINIMUM_FRAME && e.RowIndex < inputLists[selectedController].Count)
+            //SetFrame(e.RowIndex);
+            //
+        }
+
+        private void tsmi_Autoscroll_Click(object sender, EventArgs e)
+        {
+            tasStudioAutoScroll ^= true;
+            tsmi_Autoscroll.Checked = tasStudioAutoScroll;
+        }
+
+        private void dgv_Main_SelectionChanged(object sender, EventArgs e)
+        {
             if (!tasStudioAutoScroll) return;
 
-            if (e.RowIndex >= MINIMUM_FRAME && e.RowIndex < inputLists[selectedController].Count)
-            SetFrame(e.RowIndex);
-            
+            if (dgv_Main.SelectedCells.Count > 0)
+                SetFrame(dgv_Main.SelectedCells[dgv_Main.SelectedCells.Count - 1].RowIndex);
+
+
         }
-        
+
         private void tsmi_CRCPopulate_Click(object sender, EventArgs e)
         {
             int len = DataHelper.validCrcs.Count;
@@ -2285,12 +2301,6 @@ namespace MupenUtils
         private void pb_JoystickPic_MouseLeave(object sender, EventArgs e)
         {
             this.ActiveControl = null;
-        }
-
-        private void tsmi_Autoscroll_Click(object sender, EventArgs e)
-        {
-            tasStudioAutoScroll ^= true;
-            tsmi_Autoscroll.Checked = tasStudioAutoScroll;
         }
 
         
