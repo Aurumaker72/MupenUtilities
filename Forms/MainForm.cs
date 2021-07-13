@@ -594,7 +594,7 @@ namespace MupenUtils
             btn_PlayPause.Invoke((MethodInvoker)(() => btn_PlayPause.Enabled = flag));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = flag));
             txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.ReadOnly = flag));
-            this.Invoke((MethodInvoker)(() => this.MinimumSize = flag ? gp_M64.Size : new Size(1, 1)));
+            this.Invoke((MethodInvoker)(() => this.MinimumSize = flag ? new Size(200,200) : new Size(1, 1)));
             this.Invoke((MethodInvoker)(() => this.Size = s));
 
 
