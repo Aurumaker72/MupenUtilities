@@ -32,6 +32,7 @@ namespace MupenUtils.Forms
             this.gpBox_Repl_Replacement = new System.Windows.Forms.GroupBox();
             this.gp_Repl_Commands = new System.Windows.Forms.GroupBox();
             this.gp_Special = new System.Windows.Forms.GroupBox();
+            this.chk_EraseOrig = new System.Windows.Forms.CheckBox();
             this.cmb_Mode = new System.Windows.Forms.ComboBox();
             this.btn_HelpMode = new System.Windows.Forms.Button();
             this.chk_Invert = new System.Windows.Forms.CheckBox();
@@ -54,7 +55,6 @@ namespace MupenUtils.Forms
             this.lbl_Output = new System.Windows.Forms.Label();
             this.gp_Repl_Trg = new System.Windows.Forms.Label();
             this.gp_Repl_Src = new System.Windows.Forms.Label();
-            this.chk_EraseOrig = new System.Windows.Forms.CheckBox();
             this.gpBox_Repl_Replacement.SuspendLayout();
             this.gp_Repl_Commands.SuspendLayout();
             this.gp_Special.SuspendLayout();
@@ -104,6 +104,17 @@ namespace MupenUtils.Forms
             this.gp_Special.Size = new System.Drawing.Size(318, 94);
             this.gp_Special.TabIndex = 0;
             this.gp_Special.TabStop = false;
+            // 
+            // chk_EraseOrig
+            // 
+            this.chk_EraseOrig.AutoSize = true;
+            this.chk_EraseOrig.Location = new System.Drawing.Point(6, 53);
+            this.chk_EraseOrig.Name = "chk_EraseOrig";
+            this.chk_EraseOrig.Size = new System.Drawing.Size(141, 20);
+            this.chk_EraseOrig.TabIndex = 0;
+            this.chk_EraseOrig.TabStop = false;
+            this.chk_EraseOrig.Text = "Erase from original";
+            this.chk_EraseOrig.UseVisualStyleBackColor = true;
             // 
             // cmb_Mode
             // 
@@ -162,7 +173,7 @@ namespace MupenUtils.Forms
             // 
             // btn_Repl_Go
             // 
-            this.btn_Repl_Go.Location = new System.Drawing.Point(109, 123);
+            this.btn_Repl_Go.Location = new System.Drawing.Point(111, 123);
             this.btn_Repl_Go.Name = "btn_Repl_Go";
             this.btn_Repl_Go.Size = new System.Drawing.Size(91, 31);
             this.btn_Repl_Go.TabIndex = 0;
@@ -187,6 +198,7 @@ namespace MupenUtils.Forms
             this.txt_Repl_Fto.Size = new System.Drawing.Size(112, 22);
             this.txt_Repl_Fto.TabIndex = 0;
             this.txt_Repl_Fto.TabStop = false;
+            this.txt_Repl_Fto.Text = "0";
             // 
             // lbl_Repl_FFrom
             // 
@@ -204,6 +216,7 @@ namespace MupenUtils.Forms
             this.txt_Repl_FFrom.Size = new System.Drawing.Size(112, 22);
             this.txt_Repl_FFrom.TabIndex = 0;
             this.txt_Repl_FFrom.TabStop = false;
+            this.txt_Repl_FFrom.Text = "0";
             this.txt_Repl_FFrom.TextChanged += new System.EventHandler(this.txt_Repl_FFrom_TextChanged);
             // 
             // lbl_Substatus
@@ -331,17 +344,6 @@ namespace MupenUtils.Forms
             this.gp_Repl_Src.Size = new System.Drawing.Size(50, 16);
             this.gp_Repl_Src.TabIndex = 0;
             this.gp_Repl_Src.Text = "Source";
-            // 
-            // chk_EraseOrig
-            // 
-            this.chk_EraseOrig.AutoSize = true;
-            this.chk_EraseOrig.Location = new System.Drawing.Point(6, 53);
-            this.chk_EraseOrig.Name = "chk_EraseOrig";
-            this.chk_EraseOrig.Size = new System.Drawing.Size(141, 20);
-            this.chk_EraseOrig.TabIndex = 0;
-            this.chk_EraseOrig.TabStop = false;
-            this.chk_EraseOrig.Text = "Erase from original";
-            this.chk_EraseOrig.UseVisualStyleBackColor = true;
             // 
             // ReplacementForm
             // 

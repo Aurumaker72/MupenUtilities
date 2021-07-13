@@ -159,10 +159,12 @@ namespace MupenUtils.Forms
                 lbl_Repl_Status.Text = "Failed";
                 lbl_Substatus.Text = "Invalid from/to value. ";
 
-                if(from >= to || to-from<0)
+                if(from > to || to-from<0)
                     lbl_Substatus.Text += "\nBegin frame value is larger than end frame value. ";
                 if(to > src.Length)
                     lbl_Substatus.Text += "\nEnd frame value is larger than movie. ";
+                if(from == to)
+                    lbl_Substatus.Text += "\nFrame values are equal. ";
 
                 return;
             }

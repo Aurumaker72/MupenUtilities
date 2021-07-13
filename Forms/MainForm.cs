@@ -396,7 +396,7 @@ namespace MupenUtils
             TASStudioAllowed = MupenUtilities.Properties.Settings.Default.TASStudio;
             tsmi_TasStudioAllow.Checked = TASStudioAllowed;
             gp_TASStudio.Visible = TASStudioAllowed;
-            MessageBox.Show(TASStudioAllowed.ToString());
+
             exceptionForm = new ExceptionForm();
             
 
@@ -537,8 +537,11 @@ namespace MupenUtils
         
         void EnableM64View(bool flag, bool change, bool force)
         {
+
             if (m64loadBusy) return;
             if (!force && UsageType != UsageTypes.M64) return;
+
+            
             Size s;
             ExpandedMenu = flag;
             if (change) FileLoaded = flag;
@@ -564,10 +567,11 @@ namespace MupenUtils
 
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             this.MaximizeBox = flag;
-
-                ResumeLayout();
-
             gp_M64.Visible = flag;
+
+            ResumeLayout();
+
+           
 
         }
 
@@ -1910,7 +1914,12 @@ namespace MupenUtils
             tsmi_TasStudioAllow.Checked = gp_TASStudio.Visible;
             TASStudioAllowed = tsmi_TasStudioAllow.Checked;
             MupenUtilities.Properties.Settings.Default.TASStudio = TASStudioAllowed;
-            MupenUtilities.Properties.Settings.Default.Save(); 
+            MupenUtilities.Properties.Settings.Default.Save();
+
+            // prevent user from messing with it
+            // for example,
+            // enabling this after a movie has loaded without tasstudio will cause a crash (tasstudio not loaded but it tries to get data)
+            tsmi_TasStudioAllow.Enabled = false;
         }
 
         private void tsmi_SimpleMode_Click(object sender, EventArgs e)

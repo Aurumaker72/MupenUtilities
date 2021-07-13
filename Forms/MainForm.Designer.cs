@@ -151,6 +151,7 @@ namespace MupenUtils
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.transparentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -1401,7 +1402,8 @@ namespace MupenUtils
             this.tsmi_Themes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.defaultLightToolStripMenuItem,
             this.grayToolStripMenuItem,
-            this.darkToolStripMenuItem});
+            this.darkToolStripMenuItem,
+            this.transparentToolStripMenuItem});
             this.tsmi_Themes.Name = "tsmi_Themes";
             this.tsmi_Themes.Size = new System.Drawing.Size(211, 26);
             this.tsmi_Themes.Text = "Themes";
@@ -1519,6 +1521,13 @@ namespace MupenUtils
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(208, 6);
+            // 
+            // transparentToolStripMenuItem
+            // 
+            this.transparentToolStripMenuItem.Name = "transparentToolStripMenuItem";
+            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.transparentToolStripMenuItem.Text = "Transparent";
+            this.transparentToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // MainForm
             // 
@@ -1690,6 +1699,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_Autoscroll;
         private System.Windows.Forms.Button btn_SaveAs;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem transparentToolStripMenuItem;
     }
 }
 
