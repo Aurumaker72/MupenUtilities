@@ -99,9 +99,9 @@ namespace MupenUtils.Forms
             this.gp_Special.Controls.Add(this.chk_Invert);
             this.gp_Special.Controls.Add(this.lbl_Repl_Mode);
             this.gp_Special.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gp_Special.Location = new System.Drawing.Point(3, 155);
+            this.gp_Special.Location = new System.Drawing.Point(3, 160);
             this.gp_Special.Name = "gp_Special";
-            this.gp_Special.Size = new System.Drawing.Size(318, 94);
+            this.gp_Special.Size = new System.Drawing.Size(318, 89);
             this.gp_Special.TabIndex = 0;
             this.gp_Special.TabStop = false;
             // 
@@ -252,7 +252,7 @@ namespace MupenUtils.Forms
             this.gp_Repl_File.Controls.Add(this.gp_Repl_Src);
             this.gp_Repl_File.Location = new System.Drawing.Point(3, 18);
             this.gp_Repl_File.Name = "gp_Repl_File";
-            this.gp_Repl_File.Size = new System.Drawing.Size(317, 154);
+            this.gp_Repl_File.Size = new System.Drawing.Size(317, 172);
             this.gp_Repl_File.TabIndex = 0;
             this.gp_Repl_File.TabStop = false;
             this.gp_Repl_File.Text = "File";
