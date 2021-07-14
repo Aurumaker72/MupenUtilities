@@ -35,10 +35,12 @@ namespace MupenUtils.Forms
 
         private void btn_CrashLog_Click(object sender, EventArgs e)
         {
+            if(btn_CrashLog.Text == "Open Crash Log")
+            Process.Start(mPath);
+
             mPath = MainForm.MExcept(mException, false);
-            btn_CrashLog.Text = "Done";
-            btn_CrashLog.ForeColor = Color.Green;
-            btn_OpenCrashLog.Visible = true;
+            btn_CrashLog.Text = "Open Crash Log";
+            
         }
         
         private void btn_Quit_Click(object sender, EventArgs e)
@@ -59,12 +61,11 @@ namespace MupenUtils.Forms
 
             btn_CrashLog.Text = "Dump Crash Log";
             btn_CrashLog.ForeColor = Color.Black;
-            btn_OpenCrashLog.Visible = false;
         }
 
         private void btn_OpenCrashLog_Click(object sender, EventArgs e)
         {
-            Process.Start(mPath);
+            
         }
     }
 }

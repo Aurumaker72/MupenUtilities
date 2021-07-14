@@ -37,7 +37,6 @@ namespace MupenUtils.Forms
             this.pb_LogoBad = new System.Windows.Forms.PictureBox();
             this.btn_Quit = new System.Windows.Forms.Button();
             this.btn_CrashLog = new System.Windows.Forms.Button();
-            this.btn_OpenCrashLog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pb_LogoBad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +46,7 @@ namespace MupenUtils.Forms
             this.lbl_Exception.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Exception.Location = new System.Drawing.Point(200, 16);
             this.lbl_Exception.Name = "lbl_Exception";
-            this.lbl_Exception.Size = new System.Drawing.Size(396, 32);
+            this.lbl_Exception.Size = new System.Drawing.Size(395, 32);
             this.lbl_Exception.TabIndex = 0;
             this.lbl_Exception.Text = "An exception has been thrown";
             // 
@@ -56,7 +55,7 @@ namespace MupenUtils.Forms
             this.lbl_info.AutoSize = true;
             this.lbl_info.Location = new System.Drawing.Point(208, 64);
             this.lbl_info.Name = "lbl_info";
-            this.lbl_info.Size = new System.Drawing.Size(319, 102);
+            this.lbl_info.Size = new System.Drawing.Size(298, 96);
             this.lbl_info.TabIndex = 0;
             this.lbl_info.Text = resources.GetString("lbl_info.Text");
             // 
@@ -65,7 +64,7 @@ namespace MupenUtils.Forms
             this.llbl_Issues.AutoSize = true;
             this.llbl_Issues.Location = new System.Drawing.Point(16, 192);
             this.llbl_Issues.Name = "llbl_Issues";
-            this.llbl_Issues.Size = new System.Drawing.Size(119, 17);
+            this.llbl_Issues.Size = new System.Drawing.Size(110, 16);
             this.llbl_Issues.TabIndex = 0;
             this.llbl_Issues.TabStop = true;
             this.llbl_Issues.Text = "Post Github Issue";
@@ -114,24 +113,11 @@ namespace MupenUtils.Forms
             this.btn_CrashLog.UseVisualStyleBackColor = true;
             this.btn_CrashLog.Click += new System.EventHandler(this.btn_CrashLog_Click);
             // 
-            // btn_OpenCrashLog
-            // 
-            this.btn_OpenCrashLog.Location = new System.Drawing.Point(16, 296);
-            this.btn_OpenCrashLog.Name = "btn_OpenCrashLog";
-            this.btn_OpenCrashLog.Size = new System.Drawing.Size(120, 32);
-            this.btn_OpenCrashLog.TabIndex = 0;
-            this.btn_OpenCrashLog.TabStop = false;
-            this.btn_OpenCrashLog.Text = "Open Crash Log";
-            this.btn_OpenCrashLog.UseVisualStyleBackColor = true;
-            this.btn_OpenCrashLog.Visible = false;
-            this.btn_OpenCrashLog.Click += new System.EventHandler(this.btn_OpenCrashLog_Click);
-            // 
             // ExceptionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(599, 338);
-            this.Controls.Add(this.btn_OpenCrashLog);
             this.Controls.Add(this.btn_CrashLog);
             this.Controls.Add(this.btn_Quit);
             this.Controls.Add(this.btn_Continue);
@@ -146,9 +132,9 @@ namespace MupenUtils.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ExceptionForm";
+            this.Deactivate += new System.EventHandler(this.FocusLost);
             this.Shown += new System.EventHandler(this.ExceptionForm_Shown);
             this.LostFocus += new System.EventHandler(this.FocusLost);
-            this.Deactivate += new System.EventHandler(this.FocusLost);
             ((System.ComponentModel.ISupportInitialize)(this.pb_LogoBad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -164,6 +150,5 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Button btn_Continue;
         private System.Windows.Forms.Button btn_Quit;
         private System.Windows.Forms.Button btn_CrashLog;
-        private System.Windows.Forms.Button btn_OpenCrashLog;
     }
 }

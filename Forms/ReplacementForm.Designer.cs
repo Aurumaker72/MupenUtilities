@@ -108,7 +108,7 @@ namespace MupenUtils.Forms
             // chk_EraseOrig
             // 
             this.chk_EraseOrig.AutoSize = true;
-            this.chk_EraseOrig.Location = new System.Drawing.Point(6, 53);
+            this.chk_EraseOrig.Location = new System.Drawing.Point(8, 60);
             this.chk_EraseOrig.Name = "chk_EraseOrig";
             this.chk_EraseOrig.Size = new System.Drawing.Size(141, 20);
             this.chk_EraseOrig.TabIndex = 0;
@@ -120,7 +120,7 @@ namespace MupenUtils.Forms
             // 
             this.cmb_Mode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_Mode.FormattingEnabled = true;
-            this.cmb_Mode.Location = new System.Drawing.Point(121, 21);
+            this.cmb_Mode.Location = new System.Drawing.Point(88, 22);
             this.cmb_Mode.Name = "cmb_Mode";
             this.cmb_Mode.Size = new System.Drawing.Size(124, 24);
             this.cmb_Mode.TabIndex = 0;
@@ -129,7 +129,7 @@ namespace MupenUtils.Forms
             // 
             // btn_HelpMode
             // 
-            this.btn_HelpMode.Location = new System.Drawing.Point(85, 20);
+            this.btn_HelpMode.Location = new System.Drawing.Point(282, 56);
             this.btn_HelpMode.Name = "btn_HelpMode";
             this.btn_HelpMode.Size = new System.Drawing.Size(30, 27);
             this.btn_HelpMode.TabIndex = 0;
@@ -141,7 +141,7 @@ namespace MupenUtils.Forms
             // chk_Invert
             // 
             this.chk_Invert.AutoSize = true;
-            this.chk_Invert.Location = new System.Drawing.Point(251, 23);
+            this.chk_Invert.Location = new System.Drawing.Point(218, 24);
             this.chk_Invert.Name = "chk_Invert";
             this.chk_Invert.Size = new System.Drawing.Size(58, 20);
             this.chk_Invert.TabIndex = 0;
