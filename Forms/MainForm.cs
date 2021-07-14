@@ -187,7 +187,7 @@ namespace MupenUtils
         bool JOY_mouseDown, JOY_followMouse, JOY_Keyboard;
         bool lockType;
         UpdateNotifier updateNotifier = new UpdateNotifier();
-        SmoothingMode JOY_SmoothingMode = SmoothingMode.HighQuality;
+        SmoothingMode JOY_SmoothingMode = SmoothingMode.AntiAlias;
 
         Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0) };
 
@@ -208,7 +208,8 @@ namespace MupenUtils
         {
             Default,
             Gray,
-            Dark
+            Dark,
+            Transparent
         };
         public static UIThemes UITheme = UIThemes.Default;
 
@@ -407,13 +408,13 @@ namespace MupenUtils
 
         void SetUITheme(UIThemes uitheme)
         {
-            Color gp_BackColor = Color.Red;
-            Color chk_BackColor = Color.Red;
-            Color btn_BackColor = Color.Red;
-            Color txt_BackColor = Color.Red;
-            Color dgv_BackColor = Color.Red;
-            Color dgv_GridColor = Color.Red;
-            Color miscColor = Color.Red;
+            Color gp_BackColor =  Color.FromKnownColor(KnownColor.Control);
+            Color chk_BackColor = Color.FromKnownColor(KnownColor.Control);
+            Color btn_BackColor = Color.FromKnownColor(KnownColor.Control);
+            Color txt_BackColor = Color.FromKnownColor(KnownColor.Control);
+            Color dgv_BackColor = Color.FromKnownColor(KnownColor.Control);
+            Color dgv_GridColor = Color.FromKnownColor(KnownColor.Black);
+            Color miscColor = Color.FromKnownColor(KnownColor.Control);
 
 
             if (uitheme == UIThemes.Gray)
@@ -429,11 +430,11 @@ namespace MupenUtils
             else if (uitheme == UIThemes.Default)
             {
 
-                gp_BackColor = Color.FromKnownColor(KnownColor.Control);
+                gp_BackColor =  Color.FromKnownColor(KnownColor.Control);
                 chk_BackColor = Color.FromKnownColor(KnownColor.Control);
                 btn_BackColor = Color.FromKnownColor(KnownColor.Control);
                 txt_BackColor = Color.FromKnownColor(KnownColor.Control);
-                miscColor = Color.FromKnownColor(KnownColor.Control);
+                miscColor =     Color.FromKnownColor(KnownColor.Control);
                 dgv_BackColor = Color.FromKnownColor(KnownColor.Control);
                 dgv_GridColor = Color.Black;
 
@@ -447,6 +448,9 @@ namespace MupenUtils
                 miscColor = Color.FromArgb(255, 50, 50, 50);
                 dgv_BackColor = Color.FromArgb(255, 50, 50, 50);
                 dgv_GridColor = Color.Black;
+            }else if(uitheme == UIThemes.Transparent)
+            {
+                this.Opacity = .8;
             }
 
             this.ForAllControls(c =>
@@ -478,8 +482,10 @@ namespace MupenUtils
             dgv_Main.GridColor = dgv_GridColor;
             dgv_Main.ForeColor = dgv_GridColor;
 
+            if(uitheme != UIThemes.Transparent)
             pb_JoystickPic.BackColor = Color.Transparent;
-
+            else
+                pb_JoystickPic.BackColor = Color.FromKnownColor(KnownColor.Control);
 
         }
         void ResetTitle()
@@ -1905,8 +1911,8 @@ namespace MupenUtils
 
         private void tsmi_AAJoystick_Click(object sender, EventArgs e)
         {
-            JOY_SmoothingMode = JOY_SmoothingMode == SmoothingMode.HighQuality ? SmoothingMode.None : SmoothingMode.HighQuality;
-            tsmi_AAJoystick.Checked = JOY_SmoothingMode == SmoothingMode.HighQuality;
+            JOY_SmoothingMode = JOY_SmoothingMode == SmoothingMode.AntiAlias ? SmoothingMode.None : SmoothingMode.AntiAlias;
+            tsmi_AAJoystick.Checked = JOY_SmoothingMode == SmoothingMode.AntiAlias;
             pb_JoystickPic.Invalidate();
         }
 
