@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MupenUtils.Forms
@@ -68,7 +62,7 @@ namespace MupenUtils.Forms
                 sumY[i1] = 0;
             for (int i1 = 0; i1 < emptyFrames.Length; i1++)
                 emptyFrames[i1] = 0;
-            
+
             for (int i = 0; i < 4; i++)
                 if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i + 1));
 
@@ -125,7 +119,7 @@ namespace MupenUtils.Forms
             }
 
             selectedController = cbox_Ctl.SelectedIndex;
-            if(selectedController < 0)
+            if (selectedController < 0)
             {
                 cbox_Ctl.SelectedIndex = 0;
                 selectedController = cbox_Ctl.SelectedIndex;
@@ -149,10 +143,10 @@ namespace MupenUtils.Forms
             double confidence = 0;
             switch (selectedController)
             {
-                case 0:inputList = inputCtl1;break;
-                case 1:inputList = inputCtl2;break;
-                case 2:inputList = inputCtl3;break;
-                case 3:inputList = inputCtl4;break;
+                case 0: inputList = inputCtl1; break;
+                case 1: inputList = inputCtl2; break;
+                case 2: inputList = inputCtl3; break;
+                case 3: inputList = inputCtl4; break;
                 default: throw new ArgumentException("Invalid controller index");
             }
 
@@ -171,10 +165,10 @@ namespace MupenUtils.Forms
             }
 
             if (MainForm.RRs < 4) confidence -= 0.6;
-            else confidence += MainForm.RRs / (inputList.Count/2);
+            else confidence += MainForm.RRs / (inputList.Count / 2);
 
             if (all > 0)
-                confidence += inputList.Count/all;
+                confidence += inputList.Count / all;
 
 
             lbl_IsTAS.Text = confidence > 0.9 ? "Is TAS: Yes" : "Is TAS: No";

@@ -93,11 +93,11 @@ namespace MupenUtils.Forms
         private void chk_RangeMode_CheckedChanged(object sender, EventArgs e)
         {
             rangeMode ^= true;
-            txt_Debug_Byteto.Visible  = 
-            gp_Range.Visible          = rangeMode;
+            txt_Debug_Byteto.Visible =
+            gp_Range.Visible = rangeMode;
 
-            lbl_Debug_Value.Visible   =
-            txt_Debug_Value.Visible   =
+            lbl_Debug_Value.Visible =
+            txt_Debug_Value.Visible =
             txt_Debug_HexByte.Visible =
             !rangeMode;
 
@@ -125,7 +125,7 @@ namespace MupenUtils.Forms
                 {
                     encoded = "Too big section\r\nTry a smaller range";
                 }
-                else if(bytesArr.Length < 8)
+                else if (bytesArr.Length < 8)
                 {
                     encoded = "Too small section\r\nTry a bigger range";
                 }
@@ -160,7 +160,7 @@ namespace MupenUtils.Forms
                 // we run into a dilemma
                 // how to ignore nul terminator?
                 encoded = System.Text.Encoding.UTF8.GetString(bytesArr);
-                
+
             }
             else if (rb_ASCII.Checked)
             {

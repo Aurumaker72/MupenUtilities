@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace MupenUtilities.Controls
 {
@@ -11,7 +6,7 @@ namespace MupenUtilities.Controls
     {
         public HelpButton()
         {
-            
+
             this.MinimumSize = new Size(30, 27);
             this.Size = MinimumSize;
             this.Text = "?";

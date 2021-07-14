@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Input;
-using MRG.Controls.UI;
-using MupenUtilities.Helpers;
 
 namespace MupenUtils.Forms
 {
@@ -37,7 +26,7 @@ namespace MupenUtils.Forms
 
         private void MupenHookForm_Shown(object sender, EventArgs e)
         {
-            
+
             lbl_ProcName.Text += MupenData.PROCESS_NAME;
             lbl_NameVer.Text += MupenData.MUPEN_NAME;
             if (!MupenData.CONFIRMED)
@@ -47,7 +36,7 @@ namespace MupenUtils.Forms
                 return;
             }
             lbl_Name.Text += MupenData.MUPEN_NAME.Remove(MupenData.MUPEN_NAME.Length - 5);
-            lbl_Ver.Text += MupenData.MUPEN_NAME.Remove(0, MainForm.MUPEN_SPLIT.Length+1);
+            lbl_Ver.Text += MupenData.MUPEN_NAME.Remove(0, MainForm.MUPEN_SPLIT.Length + 1);
         }
 
         private void MupenHookForm_Load(object sender, EventArgs e)
@@ -55,7 +44,7 @@ namespace MupenUtils.Forms
 
         }
 
-        
+
 
         private void btn_Stop_Click(object sender, EventArgs e)
         {

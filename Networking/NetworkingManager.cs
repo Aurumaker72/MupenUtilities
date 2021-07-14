@@ -80,7 +80,7 @@ namespace MupenUtils.Networking
 
         public object[] GetLatestReleaseText()
         {
-             GitHubClient client = new GitHubClient(new ProductHeaderValue("muputils"));
+            GitHubClient client = new GitHubClient(new ProductHeaderValue("muputils"));
             string latest;
             string avatarUrl;
             try
@@ -90,9 +90,9 @@ namespace MupenUtils.Networking
                 latest += whatsNew[0].Body;
                 avatarUrl = whatsNew[0].Author.AvatarUrl;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return new object[] { "Unable to retrieve news\r\n " + e.InnerException.Message, ""};
+                return new object[] { "Unable to retrieve news\r\n " + e.InnerException.Message, "" };
             }
 
             latest = latest.Replace('#'.ToString(), "");

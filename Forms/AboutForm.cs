@@ -3,7 +3,6 @@ using MupenUtils.Networking;
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Net;
 using System.Windows.Forms;
 
@@ -20,19 +19,19 @@ namespace MupenUtils
 
         public MoreForm()
         {
-            
+
             InitializeComponent();
             this.Text = MainForm.PROGRAM_NAME + " - More";
 
             if (!updateNotifier.CheckForInternetConnection())
             {
                 btn_More_CheckUpdates.Enabled =
-                btn_News.Enabled =              false;
+                btn_News.Enabled = false;
 
-                btn_More_CheckUpdates.Text = 
-                btn_News.Text =             "No Internet";
+                btn_More_CheckUpdates.Text =
+                btn_News.Text = "No Internet";
             }
-            
+
 
             lbl_More_Tip.Text = TipProvider.GetRandomTip();
             origImage = pb_More_Logo.BackgroundImage;
@@ -40,7 +39,7 @@ namespace MupenUtils
             try
             {
                 newsTxt = (string)updateNotifier.GetLatestReleaseText()[0];
-                
+
                 using (WebClient webClient = new WebClient())
                 {
                     newsImage = ExtensionMethods.ImageFromBytes(webClient.DownloadData((string)updateNotifier.GetLatestReleaseText()[1]));

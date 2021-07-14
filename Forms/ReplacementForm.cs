@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace MupenUtils.Forms
@@ -17,7 +16,7 @@ namespace MupenUtils.Forms
         public static List<int> inputSrc = new List<int>();
 
         bool generateNew = false;
-        
+
         enum ReplaceModes
         {
             Default,
@@ -121,7 +120,7 @@ namespace MupenUtils.Forms
 
             if (string.IsNullOrEmpty(pathSource) || string.IsNullOrWhiteSpace(pathSource) || string.IsNullOrEmpty(pathTarget) || string.IsNullOrWhiteSpace(pathTarget))
             {
-                
+
                 lbl_Repl_Status.Text = "Failed";
                 lbl_Substatus.Text = "Invalid path";
                 return;
@@ -159,11 +158,11 @@ namespace MupenUtils.Forms
                 lbl_Repl_Status.Text = "Failed";
                 lbl_Substatus.Text = "Invalid from/to value. ";
 
-                if(from > to || to-from<0)
+                if (from > to || to - from < 0)
                     lbl_Substatus.Text += "\nBegin frame value is larger than end frame value. ";
-                if(to > src.Length)
+                if (to > src.Length)
                     lbl_Substatus.Text += "\nEnd frame value is larger than movie. ";
-                if(from == to)
+                if (from == to)
                     lbl_Substatus.Text += "\nFrame values are equal. ";
 
                 return;
@@ -231,8 +230,8 @@ namespace MupenUtils.Forms
 
             string finalPath = pathOutput;
 
-            if(pathOutput == string.Empty)
-            finalPath = Path.GetFileNameWithoutExtension(pathTarget) + "-replaced.m64";
+            if (pathOutput == string.Empty)
+                finalPath = Path.GetFileNameWithoutExtension(pathTarget) + "-replaced.m64";
 
             File.WriteAllBytes(finalPath, trg);
 
@@ -241,7 +240,7 @@ namespace MupenUtils.Forms
                 for (int i = INPUT_BEGIN + from; i < to; i++)
                     src[i] = 0;
                 File.WriteAllBytes(pathSource, src);
-                
+
             }
 
             stopwatch.Stop();
@@ -249,7 +248,7 @@ namespace MupenUtils.Forms
             lbl_Repl_Status.Text = "Finished";
             lbl_Substatus.Text = "Saved at " + finalPath + "\nFinished in " + stopwatch.ElapsedMilliseconds.ToString() + "ms";
             if (chk_EraseOrig.Checked)
-                lbl_Substatus.Text += "\nNuked " + (to-from) + " frames in source movie.";
+                lbl_Substatus.Text += "\nNuked " + (to - from) + " frames in source movie.";
         }
 
         private void chk_Repl_All_CheckedChanged(object sender, EventArgs e)
@@ -261,7 +260,7 @@ namespace MupenUtils.Forms
         {
             ReplaceMode = (ReplaceModes)cmb_Mode.SelectedIndex;
             chk_EraseOrig.Enabled = chk_Invert.Enabled = ReplaceMode != ReplaceModes.Default;
-            
+
         }
 
         private void btn_HelpMode_Click(object sender, EventArgs e)
@@ -277,7 +276,7 @@ namespace MupenUtils.Forms
 
         private void btn_BrowseOut_Click(object sender, EventArgs e)
         {
-            
+
             lbl_Repl_Status.Text = "Choosing output";
 
             object[] res = UIHelper.SaveFileDialog("Select Output");

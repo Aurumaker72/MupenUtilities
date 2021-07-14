@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MupenUtils.Forms
@@ -35,14 +28,14 @@ namespace MupenUtils.Forms
 
         private void btn_CrashLog_Click(object sender, EventArgs e)
         {
-            if(btn_CrashLog.Text == "Open Crash Log")
-            Process.Start(mPath);
+            if (btn_CrashLog.Text == "Open Crash Log")
+                Process.Start(mPath);
 
             mPath = MainForm.MExcept(mException, false);
             btn_CrashLog.Text = "Open Crash Log";
-            
+
         }
-        
+
         private void btn_Quit_Click(object sender, EventArgs e)
         {
             MainForm.MExcept(mException, false);
@@ -57,7 +50,7 @@ namespace MupenUtils.Forms
 
             this.Text = ProductName + " - Exception";
 
-            
+
 
             btn_CrashLog.Text = "Dump Crash Log";
             btn_CrashLog.ForeColor = Color.Black;
@@ -65,7 +58,7 @@ namespace MupenUtils.Forms
 
         private void btn_OpenCrashLog_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

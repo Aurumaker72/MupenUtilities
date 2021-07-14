@@ -55,17 +55,13 @@
 using MupenUtils.Forms;
 using MupenUtils.Networking;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -108,15 +104,15 @@ namespace MupenUtils
         public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "S", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "1", "2", "X", "Y" };
 
         Thread m64load;
-        MoreForm             moreForm           ;//= new MoreForm();
-        AdvancedDebugForm    debugForm          ;//= new AdvancedDebugForm();
-        TASStudioMoreForm    tasStudioForm      ;//= new TASStudioMoreForm();
-        ReplacementForm      replacementForm    ;//= new ReplacementForm();
-        ControllerFlagsForm  controllerFlagsForm;//= new ControllerFlagsForm();
-        MupenHookForm        mupenHookForm      ;//= new MupenHookForm();
-        STForm               stForm             ;//= new STForm();
-        static ExceptionForm exceptionForm      ;//= new ExceptionForm();
-        InputStatsForm inputStatisticsForm      ; //= new InputStatsForm();
+        MoreForm moreForm;//= new MoreForm();
+        AdvancedDebugForm debugForm;//= new AdvancedDebugForm();
+        TASStudioMoreForm tasStudioForm;//= new TASStudioMoreForm();
+        ReplacementForm replacementForm;//= new ReplacementForm();
+        ControllerFlagsForm controllerFlagsForm;//= new ControllerFlagsForm();
+        MupenHookForm mupenHookForm;//= new MupenHookForm();
+        STForm stForm;//= new STForm();
+        static ExceptionForm exceptionForm;//= new ExceptionForm();
+        InputStatsForm inputStatisticsForm; //= new InputStatsForm();
 
         List<Color> ctlColor = new List<Color>();
 
@@ -179,13 +175,13 @@ namespace MupenUtils
         public static byte selectedController = 0;
 
         public static List<int> SAVE_inputList = new List<int>();
-        
+
         int lastValue;
 
         public static int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
-        
-        
+
+
         // Joystick input
         Point JOY_Rel, JOY_Abs, JOY_middle;
         bool JOY_mouseDown, JOY_followMouse, JOY_Keyboard;
@@ -235,9 +231,9 @@ namespace MupenUtils
         public static extern bool ReadProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
         [DllImport("kernel32.dll")]
         static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
-        [DllImport("kernel32.dll", SetLastError=true)]
+        [DllImport("kernel32.dll", SetLastError = true)]
 
-        
+
 
         static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
         public struct MEMORY_BASIC_INFORMATION
@@ -286,7 +282,7 @@ namespace MupenUtils
             if (updateNotifier.CheckForInternetConnection())
                 updateNotifier.CheckForUpdates(UPDATE_UNKNOWN, true);
 
-            
+
         }
 
         void InitController()
@@ -315,7 +311,7 @@ namespace MupenUtils
         };
 
             stepFrameTimer.Tick += new EventHandler(AdvanceInputAuto);
-            stepFrameTimer.Interval = 1000/30; // 30 fps
+            stepFrameTimer.Interval = 1000 / 30; // 30 fps
             stepFrameTimer.Stop();
 
             JOY_middle.X = pb_JoystickPic.Width / 2;
@@ -393,7 +389,7 @@ namespace MupenUtils
             tsmi_JoyKeyboard.Checked = JOY_Keyboard;
 
             exceptionForm = new ExceptionForm();
-            
+
 
         }
 
@@ -408,31 +404,31 @@ namespace MupenUtils
             tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
             cbox_Controllers.Visible = gp_TASStudio.Dock != DockStyle.Fill;
         }
-        
+
         void SetUITheme(UIThemes uitheme)
         {
-            Color gp_BackColor  = Color.Red;
+            Color gp_BackColor = Color.Red;
             Color chk_BackColor = Color.Red;
             Color btn_BackColor = Color.Red;
             Color txt_BackColor = Color.Red;
             Color dgv_BackColor = Color.Red;
             Color dgv_GridColor = Color.Red;
-            Color miscColor     = Color.Red;
+            Color miscColor = Color.Red;
 
 
             if (uitheme == UIThemes.Gray)
             {
-                gp_BackColor =  Color.Gray;
+                gp_BackColor = Color.Gray;
                 chk_BackColor = Color.Gray;
                 btn_BackColor = Color.Gray;
                 txt_BackColor = Color.Gray;
-                miscColor =     Color.Gray;
+                miscColor = Color.Gray;
                 dgv_BackColor = Color.Gray;
                 dgv_GridColor = Color.Black;
             }
-            else if(uitheme == UIThemes.Default)
+            else if (uitheme == UIThemes.Default)
             {
-                
+
                 gp_BackColor = Color.FromKnownColor(KnownColor.Control);
                 chk_BackColor = Color.FromKnownColor(KnownColor.Control);
                 btn_BackColor = Color.FromKnownColor(KnownColor.Control);
@@ -441,14 +437,15 @@ namespace MupenUtils
                 dgv_BackColor = Color.FromKnownColor(KnownColor.Control);
                 dgv_GridColor = Color.Black;
 
-            } else if(uitheme == UIThemes.Dark)
+            }
+            else if (uitheme == UIThemes.Dark)
             {
-                gp_BackColor =  Color.FromArgb(255,50,50,50);
-                chk_BackColor = Color.FromArgb(255,50,50,50);
-                btn_BackColor = Color.FromArgb(255,50,50,50);
-                txt_BackColor = Color.FromArgb(255,50,50,50);
-                miscColor =     Color.FromArgb(255,50,50,50);
-                dgv_BackColor = Color.FromArgb(255,50,50,50);
+                gp_BackColor = Color.FromArgb(255, 50, 50, 50);
+                chk_BackColor = Color.FromArgb(255, 50, 50, 50);
+                btn_BackColor = Color.FromArgb(255, 50, 50, 50);
+                txt_BackColor = Color.FromArgb(255, 50, 50, 50);
+                miscColor = Color.FromArgb(255, 50, 50, 50);
+                dgv_BackColor = Color.FromArgb(255, 50, 50, 50);
                 dgv_GridColor = Color.Black;
             }
 
@@ -467,7 +464,7 @@ namespace MupenUtils
                         else
                             b.FlatStyle = FlatStyle.Standard;
 
-                        
+
 
                         b.BackColor = btn_BackColor;
                         b.UseVisualStyleBackColor = uitheme == UIThemes.Default;
@@ -483,7 +480,7 @@ namespace MupenUtils
 
             pb_JoystickPic.BackColor = Color.Transparent;
 
-            
+
         }
         void ResetTitle()
         {
@@ -501,8 +498,8 @@ namespace MupenUtils
 
         void ShowTipsForm()
         {
-            if(moreForm == null)
-            moreForm = new MoreForm();
+            if (moreForm == null)
+                moreForm = new MoreForm();
 
             moreForm.ShowDialog();
         }
@@ -529,19 +526,19 @@ namespace MupenUtils
                }).Start();
         }
 
-        
+
         void EnableM64View(bool flag, bool change, bool force)
         {
 
             if (m64loadBusy) return;
             if (!force && UsageType != UsageTypes.M64) return;
 
-            
+
             Size s;
             ExpandedMenu = flag;
             if (change) FileLoaded = flag;
 
-            
+
             s = flag ? BIG_SIZE : new Size(100 + btn_Override.Location.X + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
@@ -556,7 +553,7 @@ namespace MupenUtils
 
             SuspendLayout();
 
-            this.MinimumSize = flag ? new Size(200,200) : new Size(1, 1);
+            this.MinimumSize = flag ? new Size(200, 200) : new Size(1, 1);
 
             this.Size = s;
 
@@ -566,11 +563,11 @@ namespace MupenUtils
 
             ResumeLayout();
 
-           
+
 
         }
 
-        
+
         private void EnableM64View_ThreadSafe(bool flag)
         {
             Size s;
@@ -590,7 +587,7 @@ namespace MupenUtils
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = flag));
             txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Enabled = flag));
 
-            this.Invoke((MethodInvoker)(() => this.MinimumSize = flag ? new Size(200,200) : new Size(1, 1)));
+            this.Invoke((MethodInvoker)(() => this.MinimumSize = flag ? new Size(200, 200) : new Size(1, 1)));
             this.Invoke((MethodInvoker)(() => this.Size = s));
 
 
@@ -660,7 +657,7 @@ namespace MupenUtils
                 MupenUtilities.Properties.Settings.Default.Save();
                 Debug.WriteLine("saved usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
             }
-            if(UsageType != UsageTypes.M64)
+            if (UsageType != UsageTypes.M64)
             {
                 EnableM64View(false, false, true);
             }
@@ -710,7 +707,7 @@ namespace MupenUtils
             }
 
 
-            
+
             SYSTEM_INFO sys_info = new SYSTEM_INFO();
             GetSystemInfo(out sys_info);
 
@@ -757,13 +754,13 @@ namespace MupenUtils
 
 
 
-            
+
             string str = ExtensionMethods.CharsToString(Encoding.ASCII.GetChars(procMem.ToArray()));
             string search = MUPEN_SPLIT;
             int searched = 0;
 
-            goSearch:
-            if(searched > 4 && searched < 7) // already tried to find new mupen type name... try old one
+        goSearch:
+            if (searched > 4 && searched < 7) // already tried to find new mupen type name... try old one
                 search = "Mupen 64 rr";
             if (searched > 8) // overwrite again
                 search = "Mupen 64 rr Lua";
@@ -829,9 +826,9 @@ namespace MupenUtils
             {
                 string errReason = "";
 
-                if(!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase))
+                if (!System.IO.Path.GetExtension(Path).Equals(".m64", StringComparison.InvariantCultureIgnoreCase))
                     errReason += "Extension invalid. ";
-                if(String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path))
+                if (String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path))
                     errReason += "Path invalid. ";
 
 
@@ -849,7 +846,7 @@ namespace MupenUtils
             long len = new FileInfo(Path).Length;
             if (len < 1027)
             {
-                ErrorProcessing("File is too small to be a movie."); 
+                ErrorProcessing("File is too small to be a movie.");
                 m64loadBusy = false;
                 return;
             }
@@ -933,7 +930,7 @@ namespace MupenUtils
             Description = utf8.GetString(br.ReadBytes(256));
 
             for (int i = 0; i < 4; i++)
-             ControllersEnabled[i] = ExtensionMethods.GetBit(ControllerFlags, i);
+                ControllersEnabled[i] = ExtensionMethods.GetBit(ControllerFlags, i);
 
 
             // Load inputs
@@ -944,7 +941,7 @@ namespace MupenUtils
             // to quote: "00C 4-byte little-endian unsigned int: number of frames (vertical interrupts)"
             // WHATTT???? 
 
-            
+
 
             Debug.WriteLine("VI/s:" + VIs);
             frames = VIs;
@@ -974,7 +971,7 @@ namespace MupenUtils
                         if (ControllersEnabled[3])
                             inputListCtl4.Add(br.ReadInt32());
                     }
-                    catch {}
+                    catch { }
                     findx++;
                 }
             }
@@ -1014,7 +1011,7 @@ namespace MupenUtils
             txt_RomCountry.Invoke((MethodInvoker)(() => txt_RomCountry.Text = (string)countryData[0]));
             pb_RomCountry.Invoke((MethodInvoker)(() => pb_RomCountry.Size = countryImage.Size));
             pb_RomCountry.Invoke((MethodInvoker)(() => pb_RomCountry.BackgroundImage = countryImage));
-            
+
 
             txt_PathName.Invoke((MethodInvoker)(() => txt_PathName.Text = M64Name));
             txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
@@ -1035,7 +1032,7 @@ namespace MupenUtils
 
             EnableM64View_ThreadSafe(true);
 
-            
+
             //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
             m64loadBusy = false;
@@ -1060,21 +1057,21 @@ namespace MupenUtils
             if (VIs == 0 || VI_s == 0)
                 lb_VIs.ForeColor = Color.Red;
 
-            
 
-           
 
-           lbl_ROMCRC.ForeColor = Color.Red;
-           foreach(var crc in DataHelper.validCrcs)
+
+
+            lbl_ROMCRC.ForeColor = Color.Red;
+            foreach (var crc in DataHelper.validCrcs)
             {
                 //Debug.WriteLine("Crc32: " + Crc32.ToString("X2"));
                 //Debug.WriteLine("crc check: " + crc.ToString("X2"));
-                if(Crc32 == crc || Crc32.ToString("X2") == crc.ToString("X2")) // so much slower but might work 
+                if (Crc32 == crc || Crc32.ToString("X2") == crc.ToString("X2")) // so much slower but might work 
                 {
                     lbl_ROMCRC.ForeColor = Color.Black;
                     break;
                 }
-                
+
             }
 
         }
@@ -1087,7 +1084,7 @@ namespace MupenUtils
                 RedControl(btn_PathSel);
                 return;
             }
-            if(Controllers != 1)
+            if (Controllers != 1)
             {
                 MessageBox.Show("This m64 can not be saved because it enables too many controllers", PROGRAM_NAME);
                 return;
@@ -1097,7 +1094,7 @@ namespace MupenUtils
             if (saveAs)
             {
                 object[] res = UIHelper.SaveFileDialog("Save As");
-                if((bool)res[1])
+                if ((bool)res[1])
                     tmpPath = (string)res[1];
                 else
                 {
@@ -1117,7 +1114,7 @@ namespace MupenUtils
                 }
 
                 tmpPath = tmpPath + ".m64";
-                
+
             }
 
             SavePath = tmpPath;
@@ -1129,7 +1126,7 @@ namespace MupenUtils
             BinaryWriter br = new BinaryWriter(fs);
             //ShowStatus("Saving M64...", st_Status1);
             byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
-            byte[] magic = new byte[4] { 0x4D, 0x36, 0x34, 0x1A};
+            byte[] magic = new byte[4] { 0x4D, 0x36, 0x34, 0x1A };
             //Array.Reverse(magic);
             //magic[0] = 0x4D;
             //magic[1] = 0x36;
@@ -1188,7 +1185,7 @@ namespace MupenUtils
             rsp = Encoding.ASCII.GetBytes(RSPPlugin);
             author = Encoding.UTF8.GetBytes(Author);
             desc = Encoding.UTF8.GetBytes(Description);
-            
+
             Array.Resize(ref gfx, 64);
             Array.Resize(ref audio, 64);
             Array.Resize(ref input, 64);
@@ -1243,19 +1240,19 @@ namespace MupenUtils
 
             decompressed = ExtensionMethods.Decompress(File.ReadAllBytes(Path));
 
-            if(decompressed.Length < 10485760)
+            if (decompressed.Length < 10485760)
             {
                 ErrorProcessing("Too small.");
                 return;
             }
 
-            
+
             BinaryReader br = new BinaryReader(new MemoryStream(decompressed));
 
             //defFs.Read(STForm.savestateRDRAM, 0, (int)deStream.BaseStream.Length);
             br.BaseStream.Seek(0x1B0, SeekOrigin.Begin); // have fun figuring this out without docs
             STForm.savestateRDRAM = br.ReadBytes(8388608);
-            
+
             br.BaseStream.Seek(0, SeekOrigin.Begin);
             STForm.savestate = decompressed;
 
@@ -1270,10 +1267,10 @@ namespace MupenUtils
             tmpPath = tmpPath + ".st";
             STForm.Path = tmpPath;
 
-            if(stForm==null)stForm = new STForm();
+            if (stForm == null) stForm = new STForm();
 
             stForm.ShowDialog(); // main ui thread here pauses because of modal popup (execution does not continue)
-            
+
             //MessageBox.Show("Savestate has been decompressed to " + newFs, PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
@@ -1321,7 +1318,7 @@ namespace MupenUtils
             ((ISupportInitialize)dgv_Main).BeginInit();
 
 
-            for (int y = 0; y < inputLists[selectedController].Count-1/*???*/; y++)
+            for (int y = 0; y < inputLists[selectedController].Count - 1/*???*/; y++)
             {
                 // for each frame
                 rows.Add(new DataGridViewRow());
@@ -1364,13 +1361,13 @@ namespace MupenUtils
         {
             if (!FileLoaded) return;
             if (m64loadBusy) return;
-            
+
             inputLists[selectedController][frameTarget] /*|*/= value;
 
 
             GetInput(inputLists[selectedController][frameTarget], false, frameTarget);
 
-            
+
             UpdateTASStudio(frameTarget);
 
         }
@@ -1388,9 +1385,9 @@ namespace MupenUtils
                 if (pos > inputLists[selectedController].Count) pos = inputLists[selectedController].Count - 1;
                 if (pos < 0) pos = 0;
 
-                 value = inputLists[selectedController][pos];
-                
-                
+                value = inputLists[selectedController][pos];
+
+
 
             } // get value at that frame. If this fails then m64 is corrupted 
             catch
@@ -1427,7 +1424,7 @@ namespace MupenUtils
 
                     if (i < 16)
                     {
-                        if(ExtensionMethods.GetBit(inputLists[selectedController][frameTarget], i))
+                        if (ExtensionMethods.GetBit(inputLists[selectedController][frameTarget], i))
                             cellValue = inputStructNames[i];
                     }
                     else
@@ -1459,11 +1456,11 @@ namespace MupenUtils
 
             txt_joyX.Text = joystickX.ToString();
             txt_joyY.Text = (/*-*/joystickY).ToString();// lie to user
-            
+
             SetJoystickValue(new Point(joystickX, joystickY), RELATIVE, false);
 
-            if(setinput)
-            SetInput(targetFrame);
+            if (setinput)
+                SetInput(targetFrame);
 
             chk_restart.Checked = chk_RESERVED1.Checked && chk_RESERVED2.Checked;
             chk_restart.ForeColor = chk_restart.Checked ? Color.Orange : Color.Black;
@@ -1477,7 +1474,7 @@ namespace MupenUtils
             //lbl_FrameSelected.ForeColor = Color.Black;
             //SetInput(inputList[frame]);
 
-            
+
             SetFrame(frame + stepAmount);
         }
         bool checkAllowedStep(int stepAmount)
@@ -1517,7 +1514,7 @@ namespace MupenUtils
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
-            if(UsageType != UsageTypes.M64 && UsageType != UsageTypes.ST)
+            if (UsageType != UsageTypes.M64 && UsageType != UsageTypes.ST)
             {
                 e.Effect = DragDropEffects.None;
                 return;
@@ -1567,7 +1564,7 @@ namespace MupenUtils
         {
             if (Control.ModifierKeys != Keys.Control) return;
 
-            cellSize += Math.Sign(e.Delta)*5;
+            cellSize += Math.Sign(e.Delta) * 5;
 
             for (int i = 0; i < dgv_Main.Columns.Count; i++)
                 dgv_Main.Columns[i].Width = cellSize;
@@ -1586,8 +1583,8 @@ namespace MupenUtils
 
         private void tsmi_Input_SetInput_Click(object sender, EventArgs e)
         {
-            if(debugForm == null)
-            debugForm = new AdvancedDebugForm();
+            if (debugForm == null)
+                debugForm = new AdvancedDebugForm();
             debugForm.ShowDialog();
         }
         private void dgv_Main_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -1602,8 +1599,8 @@ namespace MupenUtils
             if (e.KeyCode == Keys.H && e.Modifiers == Keys.Control)
             {
 
-                if(tasStudioForm == null)
-                tasStudioForm = new TASStudioMoreForm();
+                if (tasStudioForm == null)
+                    tasStudioForm = new TASStudioMoreForm();
                 tasStudioForm.ShowDialog();
             }
 
@@ -1643,7 +1640,7 @@ namespace MupenUtils
 
         private void utilityToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(tasStudioForm == null)
+            if (tasStudioForm == null)
                 tasStudioForm = new TASStudioMoreForm();
             tasStudioForm.ShowDialog();
         }
@@ -1652,7 +1649,7 @@ namespace MupenUtils
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
-        
+
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
             Debug.WriteLine("browse...");
@@ -1662,7 +1659,7 @@ namespace MupenUtils
                 MupenHook(); // skip dialog
                 return;
             }
-            if(UsageType == UsageTypes.Replacement)
+            if (UsageType == UsageTypes.Replacement)
             {
                 if (replacementForm == null)
                     replacementForm = new ReplacementForm();
@@ -1680,7 +1677,7 @@ namespace MupenUtils
             txt_Path.Text = (string)result[0];
             Path = (string)result[0];
 
-            
+
             MupenUtilities.Properties.Settings.Default.LastPath = Path;
             MupenUtilities.Properties.Settings.Default.Save();
 
@@ -1693,14 +1690,14 @@ namespace MupenUtils
                 LoadST();
             else if (UsageType == UsageTypes.Autodetect)
             {
-                
+
                 string ext = System.IO.Path.GetExtension(Path);
                 if (ext.Equals(".m64", StringComparison.InvariantCultureIgnoreCase))
                 {
                     m64load = new Thread(() => ReadM64());
                     m64load.Start();
 
-                } 
+                }
                 else if (ext.Equals(".st", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".savestate", StringComparison.InvariantCultureIgnoreCase))
                 {
                     LoadST();
@@ -1717,7 +1714,7 @@ namespace MupenUtils
                         ErrorProcessing("Executable not mupen");
                         return;
                     }
-                   
+
                 }
                 else
                 {
@@ -1739,35 +1736,35 @@ namespace MupenUtils
         }
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
-            UsageType = UsageTypes.Autodetect;
-            else if(e.Button == MouseButtons.Left)
-            UsageType = UsageTypes.M64;
+            if (e.Button == MouseButtons.Right)
+                UsageType = UsageTypes.Autodetect;
+            else if (e.Button == MouseButtons.Left)
+                UsageType = UsageTypes.M64;
             UpdateVisualsTop(true);
         }
         private void rb_STsel_MouseDown(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
-            UsageType = UsageTypes.Autodetect;
-            else if(e.Button == MouseButtons.Left)
-            UsageType = UsageTypes.ST;
+            if (e.Button == MouseButtons.Right)
+                UsageType = UsageTypes.Autodetect;
+            else if (e.Button == MouseButtons.Left)
+                UsageType = UsageTypes.ST;
             UpdateVisualsTop(true);
         }
 
         private void rb_MUPsel_MouseDown(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
-            UsageType = UsageTypes.Autodetect;
-            else if(e.Button == MouseButtons.Left)
-            UsageType = UsageTypes.Mupen;
+            if (e.Button == MouseButtons.Right)
+                UsageType = UsageTypes.Autodetect;
+            else if (e.Button == MouseButtons.Left)
+                UsageType = UsageTypes.Mupen;
             UpdateVisualsTop(true);
         }
         private void rb_Replacementsel_MouseDown(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
-            UsageType = UsageTypes.Autodetect;
-            else if(e.Button == MouseButtons.Left)
-            UsageType = UsageTypes.Replacement;
+            if (e.Button == MouseButtons.Right)
+                UsageType = UsageTypes.Autodetect;
+            else if (e.Button == MouseButtons.Left)
+                UsageType = UsageTypes.Replacement;
             UpdateVisualsTop(true);
         }
 
@@ -1837,20 +1834,19 @@ namespace MupenUtils
             {
                 if (this.ActiveControl == pb_JoystickPic) return;
                 Debug.Write("key\n");
-                int x = 0, y = 0;
-                Point target = new Point(0,0);
+                Point target = new Point(0, 0);
 
                 //cringe 
-                if(Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.Up))
+                if (Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.Up))
                 {
                     target = new Point(0, -127);
 
                 }
-                if(Keyboard.IsKeyDown(Key.A) || Keyboard.IsKeyDown(Key.Left))
+                if (Keyboard.IsKeyDown(Key.A) || Keyboard.IsKeyDown(Key.Left))
                 {
                     target = new Point(-128, 0);
                 }
-                if(Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.Down))
+                if (Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.Down))
                 {
                     target = new Point(0, 127);
                 }
@@ -1859,26 +1855,26 @@ namespace MupenUtils
                     target = new Point(127, 0);
                 }
 
-                
+
                 SetJoystickValue(target, false, false);
 
-                
+
             }
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
-            if(!readOnly && JOY_Keyboard)
+            if (!readOnly && JOY_Keyboard)
             {
-                if (   Keyboard.IsKeyUp(Key.D) 
-                    || Keyboard.IsKeyUp(Key.Right) 
-                    || Keyboard.IsKeyUp(Key.S) 
+                if (Keyboard.IsKeyUp(Key.D)
+                    || Keyboard.IsKeyUp(Key.Right)
+                    || Keyboard.IsKeyUp(Key.S)
                     || Keyboard.IsKeyUp(Key.Down)
-                    || Keyboard.IsKeyUp(Key.A) 
+                    || Keyboard.IsKeyUp(Key.A)
                     || Keyboard.IsKeyUp(Key.Left)
-                    || Keyboard.IsKeyUp(Key.W) 
+                    || Keyboard.IsKeyUp(Key.W)
                     || Keyboard.IsKeyUp(Key.Up))
-                SetJoystickValue(new Point(0,0), false, false);
+                    SetJoystickValue(new Point(0, 0), false, false);
             }
         }
 
@@ -1887,7 +1883,7 @@ namespace MupenUtils
             JOY_Keyboard ^= true;
             tsmi_JoyKeyboard.Checked = JOY_Keyboard;
             MupenUtilities.Properties.Settings.Default.JoystickKeyboard = JOY_Keyboard;
-                MupenUtilities.Properties.Settings.Default.Save();
+            MupenUtilities.Properties.Settings.Default.Save();
         }
 
         private void btn_PlayPause_Click(object sender, EventArgs e)
@@ -1906,7 +1902,7 @@ namespace MupenUtils
         {
             SetTASStudioBig();
         }
-        
+
         private void tsmi_AAJoystick_Click(object sender, EventArgs e)
         {
             JOY_SmoothingMode = JOY_SmoothingMode == SmoothingMode.HighQuality ? SmoothingMode.None : SmoothingMode.HighQuality;
@@ -2004,7 +2000,7 @@ namespace MupenUtils
         }
 
         private void btn_Savem64_MouseClick(object sender, MouseEventArgs e) => WriteM64(false);
-        private void btn_SaveAs_Click(object sender, EventArgs e) =>            WriteM64(true);
+        private void btn_SaveAs_Click(object sender, EventArgs e) => WriteM64(true);
 
         private void btn_Tips_Click(object sender, EventArgs e) => ShowTipsForm();
 
@@ -2061,7 +2057,7 @@ namespace MupenUtils
 
         private void generic_ClickDisallowedProperty(object sender, MouseEventArgs e)
         {
-            
+
         }
 
         private void tsmi_Agressive_Click(object sender, EventArgs e)
@@ -2085,14 +2081,14 @@ namespace MupenUtils
 
         private void btn_CtlFlags_Click(object sender, EventArgs e)
         {
-            if(controllerFlagsForm == null)
-            controllerFlagsForm = new ControllerFlagsForm();
+            if (controllerFlagsForm == null)
+                controllerFlagsForm = new ControllerFlagsForm();
             controllerFlagsForm.ShowDialog();
         }
         private void tsmi_GetInput_Click(object sender, EventArgs e)
         {
             if (FileLoaded)
-            { 
+            {
                 string s = "";
                 s += String.Format("Input data at frame {0}: {1}", frame, ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(inputLists[selectedController][frame])) + "\n");
                 s += "View:\n";
@@ -2109,13 +2105,13 @@ namespace MupenUtils
             liveTasStudio ^= true;
             tsmi_LiveTasStudio.Checked = liveTasStudio;
         }
-        
+
 
         private void themeSelectedClick(object sender, MouseEventArgs e)
         {
             ToolStripMenuItem btn = sender as ToolStripMenuItem;
 
-            foreach(ToolStripMenuItem ts in tsmi_Themes.DropDownItems) ts.Checked = false;
+            foreach (ToolStripMenuItem ts in tsmi_Themes.DropDownItems) ts.Checked = false;
 
             for (int i = 0; i < tsmi_Themes.DropDownItems.Count; i++)
             {
@@ -2127,7 +2123,7 @@ namespace MupenUtils
                     ts.Checked = true;
                     break;
                 }
-                    
+
             }
         }
         private void inputStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2137,8 +2133,8 @@ namespace MupenUtils
             InputStatsForm.inputCtl3 = inputListCtl3;
             InputStatsForm.inputCtl4 = inputListCtl4;
 
-            if(inputStatisticsForm == null)
-            inputStatisticsForm = new InputStatsForm();
+            if (inputStatisticsForm == null)
+                inputStatisticsForm = new InputStatsForm();
             inputStatisticsForm.ShowDialog();
         }
 
@@ -2171,7 +2167,7 @@ namespace MupenUtils
         {
             int len = DataHelper.validCrcs.Count;
             DataHelper.PopulateCRCsFromFile();
-            
+
             MessageBox.Show("Added " + (DataHelper.validCrcs.Count - len) + " new CRCs");
         }
         private void tr_MovieScrub_MouseDown(object sender, MouseEventArgs e)
@@ -2215,7 +2211,7 @@ namespace MupenUtils
             }
 
             if (cell.Value is string) cell.Value = cell.Value.ToString() == inputStructNames[structIndex] ? "" : inputStructNames[structIndex];
-            
+
             bool toggled = cell.Value.ToString() != "";
 
             int buffer = inputLists[selectedController][index];
@@ -2319,7 +2315,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        
+
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -2340,13 +2336,13 @@ namespace MupenUtils
 
             if (readOnly) linepen = new Pen(Color.Gray, 3);
 
-            if(UITheme == UIThemes.Default)      linepen = new Pen(Color.Blue, 3);
-            else if(UITheme == UIThemes.Gray)    linepen = new Pen(Color.Black, 3);
-            else if(UITheme == UIThemes.Dark)    linepen = new Pen(Color.Gray, 3);
+            if (UITheme == UIThemes.Default) linepen = new Pen(Color.Blue, 3);
+            else if (UITheme == UIThemes.Gray) linepen = new Pen(Color.Black, 3);
+            else if (UITheme == UIThemes.Dark) linepen = new Pen(Color.Gray, 3);
 
-            if(UITheme == UIThemes.Default)   e.Graphics.FillRectangle(new SolidBrush(Color.FromKnownColor(KnownColor.Control)), pb_JoystickPic.ClientRectangle);
-            else if(UITheme == UIThemes.Gray) e.Graphics.FillRectangle(Brushes.Gray, pb_JoystickPic.ClientRectangle);
-            else if(UITheme == UIThemes.Dark) e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255,50,50,50)), pb_JoystickPic.ClientRectangle);
+            if (UITheme == UIThemes.Default) e.Graphics.FillRectangle(new SolidBrush(Color.FromKnownColor(KnownColor.Control)), pb_JoystickPic.ClientRectangle);
+            else if (UITheme == UIThemes.Gray) e.Graphics.FillRectangle(Brushes.Gray, pb_JoystickPic.ClientRectangle);
+            else if (UITheme == UIThemes.Dark) e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 50, 50, 50)), pb_JoystickPic.ClientRectangle);
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
             if (lockType)
@@ -2369,22 +2365,22 @@ namespace MupenUtils
             {
                 if (UITheme == UIThemes.Default)
                 {
-                     e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+                    e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
                     e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
                     e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
                     e.Graphics.DrawLine(linepen, JOY_middle, xy);
                     e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
                 }
-                else if(UITheme == UIThemes.Gray)
+                else if (UITheme == UIThemes.Gray)
                 {
                     e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
                     e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
                     e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
                     e.Graphics.DrawLine(linepen, JOY_middle, xy);
                     e.Graphics.FillEllipse(Brushes.Black, xy.X - 4, xy.Y - 4, 8, 8);
-                   
+
                 }
-                else if(UITheme == UIThemes.Dark)
+                else if (UITheme == UIThemes.Dark)
                 {
                     e.Graphics.DrawEllipse(linepen, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
                     e.Graphics.DrawLine(linepen, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
@@ -2446,8 +2442,8 @@ namespace MupenUtils
 
         public static string MExcept(Exception ex, bool mbox)
         {
-            if(mbox)
-            if (MessageBox.Show("Exception occured and the program will attempt to continue. Do you want to dump relevant data to a crash log?", PROGRAM_NAME + " - Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes) return string.Empty;
+            if (mbox)
+                if (MessageBox.Show("Exception occured and the program will attempt to continue. Do you want to dump relevant data to a crash log?", PROGRAM_NAME + " - Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes) return string.Empty;
 
             string exStr = "";
             exStr += "message: " + ex.Message + "\n";

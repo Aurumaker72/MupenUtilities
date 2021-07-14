@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Threading;
 using System.IO;
-using System.Buffers.Binary;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace MupenUtils.Forms
 {
@@ -53,7 +48,7 @@ namespace MupenUtils.Forms
             cmb_Editmode.Items.Add("Super Mario 64 USA");
 
             cmb_Editmode.SelectedIndex = 0;
-            
+
 
         }
 
@@ -65,12 +60,12 @@ namespace MupenUtils.Forms
             txt_RDRAM.ForeColor = Color.Black;
             int tmp = selectedOffset;
 
-            if(ExtensionMethods.ValidStringInt(txt_rdramoffset.Text, 0, savestateRDRAM.Length))
+            if (ExtensionMethods.ValidStringInt(txt_rdramoffset.Text, 0, savestateRDRAM.Length))
                 selectedOffset = int.Parse(txt_rdramoffset.Text);
 
-            for(int i = 0; i < disallowedOffsets.Count; i++)
+            for (int i = 0; i < disallowedOffsets.Count; i++)
             {
-                if(selectedOffset == disallowedOffsets[i])
+                if (selectedOffset == disallowedOffsets[i])
                 {
                     txt_rdramoffset.ForeColor = Color.Red;
                     lbl_live.ForeColor = Color.Red;
@@ -83,7 +78,7 @@ namespace MupenUtils.Forms
             //txt_RDRAM.Clear();
             txt_RDRAM.Text = savestateRDRAM[selectedOffset].ToString("X2");
 
-            
+
         }
 
         private void btn_RDRAMOffsetHelp_Click(object sender, EventArgs e)
@@ -103,13 +98,13 @@ namespace MupenUtils.Forms
 
         private void btn_Remove_Click(object sender, EventArgs e)
         {
-            if(ls_SAVED.SelectedIndex != -1)
-            ls_SAVED.Items.RemoveAt(ls_SAVED.SelectedIndex);
+            if (ls_SAVED.SelectedIndex != -1)
+                ls_SAVED.Items.RemoveAt(ls_SAVED.SelectedIndex);
         }
         private void btn_Disallow_Click(object sender, EventArgs e)
         {
             ls_SAVED.Items.Remove(selectedOffset.ToString("X2") + " | " + savestateRDRAM[selectedOffset].ToString("X2"));
-            for(int i=0;i<disallowedOffsets.Count;i++)if(selectedOffset==disallowedOffsets[i])disallowedOffsets.RemoveAt(i);
+            for (int i = 0; i < disallowedOffsets.Count; i++) if (selectedOffset == disallowedOffsets[i]) disallowedOffsets.RemoveAt(i);
             disallowedOffsets.Add(selectedOffset);
         }
 
@@ -118,13 +113,13 @@ namespace MupenUtils.Forms
             txt_Edit.ForeColor = Color.Black;
 
 
-            
-            if(txt_Edit.Text.Length > 4 || selectedOffset == 0 || !ExtensionMethods.ValidHexStringInt(txt_Edit.Text, 0, byte.MaxValue)){txt_Edit.ForeColor = Color.Red;return;}
-            for (int i = 0; i < disallowedOffsets.Count; i++) if (selectedOffset == disallowedOffsets[i]){txt_Edit.ForeColor = Color.Red;return;}
+
+            if (txt_Edit.Text.Length > 4 || selectedOffset == 0 || !ExtensionMethods.ValidHexStringInt(txt_Edit.Text, 0, byte.MaxValue)) { txt_Edit.ForeColor = Color.Red; return; }
+            for (int i = 0; i < disallowedOffsets.Count; i++) if (selectedOffset == disallowedOffsets[i]) { txt_Edit.ForeColor = Color.Red; return; }
 
             byte final = 0;
 
-            
+
 
             if (txt_Edit.Text.Contains("x"))
                 final = Convert.ToByte(txt_Edit.Text, 16);
@@ -142,7 +137,7 @@ namespace MupenUtils.Forms
             coins = ExtensionMethods.ToInt16(savestate.ToArray(), COINS_COUNT_ADDRESS);
             stars = ExtensionMethods.ToInt16(savestate.ToArray(), STARS_COUNT_ADDRESS);
             lives = (sbyte)savestate.ToArray()[LIVES_COUNT_ADDRESS];
-            health = (sbyte)savestate.ToArray()[HEALTH_ADDRESS]; 
+            health = (sbyte)savestate.ToArray()[HEALTH_ADDRESS];
 
             nud_Coins.Value = coins;
             nud_Stars.Value = stars;
@@ -151,10 +146,10 @@ namespace MupenUtils.Forms
         }
         void SM64Push()
         {
-            Array.Copy(BitConverter.GetBytes(coins),  0,  savestate,  COINS_COUNT_ADDRESS, 2 );
-            Array.Copy(BitConverter.GetBytes(stars),  0,  savestate,  STARS_COUNT_ADDRESS, 2 );
+            Array.Copy(BitConverter.GetBytes(coins), 0, savestate, COINS_COUNT_ADDRESS, 2);
+            Array.Copy(BitConverter.GetBytes(stars), 0, savestate, STARS_COUNT_ADDRESS, 2);
             savestate[LIVES_COUNT_ADDRESS] = (byte)lives;
-            savestate[HEALTH_ADDRESS]      = (byte)health;
+            savestate[HEALTH_ADDRESS] = (byte)health;
         }
         #endregion
 
@@ -174,24 +169,24 @@ namespace MupenUtils.Forms
             BinaryWriter br = new BinaryWriter(fs);
             br.Write(st);
 
-            br.Flush();  br.Close(); fs.Close();
+            br.Flush(); br.Close(); fs.Close();
 
 
-            MessageBox.Show(String.Format("Dumped savestate at {0}\nUncompressed size: {1}\nCompressed size: {2}", Path, 
+            MessageBox.Show(String.Format("Dumped savestate at {0}\nUncompressed size: {1}\nCompressed size: {2}", Path,
                 ExtensionMethods.FormatBytes(oldSize),
                 ExtensionMethods.FormatBytes(st.Length)));
-            
+
         }
 
         private void cmb_Editmode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cmb_Editmode.SelectedIndex == 0)
+            if (cmb_Editmode.SelectedIndex == 0)
             {
                 gp_RDRAM.Show();
                 gp_Values.Show();
                 SM64Load();
             }
-            else if(cmb_Editmode.SelectedIndex == 1)
+            else if (cmb_Editmode.SelectedIndex == 1)
             {
                 gp_RDRAM.Show();
                 gp_Values.Hide();

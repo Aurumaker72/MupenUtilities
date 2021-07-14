@@ -1,6 +1,5 @@
 using ICSharpCode.SharpZipLib.GZip;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -72,9 +71,10 @@ public static class ExtensionMethods
         }
     }
 
-    public unsafe static void SetByte(int* val, byte b, int pos) {
-        *val &= ~((int)0xff << (8 * pos)); 
-        *val |= ((int)b << (8 * pos)); 
+    public unsafe static void SetByte(int* val, byte b, int pos)
+    {
+        *val &= ~((int)0xff << (8 * pos));
+        *val |= ((int)b << (8 * pos));
     }
 
     public static bool ValidStringInt(string str, int min, int max)
@@ -293,7 +293,7 @@ public static class ExtensionMethods
     }
     public static int SetBitAlt(int value, int bitpos, bool flag)
     {
-        if(!flag) return (value & ~bitpos);
+        if (!flag) return (value & ~bitpos);
         else return (value | bitpos);
     }
     public static bool GetBit(int value, int bitpos)
@@ -346,7 +346,7 @@ public static class ExtensionMethods
     }
     public static int GetByte(int val, int bytepos)
     {
-        return (val >> (8*bytepos)) & 0xFF;
+        return (val >> (8 * bytepos)) & 0xFF;
     }
     public static void SetDoubleBuffered(System.Windows.Forms.Control c)
     {
@@ -436,7 +436,7 @@ public static class ExtensionMethods
             }
             return bmp;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
             return null;

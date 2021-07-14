@@ -198,21 +198,21 @@ namespace MupenUtils
 
             byte[] joy = BitConverter.GetBytes(value);
 
-            for (int i = 0; i < MainForm.inputStructNames.Length-2; i++)
+            for (int i = 0; i < MainForm.inputStructNames.Length - 2; i++)
             {
                 // loop through all buttons
                 Debug.WriteLine(value.ToString("X2"));
-                if(ExtensionMethods.GetBit(value,i))
+                if (ExtensionMethods.GetBit(value, i))
                 {
                     final += MainForm.inputStructNames[i] + " ";
                 }
             }
 
-            if((sbyte)joy[2] != 0)
-            final += "\nJoy X " + ((sbyte)joy[2]).ToString();
+            if ((sbyte)joy[2] != 0)
+                final += "\nJoy X " + ((sbyte)joy[2]).ToString();
 
-            if((sbyte)-joy[3] != 0)
-            final += "\nJoy Y " + ((sbyte)-joy[3]).ToString() + "\n";
+            if ((sbyte)-joy[3] != 0)
+                final += "\nJoy Y " + ((sbyte)-joy[3]).ToString() + "\n";
 
             return final;
 
@@ -232,9 +232,9 @@ namespace MupenUtils
 
                 // this is so slow and stupid lol
 
-                if(data[i] == 'c' &&
-                  data[i+1] == 'r' &&
-                  data[i+2] == 'c')
+                if (data[i] == 'c' &&
+                  data[i + 1] == 'r' &&
+                  data[i + 2] == 'c')
                 {
                     // found crc field
                     StringBuilder sb = new StringBuilder()
@@ -248,7 +248,7 @@ namespace MupenUtils
                         .Append(data[i + 11]);
 
                     //char[] chrs = sb.ToString().ToCharArray();
-                    
+
                     validCrcs.Add(uint.Parse(sb.ToString(), System.Globalization.NumberStyles.HexNumber));
                 }
             }
