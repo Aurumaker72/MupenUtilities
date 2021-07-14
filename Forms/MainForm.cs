@@ -129,7 +129,6 @@ namespace MupenUtils
         public static bool readOnly = true;
         public static bool rehookMupen = false;
         /*TAS Studio*/
-        public static bool TASStudioAllowed = true;
         public static int markedGoToFrame = 0;
         public static int markedSizeCell = 10;
         public static bool forceGoto = false;
@@ -392,10 +391,6 @@ namespace MupenUtils
 
             JOY_Keyboard = MupenUtilities.Properties.Settings.Default.JoystickKeyboard;
             tsmi_JoyKeyboard.Checked = JOY_Keyboard;
-
-            TASStudioAllowed = MupenUtilities.Properties.Settings.Default.TASStudio;
-            tsmi_TasStudioAllow.Checked = TASStudioAllowed;
-            gp_TASStudio.Visible = TASStudioAllowed;
 
             exceptionForm = new ExceptionForm();
             
@@ -1034,7 +1029,6 @@ namespace MupenUtils
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
             ResumeLayout(true);
 
-            if(TASStudioAllowed)
             PreloadTASStudio();
 
             CheckSuspiciousProperties();
@@ -1290,6 +1284,13 @@ namespace MupenUtils
 
         void PreloadTASStudio()
         {
+            /*
+             * TAS Studio
+             * ----------
+             * This is the heaviest method in the entire program and gets called after m64 load.
+             * It loads input data into the datagridview
+             * 
+             */
 
             // nuke all old data
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Clear()));
@@ -1315,11 +1316,11 @@ namespace MupenUtils
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = "Loading... Please wait"));
 
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
-            object[] buffer = new object[inputStructNames.Length];
+            string[] buffer = new string[inputStructNames.Length];
 
             ((ISupportInitialize)dgv_Main).BeginInit();
-            
-            
+
+
             for (int y = 0; y < inputLists[selectedController].Count-1/*???*/; y++)
             {
                 // for each frame
@@ -1353,7 +1354,7 @@ namespace MupenUtils
                 rows[rows.Count - 1].CreateCells(dgv_Main, buffer);
 
             }
-            
+
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
             ((ISupportInitialize)dgv_Main).EndInit();
@@ -1415,7 +1416,7 @@ namespace MupenUtils
         }
         void UpdateTASStudio(int frameTarget)
         {
-            if (liveTasStudio && TASStudioAllowed)
+            if (liveTasStudio)
             {
                 dgv_Main.ReadOnly = false;
                 // workaround because windows controls are fucked
@@ -1807,13 +1808,10 @@ namespace MupenUtils
             txt_Frame.Text = frame.ToString();
 
             int index = frame;
-            if (TASStudioAllowed)
+            if (index <= dgv_Main.Rows.Count)
             {
-                if (index <= dgv_Main.Rows.Count)
-                {
-                    dgv_Main.CurrentCell = dgv_Main.Rows[index].Cells[0];
-                    dgv_Main.Rows[index].Selected = true;
-                }
+                dgv_Main.CurrentCell = dgv_Main.Rows[index].Cells[0];
+                dgv_Main.Rows[index].Selected = true;
             }
 
             if (index < tr_MovieScrub.Maximum && index > tr_MovieScrub.Minimum) tr_MovieScrub.Value = frame;
@@ -1916,19 +1914,6 @@ namespace MupenUtils
             pb_JoystickPic.Invalidate();
         }
 
-        private void tsmi_TasStudioAllow_Click(object sender, EventArgs e)
-        {
-            gp_TASStudio.Visible = !gp_TASStudio.Visible;
-            tsmi_TasStudioAllow.Checked = gp_TASStudio.Visible;
-            TASStudioAllowed = tsmi_TasStudioAllow.Checked;
-            MupenUtilities.Properties.Settings.Default.TASStudio = TASStudioAllowed;
-            MupenUtilities.Properties.Settings.Default.Save();
-
-            // prevent user from messing with it
-            // for example,
-            // enabling this after a movie has loaded without tasstudio will cause a crash (tasstudio not loaded but it tries to get data)
-            tsmi_TasStudioAllow.Enabled = false;
-        }
 
         private void tsmi_SimpleMode_Click(object sender, EventArgs e)
         {
@@ -1949,11 +1934,9 @@ namespace MupenUtils
                 = gpRom.Visible
                 = !simpleMode;
 
-            tsmi_TasStudioAllow.Visible =
             tsmi_Input_Debug_DumpData.Visible =
             tsmi_Input_SetInput.Visible =
-            tsmi_Input_Sticky.Visible =
-            tsmi_TasStudioAllow.Checked = !simpleMode;
+            tsmi_Input_Sticky.Visible = !simpleMode;
 
 
             if (simpleMode) gp_Plugins.Location = gp_M64_misc.Location;

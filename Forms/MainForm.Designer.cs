@@ -124,7 +124,6 @@ namespace MupenUtils
             this.btn_FrameBack2 = new System.Windows.Forms.Button();
             this.btn_FrameBack = new System.Windows.Forms.Button();
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmi_TasStudioAllow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -132,15 +131,17 @@ namespace MupenUtils
             this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.inputStatisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Themes = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_CRCPopulate = new System.Windows.Forms.ToolStripMenuItem();
+            this.transparentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_JoyKeyboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_CRCPopulate = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,8 +151,6 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.transparentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -1299,7 +1298,6 @@ namespace MupenUtils
             // 
             this.ctx_Input_Debug.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_TasStudioAllow,
             this.tsmi_AAJoystick,
             this.tsmi_SimpleMode,
             this.toolStripSeparator2,
@@ -1315,16 +1313,7 @@ namespace MupenUtils
             this.tsmi_CRCPopulate,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 334);
-            // 
-            // tsmi_TasStudioAllow
-            // 
-            this.tsmi_TasStudioAllow.Checked = true;
-            this.tsmi_TasStudioAllow.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmi_TasStudioAllow.Name = "tsmi_TasStudioAllow";
-            this.tsmi_TasStudioAllow.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_TasStudioAllow.Text = "TAS Studio";
-            this.tsmi_TasStudioAllow.Click += new System.EventHandler(this.tsmi_TasStudioAllow_Click);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 336);
             // 
             // tsmi_AAJoystick
             // 
@@ -1373,30 +1362,6 @@ namespace MupenUtils
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(208, 6);
             // 
-            // tsmi_Agressive
-            // 
-            this.tsmi_Agressive.Checked = true;
-            this.tsmi_Agressive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmi_Agressive.Name = "tsmi_Agressive";
-            this.tsmi_Agressive.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_Agressive.Text = "Aggressive Override";
-            this.tsmi_Agressive.Click += new System.EventHandler(this.tsmi_Agressive_Click);
-            // 
-            // tsmi_Input_Debug_DumpData
-            // 
-            this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
-            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
-            this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
-            // 
-            // tsmi_Input_Sticky
-            // 
-            this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
-            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_Input_Sticky.Text = "Sticky";
-            this.tsmi_Input_Sticky.Visible = false;
-            this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
-            // 
             // tsmi_Themes
             // 
             this.tsmi_Themes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1411,23 +1376,58 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
+            // 
+            // transparentToolStripMenuItem
+            // 
+            this.transparentToolStripMenuItem.Name = "transparentToolStripMenuItem";
+            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.transparentToolStripMenuItem.Text = "Transparent";
+            this.transparentToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(208, 6);
+            // 
+            // tsmi_Agressive
+            // 
+            this.tsmi_Agressive.Checked = true;
+            this.tsmi_Agressive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmi_Agressive.Name = "tsmi_Agressive";
+            this.tsmi_Agressive.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_Agressive.Text = "Aggressive Override";
+            this.tsmi_Agressive.Click += new System.EventHandler(this.tsmi_Agressive_Click);
+            // 
+            // tsmi_JoyKeyboard
+            // 
+            this.tsmi_JoyKeyboard.Name = "tsmi_JoyKeyboard";
+            this.tsmi_JoyKeyboard.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_JoyKeyboard.Text = "Joystick Keyboard";
+            this.tsmi_JoyKeyboard.Click += new System.EventHandler(this.tsmi_JoyKeyboard_Click);
+            // 
+            // tsmi_Input_Debug_DumpData
+            // 
+            this.tsmi_Input_Debug_DumpData.Name = "tsmi_Input_Debug_DumpData";
+            this.tsmi_Input_Debug_DumpData.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_Input_Debug_DumpData.Text = "Dump Data";
+            this.tsmi_Input_Debug_DumpData.Click += new System.EventHandler(this.tsmi_Input_Debug_DumpData_Click);
             // 
             // tsmi_CRCPopulate
             // 
@@ -1436,12 +1436,13 @@ namespace MupenUtils
             this.tsmi_CRCPopulate.Text = "CRC Populate";
             this.tsmi_CRCPopulate.Click += new System.EventHandler(this.tsmi_CRCPopulate_Click);
             // 
-            // tsmi_JoyKeyboard
+            // tsmi_Input_Sticky
             // 
-            this.tsmi_JoyKeyboard.Name = "tsmi_JoyKeyboard";
-            this.tsmi_JoyKeyboard.Size = new System.Drawing.Size(211, 26);
-            this.tsmi_JoyKeyboard.Text = "Joystick Keyboard";
-            this.tsmi_JoyKeyboard.Click += new System.EventHandler(this.tsmi_JoyKeyboard_Click);
+            this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
+            this.tsmi_Input_Sticky.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_Input_Sticky.Text = "Sticky";
+            this.tsmi_Input_Sticky.Visible = false;
+            this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
             // ctx_TasStudio
             // 
@@ -1500,6 +1501,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
+            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1509,23 +1511,12 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
+            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(208, 6);
-            // 
-            // transparentToolStripMenuItem
-            // 
-            this.transparentToolStripMenuItem.Name = "transparentToolStripMenuItem";
-            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.transparentToolStripMenuItem.Text = "Transparent";
-            this.transparentToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // MainForm
             // 
@@ -1629,7 +1620,6 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem utilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudio_Big;
         private System.Windows.Forms.ToolStripMenuItem tsmi_AAJoystick;
-        private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudioAllow;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmi_SimpleMode;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Agressive;

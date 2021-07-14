@@ -106,17 +106,5 @@ namespace MupenUtilities.Properties {
                 this["JoystickKeyboard"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool TASStudio {
-            get {
-                return ((bool)(this["TASStudio"]));
-            }
-            set {
-                this["TASStudio"] = value;
-            }
-        }
     }
 }
