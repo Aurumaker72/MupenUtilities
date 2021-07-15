@@ -124,12 +124,14 @@ namespace MupenUtils
         bool forwardsPlayback = true;
         public static bool readOnly = true;
         public static bool rehookMupen = false;
+
         /*TAS Studio*/
         public static int markedGoToFrame = 0;
         public static int markedSizeCell = 10;
         public static bool forceGoto = false;
         public static bool forceResizeCell = false;
         public static bool tasStudioAutoScroll = true;
+        int[] copied;
         int cellSize = 10;
 
         bool simpleMode = false;
@@ -520,7 +522,16 @@ namespace MupenUtils
                    ctrl.ForeColor = tempcolor;
                }).Start();
         }
-
+        void ControlText(Control ctrl, string text)
+        {
+            string temptxt = ctrl.Text;
+            ctrl.Text = text;
+            new Thread(() =>
+            {
+                Thread.Sleep(1000);
+                ctrl.Text = temptxt;
+            }).Start();
+        }
         void RedControlBack(Control ctrl)
         {
             Color tempcolor = ctrl.BackColor;
@@ -1609,7 +1620,69 @@ namespace MupenUtils
                     tasStudioForm = new TASStudioMoreForm();
                 tasStudioForm.ShowDialog();
             }
+            if(e.KeyCode == Keys.C && e.Modifiers == Keys.Control)
+            {
+                // ctrl + c
+                // copy selection into buffer
 
+
+                
+
+                if (tasStudioAutoScroll)
+                {
+                    copied = new int[dgv_Main.SelectedRows.Count];
+                    for (int i = 0; i < dgv_Main.SelectedRows.Count; i++)
+                    {
+                        DataGridViewRow row = (DataGridViewRow)dgv_Main.SelectedRows[i];
+                        copied[i] = inputLists[selectedController][row.Index];
+                    }
+                }
+                else
+                {
+                    copied = new int[dgv_Main.SelectedCells.Count];
+                    for (int i = 0; i < dgv_Main.SelectedCells.Count; i++)
+                    {
+                        DataGridViewRow row = (DataGridViewRow)dgv_Main.Rows[dgv_Main.SelectedCells[i].RowIndex];
+                        copied[i] = inputLists[selectedController][row.Index];
+                    }
+                }
+                
+            }
+            if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
+            {
+                Debug.WriteLine("paste tasstudio {0}", copied.Length);
+
+                if (tasStudioAutoScroll)
+                {
+                    for (int i = dgv_Main.SelectedRows[0].Index; i < copied.Length; i++)
+                    {
+                        inputLists[selectedController][i] = copied[i];
+                        for (int j = 0; j < inputStructNames.Length-2; j++)
+                        {
+                            dgv_Main.Rows[i].Cells[j].Value = ExtensionMethods.GetBit(copied[i], j) ? inputStructNames[j].ToString() : "";
+                        }
+                        //UpdateTASStudio(dgv_Main.SelectedRows[i].Index);// very bad programming... expensive call
+                        Debug.WriteLine("pasting value {0} at {1}", copied[i], i);
+                    }
+                }
+                else
+                {
+                    for (int i = dgv_Main.SelectedCells[0].RowIndex; i < copied.Length; i++)
+                    {
+                        inputLists[selectedController][i] = copied[i];
+                        for (int j = 0; j < inputStructNames.Length - 2; j++)
+                        {
+                            dgv_Main.Rows[i].Cells[j].Value = ExtensionMethods.GetBit(copied[i], j) ? inputStructNames[j].ToString() : "";
+                        }
+                        //UpdateTASStudio(dgv_Main.SelectedCells[i].RowIndex);
+                        Debug.WriteLine("pasting value {0} at {1}", copied[i], i);
+                    }
+                }
+
+                
+
+                //ControlText(dgv_Main, String.Format("{0} - In-place paste {1} frames", "TAS Studio", copied.Length));
+            }
         }
 
         private void MainForm_Focus(object sender, EventArgs e)
