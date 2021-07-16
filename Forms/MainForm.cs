@@ -1620,64 +1620,46 @@ namespace MupenUtils
                     tasStudioForm = new TASStudioMoreForm();
                 tasStudioForm.ShowDialog();
             }
-            if(e.KeyCode == Keys.C && e.Modifiers == Keys.Control)
+
+            if (tasStudioAutoScroll)
+            {
+                MessageBox.Show("Please disable Move Mode for copy/paste functionality.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (e.KeyCode == Keys.C && e.Modifiers == Keys.Control)
             {
                 // ctrl + c
                 // copy selection into buffer
 
+                int selectedRows = 0;
 
-                
+                for (int i = 1; i < dgv_Main.SelectedCells.Count; i++)
+                    if (dgv_Main.SelectedCells[i].RowIndex != dgv_Main.SelectedCells[i - 1].RowIndex) selectedRows++;
 
-                if (tasStudioAutoScroll)
+                copied = new int[selectedRows];
+                for (int i = 0; i < selectedRows; i++)
                 {
-                    copied = new int[dgv_Main.SelectedRows.Count];
-                    for (int i = 0; i < dgv_Main.SelectedRows.Count; i++)
-                    {
-                        DataGridViewRow row = (DataGridViewRow)dgv_Main.SelectedRows[i];
-                        copied[i] = inputLists[selectedController][row.Index];
-                    }
+                    DataGridViewRow row = (DataGridViewRow)dgv_Main.Rows[dgv_Main.SelectedCells[i].RowIndex];
+                    copied[i] = inputLists[selectedController][row.Index];
                 }
-                else
-                {
-                    copied = new int[dgv_Main.SelectedCells.Count];
-                    for (int i = 0; i < dgv_Main.SelectedCells.Count; i++)
-                    {
-                        DataGridViewRow row = (DataGridViewRow)dgv_Main.Rows[dgv_Main.SelectedCells[i].RowIndex];
-                        copied[i] = inputLists[selectedController][row.Index];
-                    }
-                }
-                
+
+
             }
             if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
             {
                 Debug.WriteLine("paste tasstudio {0}", copied.Length);
 
-                if (tasStudioAutoScroll)
+                for (int i = dgv_Main.SelectedCells[0].RowIndex; i < copied.Length; i++)
                 {
-                    for (int i = dgv_Main.SelectedRows[0].Index; i < copied.Length; i++)
+                    inputLists[selectedController][i] = copied[i];
+                    for (int j = 0; j < inputStructNames.Length - 2; j++)
                     {
-                        inputLists[selectedController][i] = copied[i];
-                        for (int j = 0; j < inputStructNames.Length-2; j++)
-                        {
-                            dgv_Main.Rows[i].Cells[j].Value = ExtensionMethods.GetBit(copied[i], j) ? inputStructNames[j].ToString() : "";
-                        }
-                        //UpdateTASStudio(dgv_Main.SelectedRows[i].Index);// very bad programming... expensive call
-                        Debug.WriteLine("pasting value {0} at {1}", copied[i], i);
+                        dgv_Main.Rows[i].Cells[j].Value = ExtensionMethods.GetBit(copied[i], j) ? inputStructNames[j].ToString() : "";
                     }
+                    //UpdateTASStudio(dgv_Main.SelectedCells[i].RowIndex);
+                    Debug.WriteLine("pasting value {0} at {1}", copied[i], i);
                 }
-                else
-                {
-                    for (int i = dgv_Main.SelectedCells[0].RowIndex; i < copied.Length; i++)
-                    {
-                        inputLists[selectedController][i] = copied[i];
-                        for (int j = 0; j < inputStructNames.Length - 2; j++)
-                        {
-                            dgv_Main.Rows[i].Cells[j].Value = ExtensionMethods.GetBit(copied[i], j) ? inputStructNames[j].ToString() : "";
-                        }
-                        //UpdateTASStudio(dgv_Main.SelectedCells[i].RowIndex);
-                        Debug.WriteLine("pasting value {0} at {1}", copied[i], i);
-                    }
-                }
+                
 
                 
 

@@ -1313,7 +1313,7 @@ namespace MupenUtils
             this.tsmi_CRCPopulate,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 336);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 308);
             // 
             // tsmi_AAJoystick
             // 
@@ -1453,19 +1453,19 @@ namespace MupenUtils
             this.tsmi_LiveTasStudio,
             this.tsmi_Autoscroll});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(181, 108);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(211, 136);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // tsmi_TasStudio_Big
             // 
             this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
-            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(210, 26);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
@@ -1474,15 +1474,15 @@ namespace MupenUtils
             this.tsmi_LiveTasStudio.Checked = true;
             this.tsmi_LiveTasStudio.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_LiveTasStudio.Name = "tsmi_LiveTasStudio";
-            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(210, 26);
             this.tsmi_LiveTasStudio.Text = "Live TAS Studio";
             this.tsmi_LiveTasStudio.Click += new System.EventHandler(this.tsmi_LiveTasStudio_Click_1);
             // 
             // tsmi_Autoscroll
             // 
             this.tsmi_Autoscroll.Name = "tsmi_Autoscroll";
-            this.tsmi_Autoscroll.Size = new System.Drawing.Size(180, 26);
-            this.tsmi_Autoscroll.Text = "Autoscroll";
+            this.tsmi_Autoscroll.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Autoscroll.Text = "Move Mode";
             this.tsmi_Autoscroll.Click += new System.EventHandler(this.tsmi_Autoscroll_Click);
             // 
             // toolStripSeparator1
