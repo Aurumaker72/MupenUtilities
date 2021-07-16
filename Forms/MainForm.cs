@@ -52,6 +52,7 @@
 */
 
 
+using MupenUtilities.Forms;
 using MupenUtils.Forms;
 using MupenUtils.Networking;
 using System;
@@ -113,6 +114,7 @@ namespace MupenUtils
         STForm stForm;//= new STForm();
         static ExceptionForm exceptionForm;//= new ExceptionForm();
         InputStatsForm inputStatisticsForm; //= new InputStatsForm();
+        MovieDiagnosticForm movieDiagForm;
 
         List<Color> ctlColor = new List<Color>();
 
@@ -399,7 +401,13 @@ namespace MupenUtils
         #endregion
 
         #region UI
+        void MovieDiag()
+        {
+            if (movieDiagForm == null)
+                movieDiagForm = new MovieDiagnosticForm();
 
+            movieDiagForm.ShowDialog();
+        }
         void SetTASStudioBig()
         {
             gp_TASStudio.Dock = gp_TASStudio.Dock == DockStyle.Right ? DockStyle.Fill : DockStyle.Right;
@@ -1059,7 +1067,8 @@ namespace MupenUtils
             if (Controllers > 1)
             {
                 lbl_Ctrls.ForeColor = Color.Red;
-                MessageBox.Show("Your movie has more than one controller plugged in. This might cause bugs and crashes.", PROGRAM_NAME + " - Too many controllers");
+                // trigger movie diagnostic...
+                MovieDiag();
             }
 
             if (txt_RomCountry.Text.Contains("Unknown"))
@@ -1103,7 +1112,7 @@ namespace MupenUtils
             }
             if (Controllers != 1)
             {
-                MessageBox.Show("This m64 can not be saved because it enables too many controllers", PROGRAM_NAME);
+                MessageBox.Show("This movie can not be saved because it enables too many controllers", PROGRAM_NAME);
                 return;
             }
 
@@ -1115,7 +1124,6 @@ namespace MupenUtils
                     tmpPath = (string)res[1];
                 else
                 {
-                    MessageBox.Show("Cancelled saving M64. Try again.", PROGRAM_NAME);
                     return;
                 }
             }
@@ -2125,7 +2133,11 @@ namespace MupenUtils
         {
             tsmi_Agressive.Checked ^= true;
         }
-
+        
+        private void tsmi_MovieDiagnostic_Click(object sender, EventArgs e)
+        {
+            MovieDiag();
+        }
         private void cbox_Controllers_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbox_Controllers.SelectedIndex + 1 > Controllers)
@@ -2375,6 +2387,8 @@ namespace MupenUtils
         {
             this.ActiveControl = null;
         }
+
+       
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

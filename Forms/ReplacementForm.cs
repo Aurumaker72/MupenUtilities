@@ -164,7 +164,7 @@ namespace MupenUtils.Forms
                     lbl_Substatus.Text += "\nEnd frame value is larger than movie. ";
                 if (from == to)
                     lbl_Substatus.Text += "\nFrame values are equal. ";
-
+                    
                 return;
             }
 

@@ -192,6 +192,11 @@ namespace MupenUtils
             return new object[] { code, image };
         }
 
+        static string GetMovieStartupType(ushort startFlags)
+        {
+            return GetMovieStartupType((short)startFlags);
+        }
+
         public static string GetFriendlyValue(int value)
         {
             string final = "";

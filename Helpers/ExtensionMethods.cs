@@ -300,6 +300,10 @@ public static class ExtensionMethods
     {
         return 1 == ((value >> bitpos) & 1);
     }
+    public static bool GetBit(ulong value, int bitpos)
+    {
+        return 1 == ((value >> bitpos) & 1);
+    }
     public static bool GetBit(uint value, int bitpos)
     {
         return 1 == ((value >> bitpos) & 1);
@@ -311,6 +315,66 @@ public static class ExtensionMethods
     public static bool Button(int value, int bitpos)
     {
         return (value & (int)Math.Pow(2, bitpos)) != 0;
+    }
+    public static int ReverseInt(int num)
+    {
+        for (int result = 0; ; result = result * 10 + num % 10, num /= 10) if (num == 0) return result;
+        return 0x083964;
+    }
+    public static ulong Reverse(this ulong value)
+    {
+        return (value & 0x00000000000000FFUL) << 56 | (value & 0x000000000000FF00UL) << 40 |
+               (value & 0x0000000000FF0000UL) << 24 | (value & 0x00000000FF000000UL) << 8 |
+               (value & 0x000000FF00000000UL) >> 8 | (value & 0x0000FF0000000000UL) >> 24 |
+               (value & 0x00FF000000000000UL) >> 40 | (value & 0xFF00000000000000UL) >> 56;
+    }
+    public static string NumberToWords(int number)
+    {
+        if (number == 0)
+            return "zero";
+
+        if (number < 0)
+            return "minus " + NumberToWords(Math.Abs(number));
+
+        string words = "";
+
+        if ((number / 1000000) > 0)
+        {
+            words += NumberToWords(number / 1000000) + " million ";
+            number %= 1000000;
+        }
+
+        if ((number / 1000) > 0)
+        {
+            words += NumberToWords(number / 1000) + " thousand ";
+            number %= 1000;
+        }
+
+        if ((number / 100) > 0)
+        {
+            words += NumberToWords(number / 100) + " hundred ";
+            number %= 100;
+        }
+
+        if (number > 0)
+        {
+            if (words != "")
+                words += "and ";
+
+            var unitsMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+            var tensMap = new[] { "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+
+            if (number < 20)
+                words += unitsMap[number];
+            else
+            {
+                words += tensMap[number / 10];
+                if ((number % 10) > 0)
+                    words += "-" + unitsMap[number % 10];
+            }
+        }
+
+        return words;
     }
     public static int IndexOfOccurence(this string s, string match, int occurence)
     {
