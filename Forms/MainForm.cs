@@ -2376,8 +2376,6 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-
-
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
             this.ActiveControl = pb_JoystickPic;
