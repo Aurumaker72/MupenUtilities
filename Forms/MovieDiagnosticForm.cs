@@ -74,7 +74,6 @@ namespace MupenUtilities.Forms
         {
             lbl_info.Visible = false;
             lb_Checks.Items.Clear();
-            lb_Checks.MultiColumn = true;
 
             FileStream fs = new FileStream(MainForm.Path, FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
@@ -109,12 +108,12 @@ namespace MupenUtilities.Forms
             string[] checks = new string[6];
             int successfulChecks = 0, failedChecks = 0;
 
-            lb_Checks.Items.Add(checks[0] = GetCheck(movieData.magic == 0x4D36341A || movieData.magic == 439629389, "Malformed magic cookie"));
-            lb_Checks.Items.Add(checks[1] = GetCheck(movieData.version == 3, "Old version"));
-            lb_Checks.Items.Add(checks[2] = GetCheck(movieData.num_controllers > 1 || movieData.num_controllers < 4, "Illegal controllers amount"));
-            lb_Checks.Items.Add(checks[3] = GetCheck(!DataHelper.GetMovieStartupType((short)movieData.startFlags).Contains("Unknown"), "Invalid movie startup type"));
-            lb_Checks.Items.Add(checks[4] = GetCheck(fs.Length > 1024, "Movie is too small"));
-            lb_Checks.Items.Add(checks[5] = GetCheck(!ExtensionMethods.GetBit(movieData.controllerFlags, 1) && !ExtensionMethods.GetBit(movieData.controllerFlags, 2) && !ExtensionMethods.GetBit(movieData.controllerFlags, 3), "Unsupported controller activated"));
+            lb_Checks.Items.Add( (checks[0] = GetCheck(movieData.magic == 0x4D36341A || movieData.magic == 439629389, "Malformed magic cookie"                                                                                                                       )).ToString());
+            lb_Checks.Items.Add( (checks[1] = GetCheck(movieData.version == 3, "Old version"                                                                                                                                                                         )).ToString());
+            lb_Checks.Items.Add( (checks[2] = GetCheck(movieData.num_controllers > 1 || movieData.num_controllers < 4, "Illegal controllers amount"                                                                                                                  )).ToString());
+            lb_Checks.Items.Add( (checks[3] = GetCheck(!DataHelper.GetMovieStartupType((short)movieData.startFlags).Contains("Unknown"), "Invalid movie startup type"                                                                                                )).ToString());
+            lb_Checks.Items.Add( (checks[4] = GetCheck(fs.Length > 1024, "Movie is too small"                                                                                                                                                                        )).ToString());
+            lb_Checks.Items.Add( (checks[5] = GetCheck(!ExtensionMethods.GetBit(movieData.controllerFlags, 1) && !ExtensionMethods.GetBit(movieData.controllerFlags, 2) && !ExtensionMethods.GetBit(movieData.controllerFlags, 3), "Unsupported controller activated")).ToString());
 
             foreach(var a in checks)
             {
@@ -147,6 +146,12 @@ namespace MupenUtilities.Forms
         private void btn_Recalc_Click(object sender, EventArgs e)
         {
             DoChecks();
+        }
+
+        private void lb_Checks_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (lb_Checks.SelectedItems.Count > 0)
+                MessageBox.Show("Check Number " + lb_Checks.SelectedIndex.ToString() + " - " + lb_Checks.SelectedItems[0].ToString());
         }
     }
 }
