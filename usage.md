@@ -9,6 +9,9 @@
 The program will immediately start loading the movie file after selection. Wait for the loading process to finish and the dialog to expand.
 If a warning appears or any text turns red, your M64 might be corrupted. Use the M64 diagnostic tool to check if your movie is corrupted. 
 
+_Example Image_
+<img src="https://github.com/Aurumaker72/MupenUtilities/blob/main/mupenutilities-1.PNG" align="right" />
+
 ### How to edit a M64
 - With a M64 loaded, turn on Read-write mode by unchecking "Read-only"
 - You can edit buttons by either clicking on TAS Studio cells or the checkboxes.
@@ -23,6 +26,9 @@ On how to save your edited M64, visit [How to save a M64](###how-to-save-a-m64)
 - With a M64 loaded, click on the "More" button inside the "Input" group box.
 
 ### How to replace (hex) two M64s together
+
+<img src="https://github.com/Aurumaker72/MupenUtilities/blob/main/mupenutilities-2.PNG" align="left" />
+
 - At the top, click on the "Replacement" radiobutton and then on the button named "Replacement" next to it.
 - Select your Source and Target movies by clicking the respective "Browse" button. The output movie is optional; leave it empty for the output to be placed in the same folder with the program or select a path for it to be saved there.
 - Select the range of frames from which you want to replace (e.g from frame 4 to frame 9)
