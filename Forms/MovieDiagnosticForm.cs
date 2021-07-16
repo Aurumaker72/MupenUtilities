@@ -66,7 +66,7 @@ namespace MupenUtilities.Forms
 
         string GetCheck(bool condition, string failmessage)
         {
-            return condition ? ("Check passed") : (failmessage);
+            return condition ? ("PASS") : ("FAIL " + failmessage);
         }
 
 
@@ -118,7 +118,7 @@ namespace MupenUtilities.Forms
 
             foreach(var a in checks)
             {
-                if (a.Equals("Check passed")) successfulChecks++;
+                if (a.Equals("PASS")) successfulChecks++;
             }
             failedChecks = checks.Length - successfulChecks;
             if (failedChecks == 0)
