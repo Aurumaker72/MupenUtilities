@@ -7,10 +7,11 @@
 
 
 ## ⚙️ Feature-rich Utility application for Mupen64 ⚙️</b> 
+### [Usage Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/usage.md)
 
 
 ![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG)
-`M64 Editor 2021 Refurbished Epic Edition`
+
 
 ## M64
 The data of any M64 file is presented in a simple interface.
