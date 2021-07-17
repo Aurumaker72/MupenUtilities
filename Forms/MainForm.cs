@@ -359,7 +359,18 @@ namespace MupenUtils
             }
 
 
-
+            cmb_Country.Items.Add("Demo");
+            cmb_Country.Items.Add("Beta");
+            cmb_Country.Items.Add("USA/Japan");
+            cmb_Country.Items.Add("German");
+            cmb_Country.Items.Add("USA");
+            cmb_Country.Items.Add("France");
+            cmb_Country.Items.Add("Italy");
+            cmb_Country.Items.Add("Japan");
+            cmb_Country.Items.Add("Spain");
+            cmb_Country.Items.Add("Australia");
+            cmb_Country.Items.Add("Europe");
+            cmb_Country.Items.Add("Unknown");
 
             UpdateReadOnly();
 
@@ -969,7 +980,7 @@ namespace MupenUtils
             object[] countryData = DataHelper.GetCountryResource(MovieHeader.romCountry);
             Image countryImage = (Image)countryData[1];
 
-            txt_RomCountry.Invoke((MethodInvoker)(() => txt_RomCountry.Text = (string)countryData[0]));
+            cmb_Country.Invoke((MethodInvoker)(() => cmb_Country.SelectedIndex = (int)countryData[2]));
             pb_RomCountry.Invoke((MethodInvoker)(() => pb_RomCountry.Size = countryImage.Size));
             pb_RomCountry.Invoke((MethodInvoker)(() => pb_RomCountry.BackgroundImage = countryImage));
 
@@ -1008,7 +1019,7 @@ namespace MupenUtils
                 MovieDiag();
             }
 
-            if (txt_RomCountry.Text.Contains("Unknown"))
+            if (cmb_Country.SelectedIndex == 11)
                 lbl_RomCountry.ForeColor = Color.Red;
 
             if (MovieHeader.startFlags > 4 || MovieHeader.startFlags < 1)
@@ -1781,6 +1792,14 @@ namespace MupenUtils
             EnableM64View(!ExpandedMenu, false, false);
             btn_Override.Text = ExpandedMenu ? "Collapse" : "Expand";
         }
+        private void cmb_Country_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ushort ccode = DataHelper.GetCountryCodeFromComboIndex(cmb_Country.SelectedIndex);
+            object[] data = DataHelper.GetCountryResource(ccode);
+            pb_RomCountry.BackgroundImage = (Image)data[1];
+            cmb_Country.SelectedIndex = (int)data[2];
+            MovieHeader.romCountry = ccode;
+        }
         private void btn_FrameFront_Click(object sender, EventArgs e)
         {
             StepFrame(1);
@@ -1826,6 +1845,7 @@ namespace MupenUtils
         {
             StepFrameAuto();
         }
+
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Oem5) //  (\ or |)
@@ -2327,7 +2347,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-       
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

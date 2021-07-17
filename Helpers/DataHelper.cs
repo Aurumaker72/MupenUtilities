@@ -94,12 +94,66 @@ namespace MupenUtils
             }
             return type;
         }
+
+        // Country Code
+        public static ushort GetCountryCodeFromComboIndex(int comboIndex)
+        {
+            byte[] ccode = new byte[2];
+            byte code = 0;
+            ccode[1] = 0;
+
+            switch (comboIndex)
+            {
+                case 0:
+                    code = 0;
+                    break;
+                case 1:
+                    code = (byte)'7';
+                    break;
+                case 2:
+                    code = 0x41;
+                    break;
+                case 3:
+                    code = 0x44;
+                    break;
+                case 4:
+                    code = 0x45;
+                    break;
+                case 5:
+                    code = 0x46;
+                    break;
+                case 6:
+                    code = (byte)'I';
+                    break;
+                case 7:
+                    code = 0x4A;
+                    break;
+                case 8:
+                    code = (byte)'S';
+                    break;
+                case 9:
+                    code = 0x55;
+                    break;
+                case 10:
+                    code = 0x50;
+                    break;
+                case 11:
+                    code = 0x77;
+                    break;
+            }
+            
+            ccode[0] = code;
+            return BitConverter.ToUInt16(ccode, 0);
+        }
+
         // [0] String
         // [1] Image
+        // [2] Combobox Index
         public static object[] GetCountryResource(ushort ccode)
         {
             string code = "Error";
             Image image = MupenUtilities.Properties.Resources.unknown;
+            int index = 0;
 
             switch (ccode & 0xFF)
             {
@@ -107,10 +161,12 @@ namespace MupenUtils
                 case 0:
                     code = "Demo";
                     image = MupenUtilities.Properties.Resources.demo;
+                    index = 0;
                     break;
                 case '7':
                     code = "Beta";
                     image = MupenUtilities.Properties.Resources.n64beta;
+                    index = 1;
                     break;
 
                 case 0x41:
@@ -126,6 +182,7 @@ namespace MupenUtils
                         g.DrawImageUnscaled(second, 0, 0);
 
                         image = result;
+                        index = 2;
                     }
                     break;
 
@@ -133,6 +190,7 @@ namespace MupenUtils
                 case 0x44:
                     code = "German";
                     image = MupenUtilities.Properties.Resources.germany;
+                    index = 3;
                     break;
 
                 /* USA */
@@ -140,29 +198,34 @@ namespace MupenUtils
                 case 0x60:
                     code = "USA";
                     image = MupenUtilities.Properties.Resources.usa;
+                    index = 4;
                     break;
 
                 /* France */
                 case 0x46:
                     code = "France";
                     image = MupenUtilities.Properties.Resources.france;
+                    index = 5;
                     break;
 
                 /* Italy */
                 case 'I':
                     code = "Italy";
                     image = MupenUtilities.Properties.Resources.italy;
+                    index = 6;
                     break;
 
                 /* Japan */
                 case 0x4A:
                     code = "Japan";
                     image = MupenUtilities.Properties.Resources.japan;
+                    index = 7;
                     break;
 
                 case 'S':	/* Spain */
                     code = "Spain";
                     image = MupenUtilities.Properties.Resources.spain;
+                    index = 8;
                     break;
 
                 /* Australia */
@@ -170,6 +233,7 @@ namespace MupenUtils
                 case 0x59:
                     code = "Australia";
                     image = MupenUtilities.Properties.Resources.austral;
+                    index = 9;
                     break;
 
                 case 0x50:
@@ -180,16 +244,18 @@ namespace MupenUtils
                 case 0x70:
                     code = "Europe";
                     image = MupenUtilities.Properties.Resources.europe;
+                    index = 10;
                     break;
 
                 default:
                     code = "Unknown (" + ccode + ")";
+                    index = 11;
                     break;
             }
             Bitmap bmp = new Bitmap(image);
             bmp.MakeTransparent(Color.White);
             image = bmp;
-            return new object[] { code, image };
+            return new object[] { code, image, index };
         }
 
         

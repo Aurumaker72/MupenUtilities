@@ -61,7 +61,6 @@ namespace MupenUtils
             this.pb_RomCountry = new System.Windows.Forms.PictureBox();
             this.txt_Rom = new System.Windows.Forms.TextBox();
             this.txt_Crc = new System.Windows.Forms.TextBox();
-            this.txt_RomCountry = new System.Windows.Forms.TextBox();
             this.lbl_ROMNAME = new System.Windows.Forms.Label();
             this.lbl_ROMCRC = new System.Windows.Forms.Label();
             this.lbl_RomCountry = new System.Windows.Forms.Label();
@@ -153,6 +152,7 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.cmb_Country = new System.Windows.Forms.ComboBox();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -486,10 +486,10 @@ namespace MupenUtils
             // 
             // gpRom
             // 
+            this.gpRom.Controls.Add(this.cmb_Country);
             this.gpRom.Controls.Add(this.pb_RomCountry);
             this.gpRom.Controls.Add(this.txt_Rom);
             this.gpRom.Controls.Add(this.txt_Crc);
-            this.gpRom.Controls.Add(this.txt_RomCountry);
             this.gpRom.Controls.Add(this.lbl_ROMNAME);
             this.gpRom.Controls.Add(this.lbl_ROMCRC);
             this.gpRom.Controls.Add(this.lbl_RomCountry);
@@ -505,7 +505,7 @@ namespace MupenUtils
             // pb_RomCountry
             // 
             this.pb_RomCountry.BackColor = System.Drawing.Color.Transparent;
-            this.pb_RomCountry.Location = new System.Drawing.Point(101, 83);
+            this.pb_RomCountry.Location = new System.Drawing.Point(100, 84);
             this.pb_RomCountry.Name = "pb_RomCountry";
             this.pb_RomCountry.Size = new System.Drawing.Size(24, 24);
             this.pb_RomCountry.TabIndex = 1;
@@ -529,16 +529,6 @@ namespace MupenUtils
             this.txt_Crc.Size = new System.Drawing.Size(132, 22);
             this.txt_Crc.TabIndex = 0;
             this.txt_Crc.TabStop = false;
-            // 
-            // txt_RomCountry
-            // 
-            this.txt_RomCountry.Location = new System.Drawing.Point(128, 79);
-            this.txt_RomCountry.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_RomCountry.Name = "txt_RomCountry";
-            this.txt_RomCountry.ReadOnly = true;
-            this.txt_RomCountry.Size = new System.Drawing.Size(132, 22);
-            this.txt_RomCountry.TabIndex = 0;
-            this.txt_RomCountry.TabStop = false;
             // 
             // lbl_ROMNAME
             // 
@@ -1316,7 +1306,7 @@ namespace MupenUtils
             this.tsmi_CRCPopulate,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 362);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 334);
             // 
             // tsmi_AAJoystick
             // 
@@ -1518,7 +1508,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1528,12 +1517,22 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
+            // 
+            // cmb_Country
+            // 
+            this.cmb_Country.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_Country.FormattingEnabled = true;
+            this.cmb_Country.Location = new System.Drawing.Point(128, 81);
+            this.cmb_Country.Name = "cmb_Country";
+            this.cmb_Country.Size = new System.Drawing.Size(132, 24);
+            this.cmb_Country.TabIndex = 0;
+            this.cmb_Country.TabStop = false;
+            this.cmb_Country.SelectedIndexChanged += new System.EventHandler(this.cmb_Country_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -1660,7 +1659,6 @@ namespace MupenUtils
         private System.Windows.Forms.GroupBox gpRom;
         private System.Windows.Forms.TextBox txt_Rom;
         private System.Windows.Forms.TextBox txt_Crc;
-        private System.Windows.Forms.TextBox txt_RomCountry;
         private System.Windows.Forms.Label lbl_ROMNAME;
         private System.Windows.Forms.Label lbl_ROMCRC;
         private System.Windows.Forms.Label lbl_RomCountry;
@@ -1707,6 +1705,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem transparentToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem tsmi_MovieDiagnostic;
+        private System.Windows.Forms.ComboBox cmb_Country;
     }
 }
 
