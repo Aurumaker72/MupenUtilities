@@ -155,6 +155,7 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
             this.lbl_VI_s = new System.Windows.Forms.Label();
             this.txt_VI_s = new System.Windows.Forms.TextBox();
+            this.btn_Reload = new System.Windows.Forms.Button();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -316,7 +317,7 @@ namespace MupenUtils
             // 
             // btn_SaveAs
             // 
-            this.btn_SaveAs.Location = new System.Drawing.Point(139, 448);
+            this.btn_SaveAs.Location = new System.Drawing.Point(117, 448);
             this.btn_SaveAs.Margin = new System.Windows.Forms.Padding(4);
             this.btn_SaveAs.Name = "btn_SaveAs";
             this.btn_SaveAs.Size = new System.Drawing.Size(98, 28);
@@ -328,7 +329,7 @@ namespace MupenUtils
             // 
             // btn_Save
             // 
-            this.btn_Save.Location = new System.Drawing.Point(25, 448);
+            this.btn_Save.Location = new System.Drawing.Point(11, 448);
             this.btn_Save.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(98, 28);
@@ -342,6 +343,7 @@ namespace MupenUtils
             // 
             this.gp_M64.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.gp_M64.Controls.Add(this.gp_header);
+            this.gp_M64.Controls.Add(this.btn_Reload);
             this.gp_M64.Controls.Add(this.btn_SaveAs);
             this.gp_M64.Controls.Add(this.gp_input);
             this.gp_M64.Controls.Add(this.btn_Save);
@@ -1559,6 +1561,18 @@ namespace MupenUtils
             this.txt_VI_s.TabStop = false;
             this.txt_VI_s.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
             // 
+            // btn_Reload
+            // 
+            this.btn_Reload.Location = new System.Drawing.Point(223, 448);
+            this.btn_Reload.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Reload.Name = "btn_Reload";
+            this.btn_Reload.Size = new System.Drawing.Size(98, 28);
+            this.btn_Reload.TabIndex = 0;
+            this.btn_Reload.TabStop = false;
+            this.btn_Reload.Text = "Reload";
+            this.btn_Reload.UseVisualStyleBackColor = true;
+            this.btn_Reload.Click += new System.EventHandler(this.btn_Reload_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1733,6 +1747,7 @@ namespace MupenUtils
         private System.Windows.Forms.ComboBox cmb_Country;
         private System.Windows.Forms.TextBox txt_VI_s;
         private System.Windows.Forms.Label lbl_VI_s;
+        private System.Windows.Forms.Button btn_Reload;
     }
 }
 

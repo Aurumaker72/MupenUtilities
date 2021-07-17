@@ -2030,7 +2030,12 @@ namespace MupenUtils
 
         private void btn_Savem64_MouseClick(object sender, MouseEventArgs e) => WriteM64(false);
         private void btn_SaveAs_Click(object sender, EventArgs e) => WriteM64(true);
-
+        private void btn_Reload_Click(object sender, EventArgs e)
+        {
+            if (!FileLoaded) return;
+            m64load = new Thread(() => ReadM64());
+            m64load.Start();
+        }
         private void btn_Tips_Click(object sender, EventArgs e) => ShowTipsForm();
 
         void UpdateReadOnly()
