@@ -110,7 +110,7 @@ namespace MupenUtilities.Forms
 
             br.BaseStream.Seek(1024, SeekOrigin.Begin);
             ulong findx = 0;
-            while (findx < movieData.length_samples)
+            while (findx < movieData.length_vis)
             {
                 if (br.BaseStream.Position + 4 > fs.Length)
                 {
@@ -122,7 +122,7 @@ namespace MupenUtilities.Forms
                 
                 findx++;
             }
-            for (ulong i = 0; i < movieData.length_samples; i++)
+            for (ulong i = 0; i < movieData.length_vis; i++)
             {
                 try
                 {
@@ -141,7 +141,7 @@ namespace MupenUtilities.Forms
 
             lb_Checks.Items.Add( (checks[0] = GetCheck(movieData.magic == 0x4D36341A || movieData.magic == 439629389, "Malformed magic cookie"                                                                                                                       )).ToString());
             lb_Checks.Items.Add( (checks[1] = GetCheck(movieData.version == 3, "Old version"                                                                                                                                                                         )).ToString());
-            lb_Checks.Items.Add( (checks[2] = GetCheck(movieData.num_controllers > 1 || movieData.num_controllers < 4, "Illegal controllers amount"                                                                                                                  )).ToString());
+            lb_Checks.Items.Add( (checks[2] = GetCheck(movieData.num_controllers > 1 && movieData.num_controllers < 4, "Illegal controllers amount"                                                                                                                  )).ToString());
             lb_Checks.Items.Add( (checks[3] = GetCheck(!DataHelper.GetMovieStartupType(movieData.startFlags).Contains("Unknown"), "Invalid movie startup type"                                                                                                )).ToString());
             lb_Checks.Items.Add( (checks[4] = GetCheck(fs.Length > 1024, "Movie is too small"                                                                                                                                                                        )).ToString());
             lb_Checks.Items.Add( (checks[5] = GetCheck(!ExtensionMethods.GetBit(movieData.controllerFlags, 1) && !ExtensionMethods.GetBit(movieData.controllerFlags, 2) && !ExtensionMethods.GetBit(movieData.controllerFlags, 3), "Unsupported controller activated")).ToString());
@@ -166,6 +166,7 @@ namespace MupenUtilities.Forms
                 a[0] = char.ToUpper(a[0]);
 
                 if (failedChecks == 1) lbl_Result.Text = "One check failed";
+                else if (failedChecks == checks.Length) lbl_Result.Text = "All checks failed";
                 else lbl_Result.Text = new string(a) + " checks failed";
             }
 
