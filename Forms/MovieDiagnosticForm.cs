@@ -15,6 +15,7 @@ namespace MupenUtilities.Forms
 {
     public partial class MovieDiagnosticForm : Form
     {
+        public static string warnText = "An automatic movie diagnostic was performed\r\nbecause your movie contains suspicious properties";
 
         public struct MovieStruct
         {
@@ -46,8 +47,10 @@ namespace MupenUtilities.Forms
             public string rspPluginName;
             public string authorInfos; // utf8-encoded
             public string description; // utf8-encoded
-        }
 
+            
+        }
+        public List<int> inputs = new List<int>();
         public MovieDiagnosticForm()
         {
             InitializeComponent();
@@ -61,6 +64,7 @@ namespace MupenUtilities.Forms
             //    ctl.Enabled = MainForm.FileLoaded;
 
             //if (MainForm.FileLoaded) DoChecks();
+            lbl_info.Text = warnText;
             DoChecks();
         }
 
@@ -101,11 +105,37 @@ namespace MupenUtilities.Forms
             br.ReadBytes(222);
             br.ReadBytes(256);
 
+            bool failedInputTest = false;
 
-            
+            br.BaseStream.Seek(1024, SeekOrigin.Begin);
+            ulong findx = 0;
+            while (findx < movieData.length_samples)
+            {
+                if (br.BaseStream.Position + 4 > fs.Length)
+                {
+                    findx++;
+                    continue;
+                }
+
+                inputs.Add(br.ReadInt32());
+                
+                findx++;
+            }
+            for (ulong i = 0; i < movieData.length_samples; i++)
+            {
+                try
+                {
+                    if (inputs[(int)i] != 0) ;
+                }
+                catch(ArgumentOutOfRangeException e)
+                {
+                    failedInputTest = true;
+                }
+            }
+
 
             //////////////////////////////////////////////
-            string[] checks = new string[6];
+            string[] checks = new string[7];
             int successfulChecks = 0, failedChecks = 0;
 
             lb_Checks.Items.Add( (checks[0] = GetCheck(movieData.magic == 0x4D36341A || movieData.magic == 439629389, "Malformed magic cookie"                                                                                                                       )).ToString());
@@ -114,8 +144,9 @@ namespace MupenUtilities.Forms
             lb_Checks.Items.Add( (checks[3] = GetCheck(!DataHelper.GetMovieStartupType((short)movieData.startFlags).Contains("Unknown"), "Invalid movie startup type"                                                                                                )).ToString());
             lb_Checks.Items.Add( (checks[4] = GetCheck(fs.Length > 1024, "Movie is too small"                                                                                                                                                                        )).ToString());
             lb_Checks.Items.Add( (checks[5] = GetCheck(!ExtensionMethods.GetBit(movieData.controllerFlags, 1) && !ExtensionMethods.GetBit(movieData.controllerFlags, 2) && !ExtensionMethods.GetBit(movieData.controllerFlags, 3), "Unsupported controller activated")).ToString());
-
-            foreach(var a in checks)
+            lb_Checks.Items.Add((checks[6] = GetCheck(!failedInputTest, "Frame-Input value Mismatch")).ToString());
+            
+            foreach (var a in checks)
             {
                 if (a.Equals("PASS")) successfulChecks++;
             }
@@ -145,13 +176,18 @@ namespace MupenUtilities.Forms
 
         private void btn_Recalc_Click(object sender, EventArgs e)
         {
-            DoChecks();
+            Application.Exit();
         }
 
         private void lb_Checks_MouseClick(object sender, MouseEventArgs e)
         {
             if (lb_Checks.SelectedItems.Count > 0)
                 MessageBox.Show("Check Number " + lb_Checks.SelectedIndex.ToString() + " - " + lb_Checks.SelectedItems[0].ToString());
+        }
+
+        private void btn_Continue_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

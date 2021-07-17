@@ -1068,6 +1068,7 @@ namespace MupenUtils
             {
                 lbl_Ctrls.ForeColor = Color.Red;
                 // trigger movie diagnostic...
+                MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause your movie failed the runtime property check";
                 MovieDiag();
             }
 
@@ -1419,7 +1420,9 @@ namespace MupenUtils
             {
                 EnableM64View(false, false, false);
                 stepFrameTimer.Enabled = false;
-                MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.\nThis can be caused by a corrupted m64 or loading movies in quick succession", PROGRAM_NAME + " - Fatal desync");
+                //MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.\nThis can be caused by a corrupted m64 or loading movies in quick succession", PROGRAM_NAME + " - Fatal desync");
+                MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause of a desync in the frame controller";
+                MovieDiag();
                 return;
             }
 

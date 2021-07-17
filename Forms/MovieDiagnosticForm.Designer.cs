@@ -33,8 +33,9 @@ namespace MupenUtilities.Forms
             this.pb_DeadMupen = new System.Windows.Forms.PictureBox();
             this.lbl_info = new System.Windows.Forms.Label();
             this.lbl_Result = new System.Windows.Forms.Label();
-            this.btn_Recalc = new System.Windows.Forms.Button();
+            this.btn_Quit = new System.Windows.Forms.Button();
             this.lb_Checks = new System.Windows.Forms.ListBox();
+            this.btn_Continue = new System.Windows.Forms.Button();
             this.gp_Moviediag.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_DeadMupen)).BeginInit();
             this.SuspendLayout();
@@ -44,7 +45,8 @@ namespace MupenUtilities.Forms
             this.gp_Moviediag.Controls.Add(this.pb_DeadMupen);
             this.gp_Moviediag.Controls.Add(this.lbl_info);
             this.gp_Moviediag.Controls.Add(this.lbl_Result);
-            this.gp_Moviediag.Controls.Add(this.btn_Recalc);
+            this.gp_Moviediag.Controls.Add(this.btn_Continue);
+            this.gp_Moviediag.Controls.Add(this.btn_Quit);
             this.gp_Moviediag.Controls.Add(this.lb_Checks);
             this.gp_Moviediag.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_Moviediag.Location = new System.Drawing.Point(0, 0);
@@ -67,7 +69,7 @@ namespace MupenUtilities.Forms
             // lbl_info
             // 
             this.lbl_info.AutoSize = true;
-            this.lbl_info.Location = new System.Drawing.Point(122, 184);
+            this.lbl_info.Location = new System.Drawing.Point(192, 184);
             this.lbl_info.Name = "lbl_info";
             this.lbl_info.Size = new System.Drawing.Size(313, 32);
             this.lbl_info.TabIndex = 0;
@@ -85,16 +87,16 @@ namespace MupenUtilities.Forms
             this.lbl_Result.TabIndex = 0;
             this.lbl_Result.Text = "?";
             // 
-            // btn_Recalc
+            // btn_Quit
             // 
-            this.btn_Recalc.Location = new System.Drawing.Point(12, 184);
-            this.btn_Recalc.Name = "btn_Recalc";
-            this.btn_Recalc.Size = new System.Drawing.Size(104, 34);
-            this.btn_Recalc.TabIndex = 0;
-            this.btn_Recalc.TabStop = false;
-            this.btn_Recalc.Text = "Recalculate";
-            this.btn_Recalc.UseVisualStyleBackColor = true;
-            this.btn_Recalc.Click += new System.EventHandler(this.btn_Recalc_Click);
+            this.btn_Quit.Location = new System.Drawing.Point(12, 184);
+            this.btn_Quit.Name = "btn_Quit";
+            this.btn_Quit.Size = new System.Drawing.Size(58, 34);
+            this.btn_Quit.TabIndex = 0;
+            this.btn_Quit.TabStop = false;
+            this.btn_Quit.Text = "Quit";
+            this.btn_Quit.UseVisualStyleBackColor = true;
+            this.btn_Quit.Click += new System.EventHandler(this.btn_Recalc_Click);
             // 
             // lb_Checks
             // 
@@ -107,16 +109,31 @@ namespace MupenUtilities.Forms
             this.lb_Checks.TabStop = false;
             this.lb_Checks.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lb_Checks_MouseClick);
             // 
+            // btn_Continue
+            // 
+            this.btn_Continue.Location = new System.Drawing.Point(76, 184);
+            this.btn_Continue.Name = "btn_Continue";
+            this.btn_Continue.Size = new System.Drawing.Size(110, 34);
+            this.btn_Continue.TabIndex = 0;
+            this.btn_Continue.TabStop = false;
+            this.btn_Continue.Text = "Continue";
+            this.btn_Continue.UseVisualStyleBackColor = true;
+            this.btn_Continue.Click += new System.EventHandler(this.btn_Continue_Click);
+            // 
             // MovieDiagnosticForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(517, 227);
+            this.ControlBox = false;
             this.Controls.Add(this.gp_Moviediag);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MovieDiagnosticForm";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MovieDiagnosticForm";
             this.Shown += new System.EventHandler(this.MovieDiagnosticForm_Shown);
@@ -131,9 +148,10 @@ namespace MupenUtilities.Forms
 
         private System.Windows.Forms.GroupBox gp_Moviediag;
         private System.Windows.Forms.ListBox lb_Checks;
-        private System.Windows.Forms.Button btn_Recalc;
+        private System.Windows.Forms.Button btn_Quit;
         private System.Windows.Forms.Label lbl_Result;
         private System.Windows.Forms.Label lbl_info;
         private System.Windows.Forms.PictureBox pb_DeadMupen;
+        private System.Windows.Forms.Button btn_Continue;
     }
 }
