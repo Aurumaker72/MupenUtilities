@@ -156,6 +156,7 @@ namespace MupenUtils
             this.lbl_VI_s = new System.Windows.Forms.Label();
             this.txt_VI_s = new System.Windows.Forms.TextBox();
             this.btn_Reload = new System.Windows.Forms.Button();
+            this.btn_VIMAX = new System.Windows.Forms.Button();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -372,6 +373,7 @@ namespace MupenUtils
             // 
             // gp_User
             // 
+            this.gp_User.Controls.Add(this.btn_VIMAX);
             this.gp_User.Controls.Add(this.txt_PathName);
             this.gp_User.Controls.Add(this.lbl_Name);
             this.gp_User.Controls.Add(this.txt_Desc);
@@ -436,7 +438,7 @@ namespace MupenUtils
             this.txt_VIs.Location = new System.Drawing.Point(128, 148);
             this.txt_VIs.Margin = new System.Windows.Forms.Padding(4);
             this.txt_VIs.Name = "txt_VIs";
-            this.txt_VIs.Size = new System.Drawing.Size(132, 22);
+            this.txt_VIs.Size = new System.Drawing.Size(77, 22);
             this.txt_VIs.TabIndex = 0;
             this.txt_VIs.TabStop = false;
             this.txt_VIs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
@@ -1573,6 +1575,17 @@ namespace MupenUtils
             this.btn_Reload.UseVisualStyleBackColor = true;
             this.btn_Reload.Click += new System.EventHandler(this.btn_Reload_Click);
             // 
+            // btn_VIMAX
+            // 
+            this.btn_VIMAX.Location = new System.Drawing.Point(212, 147);
+            this.btn_VIMAX.Name = "btn_VIMAX";
+            this.btn_VIMAX.Size = new System.Drawing.Size(48, 23);
+            this.btn_VIMAX.TabIndex = 0;
+            this.btn_VIMAX.TabStop = false;
+            this.btn_VIMAX.Text = "Max";
+            this.btn_VIMAX.UseVisualStyleBackColor = true;
+            this.btn_VIMAX.Click += new System.EventHandler(this.btn_VIMAX_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1748,6 +1761,7 @@ namespace MupenUtils
         private System.Windows.Forms.TextBox txt_VI_s;
         private System.Windows.Forms.Label lbl_VI_s;
         private System.Windows.Forms.Button btn_Reload;
+        private System.Windows.Forms.Button btn_VIMAX;
     }
 }
 

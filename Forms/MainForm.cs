@@ -2057,6 +2057,7 @@ namespace MupenUtils
             txt_Rom.ReadOnly = readOnly;
             txt_CTRLS.ReadOnly = readOnly;
             cbox_startType.Enabled = !readOnly;
+            btn_VIMAX.Enabled = !readOnly;
             foreach (Control ctl in gp_Plugins.Controls)
             {
                 if (ctl is TextBox)
@@ -2078,6 +2079,7 @@ namespace MupenUtils
                 }
             }
             dgv_Main.ReadOnly = readOnly;
+           
         }
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
@@ -2354,7 +2356,10 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        
+        private void btn_VIMAX_Click(object sender, EventArgs e)
+        {
+            MovieHeader.length_vis = UInt32.MaxValue;
+        }
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
