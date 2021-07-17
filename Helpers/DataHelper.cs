@@ -74,7 +74,7 @@ namespace MupenUtils
             }
             return type;
         }
-        public static string GetMovieStartupType(short stype)
+        public static string GetMovieStartupType(ushort stype)
         {
             string type;
             switch (stype)
@@ -192,10 +192,7 @@ namespace MupenUtils
             return new object[] { code, image };
         }
 
-        static string GetMovieStartupType(ushort startFlags)
-        {
-            return GetMovieStartupType((short)startFlags);
-        }
+        
 
         public static string GetFriendlyValue(int value)
         {

@@ -53,6 +53,7 @@
 
 
 using MupenUtilities.Forms;
+using MupenUtilities.Helpers;
 using MupenUtils.Forms;
 using MupenUtils.Networking;
 using System;
@@ -141,32 +142,11 @@ namespace MupenUtils
         public static bool loadedInvalidFile = false;
         public static bool m64loadBusy = false;
 
-        // M64 Data as Strings
-        string Magic;
-        Int32 magic_Raw;
-        string Version;
-        Int32 UID;
-        UInt32 VIs; // vis
-        byte VI_s; // vi/s
-        public static UInt32 frames;
-        public static UInt32 RRs;
-        byte Controllers;
-        public static bool[] ControllersEnabled = { false, false, false, false };
-        Int16 StartType;
-        public static string RomName;
-        UInt32 Crc32;
-        public static UInt16 RomCountry;
-        string VideoPlugin;
-        string InputPlugin;
-        string AudioPlugin;
-        string RSPPlugin;
-        UInt32 Samples;
-        public static UInt32 ControllerFlags;
+        // M64 Data 
+        public static M64.MovieStruct MovieHeader;
+        public static bool[] ControllersEnabled = new bool[4];
 
-        string M64Name; // Name = m64 file name (path)
-        string Author;
-        string Description;
-
+        ulong frames = 0;
         public CheckBox[] controllerButtonsChk;
 
         public static List<int> inputListCtl1 = new List<int>();
@@ -886,15 +866,7 @@ namespace MupenUtils
 
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
-            FileStream fs;
-            try { fs = File.Open(Path, FileMode.Open); }
-            catch
-            {
-                ErrorProcessing("File inaccessible.");
-                m64loadBusy = false;
-                return;
-            }
-            BinaryReader br = new BinaryReader(fs);
+            
 
             // Reset
             inputListCtl1.Clear();
@@ -909,72 +881,36 @@ namespace MupenUtils
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = MINIMUM_FRAME));
             gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
             Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
-            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Enabled = readOnly));
+            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Checked = readOnly));
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Readonly"));
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
             ResetLblColors();
 
             // Read header
-            magic_Raw = br.ReadInt32();
-            Magic = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(magic_Raw));
-            Version = ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            UID = br.ReadInt32();
-            VIs = br.ReadUInt32();//ByteArrayToString(BitConverter.GetBytes(br.ReadInt32()));
-            RRs = br.ReadUInt32();
-            VI_s = br.ReadByte(); // frames (vertical interrupts) per second ---- SEEK 1 BYTE FORWARD (DUMMY)
-            Controllers = br.ReadByte();
-            br.ReadBytes(2); // reserved --- Seek 2 bytes forward (dummy)
-            Samples = br.ReadUInt32(); // input samples --- Seek 4 bytes forward (dummy)
-            StartType = br.ReadInt16();//DataHelper.GetMovieStartupType(br.ReadInt16());
-
-            br.ReadInt16(); // reserved -- seek 2 bytes forward (dummy)
-            ControllerFlags = br.ReadUInt32(); // controller flags
-            br.ReadBytes(160); // reserved -- seek 160 bytes forward (dummy)
-            RomName = ascii.GetString(br.ReadBytes(32)); // rom name
-            Crc32 = br.ReadUInt32();// crc32
-
-            RomCountry = br.ReadUInt16();//.GetCountryCode(br.ReadInt16()); // Country code
-            br.ReadBytes(56); // reserved -- seek 56 bytes forward (dummy)
-
-
-            /*
-            64-byte ASCII string: name of video plugin used when recording, directly from plugin
-            64-byte ASCII string: name of sound plugin used when recording, directly from plugin
-            64-byte ASCII string: name of input plugin used when recording, directly from plugin
-            64-byte ASCII string: name of rsp plugin used when recording, directly from plugin
-            222-byte UTF-8 string: author name info
-            256-byte UTF-8 string: author movie description info
-            */
-            VideoPlugin = ascii.GetString(br.ReadBytes(64));
-            AudioPlugin = ascii.GetString(br.ReadBytes(64));
-            InputPlugin = ascii.GetString(br.ReadBytes(64));
-            RSPPlugin = ascii.GetString(br.ReadBytes(64));
-
-            M64Name = System.IO.Path.GetFileNameWithoutExtension(Path);
-            Author = utf8.GetString(br.ReadBytes(222));
-            Description = utf8.GetString(br.ReadBytes(256));
-
+            MovieHeader = M64.ParseMovie(Path);
+            FileStream fs;
+            try { fs = File.Open(Path, FileMode.Open); }
+            catch
+            {
+                ErrorProcessing("File inaccessible.");
+                m64loadBusy = false;
+                return;
+            }
+            
+            BinaryReader br = new BinaryReader(fs);
             for (int i = 0; i < 4; i++)
-                ControllersEnabled[i] = ExtensionMethods.GetBit(ControllerFlags, i);
+                ControllersEnabled[i] = ExtensionMethods.GetBit(MovieHeader.controllerFlags, i);
 
 
             // Load inputs
             // We need a buffer to check if end of file reached
 
-            // tasstudio docs about mupen are fucking retarded and apparently the person who wrote it doesnt know what the difference
-            // between a frame and a VI is...
-            // to quote: "00C 4-byte little-endian unsigned int: number of frames (vertical interrupts)"
-            // WHATTT???? 
-
-
-
-            Debug.WriteLine("VI/s:" + VIs);
-            frames = VIs;
-            int findx = 0;
+            frames = MovieHeader.length_vis;
+            ulong findx = 0;
             // position 1024
             while (findx <= frames)
             {
-                for (int i = 0; i < Controllers; i++)
+                for (int i = 0; i < MovieHeader.num_controllers; i++)
                 {
 
 
@@ -1004,33 +940,33 @@ namespace MupenUtils
 
 
 
-
+            fs.Close();
             br.Close(); // destroy handle
 
             /*Set Controls*/
             SuspendLayout();
 
-            txt_misc_Magic.Invoke((MethodInvoker)(() => txt_misc_Magic.Text = Magic));
-            txt_misc_Version.Invoke((MethodInvoker)(() => txt_misc_Version.Text = Version));
-            txt_misc_UID.Invoke((MethodInvoker)(() => txt_misc_UID.Text = UID.ToString()));
+            txt_misc_Magic.Invoke((MethodInvoker)(() => txt_misc_Magic.Text = ExtensionMethods.ByteArrayToString(MovieHeader.magic)));
+            txt_misc_Version.Invoke((MethodInvoker)(() => txt_misc_Version.Text = MovieHeader.version.ToString()));
+            txt_misc_UID.Invoke((MethodInvoker)(() => txt_misc_UID.Text = ExtensionMethods.ByteArrayToString(MovieHeader.uid)));
 
-            txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = VIs.ToString()));
-            txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = RRs.ToString()));
-            txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = Controllers.ToString()));
+            txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = MovieHeader.length_vis.ToString()));
+            txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = MovieHeader.rerecord_count.ToString()));
+            txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = MovieHeader.num_controllers.ToString()));
 
 
 
-            cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.SelectedItem = DataHelper.GetMovieStartupType(StartType)));
+            cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.SelectedItem = DataHelper.GetMovieStartupType(MovieHeader.startFlags)));
 
-            txt_videoplugin.Invoke((MethodInvoker)(() => txt_videoplugin.Text = VideoPlugin));
-            txt_inputplugin.Invoke((MethodInvoker)(() => txt_inputplugin.Text = InputPlugin));
-            txtbox_Audioplugin.Invoke((MethodInvoker)(() => txtbox_Audioplugin.Text = AudioPlugin));
-            txt_Rsp.Invoke((MethodInvoker)(() => txt_Rsp.Text = RSPPlugin));
+            txt_videoplugin.Invoke((MethodInvoker)(() => txt_videoplugin.Text = MovieHeader.videoPluginName));
+            txt_inputplugin.Invoke((MethodInvoker)(() => txt_inputplugin.Text = MovieHeader.inputPluginName));
+            txtbox_Audioplugin.Invoke((MethodInvoker)(() => txtbox_Audioplugin.Text = MovieHeader.soundPluginName));
+            txt_Rsp.Invoke((MethodInvoker)(() => txt_Rsp.Text = MovieHeader.rspPluginName));
 
-            txt_Rom.Invoke((MethodInvoker)(() => txt_Rom.Text = RomName));
-            txt_Crc.Invoke((MethodInvoker)(() => txt_Crc.Text = Crc32.ToString()));
+            txt_Rom.Invoke((MethodInvoker)(() => txt_Rom.Text = MovieHeader.romNom));
+            txt_Crc.Invoke((MethodInvoker)(() => txt_Crc.Text = MovieHeader.romCRC.ToString()));
 
-            object[] countryData = DataHelper.GetCountryResource(RomCountry);
+            object[] countryData = DataHelper.GetCountryResource(MovieHeader.romCountry);
             Image countryImage = (Image)countryData[1];
 
             txt_RomCountry.Invoke((MethodInvoker)(() => txt_RomCountry.Text = (string)countryData[0]));
@@ -1038,14 +974,14 @@ namespace MupenUtils
             pb_RomCountry.Invoke((MethodInvoker)(() => pb_RomCountry.BackgroundImage = countryImage));
 
 
-            txt_PathName.Invoke((MethodInvoker)(() => txt_PathName.Text = M64Name));
-            txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = Author));
-            txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = Description));
+            txt_PathName.Invoke((MethodInvoker)(() => txt_PathName.Text = System.IO.Path.GetFileNameWithoutExtension(Path)));
+            txt_Author.Invoke((MethodInvoker)(() => txt_Author.Text = MovieHeader.authorInfos));
+            txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = MovieHeader.description));
 
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = MINIMUM_FRAME));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)Samples));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)MovieHeader.length_samples));
 
-            for (int i = 0; i < Controllers; i++)
+            for (int i = 0; i < MovieHeader.num_controllers; i++)
                 cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Add("Controller " + (i + 1))));
 
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
@@ -1064,7 +1000,7 @@ namespace MupenUtils
         }
         void CheckSuspiciousProperties()
         {
-            if (Controllers > 1)
+            if (MovieHeader.num_controllers > 1)
             {
                 lbl_Ctrls.ForeColor = Color.Red;
                 // trigger movie diagnostic...
@@ -1075,13 +1011,13 @@ namespace MupenUtils
             if (txt_RomCountry.Text.Contains("Unknown"))
                 lbl_RomCountry.ForeColor = Color.Red;
 
-            if (StartType > 4 || StartType < 1)
+            if (MovieHeader.startFlags > 4 || MovieHeader.startFlags < 1)
                 lb_starttype.ForeColor = Color.Red;
 
-            if (magic_Raw != 439629389)
+            if (MovieHeader.magic != 439629389)
                 lbl_misc_Magic.ForeColor = Color.Red;
 
-            if (VIs == 0 || VI_s == 0)
+            if (MovieHeader.length_vis == 0 || MovieHeader.vis_per_second == 0)
                 lb_VIs.ForeColor = Color.Red;
 
 
@@ -1093,7 +1029,7 @@ namespace MupenUtils
             {
                 //Debug.WriteLine("Crc32: " + Crc32.ToString("X2"));
                 //Debug.WriteLine("crc check: " + crc.ToString("X2"));
-                if (Crc32 == crc || Crc32.ToString("X2") == crc.ToString("X2")) // so much slower but might work 
+                if (MovieHeader.romCRC == crc || MovieHeader.romCRC.ToString("X2") == MovieHeader.romCRC.ToString("X2")) // so much slower but might work 
                 {
                     lbl_ROMCRC.ForeColor = Color.Black;
                     break;
@@ -1111,7 +1047,7 @@ namespace MupenUtils
                 RedControl(btn_PathSel);
                 return;
             }
-            if (Controllers != 1)
+            if (MovieHeader.num_controllers != 1)
             {
                 MessageBox.Show("This movie can not be saved because it enables too many controllers", PROGRAM_NAME);
                 return;
@@ -1122,7 +1058,7 @@ namespace MupenUtils
             {
                 object[] res = UIHelper.SaveFileDialog("Save As");
                 if ((bool)res[1])
-                    tmpPath = (string)res[1];
+                    tmpPath = (string)res[0];
                 else
                 {
                     return;
@@ -1162,39 +1098,39 @@ namespace MupenUtils
             Array.Clear(zeroar1, 0, zeroar1.Length);
             Array.Clear(zeroar2, 0, zeroar2.Length);
 
-            UID = Int32.Parse(txt_misc_UID.Text);
-            VIs = UInt32.Parse(txt_VIs.Text);
-            RRs = UInt32.Parse(txt_RR.Text);
-            Controllers = byte.Parse(txt_CTRLS.Text);
-            RomName = txt_Rom.Text;
-            VideoPlugin = txt_videoplugin.Text;
-            AudioPlugin = txtbox_Audioplugin.Text;
-            InputPlugin = txt_inputplugin.Text;
-            RSPPlugin = txt_Rsp.Text;
-            Author = txt_Author.Text;
-            Description = txt_Desc.Text;
+            MovieHeader.uid = Convert.ToUInt32(txt_misc_UID.Text, 16);
+            MovieHeader.length_vis = UInt32.Parse(txt_VIs.Text);
+            MovieHeader.rerecord_count = UInt32.Parse(txt_RR.Text);
+            MovieHeader.num_controllers = byte.Parse(txt_CTRLS.Text);
+            MovieHeader.romNom = txt_Rom.Text;
+            MovieHeader.videoPluginName = txt_videoplugin.Text;
+            MovieHeader.soundPluginName = txtbox_Audioplugin.Text;
+            MovieHeader.inputPluginName = txt_inputplugin.Text;
+            MovieHeader.rspPluginName = txt_Rsp.Text;
+            MovieHeader.authorInfos = txt_Author.Text;
+            MovieHeader.description = txt_Desc.Text;
 
             // lol cringe
             br.Write(magic); // Int32 - Magic (4D36341A)
             br.Write(0x3); // UInt32 - Version number (3)
-            br.Write(UID); // UInt32 - UID
-            br.Write((UInt32)VIs); // UInt32 - VIs
-            br.Write((UInt32)RRs); // UInt32 - RRs
-            br.Write(VI_s); // Byte - VI/s
-            br.Write(Controllers); // Byte - Controllers
+            br.Write(MovieHeader.uid); // UInt32 - UID
+            br.Write((UInt32)MovieHeader.length_vis); // UInt32 - VIs
+            br.Write((UInt32)MovieHeader.rerecord_count); // UInt32 - RRs
+            br.Write(MovieHeader.vis_per_second); // Byte - VI/s
+            br.Write(MovieHeader.num_controllers); // Byte - Controllers
             br.Write((Int16)0); // 2 Bytes - RESERVED
-            br.Write(Samples); // UInt32 - Input Samples
+            br.Write(MovieHeader.length_samples); // UInt32 - Input Samples
 
             br.Write((UInt16)DataHelper.GetMovieStartupTypeIndex(cbox_startType.SelectedItem.ToString())); // UInt16 - Movie start type
             br.Write((Int16)0); // 2 bytes - RESERVED
-            br.Write(ControllerFlags); // UInt32 - Controller Flags
+            br.Write(MovieHeader.controllerFlags); // UInt32 - Controller Flags
             br.Write(zeroar1, 0, zeroar1.Length); // 160 bytes - RESERVED
             byte[] romname;
-            romname = ASCIIEncoding.ASCII.GetBytes(RomName);
+            romname = ASCIIEncoding.ASCII.GetBytes(MovieHeader.romNom);
             Array.Resize(ref romname, 32);
             br.Write(romname, 0, 32);
-            br.Write(Crc32);
-            br.Write(RomCountry);
+            br.Write(MovieHeader.romCRC);
+            br.Write(MovieHeader.romCountry);
             br.Write(zeroar2, 0, zeroar2.Length); // 56 bytes - RESERVED
 
 
@@ -1205,12 +1141,12 @@ namespace MupenUtils
             byte[] author = new byte[222];
             byte[] desc = new byte[256];
 
-            gfx = Encoding.ASCII.GetBytes(VideoPlugin);
-            audio = Encoding.ASCII.GetBytes(AudioPlugin);
-            input = Encoding.ASCII.GetBytes(InputPlugin);
-            rsp = Encoding.ASCII.GetBytes(RSPPlugin);
-            author = Encoding.UTF8.GetBytes(Author);
-            desc = Encoding.UTF8.GetBytes(Description);
+            gfx = Encoding.ASCII.GetBytes(MovieHeader.videoPluginName);
+            audio = Encoding.ASCII.GetBytes(MovieHeader.soundPluginName);
+            input = Encoding.ASCII.GetBytes(MovieHeader.inputPluginName);
+            rsp = Encoding.ASCII.GetBytes(MovieHeader.rspPluginName);
+            author = Encoding.UTF8.GetBytes(MovieHeader.authorInfos);
+            desc = Encoding.UTF8.GetBytes(MovieHeader.description);
 
             Array.Resize(ref gfx, 64);
             Array.Resize(ref audio, 64);
@@ -1507,10 +1443,10 @@ namespace MupenUtils
         }
         bool checkAllowedStep(int stepAmount)
         {
-            if (frame > frames || frame < MINIMUM_FRAME)
+            if (frame > (int)frames || frame < MINIMUM_FRAME)
             {
                 {
-                    if (frame > frames)
+                    if (frame > (int)frames)
                         frame = (int)frames;
                     else if (frame < MINIMUM_FRAME)
                         frame = MINIMUM_FRAME;
@@ -1533,7 +1469,7 @@ namespace MupenUtils
                 stepFrameTimer.Enabled = false;
                 return;
             }
-            GetInput(inputLists[selectedController][frame], true, frame);
+            GetInput(inputLists[selectedController][(int)frame], true, frame);
             UpdateFrameControlUI();
         }
         #endregion
@@ -1698,13 +1634,13 @@ namespace MupenUtils
             }
             if (notifiedReupdateControllerFlags)
             {
-                Controllers = 0;
+                MovieHeader.num_controllers = 0;
                 for (int i = 0; i < 4; i++)
                 {
-                    if (ExtensionMethods.GetBit(ControllerFlags, i))
-                        Controllers++;
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, i))
+                        MovieHeader.num_controllers++;
                 }
-                txt_CTRLS.Text = Controllers.ToString();
+                txt_CTRLS.Text = MovieHeader.num_controllers.ToString();
 
                 notifiedReupdateControllerFlags = false;
             }
@@ -2143,7 +2079,7 @@ namespace MupenUtils
         }
         private void cbox_Controllers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbox_Controllers.SelectedIndex + 1 > Controllers)
+            if (cbox_Controllers.SelectedIndex + 1 > MovieHeader.num_controllers)
             {
                 selectedController = 0;
                 goto update;

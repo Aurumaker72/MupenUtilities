@@ -32,23 +32,23 @@ namespace MupenUtils.Forms
             selectedController = cbox_Cflg_ControllerSelect.SelectedIndex + 1;
 
             int offset = selectedController - 1;
-            chk_Cflg_Present.Checked = ExtensionMethods.GetBit(MainForm.ControllerFlags, offset);
+            chk_Cflg_Present.Checked = ExtensionMethods.GetBit(MainForm.MovieHeader.controllerFlags, offset);
 
             offset = 4;
             if (selectedController != 1)
                 offset += selectedController - 1;
-            chk_Cflg_Mempak.Checked = ExtensionMethods.GetBit(MainForm.ControllerFlags, offset);
+            chk_Cflg_Mempak.Checked = ExtensionMethods.GetBit(MainForm.MovieHeader.controllerFlags, offset);
 
             offset = 8;
             if (selectedController != 1)
                 offset += selectedController - 1;
 
-            chk_Cflg_Rumblepak.Checked = ExtensionMethods.GetBit(MainForm.ControllerFlags, offset);
+            chk_Cflg_Rumblepak.Checked = ExtensionMethods.GetBit(MainForm.MovieHeader.controllerFlags, offset);
         }
 
         private void chk_Cflg_Present_CheckedChanged(object sender, EventArgs e)
         {
-            ExtensionMethods.SetBit(ref MainForm.ControllerFlags, chk_Cflg_Present.Checked, selectedController - 1);
+            ExtensionMethods.SetBit(ref MainForm.MovieHeader.controllerFlags, chk_Cflg_Present.Checked, selectedController - 1);
         }
 
         private void chk_Cflg_Mempak_CheckedChanged(object sender, EventArgs e)
@@ -57,7 +57,7 @@ namespace MupenUtils.Forms
             if (selectedController != 1)
                 offset += selectedController - 1;
 
-            ExtensionMethods.SetBit(ref MainForm.ControllerFlags, chk_Cflg_Mempak.Checked, offset);
+            ExtensionMethods.SetBit(ref MainForm.MovieHeader.controllerFlags, chk_Cflg_Mempak.Checked, offset);
         }
 
         private void chk_Cflg_Rumblepak_CheckedChanged(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace MupenUtils.Forms
             if (selectedController != 1)
                 offset += selectedController - 1;
 
-            ExtensionMethods.SetBit(ref MainForm.ControllerFlags, chk_Cflg_Rumblepak.Checked, offset);
+            ExtensionMethods.SetBit(ref MainForm.MovieHeader.controllerFlags, chk_Cflg_Rumblepak.Checked, offset);
         }
     }
 }

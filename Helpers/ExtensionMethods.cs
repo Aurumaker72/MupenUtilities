@@ -266,6 +266,36 @@ public static class ExtensionMethods
         return "0x" + hex.ToString().ToUpper();
 
     }
+    public static string ByteArrayToString(ulong b)
+    {
+        byte[] ba = BitConverter.GetBytes(b);
+        StringBuilder hex = new StringBuilder(ba.Length * 2);
+        foreach (byte by in ba)
+            hex.AppendFormat("{0:x2}", by);
+
+        return "0x" + hex.ToString().ToUpper();
+
+    }
+    public static string ByteArrayToString(uint b)
+    {
+        byte[] ba = BitConverter.GetBytes(b);
+        StringBuilder hex = new StringBuilder(ba.Length * 2);
+        foreach (byte by in ba)
+            hex.AppendFormat("{0:x2}", by);
+
+        return "0x" + hex.ToString().ToUpper();
+
+    }
+    public static string ByteArrayToString(int b)
+    {
+        byte[] ba = BitConverter.GetBytes(b);
+        StringBuilder hex = new StringBuilder(ba.Length * 2);
+        foreach (byte by in ba)
+            hex.AppendFormat("{0:x2}", by);
+
+        return "0x" + hex.ToString().ToUpper();
+
+    }
     public static string StringASCII(string str)
     {
         return ASCIIEncoding.ASCII.GetString(ASCIIEncoding.UTF8.GetBytes(str));
