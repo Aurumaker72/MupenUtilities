@@ -110,7 +110,7 @@ namespace MupenUtilities.Forms
 
             br.BaseStream.Seek(1024, SeekOrigin.Begin);
             ulong findx = 0;
-            while (findx < movieData.length_vis)
+            while (findx < movieData.length_samples)
             {
                 if (br.BaseStream.Position + 4 > fs.Length)
                 {
@@ -122,7 +122,7 @@ namespace MupenUtilities.Forms
                 
                 findx++;
             }
-            for (ulong i = 0; i < movieData.length_vis; i++)
+            for (ulong i = 0; i < movieData.length_samples; i++)
             {
                 try
                 {
