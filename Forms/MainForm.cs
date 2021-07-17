@@ -264,7 +264,6 @@ namespace MupenUtils
             InitUI();
 
             // check for updates
-            if (updateNotifier.CheckForInternetConnection())
                 updateNotifier.CheckForUpdates(UPDATE_UNKNOWN, true);
 
 

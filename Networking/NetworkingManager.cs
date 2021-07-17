@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace MupenUtils.Networking
@@ -40,6 +41,8 @@ namespace MupenUtils.Networking
         }
         public bool CheckForInternetConnection()
         {
+           
+
             try
             {
                 using (var client = new WebClient())
@@ -50,6 +53,7 @@ namespace MupenUtils.Networking
             {
                 return false;
             }
+
         }
 
         // https://stackoverflow.com/questions/25678690/how-can-i-check-github-releases-in-c
