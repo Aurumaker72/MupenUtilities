@@ -1581,13 +1581,15 @@ namespace MupenUtils
                 tasStudioForm.ShowDialog();
             }
 
-            if (tasStudioAutoScroll)
-            {
-                MessageBox.Show("Please disable Move Mode for copy/paste functionality.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            
             if (e.KeyCode == Keys.C && e.Modifiers == Keys.Control)
             {
+                if (tasStudioAutoScroll)
+                {
+                    MessageBox.Show("Please disable Move Mode for copy/paste functionality.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 // ctrl + c
                 // copy selection into buffer
 
@@ -1607,6 +1609,12 @@ namespace MupenUtils
             }
             if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
             {
+                if (tasStudioAutoScroll)
+                {
+                    MessageBox.Show("Please disable Move Mode for copy/paste functionality.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 Debug.WriteLine("paste tasstudio {0}", copied.Length);
 
                 for (int i = dgv_Main.SelectedCells[0].RowIndex; i < copied.Length; i++)
