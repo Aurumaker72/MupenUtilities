@@ -105,7 +105,7 @@ namespace MupenUtils
         // [] means reserved, <^>v is direction
         public static string[] inputStructNames = { "D>", "D<", "Dv", "D^", "S", "Z", "B", "A", "C>", "C<", "Cv", "C^", "R", "L", "1", "2", "X", "Y" };
 
-        Thread m64load;
+        public static Thread m64load;
         MoreForm moreForm;//= new MoreForm();
         AdvancedDebugForm debugForm;//= new AdvancedDebugForm();
         TASStudioMoreForm tasStudioForm;//= new TASStudioMoreForm();
@@ -304,7 +304,13 @@ namespace MupenUtils
 
         void InitUI()
         {
+            this.ForAllControls(c =>
+            {
+                c.TabIndex = 0; c.TabStop = false;
+            });
+            
             rb_M64sel.Checked = true;
+            rb_M64sel.TabStop = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             gp_M64.Visible = false;
             gp_Path.Dock = DockStyle.Fill;
@@ -1012,12 +1018,12 @@ namespace MupenUtils
         }
         void CheckSuspiciousProperties()
         {
+            bool triggerDiag = false;
+
             if (MovieHeader.num_controllers > 1)
             {
                 lbl_Ctrls.ForeColor = Color.Red;
-                // trigger movie diagnostic...
-                MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause your movie failed the runtime property check";
-                MovieDiag();
+                triggerDiag = true;
             }
 
             if (cmb_Country.SelectedIndex == 11)
@@ -1027,12 +1033,22 @@ namespace MupenUtils
                 lb_starttype.ForeColor = Color.Red;
 
             if (MovieHeader.magic != 439629389)
+            {
                 lbl_misc_Magic.ForeColor = Color.Red;
-
+                triggerDiag = true;
+            }
             if (MovieHeader.length_vis == 0 || MovieHeader.vis_per_second == 0)
+            {
                 lb_VIs.ForeColor = Color.Red;
+                triggerDiag = true;
+            }
 
 
+            if (triggerDiag)
+            {
+                MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause suspicious properties were detected";
+                MovieDiag();
+            }
 
 
 

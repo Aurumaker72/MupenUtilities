@@ -33,9 +33,9 @@ namespace MupenUtilities.Forms
             this.pb_DeadMupen = new System.Windows.Forms.PictureBox();
             this.lbl_info = new System.Windows.Forms.Label();
             this.lbl_Result = new System.Windows.Forms.Label();
+            this.btn_Continue = new System.Windows.Forms.Button();
             this.btn_Quit = new System.Windows.Forms.Button();
             this.lb_Checks = new System.Windows.Forms.ListBox();
-            this.btn_Continue = new System.Windows.Forms.Button();
             this.gp_Moviediag.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_DeadMupen)).BeginInit();
             this.SuspendLayout();
@@ -51,7 +51,7 @@ namespace MupenUtilities.Forms
             this.gp_Moviediag.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_Moviediag.Location = new System.Drawing.Point(0, 0);
             this.gp_Moviediag.Name = "gp_Moviediag";
-            this.gp_Moviediag.Size = new System.Drawing.Size(517, 227);
+            this.gp_Moviediag.Size = new System.Drawing.Size(535, 223);
             this.gp_Moviediag.TabIndex = 0;
             this.gp_Moviediag.TabStop = false;
             this.gp_Moviediag.Text = "Movie Diagnostic";
@@ -60,7 +60,7 @@ namespace MupenUtilities.Forms
             // 
             this.pb_DeadMupen.BackgroundImage = global::MupenUtilities.Properties.Resources.mupenbw;
             this.pb_DeadMupen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pb_DeadMupen.Location = new System.Drawing.Point(372, 21);
+            this.pb_DeadMupen.Location = new System.Drawing.Point(396, 21);
             this.pb_DeadMupen.Name = "pb_DeadMupen";
             this.pb_DeadMupen.Size = new System.Drawing.Size(133, 132);
             this.pb_DeadMupen.TabIndex = 1;
@@ -87,6 +87,17 @@ namespace MupenUtilities.Forms
             this.lbl_Result.TabIndex = 0;
             this.lbl_Result.Text = "?";
             // 
+            // btn_Continue
+            // 
+            this.btn_Continue.Location = new System.Drawing.Point(76, 184);
+            this.btn_Continue.Name = "btn_Continue";
+            this.btn_Continue.Size = new System.Drawing.Size(110, 34);
+            this.btn_Continue.TabIndex = 0;
+            this.btn_Continue.TabStop = false;
+            this.btn_Continue.Text = "Continue";
+            this.btn_Continue.UseVisualStyleBackColor = true;
+            this.btn_Continue.Click += new System.EventHandler(this.btn_Continue_Click);
+            // 
             // btn_Quit
             // 
             this.btn_Quit.Location = new System.Drawing.Point(12, 184);
@@ -104,27 +115,16 @@ namespace MupenUtilities.Forms
             this.lb_Checks.ItemHeight = 16;
             this.lb_Checks.Location = new System.Drawing.Point(12, 21);
             this.lb_Checks.Name = "lb_Checks";
-            this.lb_Checks.Size = new System.Drawing.Size(354, 132);
+            this.lb_Checks.Size = new System.Drawing.Size(378, 132);
             this.lb_Checks.TabIndex = 0;
             this.lb_Checks.TabStop = false;
             this.lb_Checks.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lb_Checks_MouseClick);
-            // 
-            // btn_Continue
-            // 
-            this.btn_Continue.Location = new System.Drawing.Point(76, 184);
-            this.btn_Continue.Name = "btn_Continue";
-            this.btn_Continue.Size = new System.Drawing.Size(110, 34);
-            this.btn_Continue.TabIndex = 0;
-            this.btn_Continue.TabStop = false;
-            this.btn_Continue.Text = "Continue";
-            this.btn_Continue.UseVisualStyleBackColor = true;
-            this.btn_Continue.Click += new System.EventHandler(this.btn_Continue_Click);
             // 
             // MovieDiagnosticForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(517, 227);
+            this.ClientSize = new System.Drawing.Size(535, 223);
             this.ControlBox = false;
             this.Controls.Add(this.gp_Moviediag);
             this.DoubleBuffered = true;
