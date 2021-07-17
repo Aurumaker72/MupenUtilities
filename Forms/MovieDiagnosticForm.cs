@@ -135,7 +135,7 @@ namespace MupenUtilities.Forms
 
 
             //////////////////////////////////////////////
-            string[] checks = new string[7];
+            string[] checks = new string[8];
             int successfulChecks = 0, failedChecks = 0;
 
             lb_Checks.Items.Add( (checks[0] = GetCheck(movieData.magic == 0x4D36341A || movieData.magic == 439629389, "Malformed magic cookie"                                                                                                                       )).ToString());
@@ -145,7 +145,8 @@ namespace MupenUtilities.Forms
             lb_Checks.Items.Add( (checks[4] = GetCheck(fs.Length > 1024, "Movie is too small"                                                                                                                                                                        )).ToString());
             lb_Checks.Items.Add( (checks[5] = GetCheck(!ExtensionMethods.GetBit(movieData.controllerFlags, 1) && !ExtensionMethods.GetBit(movieData.controllerFlags, 2) && !ExtensionMethods.GetBit(movieData.controllerFlags, 3), "Unsupported controller activated")).ToString());
             lb_Checks.Items.Add((checks[6] = GetCheck(!failedInputTest, "Frame-Input value Mismatch")).ToString());
-            
+            lb_Checks.Items.Add((checks[7] = GetCheck(movieData.vis_per_second > 10 && movieData.vis_per_second <= 60, "Non-standard VI/s")).ToString());
+
             foreach (var a in checks)
             {
                 if (a.Equals("PASS")) successfulChecks++;

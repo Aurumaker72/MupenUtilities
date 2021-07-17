@@ -58,6 +58,7 @@ namespace MupenUtils
             this.lb_RR = new System.Windows.Forms.Label();
             this.txt_Author = new System.Windows.Forms.TextBox();
             this.gpRom = new System.Windows.Forms.GroupBox();
+            this.cmb_Country = new System.Windows.Forms.ComboBox();
             this.pb_RomCountry = new System.Windows.Forms.PictureBox();
             this.txt_Rom = new System.Windows.Forms.TextBox();
             this.txt_Crc = new System.Windows.Forms.TextBox();
@@ -152,7 +153,8 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.cmb_Country = new System.Windows.Forms.ComboBox();
+            this.lbl_VI_s = new System.Windows.Forms.Label();
+            this.txt_VI_s = new System.Windows.Forms.TextBox();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -372,6 +374,8 @@ namespace MupenUtils
             this.gp_User.Controls.Add(this.lbl_Name);
             this.gp_User.Controls.Add(this.txt_Desc);
             this.gp_User.Controls.Add(this.lbl_Author);
+            this.gp_User.Controls.Add(this.txt_VI_s);
+            this.gp_User.Controls.Add(this.lbl_VI_s);
             this.gp_User.Controls.Add(this.txt_VIs);
             this.gp_User.Controls.Add(this.lb_VIs);
             this.gp_User.Controls.Add(this.txt_RR);
@@ -501,6 +505,17 @@ namespace MupenUtils
             this.gpRom.TabIndex = 0;
             this.gpRom.TabStop = false;
             this.gpRom.Text = "ROM";
+            // 
+            // cmb_Country
+            // 
+            this.cmb_Country.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_Country.FormattingEnabled = true;
+            this.cmb_Country.Location = new System.Drawing.Point(128, 81);
+            this.cmb_Country.Name = "cmb_Country";
+            this.cmb_Country.Size = new System.Drawing.Size(132, 24);
+            this.cmb_Country.TabIndex = 0;
+            this.cmb_Country.TabStop = false;
+            this.cmb_Country.SelectedIndexChanged += new System.EventHandler(this.cmb_Country_SelectedIndexChanged);
             // 
             // pb_RomCountry
             // 
@@ -697,7 +712,7 @@ namespace MupenUtils
             // 
             // btn_CtlFlags
             // 
-            this.btn_CtlFlags.Location = new System.Drawing.Point(117, 174);
+            this.btn_CtlFlags.Location = new System.Drawing.Point(116, 174);
             this.btn_CtlFlags.Name = "btn_CtlFlags";
             this.btn_CtlFlags.Size = new System.Drawing.Size(132, 24);
             this.btn_CtlFlags.TabIndex = 0;
@@ -1352,7 +1367,6 @@ namespace MupenUtils
             // 
             // tsmi_MovieDiagnostic
             // 
-            this.tsmi_MovieDiagnostic.Enabled = false;
             this.tsmi_MovieDiagnostic.Name = "tsmi_MovieDiagnostic";
             this.tsmi_MovieDiagnostic.Size = new System.Drawing.Size(211, 26);
             this.tsmi_MovieDiagnostic.Text = "Movie Diagnostic";
@@ -1508,6 +1522,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
+            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1517,22 +1532,32 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
+            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
-            // cmb_Country
+            // lbl_VI_s
             // 
-            this.cmb_Country.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_Country.FormattingEnabled = true;
-            this.cmb_Country.Location = new System.Drawing.Point(128, 81);
-            this.cmb_Country.Name = "cmb_Country";
-            this.cmb_Country.Size = new System.Drawing.Size(132, 24);
-            this.cmb_Country.TabIndex = 0;
-            this.cmb_Country.TabStop = false;
-            this.cmb_Country.SelectedIndexChanged += new System.EventHandler(this.cmb_Country_SelectedIndexChanged);
+            this.lbl_VI_s.AutoSize = true;
+            this.lbl_VI_s.Location = new System.Drawing.Point(10, 176);
+            this.lbl_VI_s.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_VI_s.Name = "lbl_VI_s";
+            this.lbl_VI_s.Size = new System.Drawing.Size(30, 16);
+            this.lbl_VI_s.TabIndex = 0;
+            this.lbl_VI_s.Text = "VI/s";
+            // 
+            // txt_VI_s
+            // 
+            this.txt_VI_s.Location = new System.Drawing.Point(128, 174);
+            this.txt_VI_s.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_VI_s.Name = "txt_VI_s";
+            this.txt_VI_s.Size = new System.Drawing.Size(132, 22);
+            this.txt_VI_s.TabIndex = 0;
+            this.txt_VI_s.TabStop = false;
+            this.txt_VI_s.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
             // 
             // MainForm
             // 
@@ -1706,6 +1731,8 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem tsmi_MovieDiagnostic;
         private System.Windows.Forms.ComboBox cmb_Country;
+        private System.Windows.Forms.TextBox txt_VI_s;
+        private System.Windows.Forms.Label lbl_VI_s;
     }
 }
 

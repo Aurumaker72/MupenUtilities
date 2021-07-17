@@ -961,6 +961,7 @@ namespace MupenUtils
             txt_misc_UID.Invoke((MethodInvoker)(() => txt_misc_UID.Text = ExtensionMethods.ByteArrayToString(MovieHeader.uid)));
 
             txt_VIs.Invoke((MethodInvoker)(() => txt_VIs.Text = MovieHeader.length_vis.ToString()));
+            txt_VI_s.Invoke((MethodInvoker)(() => txt_VI_s.Text = MovieHeader.vis_per_second.ToString()));
             txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = MovieHeader.rerecord_count.ToString()));
             txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = MovieHeader.num_controllers.ToString()));
 
@@ -1119,6 +1120,7 @@ namespace MupenUtils
             MovieHeader.rspPluginName = txt_Rsp.Text;
             MovieHeader.authorInfos = txt_Author.Text;
             MovieHeader.description = txt_Desc.Text;
+            MovieHeader.vis_per_second = byte.Parse(txt_VI_s.Text);
 
             // lol cringe
             br.Write(magic); // Int32 - Magic (4D36341A)
