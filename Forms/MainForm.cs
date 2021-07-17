@@ -892,7 +892,7 @@ namespace MupenUtils
             gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
             Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Checked = readOnly));
-            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Readonly"));
+            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Read-only"));
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
             ResetLblColors();
 
