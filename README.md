@@ -10,7 +10,7 @@
 ### [Usage Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/usage.md)
 
 
-![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/multicontroller/app.PNG)
+![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/app.PNG)
 
 
 ## M64
