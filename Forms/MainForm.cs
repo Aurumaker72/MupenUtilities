@@ -915,14 +915,15 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
 
-            frames = MovieHeader.length_vis;
+            frames = MovieHeader.length_samples;
             ulong findx = 0;
             // position 1024
+            
             while (findx <= frames)
             {
                 for (int i = 0; i < MovieHeader.num_controllers; i++)
                 {
-
+                    
 
                     if (br.BaseStream.Position + 4 > fs.Length)
                     {
