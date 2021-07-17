@@ -2128,6 +2128,7 @@ namespace MupenUtils
         
         private void tsmi_MovieDiagnostic_Click(object sender, EventArgs e)
         {
+            MovieDiagnosticForm.warnText = "A manual movie diagnostic has been requested";
             MovieDiag();
         }
         private void cbox_Controllers_SelectedIndexChanged(object sender, EventArgs e)
