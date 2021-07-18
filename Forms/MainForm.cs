@@ -626,6 +626,22 @@ namespace MupenUtils
                     lbl.Invoke((MethodInvoker)(() => lbl.ForeColor = Color.Black));
                 }
             }
+            for (int i = 0; i < gp_M64_misc.Controls.Count; i++)
+            {
+                if (gp_M64_misc.Controls[i] is Label)
+                {
+                    Label lbl = gp_M64_misc.Controls[i] as Label;
+                    lbl.Invoke((MethodInvoker)(() => lbl.ForeColor = Color.Black));
+                }
+            }
+            for (int i = 0; i < gpRom.Controls.Count; i++)
+            {
+                if (gpRom.Controls[i] is Label)
+                {
+                    Label lbl = gpRom.Controls[i] as Label;
+                    lbl.Invoke((MethodInvoker)(() => lbl.ForeColor = Color.Black));
+                }
+            }
             for (int i = 0; i < gp_M64.Controls.Count; i++)
             {
                 if (gp_User.Controls[i] is Label)
