@@ -16,6 +16,7 @@ namespace MupenUtils.Forms
             public string PROCESS_NAME;
         }
         public static MupenDataStruct MupenData;
+        public static int searched = 0;
 
         public MupenHookForm()
         {
@@ -31,7 +32,7 @@ namespace MupenUtils.Forms
             lbl_NameVer.Text += MupenData.MUPEN_NAME;
             if (!MupenData.CONFIRMED)
             {
-                MessageBox.Show("The mupen64 name string could\'nt be found.\nVersions older than 1.0.5 are not supported", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(String.Format("Searched process memory {0} times and the mupen64 name string could\'nt be found.\nVersions older than 1.0.5 are not supported", searched), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //this.Hide();
                 return;
             }

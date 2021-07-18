@@ -815,7 +815,7 @@ namespace MupenUtils
                 finalName = a;
             }
 
-            if (finalName == "" && searched < 10)
+            if (finalName == "" && searched < 50)
             {
                 searched++;
                 goto goSearch;
@@ -829,7 +829,7 @@ namespace MupenUtils
             mupenData.MUPEN_NAME = finalName;
             mupenData.PROCESS_NAME = procName;
             MupenHookForm.MupenData = mupenData;
-
+            MupenHookForm.searched = searched;
             mupenHookForm.Show();
         }
 
