@@ -1042,6 +1042,11 @@ namespace MupenUtils
                 lb_VIs.ForeColor = Color.Red;
                 triggerDiag = true;
             }
+            if(MovieHeader.version != 3)
+            {
+                lbl_misc_version.ForeColor = Color.Red;
+                triggerDiag = true;
+            }
 
 
             if (triggerDiag)

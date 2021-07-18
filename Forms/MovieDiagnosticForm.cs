@@ -60,11 +60,7 @@ namespace MupenUtilities.Forms
         {
             this.Text = MainForm.PROGRAM_NAME + " - Movie Diagnostic Tool";
 
-            //foreach (Control ctl in Controls)
-            //    ctl.Enabled = MainForm.FileLoaded;
-
-            //if (MainForm.FileLoaded) DoChecks();
-            btn_Quit.Enabled = !MainForm.m64load.IsAlive;
+            
             lbl_info.Text = warnText;
             DoChecks();
         }
