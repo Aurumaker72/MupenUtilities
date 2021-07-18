@@ -51,7 +51,7 @@ namespace MupenUtilities.Forms
             this.gp_Moviediag.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_Moviediag.Location = new System.Drawing.Point(0, 0);
             this.gp_Moviediag.Name = "gp_Moviediag";
-            this.gp_Moviediag.Size = new System.Drawing.Size(535, 223);
+            this.gp_Moviediag.Size = new System.Drawing.Size(531, 219);
             this.gp_Moviediag.TabIndex = 0;
             this.gp_Moviediag.TabStop = false;
             this.gp_Moviediag.Text = "Movie Diagnostic";
@@ -83,9 +83,9 @@ namespace MupenUtilities.Forms
             this.lbl_Result.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Result.Location = new System.Drawing.Point(12, 156);
             this.lbl_Result.Name = "lbl_Result";
-            this.lbl_Result.Size = new System.Drawing.Size(23, 25);
+            this.lbl_Result.Size = new System.Drawing.Size(197, 25);
             this.lbl_Result.TabIndex = 0;
-            this.lbl_Result.Text = "?";
+            this.lbl_Result.Text = "No checks performed";
             // 
             // btn_Continue
             // 
@@ -124,7 +124,7 @@ namespace MupenUtilities.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(535, 223);
+            this.ClientSize = new System.Drawing.Size(531, 219);
             this.ControlBox = false;
             this.Controls.Add(this.gp_Moviediag);
             this.DoubleBuffered = true;

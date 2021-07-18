@@ -73,6 +73,8 @@ namespace MupenUtilities.Forms
 
         void DoChecks()
         {
+            if (MainForm.Path == null) return;
+
             lbl_info.Visible = false;
             lb_Checks.Items.Clear();
 
