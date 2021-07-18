@@ -935,7 +935,7 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
 
-            frames = MovieHeader.length_vis ;
+            frames = MovieHeader.length_samples ;
             ulong findx = 0;
             // force seek to 1024
             br.BaseStream.Seek(1024, SeekOrigin.Begin);
