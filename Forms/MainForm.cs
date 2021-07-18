@@ -158,8 +158,6 @@ namespace MupenUtils
 
         public static byte selectedController = 0;
 
-        public static List<int> SAVE_inputList = new List<int>();
-
         int lastValue;
 
         public static int frame;
@@ -937,39 +935,36 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
 
-            frames = MovieHeader.length_samples;
+            frames = MovieHeader.length_vis ;
             ulong findx = 0;
-            // position 1024
-            
+            // force seek to 1024
+            br.BaseStream.Seek(1024, SeekOrigin.Begin);
             while (findx <= frames)
             {
-                for (int i = 0; i < MovieHeader.num_controllers; i++)
+                //for (int i = 0; i < MovieHeader.num_controllers; i++)
+                //{
+
+
+                if (br.BaseStream.Position + 4 > fs.Length)
                 {
-                    
-
-                    if (br.BaseStream.Position + 4 > fs.Length)
-                    {
-                        findx++;
-                        continue;
-                    }
-
-
-                    try
-                    {
-                        if (ControllersEnabled[0])
-                            inputListCtl1.Add(br.ReadInt32());
-                        if (ControllersEnabled[1])
-                            inputListCtl2.Add(br.ReadInt32());
-                        if (ControllersEnabled[2])
-                            inputListCtl3.Add(br.ReadInt32());
-                        if (ControllersEnabled[3])
-                            inputListCtl4.Add(br.ReadInt32());
-                    }
-                    catch { }
                     findx++;
+                    continue;
                 }
+
+
+
+                if (ControllersEnabled[0])
+                    inputListCtl1.Add(br.ReadInt32());
+                if (ControllersEnabled[1])
+                    inputListCtl2.Add(br.ReadInt32());
+                if (ControllersEnabled[2])
+                    inputListCtl3.Add(br.ReadInt32());
+                if (ControllersEnabled[3])
+                    inputListCtl4.Add(br.ReadInt32());
+
+                findx++;
+                //}
             }
-            SAVE_inputList = inputListCtl1; // copy
 
 
 

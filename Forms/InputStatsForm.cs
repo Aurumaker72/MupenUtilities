@@ -24,13 +24,16 @@ namespace MupenUtils.Forms
 
         public static Label[] labels = new Label[MainForm.inputStructNames.Length];
 
+        int? foundFrame = null;
+
         public InputStatsForm()
         {
             InitializeComponent();
-            this.Text = MainForm.PROGRAM_NAME + " - Input Statistics";
+            this.Text = MainForm.PROGRAM_NAME + " - Input Analysis";
             for (int i = 0; i < 4; i++)
                 cbox_Ctl.Items.Add("Controller " + (i + 1));
-
+            for (int i = 0; i < MainForm.inputStructNames.Length-2; i++)
+                cmb_Buttons.Items.Add(MainForm.inputStructNames[i]);
 
             labels[0] = lbl_DRight;
             labels[1] = lbl_DLeft;
@@ -192,6 +195,35 @@ namespace MupenUtils.Forms
         private void btn_Refresh_Click(object sender, EventArgs e)
         {
             UpdateInfos();
+        }
+
+        private void btn_GoBruteforceButton_Click(object sender, EventArgs e)
+        {
+            List<int> inputList;
+            int searchedButton = cmb_Buttons.SelectedIndex;
+            
+            switch (selectedController)
+            {
+                case 0: inputList = inputCtl1; break;
+                case 1: inputList = inputCtl2; break;
+                case 2: inputList = inputCtl3; break;
+                case 3: inputList = inputCtl4; break;
+                default: throw new ArgumentException("Invalid controller index");
+            }
+
+            for (int i = 0; i < inputList.Count; i++)
+            {
+                if(ExtensionMethods.GetBit(inputList[i], searchedButton))
+                {
+                    foundFrame = i;
+                    break;
+                }
+            }
+
+            if (foundFrame == null)
+                lbl_StatusButton.Text = "Couldn\'t find button " + MainForm.inputStructNames[searchedButton];
+            else
+                lbl_StatusButton.Text = "First instance of button " + MainForm.inputStructNames[searchedButton] + " at " + foundFrame;
         }
     }
 }

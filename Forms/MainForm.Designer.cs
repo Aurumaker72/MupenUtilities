@@ -1410,7 +1410,7 @@ namespace MupenUtils
             // 
             this.inputStatisticsToolStripMenuItem.Name = "inputStatisticsToolStripMenuItem";
             this.inputStatisticsToolStripMenuItem.Size = new System.Drawing.Size(211, 26);
-            this.inputStatisticsToolStripMenuItem.Text = "Input Statistics";
+            this.inputStatisticsToolStripMenuItem.Text = "Input Analysis";
             this.inputStatisticsToolStripMenuItem.Click += new System.EventHandler(this.inputStatisticsToolStripMenuItem_Click);
             // 
             // tsmi_MovieDiagnostic
