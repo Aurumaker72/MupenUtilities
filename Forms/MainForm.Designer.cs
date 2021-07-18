@@ -47,10 +47,13 @@ namespace MupenUtils
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.gp_header = new System.Windows.Forms.GroupBox();
             this.gp_User = new System.Windows.Forms.GroupBox();
+            this.btn_VIMAX = new System.Windows.Forms.Button();
             this.txt_PathName = new System.Windows.Forms.TextBox();
             this.lbl_Name = new System.Windows.Forms.Label();
             this.txt_Desc = new System.Windows.Forms.TextBox();
             this.lbl_Author = new System.Windows.Forms.Label();
+            this.txt_VI_s = new System.Windows.Forms.TextBox();
+            this.lbl_VI_s = new System.Windows.Forms.Label();
             this.txt_VIs = new System.Windows.Forms.TextBox();
             this.lb_VIs = new System.Windows.Forms.Label();
             this.txt_RR = new System.Windows.Forms.TextBox();
@@ -87,6 +90,7 @@ namespace MupenUtils
             this.txtbox_Audioplugin = new System.Windows.Forms.TextBox();
             this.lbl_Input = new System.Windows.Forms.Label();
             this.txt_Rsp = new System.Windows.Forms.TextBox();
+            this.btn_Reload = new System.Windows.Forms.Button();
             this.gp_input = new System.Windows.Forms.GroupBox();
             this.cbox_Controllers = new System.Windows.Forms.ComboBox();
             this.gp_TASStudio = new System.Windows.Forms.GroupBox();
@@ -153,10 +157,6 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.lbl_VI_s = new System.Windows.Forms.Label();
-            this.txt_VI_s = new System.Windows.Forms.TextBox();
-            this.btn_Reload = new System.Windows.Forms.Button();
-            this.btn_VIMAX = new System.Windows.Forms.Button();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -395,6 +395,17 @@ namespace MupenUtils
             this.gp_User.TabStop = false;
             this.gp_User.Text = "Specific";
             // 
+            // btn_VIMAX
+            // 
+            this.btn_VIMAX.Location = new System.Drawing.Point(212, 147);
+            this.btn_VIMAX.Name = "btn_VIMAX";
+            this.btn_VIMAX.Size = new System.Drawing.Size(48, 23);
+            this.btn_VIMAX.TabIndex = 0;
+            this.btn_VIMAX.TabStop = false;
+            this.btn_VIMAX.Text = "Max";
+            this.btn_VIMAX.UseVisualStyleBackColor = true;
+            this.btn_VIMAX.Click += new System.EventHandler(this.btn_VIMAX_Click);
+            // 
             // txt_PathName
             // 
             this.txt_PathName.Location = new System.Drawing.Point(128, 30);
@@ -432,6 +443,26 @@ namespace MupenUtils
             this.lbl_Author.Size = new System.Drawing.Size(45, 16);
             this.lbl_Author.TabIndex = 0;
             this.lbl_Author.Text = "Author";
+            // 
+            // txt_VI_s
+            // 
+            this.txt_VI_s.Location = new System.Drawing.Point(128, 174);
+            this.txt_VI_s.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_VI_s.Name = "txt_VI_s";
+            this.txt_VI_s.Size = new System.Drawing.Size(132, 22);
+            this.txt_VI_s.TabIndex = 0;
+            this.txt_VI_s.TabStop = false;
+            this.txt_VI_s.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
+            // 
+            // lbl_VI_s
+            // 
+            this.lbl_VI_s.AutoSize = true;
+            this.lbl_VI_s.Location = new System.Drawing.Point(10, 176);
+            this.lbl_VI_s.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_VI_s.Name = "lbl_VI_s";
+            this.lbl_VI_s.Size = new System.Drawing.Size(30, 16);
+            this.lbl_VI_s.TabIndex = 0;
+            this.lbl_VI_s.Text = "VI/s";
             // 
             // txt_VIs
             // 
@@ -529,6 +560,7 @@ namespace MupenUtils
             this.pb_RomCountry.Size = new System.Drawing.Size(24, 24);
             this.pb_RomCountry.TabIndex = 1;
             this.pb_RomCountry.TabStop = false;
+            this.pb_RomCountry.Click += new System.EventHandler(this.pb_RomCountry_Click);
             // 
             // txt_Rom
             // 
@@ -819,6 +851,18 @@ namespace MupenUtils
             this.txt_Rsp.Size = new System.Drawing.Size(132, 22);
             this.txt_Rsp.TabIndex = 0;
             this.txt_Rsp.TabStop = false;
+            // 
+            // btn_Reload
+            // 
+            this.btn_Reload.Location = new System.Drawing.Point(223, 448);
+            this.btn_Reload.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Reload.Name = "btn_Reload";
+            this.btn_Reload.Size = new System.Drawing.Size(98, 28);
+            this.btn_Reload.TabIndex = 0;
+            this.btn_Reload.TabStop = false;
+            this.btn_Reload.Text = "Reload";
+            this.btn_Reload.UseVisualStyleBackColor = true;
+            this.btn_Reload.Click += new System.EventHandler(this.btn_Reload_Click);
             // 
             // gp_input
             // 
@@ -1542,49 +1586,6 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
-            // 
-            // lbl_VI_s
-            // 
-            this.lbl_VI_s.AutoSize = true;
-            this.lbl_VI_s.Location = new System.Drawing.Point(10, 176);
-            this.lbl_VI_s.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_VI_s.Name = "lbl_VI_s";
-            this.lbl_VI_s.Size = new System.Drawing.Size(30, 16);
-            this.lbl_VI_s.TabIndex = 0;
-            this.lbl_VI_s.Text = "VI/s";
-            // 
-            // txt_VI_s
-            // 
-            this.txt_VI_s.Location = new System.Drawing.Point(128, 174);
-            this.txt_VI_s.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_VI_s.Name = "txt_VI_s";
-            this.txt_VI_s.Size = new System.Drawing.Size(132, 22);
-            this.txt_VI_s.TabIndex = 0;
-            this.txt_VI_s.TabStop = false;
-            this.txt_VI_s.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
-            // 
-            // btn_Reload
-            // 
-            this.btn_Reload.Location = new System.Drawing.Point(223, 448);
-            this.btn_Reload.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_Reload.Name = "btn_Reload";
-            this.btn_Reload.Size = new System.Drawing.Size(98, 28);
-            this.btn_Reload.TabIndex = 0;
-            this.btn_Reload.TabStop = false;
-            this.btn_Reload.Text = "Reload";
-            this.btn_Reload.UseVisualStyleBackColor = true;
-            this.btn_Reload.Click += new System.EventHandler(this.btn_Reload_Click);
-            // 
-            // btn_VIMAX
-            // 
-            this.btn_VIMAX.Location = new System.Drawing.Point(212, 147);
-            this.btn_VIMAX.Name = "btn_VIMAX";
-            this.btn_VIMAX.Size = new System.Drawing.Size(48, 23);
-            this.btn_VIMAX.TabIndex = 0;
-            this.btn_VIMAX.TabStop = false;
-            this.btn_VIMAX.Text = "Max";
-            this.btn_VIMAX.UseVisualStyleBackColor = true;
-            this.btn_VIMAX.Click += new System.EventHandler(this.btn_VIMAX_Click);
             // 
             // MainForm
             // 

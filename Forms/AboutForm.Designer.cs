@@ -29,12 +29,12 @@ namespace MupenUtils
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MoreForm));
             this.gp_More_Tips = new System.Windows.Forms.GroupBox();
             this.lbl_More_TipInfo = new System.Windows.Forms.Label();
             this.lbl_More_Tip = new System.Windows.Forms.Label();
             this.btn_More_NewTip = new System.Windows.Forms.Button();
             this.gp_More_About = new System.Windows.Forms.GroupBox();
+            this.btn_News = new System.Windows.Forms.Button();
             this.btn_More_CheckUpdates = new System.Windows.Forms.Button();
             this.lbl_Github = new System.Windows.Forms.Label();
             this.lbl_More_Related2 = new System.Windows.Forms.Label();
@@ -46,7 +46,6 @@ namespace MupenUtils
             this.Llbl_More_Mupen = new System.Windows.Forms.LinkLabel();
             this.txt_More_Info = new System.Windows.Forms.TextBox();
             this.pb_More_Logo = new System.Windows.Forms.PictureBox();
-            this.btn_News = new System.Windows.Forms.Button();
             this.gp_More_Tips.SuspendLayout();
             this.gp_More_About.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_More_Logo)).BeginInit();
@@ -71,7 +70,7 @@ namespace MupenUtils
             this.lbl_More_TipInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_More_TipInfo.Location = new System.Drawing.Point(16, 32);
             this.lbl_More_TipInfo.Name = "lbl_More_TipInfo";
-            this.lbl_More_TipInfo.Size = new System.Drawing.Size(55, 32);
+            this.lbl_More_TipInfo.Size = new System.Drawing.Size(54, 32);
             this.lbl_More_TipInfo.TabIndex = 0;
             this.lbl_More_TipInfo.Text = "Tip";
             this.lbl_More_TipInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.event_NewTip);
@@ -81,7 +80,7 @@ namespace MupenUtils
             this.lbl_More_Tip.AutoSize = true;
             this.lbl_More_Tip.Location = new System.Drawing.Point(72, 40);
             this.lbl_More_Tip.Name = "lbl_More_Tip";
-            this.lbl_More_Tip.Size = new System.Drawing.Size(337, 17);
+            this.lbl_More_Tip.Size = new System.Drawing.Size(312, 16);
             this.lbl_More_Tip.TabIndex = 0;
             this.lbl_More_Tip.Text = "Press the \"New Tip\" button or \"Tip\" text to show a tip";
             // 
@@ -118,6 +117,17 @@ namespace MupenUtils
             this.gp_More_About.TabStop = false;
             this.gp_More_About.Text = "About";
             // 
+            // btn_News
+            // 
+            this.btn_News.Location = new System.Drawing.Point(240, 224);
+            this.btn_News.Name = "btn_News";
+            this.btn_News.Size = new System.Drawing.Size(131, 31);
+            this.btn_News.TabIndex = 0;
+            this.btn_News.TabStop = false;
+            this.btn_News.Text = "What\'s new?";
+            this.btn_News.UseVisualStyleBackColor = true;
+            this.btn_News.Click += new System.EventHandler(this.btn_News_Click);
+            // 
             // btn_More_CheckUpdates
             // 
             this.btn_More_CheckUpdates.Location = new System.Drawing.Point(384, 224);
@@ -134,7 +144,7 @@ namespace MupenUtils
             this.lbl_Github.AutoSize = true;
             this.lbl_Github.Location = new System.Drawing.Point(16, 176);
             this.lbl_Github.Name = "lbl_Github";
-            this.lbl_Github.Size = new System.Drawing.Size(50, 17);
+            this.lbl_Github.Size = new System.Drawing.Size(45, 16);
             this.lbl_Github.TabIndex = 0;
             this.lbl_Github.Text = "Github";
             // 
@@ -143,7 +153,7 @@ namespace MupenUtils
             this.lbl_More_Related2.AutoSize = true;
             this.lbl_More_Related2.Location = new System.Drawing.Point(16, 152);
             this.lbl_More_Related2.Name = "lbl_More_Related2";
-            this.lbl_More_Related2.Size = new System.Drawing.Size(157, 17);
+            this.lbl_More_Related2.Size = new System.Drawing.Size(143, 16);
             this.lbl_More_Related2.TabIndex = 0;
             this.lbl_More_Related2.Text = "Other useful resources:";
             // 
@@ -152,7 +162,7 @@ namespace MupenUtils
             this.lbl_More_Related.AutoSize = true;
             this.lbl_More_Related.Location = new System.Drawing.Point(16, 128);
             this.lbl_More_Related.Name = "lbl_More_Related";
-            this.lbl_More_Related.Size = new System.Drawing.Size(112, 17);
+            this.lbl_More_Related.Size = new System.Drawing.Size(104, 16);
             this.lbl_More_Related.TabIndex = 0;
             this.lbl_More_Related.Text = "To be used with:";
             // 
@@ -163,7 +173,7 @@ namespace MupenUtils
             this.Llbl_More_MupenCringe.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Llbl_More_MupenCringe.Location = new System.Drawing.Point(288, 152);
             this.Llbl_More_MupenCringe.Name = "Llbl_More_MupenCringe";
-            this.Llbl_More_MupenCringe.Size = new System.Drawing.Size(125, 17);
+            this.Llbl_More_MupenCringe.Size = new System.Drawing.Size(121, 16);
             this.Llbl_More_MupenCringe.TabIndex = 0;
             this.Llbl_More_MupenCringe.TabStop = true;
             this.Llbl_More_MupenCringe.Text = "Mupen TASVideos";
@@ -177,7 +187,7 @@ namespace MupenUtils
             this.Llbl_More_ReportBug.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Llbl_More_ReportBug.Location = new System.Drawing.Point(192, 176);
             this.Llbl_More_ReportBug.Name = "Llbl_More_ReportBug";
-            this.Llbl_More_ReportBug.Size = new System.Drawing.Size(91, 17);
+            this.Llbl_More_ReportBug.Size = new System.Drawing.Size(85, 16);
             this.Llbl_More_ReportBug.TabIndex = 0;
             this.Llbl_More_ReportBug.TabStop = true;
             this.Llbl_More_ReportBug.Text = "Report a bug";
@@ -191,7 +201,7 @@ namespace MupenUtils
             this.Llbl_More_FeatureSuggestIssue.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Llbl_More_FeatureSuggestIssue.Location = new System.Drawing.Point(72, 176);
             this.Llbl_More_FeatureSuggestIssue.Name = "Llbl_More_FeatureSuggestIssue";
-            this.Llbl_More_FeatureSuggestIssue.Size = new System.Drawing.Size(121, 17);
+            this.Llbl_More_FeatureSuggestIssue.Size = new System.Drawing.Size(112, 16);
             this.Llbl_More_FeatureSuggestIssue.TabIndex = 0;
             this.Llbl_More_FeatureSuggestIssue.TabStop = true;
             this.Llbl_More_FeatureSuggestIssue.Text = "Suggest a feature";
@@ -205,7 +215,7 @@ namespace MupenUtils
             this.Llbl_More_Resources.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Llbl_More_Resources.Location = new System.Drawing.Point(176, 152);
             this.Llbl_More_Resources.Name = "Llbl_More_Resources";
-            this.Llbl_More_Resources.Size = new System.Drawing.Size(107, 17);
+            this.Llbl_More_Resources.Size = new System.Drawing.Size(103, 16);
             this.Llbl_More_Resources.TabIndex = 0;
             this.Llbl_More_Resources.TabStop = true;
             this.Llbl_More_Resources.Text = "TAS Resources";
@@ -219,7 +229,7 @@ namespace MupenUtils
             this.Llbl_More_Mupen.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Llbl_More_Mupen.Location = new System.Drawing.Point(136, 128);
             this.Llbl_More_Mupen.Name = "Llbl_More_Mupen";
-            this.Llbl_More_Mupen.Size = new System.Drawing.Size(104, 17);
+            this.Llbl_More_Mupen.Size = new System.Drawing.Size(94, 16);
             this.Llbl_More_Mupen.TabIndex = 0;
             this.Llbl_More_Mupen.TabStop = true;
             this.Llbl_More_Mupen.Text = "Mupen64 rr lua";
@@ -236,7 +246,8 @@ namespace MupenUtils
             this.txt_More_Info.Size = new System.Drawing.Size(408, 88);
             this.txt_More_Info.TabIndex = 0;
             this.txt_More_Info.TabStop = false;
-            this.txt_More_Info.Text = resources.GetString("txt_More_Info.Text");
+            this.txt_More_Info.Text = "MupenUtilities\r\n\r\nFeature-rich Utility app for Mupen64 with \r\nfull M64, ST suppor" +
+    "t and TAS Studio\r\n\r\nby Aurumaker72";
             // 
             // pb_More_Logo
             // 
@@ -250,17 +261,6 @@ namespace MupenUtils
             this.pb_More_Logo.TabIndex = 0;
             this.pb_More_Logo.TabStop = false;
             this.pb_More_Logo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_More_Logo_MouseDown);
-            // 
-            // btn_News
-            // 
-            this.btn_News.Location = new System.Drawing.Point(240, 224);
-            this.btn_News.Name = "btn_News";
-            this.btn_News.Size = new System.Drawing.Size(131, 31);
-            this.btn_News.TabIndex = 0;
-            this.btn_News.TabStop = false;
-            this.btn_News.Text = "What\'s new?";
-            this.btn_News.UseVisualStyleBackColor = true;
-            this.btn_News.Click += new System.EventHandler(this.btn_News_Click);
             // 
             // MoreForm
             // 

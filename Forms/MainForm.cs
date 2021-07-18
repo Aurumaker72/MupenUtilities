@@ -2192,7 +2192,15 @@ namespace MupenUtils
             liveTasStudio ^= true;
             tsmi_LiveTasStudio.Checked = liveTasStudio;
         }
+        private void btn_VIMAX_Click(object sender, EventArgs e)
+        {
+            MovieHeader.length_vis = UInt32.MaxValue;
+        }
 
+        private void pb_RomCountry_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("The movie\'s country is " + (string)DataHelper.GetCountryResource(MovieHeader.romCountry)[0] + ", with the country code of " + MovieHeader.romCountry + " (Hex: " + ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(MovieHeader.romCountry)) + ")", this.Text);
+        }
 
         private void themeSelectedClick(object sender, MouseEventArgs e)
         {
@@ -2402,10 +2410,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        private void btn_VIMAX_Click(object sender, EventArgs e)
-        {
-            MovieHeader.length_vis = UInt32.MaxValue;
-        }
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
