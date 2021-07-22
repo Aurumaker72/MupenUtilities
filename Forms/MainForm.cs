@@ -1769,7 +1769,13 @@ namespace MupenUtils
                 {
                     if (Path.Contains("mupen"))
                     {
-                        Process.Start(Path);
+                        var proc = Process.Start(Path);
+                        while (string.IsNullOrEmpty(proc.MainWindowTitle))
+                        {
+                            System.Threading.Thread.Sleep(100);
+                            proc.Refresh();
+                        }
+
                         MupenHook();
                     }
                     else
