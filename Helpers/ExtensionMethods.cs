@@ -438,9 +438,13 @@ public static class ExtensionMethods
 
         return sb.ToString();
     }
-    public static int GetByte(int val, int bytepos)
+    public static int GetByteBig(int val, int bytepos)
     {
         return (val >> (8 * bytepos)) & 0xFF;
+    }
+    public static sbyte GetSByte(int val, int bytepos)
+    {
+        return (sbyte)((val >> (8 * bytepos)) & 0xFF);
     }
     public static void SetDoubleBuffered(System.Windows.Forms.Control c)
     {

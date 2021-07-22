@@ -928,6 +928,7 @@ namespace MupenUtils
             }
             
             BinaryReader br = new BinaryReader(fs);
+
             for (int i = 0; i < 4; i++)
                 ControllersEnabled[i] = ExtensionMethods.GetBit(MovieHeader.controllerFlags, i);
 
@@ -935,35 +936,36 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
 
-            frames = MovieHeader.length_samples ;
-            ulong findx = 0;
-            // force seek to 1024
+            frames = MovieHeader.length_vis;
+            uint findx = 0;
+            // position 1024
             br.BaseStream.Seek(1024, SeekOrigin.Begin);
             while (findx <= frames)
             {
-                //for (int i = 0; i < MovieHeader.num_controllers; i++)
-                //{
-
-
-                if (br.BaseStream.Position + 4 > fs.Length)
+                for (int i = 0; i < MovieHeader.num_controllers; i++)
                 {
+
+
+                    if (br.BaseStream.Position + 4 > fs.Length)
+                    {
+                        findx++;
+                        continue;
+                    }
+
+
+
+                    if (ControllersEnabled[0])
+                        inputListCtl1.Add(br.ReadInt32());
+                    if (ControllersEnabled[1])
+                        inputListCtl2.Add(br.ReadInt32());
+                    if (ControllersEnabled[2])
+                        inputListCtl3.Add(br.ReadInt32());
+                    if (ControllersEnabled[3])
+                        inputListCtl4.Add(br.ReadInt32());
+
+                    Debug.WriteLine(ExtensionMethods.GetSByte(inputListCtl1[(int)findx], 2));
                     findx++;
-                    continue;
                 }
-
-
-
-                if (ControllersEnabled[0])
-                    inputListCtl1.Add(br.ReadInt32());
-                if (ControllersEnabled[1])
-                    inputListCtl2.Add(br.ReadInt32());
-                if (ControllersEnabled[2])
-                    inputListCtl3.Add(br.ReadInt32());
-                if (ControllersEnabled[3])
-                    inputListCtl4.Add(br.ReadInt32());
-
-                findx++;
-                //}
             }
 
 
@@ -1352,8 +1354,8 @@ namespace MupenUtils
                 buffer[14] = (inputLists[selectedController][y] & (int)Math.Pow(2, 14)) != 0 ? inputStructNames[14] : "";
                 buffer[15] = (inputLists[selectedController][y] & (int)Math.Pow(2, 15)) != 0 ? inputStructNames[15] : "";
 
-                buffer[16] = (ExtensionMethods.GetByte(inputLists[selectedController][y], 2)).ToString();
-                buffer[17] = (ExtensionMethods.GetByte(inputLists[selectedController][y], 3)).ToString();
+                buffer[16] = ExtensionMethods.GetSByte(inputLists[selectedController][y], 2).ToString();
+                buffer[17] = ExtensionMethods.GetSByte(inputLists[selectedController][y], 3).ToString();
 
                 rows[rows.Count - 1].CreateCells(dgv_Main, buffer);
 
