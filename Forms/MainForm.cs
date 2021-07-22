@@ -2328,6 +2328,15 @@ namespace MupenUtils
         {
 
         }
+        private void tsmi_DumpAppInfo_Click(object sender, EventArgs e)
+        {
+            File.WriteAllText(@"specialinfos.log", TelemetryDump());
+            if (MessageBox.Show("Dumped special information. Do you want to open a issue to send this file?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Process.Start("https://github.com/Aurumaker72/MupenUtilities/issues/new?assignees=&labels=&template=exception-with-crash-log.md&title=Mupen+Utilities+Telemetry");
+            }
+        }
+        
         #endregion
 
         #region Joystick Behaviour
@@ -2424,7 +2433,6 @@ namespace MupenUtils
             JOY_mouseDown = true;
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
-
 
         private void DrawJoystick(PaintEventArgs e)
         {
@@ -2552,12 +2560,36 @@ namespace MupenUtils
             exStr += "usage type: " + UsageType.ToString() + "\n";
             exStr += "file path: " + Path + "\n";
             exStr += "theme: " + UITheme.ToString() + "\n";
-
+            
             File.WriteAllText(@"exception.log", exStr);
 
             return @"exception.log";
         }
 
+        public string TelemetryDump()
+        {
+
+            string str = "";
+            str += "file loaded: " + FileLoaded.ToString() + "\n";
+            str += "mupen running: " + mupenRunning.ToString() + "\n";
+            str += "loaded invalid file: " + loadedInvalidFile.ToString() + "\n";
+            str += "usage type: " + UsageType.ToString() + "\n";
+            str += "file path: " + Path + "\n";
+            str += "theme: " + UITheme.ToString() + "\n";
+            foreach(var ctl in ctx_Input_Debug.Items)
+            {
+                if (ctl is ToolStripSeparator) continue;
+                ToolStripMenuItem tsmi = ctl as ToolStripMenuItem;
+                str += tsmi.Text + ": " + tsmi.Checked.ToString() + "\n"; 
+            }
+            foreach (var ctl in ctx_TasStudio.Items)
+            {
+                if (ctl is ToolStripSeparator) continue;
+                ToolStripMenuItem tsmi = ctl as ToolStripMenuItem;
+                str += tsmi.Text + ": " + tsmi.Checked.ToString() + "\n";
+            }
+            return str;
+        }
         #endregion
     }
 }

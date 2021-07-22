@@ -157,6 +157,7 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.tsmi_DumpAppInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -1365,11 +1366,12 @@ namespace MupenUtils
             this.toolStripSeparator4,
             this.tsmi_Agressive,
             this.tsmi_JoyKeyboard,
+            this.tsmi_DumpAppInfo,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_CRCPopulate,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 334);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(212, 388);
             // 
             // tsmi_AAJoystick
             // 
@@ -1570,7 +1572,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1580,12 +1581,18 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
+            // 
+            // tsmi_DumpAppInfo
+            // 
+            this.tsmi_DumpAppInfo.Name = "tsmi_DumpAppInfo";
+            this.tsmi_DumpAppInfo.Size = new System.Drawing.Size(211, 26);
+            this.tsmi_DumpAppInfo.Text = "Dump App Info";
+            this.tsmi_DumpAppInfo.Click += new System.EventHandler(this.tsmi_DumpAppInfo_Click);
             // 
             // MainForm
             // 
@@ -1763,6 +1770,7 @@ namespace MupenUtils
         private System.Windows.Forms.Label lbl_VI_s;
         private System.Windows.Forms.Button btn_Reload;
         private System.Windows.Forms.Button btn_VIMAX;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_DumpAppInfo;
     }
 }
 
