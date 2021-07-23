@@ -70,3 +70,35 @@ Do you want to find the first frame at which a specific button or joystick combi
 - Switch to the tab "Finder"
 - Choose your button/joystick
 - Press "Go"
+
+### Rundown of "More" context menu
+This menu changes with each update, but I'll try to keep this section relevant.
+- Simple Mode: toggles between a simple view with less controls and the full view
+
+- Input Analysis: opens the [Input Analysis](###how-to-find-the-first-button/joystick-value-in-a-movie) dialog
+
+- Movie Diagnostic: opens the Movie Diagnostic dialog and automatically performs all checks
+
+- Expert Tools: opens the Expert Tools dialog where you can view and edit movie data byte by byte
+
+- Get Input: shows a messagebox explaining how to understand a input data sample and shows you the data in a nice format
+
+- Themes: opens a dropdown where you can select themes
+
+- Antialiased Joystick: enables or disables antialiasing on the joystick drawing
+
+- Aggressive Override: when enabled, calls input-related functions more often and prevents weird edge cases from happening. **It is VERY recommended you keep this on**
+
+- Joystick Keyboard: when enabled, allows you to control the joystick using WASD, arrow keys
+
+- Generate Telemetry Data: generates a big file with many informations about your Mupen Utilities session and prompts you to send it to me. I appreciate this :)
+
+- Dump Movie: Dumps all movie input data to a file
+
+- Load CRC database: Loads CRC database from crc.txt located in the same folder as the executable
+
+ Acceptable format: `crc 12345678`. The text after crc should be a hex string
+ 
+ You can find the recommended resource here: https://github.com/libretro/libretro-database/blob/master/metadat/no-intro/Nintendo%20-%20Nintendo%2064.dat
+ 
+- Debug: Crash - Throws a exception and should cause the Mupen Utilities exception window to pop up
