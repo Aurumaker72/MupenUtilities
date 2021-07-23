@@ -59,6 +59,8 @@ namespace MupenUtils.Forms
 
             cbox_Ctl.Items.Clear();
 
+            cmb_Buttons.SelectedIndex = 0;
+
             for (int i1 = 0; i1 < sumX.Length; i1++)
                 sumX[i1] = 0;
             for (int i1 = 0; i1 < sumY.Length; i1++)
@@ -199,10 +201,16 @@ namespace MupenUtils.Forms
 
         private void btn_GoBruteforceButton_Click(object sender, EventArgs e)
         {
+            
             List<int> inputList;
             int searchedButton = cmb_Buttons.SelectedIndex;
             foundFrame = null;
 
+            if(searchedButton < 0)
+            {
+                lbl_StatusButton.Text = "Wrong button index";
+                return;
+            }
             switch (selectedController)
             {
                 case 0: inputList = inputCtl1; break;
@@ -211,7 +219,7 @@ namespace MupenUtils.Forms
                 case 3: inputList = inputCtl4; break;
                 default: MessageBox.Show("oob controller"); return;
             }
-
+            
             for (int i = 0; i < inputList.Count; i++)
             {
                 if(ExtensionMethods.GetBit(inputList[i], searchedButton))
