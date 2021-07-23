@@ -28,6 +28,10 @@ namespace MupenUtils.Forms
         ReplaceModes ReplaceMode = ReplaceModes.Assign;
         bool ReplaceUseNOT = false;
 
+        public static int from = 0;
+        public static int to = 0;
+        public static bool useExternalData = false;
+
         public ReplacementForm()
         {
             InitializeComponent();
@@ -50,7 +54,8 @@ namespace MupenUtils.Forms
             if (ExtensionMethods.ValidPath(MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg))
                 txt_Repl_Trg.Text = MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg;
 
-
+            txt_Repl_FFrom.Text = from.ToString();
+            txt_Repl_Fto.Text = to.ToString();
         }
 
         private void btn_Repl_BrowseSrc_Click(object sender, EventArgs e)
@@ -137,22 +142,26 @@ namespace MupenUtils.Forms
 
             const int INPUT_BEGIN = 1024;
 
-            int from = 0;
-            int to = 0;
-            try
+
+            if (!useExternalData)
             {
-                from = Int32.Parse(txt_Repl_FFrom.Text);
-                to = Int32.Parse(txt_Repl_Fto.Text);
+
+                try
+                {
+                    from = Int32.Parse(txt_Repl_FFrom.Text);
+                    to = Int32.Parse(txt_Repl_Fto.Text);
+                }
+                catch
+                {
+                    lbl_Repl_Status.Text = "Failed";
+                    lbl_Substatus.Text = "Integer parsing error";
+                }
+                if (chk_Repl_All.Checked)
+                {
+                    to = src.Length;
+                }
             }
-            catch
-            {
-                lbl_Repl_Status.Text = "Failed";
-                lbl_Substatus.Text = "Integer parsing error";
-            }
-            if (chk_Repl_All.Checked)
-            {
-                to = src.Length;
-            }
+
             if (to - from < 0 || from >= to || to > src.Length)
             {
                 lbl_Repl_Status.Text = "Failed";

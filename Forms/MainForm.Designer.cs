@@ -92,6 +92,8 @@ namespace MupenUtils
             this.txt_Rsp = new System.Windows.Forms.TextBox();
             this.btn_Reload = new System.Windows.Forms.Button();
             this.gp_input = new System.Windows.Forms.GroupBox();
+            this.nud_Y = new System.Windows.Forms.NumericUpDown();
+            this.nud_X = new System.Windows.Forms.NumericUpDown();
             this.cbox_Controllers = new System.Windows.Forms.ComboBox();
             this.gp_TASStudio = new System.Windows.Forms.GroupBox();
             this.dgv_Main = new System.Windows.Forms.DataGridView();
@@ -126,13 +128,12 @@ namespace MupenUtils
             this.btn_FrameBack2 = new System.Windows.Forms.Button();
             this.btn_FrameBack = new System.Windows.Forms.Button();
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_GetInput = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.inputStatisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_MovieDiagnostic = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_GetInput = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_Themes = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,6 +141,7 @@ namespace MupenUtils
             this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transparentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_JoyKeyboard = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_DumpAppInfo = new System.Windows.Forms.ToolStripMenuItem();
@@ -156,8 +158,12 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.nud_X = new System.Windows.Forms.NumericUpDown();
-            this.nud_Y = new System.Windows.Forms.NumericUpDown();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_Markers = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_BeginRegion = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_EndRegion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.replacementwithRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -167,6 +173,8 @@ namespace MupenUtils
             this.gp_M64_misc.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_input.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
             this.gp_TASStudio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
@@ -174,8 +182,6 @@ namespace MupenUtils
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -913,6 +919,26 @@ namespace MupenUtils
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input";
             // 
+            // nud_Y
+            // 
+            this.nud_Y.Location = new System.Drawing.Point(30, 153);
+            this.nud_Y.Name = "nud_Y";
+            this.nud_Y.Size = new System.Drawing.Size(64, 22);
+            this.nud_Y.TabIndex = 4;
+            this.nud_Y.ValueChanged += new System.EventHandler(this.nud_X_ValueChanged);
+            this.nud_Y.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
+            this.nud_Y.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            // 
+            // nud_X
+            // 
+            this.nud_X.Location = new System.Drawing.Point(30, 128);
+            this.nud_X.Name = "nud_X";
+            this.nud_X.Size = new System.Drawing.Size(64, 22);
+            this.nud_X.TabIndex = 4;
+            this.nud_X.ValueChanged += new System.EventHandler(this.nud_X_ValueChanged);
+            this.nud_X.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
+            this.nud_X.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            // 
             // cbox_Controllers
             // 
             this.cbox_Controllers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1353,15 +1379,6 @@ namespace MupenUtils
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
             this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 360);
             // 
-            // tsmi_AAJoystick
-            // 
-            this.tsmi_AAJoystick.Checked = true;
-            this.tsmi_AAJoystick.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmi_AAJoystick.Name = "tsmi_AAJoystick";
-            this.tsmi_AAJoystick.Size = new System.Drawing.Size(243, 26);
-            this.tsmi_AAJoystick.Text = "Antialiased Joystick";
-            this.tsmi_AAJoystick.Click += new System.EventHandler(this.tsmi_AAJoystick_Click);
-            // 
             // tsmi_SimpleMode
             // 
             this.tsmi_SimpleMode.Name = "tsmi_SimpleMode";
@@ -1373,20 +1390,6 @@ namespace MupenUtils
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(240, 6);
-            // 
-            // tsmi_GetInput
-            // 
-            this.tsmi_GetInput.Name = "tsmi_GetInput";
-            this.tsmi_GetInput.Size = new System.Drawing.Size(243, 26);
-            this.tsmi_GetInput.Text = "Get Input";
-            this.tsmi_GetInput.Click += new System.EventHandler(this.tsmi_GetInput_Click);
-            // 
-            // tsmi_Input_SetInput
-            // 
-            this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
-            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(243, 26);
-            this.tsmi_Input_SetInput.Text = "Expert Tools";
-            this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
             // 
             // inputStatisticsToolStripMenuItem
             // 
@@ -1401,6 +1404,20 @@ namespace MupenUtils
             this.tsmi_MovieDiagnostic.Size = new System.Drawing.Size(243, 26);
             this.tsmi_MovieDiagnostic.Text = "Movie Diagnostic";
             this.tsmi_MovieDiagnostic.Click += new System.EventHandler(this.tsmi_MovieDiagnostic_Click);
+            // 
+            // tsmi_Input_SetInput
+            // 
+            this.tsmi_Input_SetInput.Name = "tsmi_Input_SetInput";
+            this.tsmi_Input_SetInput.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_Input_SetInput.Text = "Expert Tools";
+            this.tsmi_Input_SetInput.Click += new System.EventHandler(this.tsmi_Input_SetInput_Click);
+            // 
+            // tsmi_GetInput
+            // 
+            this.tsmi_GetInput.Name = "tsmi_GetInput";
+            this.tsmi_GetInput.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_GetInput.Text = "Get Input";
+            this.tsmi_GetInput.Click += new System.EventHandler(this.tsmi_GetInput_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1450,6 +1467,15 @@ namespace MupenUtils
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(240, 6);
+            // 
+            // tsmi_AAJoystick
+            // 
+            this.tsmi_AAJoystick.Checked = true;
+            this.tsmi_AAJoystick.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmi_AAJoystick.Name = "tsmi_AAJoystick";
+            this.tsmi_AAJoystick.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_AAJoystick.Text = "Antialiased Joystick";
+            this.tsmi_AAJoystick.Click += new System.EventHandler(this.tsmi_AAJoystick_Click);
             // 
             // tsmi_Agressive
             // 
@@ -1504,42 +1530,44 @@ namespace MupenUtils
             this.toolStripSeparator5,
             this.tsmi_LiveTasStudio,
             this.tsmi_Autoscroll,
-            this.tsmi_TasStudio_Big});
+            this.tsmi_TasStudio_Big,
+            this.toolStripSeparator6,
+            this.tsmi_Markers});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(181, 114);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(211, 174);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(207, 6);
             // 
             // tsmi_LiveTasStudio
             // 
             this.tsmi_LiveTasStudio.Checked = true;
             this.tsmi_LiveTasStudio.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_LiveTasStudio.Name = "tsmi_LiveTasStudio";
-            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(210, 26);
             this.tsmi_LiveTasStudio.Text = "Live TAS Studio";
             this.tsmi_LiveTasStudio.Click += new System.EventHandler(this.tsmi_LiveTasStudio_Click_1);
             // 
             // tsmi_Autoscroll
             // 
             this.tsmi_Autoscroll.Name = "tsmi_Autoscroll";
-            this.tsmi_Autoscroll.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_Autoscroll.Size = new System.Drawing.Size(210, 26);
             this.tsmi_Autoscroll.Text = "Move Mode";
             this.tsmi_Autoscroll.Click += new System.EventHandler(this.tsmi_Autoscroll_Click);
             // 
             // tsmi_TasStudio_Big
             // 
             this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
-            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(210, 26);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
@@ -1576,25 +1604,47 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
-            // nud_X
+            // toolStripSeparator6
             // 
-            this.nud_X.Location = new System.Drawing.Point(30, 128);
-            this.nud_X.Name = "nud_X";
-            this.nud_X.Size = new System.Drawing.Size(64, 22);
-            this.nud_X.TabIndex = 4;
-            this.nud_X.ValueChanged += new System.EventHandler(this.nud_X_ValueChanged);
-            this.nud_X.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
-            this.nud_X.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(207, 6);
             // 
-            // nud_Y
+            // tsmi_Markers
             // 
-            this.nud_Y.Location = new System.Drawing.Point(30, 153);
-            this.nud_Y.Name = "nud_Y";
-            this.nud_Y.Size = new System.Drawing.Size(64, 22);
-            this.nud_Y.TabIndex = 4;
-            this.nud_Y.ValueChanged += new System.EventHandler(this.nud_X_ValueChanged);
-            this.nud_Y.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
-            this.nud_Y.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            this.tsmi_Markers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_BeginRegion,
+            this.tsmi_EndRegion,
+            this.toolStripSeparator7,
+            this.replacementwithRegionToolStripMenuItem});
+            this.tsmi_Markers.Name = "tsmi_Markers";
+            this.tsmi_Markers.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Markers.Text = "Markers";
+            // 
+            // tsmi_BeginRegion
+            // 
+            this.tsmi_BeginRegion.Name = "tsmi_BeginRegion";
+            this.tsmi_BeginRegion.Size = new System.Drawing.Size(224, 26);
+            this.tsmi_BeginRegion.Text = "Begin Region";
+            this.tsmi_BeginRegion.Click += new System.EventHandler(this.tsmi_BeginRegion_Click);
+            // 
+            // tsmi_EndRegion
+            // 
+            this.tsmi_EndRegion.Name = "tsmi_EndRegion";
+            this.tsmi_EndRegion.Size = new System.Drawing.Size(224, 26);
+            this.tsmi_EndRegion.Text = "End Region";
+            this.tsmi_EndRegion.Click += new System.EventHandler(this.tsmi_EndRegion_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(265, 6);
+            // 
+            // replacementwithRegionToolStripMenuItem
+            // 
+            this.replacementwithRegionToolStripMenuItem.Name = "replacementwithRegionToolStripMenuItem";
+            this.replacementwithRegionToolStripMenuItem.Size = new System.Drawing.Size(268, 26);
+            this.replacementwithRegionToolStripMenuItem.Text = "Replacement (with region)";
+            this.replacementwithRegionToolStripMenuItem.Click += new System.EventHandler(this.replacementwithRegionToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1632,6 +1682,8 @@ namespace MupenUtils
             this.gp_Plugins.PerformLayout();
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
             this.gp_TASStudio.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
@@ -1640,8 +1692,6 @@ namespace MupenUtils
             this.ctx_TasStudio.ResumeLayout(false);
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1775,6 +1825,12 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_DumpAppInfo;
         private System.Windows.Forms.NumericUpDown nud_X;
         private System.Windows.Forms.NumericUpDown nud_Y;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Markers;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_BeginRegion;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_EndRegion;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem replacementwithRegionToolStripMenuItem;
     }
 }
 

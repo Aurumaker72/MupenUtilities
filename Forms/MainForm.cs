@@ -161,6 +161,8 @@ namespace MupenUtils
 
         int lastValue;
 
+        int beginRegion, endRegion;
+
         public static int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
 
@@ -1023,7 +1025,7 @@ namespace MupenUtils
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = MovieHeader.description));
 
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = MINIMUM_FRAME));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)MovieHeader.length_samples));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = inputListCtl1.Count));
 
             for (int i = 0; i < MovieHeader.num_controllers; i++)
                 cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Add("Controller " + (i + 1))));
@@ -1743,6 +1745,9 @@ namespace MupenUtils
             {
                 if (replacementForm == null)
                     replacementForm = new ReplacementForm();
+
+                ReplacementForm.useExternalData = false;
+
                 replacementForm.ShowDialog();
                 return;
             }
@@ -1905,8 +1910,7 @@ namespace MupenUtils
                 dgv_Main.Rows[index].Selected = true;
             }
 
-            Debug.WriteLine(tr_MovieScrub.Maximum);
-            if (index < tr_MovieScrub.Maximum && index > tr_MovieScrub.Minimum) tr_MovieScrub.Value = frame;
+            if(index < tr_MovieScrub.Maximum && index > tr_MovieScrub.Minimum) tr_MovieScrub.Value = frame;
         }
         void AdvanceInputAuto(object obj, EventArgs e)
         {
@@ -2307,7 +2311,7 @@ namespace MupenUtils
 
             if (dgv_Main.SelectedCells.Count > 0)
                 SetFrame(dgv_Main.SelectedCells[dgv_Main.SelectedCells.Count - 1].RowIndex);
-
+            
 
         }
 
@@ -2381,12 +2385,44 @@ namespace MupenUtils
         private void tsmi_DumpAppInfo_Click(object sender, EventArgs e)
         {
             File.WriteAllText(@"specialinfos.log", TelemetryDump());
-            if (MessageBox.Show("Dumped special information. Do you want to open a issue to send this file?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Generated special information. Do you want to open a issue to send this file?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Process.Start("https://github.com/Aurumaker72/MupenUtilities/issues/new?assignees=&labels=&template=exception-with-crash-log.md&title=Mupen+Utilities+Telemetry");
             }
         }
-        
+        private void tsmi_EndRegion_Click(object sender, EventArgs e)
+        {
+            if (tasStudioAutoScroll)
+                endRegion = dgv_Main.SelectedRows[0].Index;
+            else
+                endRegion = dgv_Main.SelectedCells[0].RowIndex;
+
+            //MessageBox.Show("Set region end to frame " + endRegion, this.Text);
+
+        }
+
+        private void tsmi_BeginRegion_Click(object sender, EventArgs e)
+        {
+            if (tasStudioAutoScroll)
+                beginRegion = dgv_Main.SelectedRows[0].Index;
+            else
+                beginRegion = dgv_Main.SelectedCells[0].RowIndex;
+
+            //MessageBox.Show("Set region begin to frame " + beginRegion, this.Text);
+        }
+        private void replacementwithRegionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReplacementForm.from = beginRegion;
+            ReplacementForm.to = endRegion;
+            ReplacementForm.useExternalData = true;
+
+
+            if (replacementForm == null) replacementForm = new ReplacementForm();
+
+            replacementForm.ShowDialog();
+
+        }
+
         #endregion
 
         #region Joystick Behaviour
@@ -2474,7 +2510,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        
+       
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
