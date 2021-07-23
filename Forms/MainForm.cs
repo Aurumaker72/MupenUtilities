@@ -960,7 +960,7 @@ namespace MupenUtils
             // Load inputs
             // We need a buffer to check if end of file reached
 
-            frames = MovieHeader.length_vis;
+            frames = MovieHeader.length_samples;
             uint findx = 0;
             // position 1024
             br.BaseStream.Seek(1024, SeekOrigin.Begin);
@@ -2260,6 +2260,7 @@ namespace MupenUtils
         private void btn_VIMAX_Click(object sender, EventArgs e)
         {
             MovieHeader.length_vis = UInt32.MaxValue;
+            txt_VIs.Text = MovieHeader.length_vis.ToString();
         }
 
         private void pb_RomCountry_Click(object sender, EventArgs e)
