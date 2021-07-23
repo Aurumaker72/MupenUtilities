@@ -200,6 +200,10 @@ namespace MupenUtils
         const int MEM_COMMIT = 0x00001000;
         const int PAGE_READWRITE = 0x04;
         const int PROCESS_WM_READ = 0x0010;
+        const int UDS_HORZ = 0x0040;
+
+        [DllImport("user32.dll")]
+        static extern int SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
 
         [DllImport("user32.dll")]
         public static extern bool LockWindowUpdate(IntPtr hWndLock);
@@ -386,6 +390,14 @@ namespace MupenUtils
 
             JOY_Keyboard = MupenUtilities.Properties.Settings.Default.JoystickKeyboard;
             tsmi_JoyKeyboard.Checked = JOY_Keyboard;
+
+            nud_X.Minimum = -128;
+            nud_X.Maximum = 127;
+
+            nud_Y.Minimum = -127;
+            nud_Y.Maximum = 128;
+
+            //SetWindowLong(nud_X.Handle, -20, UDS_HORZ);
 
             exceptionForm = new ExceptionForm();
 
@@ -1446,7 +1458,7 @@ namespace MupenUtils
                         if (i == 16)
                             cellValue = ((sbyte)data[2]).ToString();
                         else if (i == 17)
-                            cellValue = txt_joyY.Text;
+                            cellValue = nud_Y.Value.ToString();
                     }
 
                     dgv_Main.Rows[frameTarget].Cells[i].Value = cellValue;
@@ -1465,8 +1477,8 @@ namespace MupenUtils
             sbyte joystickX = (sbyte)data[2];
             sbyte joystickY = (sbyte)-data[3]; // flip
 
-            txt_joyX.Text = joystickX.ToString();
-            txt_joyY.Text = (/*-*/joystickY).ToString();// lie to user
+            nud_X.Value = ExtensionMethods.Clamp(joystickX, -128, 127);
+            nud_Y.Value = ExtensionMethods.Clamp(joystickY, -127, 128);
 
             SetJoystickValue(new Point(joystickX, joystickY), RELATIVE, false);
 
@@ -1888,8 +1900,8 @@ namespace MupenUtils
                 dgv_Main.Rows[index].Selected = true;
             }
 
+            Debug.WriteLine(tr_MovieScrub.Maximum);
             if (index < tr_MovieScrub.Maximum && index > tr_MovieScrub.Minimum) tr_MovieScrub.Value = frame;
-
         }
         void AdvanceInputAuto(object obj, EventArgs e)
         {
@@ -1993,8 +2005,8 @@ namespace MupenUtils
         {
             simpleMode = !simpleMode;
             tsmi_SimpleMode.Checked = simpleMode;
-            txt_joyX.Visible
-                = txt_joyY.Visible
+            nud_X.Visible
+                = nud_Y.Visible
                 = lbl_X.Visible
                 = lbl_Y.Visible
                 = txt_Frame.Visible
@@ -2060,23 +2072,30 @@ namespace MupenUtils
                 SetFrame(Int32.Parse(txt_Frame.Text));
             }
         }
-        void ParseXYTextbox()
+        void JoystickFromNudControl()
         {
-            if (ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text))
-                SetJoystickValue(new Point(sbyte.Parse(txt_joyX.Text), sbyte.Parse(txt_joyY.Text)), RELATIVE, false);
-        }
-        private void txt_joyX_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) ParseXYTextbox();
-            if (e.KeyCode == Keys.Escape) this.ActiveControl = null;
+            //if (ExtensionMethods.ValidStringSByte(txt_joyX.Text) && ExtensionMethods.ValidStringSByte(txt_joyY.Text))
+            
+            SetJoystickValue(new Point((int)nud_X.Value, (int)nud_Y.Value), RELATIVE, false);
+
         }
 
-        private void txt_joyY_KeyDown(object sender, KeyEventArgs e)
+        private void nud_X_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) ParseXYTextbox();
+            JoystickFromNudControl();
             if (e.KeyCode == Keys.Escape) this.ActiveControl = null;
         }
+        private void nud_X_ValueChanged(object sender, EventArgs e)
+        {
+            //Debug.WriteLine("ok");
+            //JoystickFromNudControl();
 
+            // this event is dogshit
+        }
+        private void nud_X_MouseUp(object sender, MouseEventArgs e)
+        {
+            JoystickFromNudControl();
+        }
         private void btn_Savem64_MouseClick(object sender, MouseEventArgs e) => WriteM64(false);
         private void btn_SaveAs_Click(object sender, EventArgs e) => WriteM64(true);
         private void btn_Reload_Click(object sender, EventArgs e)
@@ -2116,8 +2135,8 @@ namespace MupenUtils
             }
             // Joystick buttons + Joystick
             pb_JoystickPic.Enabled = !readOnly;
-            txt_joyX.ReadOnly = readOnly;
-            txt_joyY.ReadOnly = readOnly;
+            nud_X.Enabled = !readOnly;
+            nud_Y.Enabled = !readOnly;
             foreach (Control ctl in gp_input.Controls)
             {
                 if (ctl is CheckBox)
@@ -2400,8 +2419,10 @@ namespace MupenUtils
             //if (user && !readOnly)  (frame);
 
             SuspendLayout(); // freeze form repaint
-            txt_joyX.Text = JOY_Rel.X.ToString();
-            txt_joyY.Text = JOY_Rel.Y.ToString();
+            nud_X.Value = ExtensionMethods.Clamp(JOY_Rel.X, -128, 127);
+            nud_Y.Value = ExtensionMethods.Clamp(JOY_Rel.Y, -127, 128);
+            
+            
             ResumeLayout(true);
 
             pb_JoystickPic.Refresh();
@@ -2433,6 +2454,8 @@ namespace MupenUtils
             JOY_mouseDown = true;
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
+
+        
 
         private void DrawJoystick(PaintEventArgs e)
         {

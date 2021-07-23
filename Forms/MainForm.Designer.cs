@@ -101,8 +101,6 @@ namespace MupenUtils
             this.txt_Frame = new System.Windows.Forms.TextBox();
             this.lbl_Y = new System.Windows.Forms.Label();
             this.lbl_X = new System.Windows.Forms.Label();
-            this.txt_joyY = new System.Windows.Forms.TextBox();
-            this.txt_joyX = new System.Windows.Forms.TextBox();
             this.chk_RESERVED2 = new System.Windows.Forms.CheckBox();
             this.chk_restart = new System.Windows.Forms.CheckBox();
             this.chk_RESERVED1 = new System.Windows.Forms.CheckBox();
@@ -158,6 +156,8 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.nud_X = new System.Windows.Forms.NumericUpDown();
+            this.nud_Y = new System.Windows.Forms.NumericUpDown();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -174,6 +174,8 @@ namespace MupenUtils
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -867,6 +869,8 @@ namespace MupenUtils
             // 
             // gp_input
             // 
+            this.gp_input.Controls.Add(this.nud_Y);
+            this.gp_input.Controls.Add(this.nud_X);
             this.gp_input.Controls.Add(this.cbox_Controllers);
             this.gp_input.Controls.Add(this.gp_TASStudio);
             this.gp_input.Controls.Add(this.tr_MovieScrub);
@@ -875,8 +879,6 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.txt_Frame);
             this.gp_input.Controls.Add(this.lbl_Y);
             this.gp_input.Controls.Add(this.lbl_X);
-            this.gp_input.Controls.Add(this.txt_joyY);
-            this.gp_input.Controls.Add(this.txt_joyX);
             this.gp_input.Controls.Add(this.chk_RESERVED2);
             this.gp_input.Controls.Add(this.chk_restart);
             this.gp_input.Controls.Add(this.chk_RESERVED1);
@@ -1022,28 +1024,6 @@ namespace MupenUtils
             this.lbl_X.TabIndex = 0;
             this.lbl_X.Text = "X";
             // 
-            // txt_joyY
-            // 
-            this.txt_joyY.Location = new System.Drawing.Point(30, 152);
-            this.txt_joyY.Name = "txt_joyY";
-            this.txt_joyY.ReadOnly = true;
-            this.txt_joyY.Size = new System.Drawing.Size(64, 22);
-            this.txt_joyY.TabIndex = 0;
-            this.txt_joyY.TabStop = false;
-            this.txt_joyY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_joyY_KeyDown);
-            this.txt_joyY.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // txt_joyX
-            // 
-            this.txt_joyX.Location = new System.Drawing.Point(30, 128);
-            this.txt_joyX.Name = "txt_joyX";
-            this.txt_joyX.ReadOnly = true;
-            this.txt_joyX.Size = new System.Drawing.Size(64, 22);
-            this.txt_joyX.TabIndex = 0;
-            this.txt_joyX.TabStop = false;
-            this.txt_joyX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_joyX_KeyDown);
-            this.txt_joyX.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
             // chk_RESERVED2
             // 
             this.chk_RESERVED2.AutoSize = true;
@@ -1106,7 +1086,7 @@ namespace MupenUtils
             // 
             this.chk_Cright.AutoSize = true;
             this.chk_Cright.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cright.Location = new System.Drawing.Point(75, 236);
+            this.chk_Cright.Location = new System.Drawing.Point(72, 236);
             this.chk_Cright.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Cright.Name = "chk_Cright";
             this.chk_Cright.Size = new System.Drawing.Size(45, 20);
@@ -1120,7 +1100,7 @@ namespace MupenUtils
             // 
             this.chk_Cdown.AutoSize = true;
             this.chk_Cdown.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cdown.Location = new System.Drawing.Point(43, 266);
+            this.chk_Cdown.Location = new System.Drawing.Point(43, 263);
             this.chk_Cdown.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Cdown.Name = "chk_Cdown";
             this.chk_Cdown.Size = new System.Drawing.Size(45, 20);
@@ -1134,7 +1114,7 @@ namespace MupenUtils
             // 
             this.chk_Cleft.AutoSize = true;
             this.chk_Cleft.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cleft.Location = new System.Drawing.Point(11, 236);
+            this.chk_Cleft.Location = new System.Drawing.Point(14, 236);
             this.chk_Cleft.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Cleft.Name = "chk_Cleft";
             this.chk_Cleft.Size = new System.Drawing.Size(45, 20);
@@ -1204,7 +1184,7 @@ namespace MupenUtils
             // 
             this.chk_Cup.AutoSize = true;
             this.chk_Cup.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cup.Location = new System.Drawing.Point(43, 207);
+            this.chk_Cup.Location = new System.Drawing.Point(43, 210);
             this.chk_Cup.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Cup.Name = "chk_Cup";
             this.chk_Cup.Size = new System.Drawing.Size(45, 20);
@@ -1298,9 +1278,9 @@ namespace MupenUtils
             this.lbl_FrameSelected.Location = new System.Drawing.Point(132, 295);
             this.lbl_FrameSelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_FrameSelected.Name = "lbl_FrameSelected";
-            this.lbl_FrameSelected.Size = new System.Drawing.Size(59, 16);
+            this.lbl_FrameSelected.Size = new System.Drawing.Size(56, 16);
             this.lbl_FrameSelected.TabIndex = 0;
-            this.lbl_FrameSelected.Text = "Frame: 0";
+            this.lbl_FrameSelected.Text = "Frame 0";
             // 
             // btn_FrameFront2
             // 
@@ -1371,7 +1351,7 @@ namespace MupenUtils
             this.tsmi_CRCPopulate,
             this.tsmi_Input_Sticky});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 388);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 360);
             // 
             // tsmi_AAJoystick
             // 
@@ -1596,6 +1576,26 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
+            // nud_X
+            // 
+            this.nud_X.Location = new System.Drawing.Point(30, 128);
+            this.nud_X.Name = "nud_X";
+            this.nud_X.Size = new System.Drawing.Size(64, 22);
+            this.nud_X.TabIndex = 4;
+            this.nud_X.ValueChanged += new System.EventHandler(this.nud_X_ValueChanged);
+            this.nud_X.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
+            this.nud_X.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            // 
+            // nud_Y
+            // 
+            this.nud_Y.Location = new System.Drawing.Point(30, 153);
+            this.nud_Y.Name = "nud_Y";
+            this.nud_Y.Size = new System.Drawing.Size(64, 22);
+            this.nud_Y.TabIndex = 4;
+            this.nud_Y.ValueChanged += new System.EventHandler(this.nud_X_ValueChanged);
+            this.nud_Y.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
+            this.nud_Y.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1640,6 +1640,8 @@ namespace MupenUtils
             this.ctx_TasStudio.ResumeLayout(false);
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1676,8 +1678,6 @@ namespace MupenUtils
         private System.Windows.Forms.CheckBox chk_Z;
         private System.Windows.Forms.CheckBox chk_RESERVED2;
         private System.Windows.Forms.CheckBox chk_RESERVED1;
-        private System.Windows.Forms.TextBox txt_joyY;
-        private System.Windows.Forms.TextBox txt_joyX;
         private System.Windows.Forms.CheckBox chk_restart;
         private System.Windows.Forms.Label lbl_X;
         private System.Windows.Forms.Button btn_PlayDirection;
@@ -1773,6 +1773,8 @@ namespace MupenUtils
         private System.Windows.Forms.Button btn_Reload;
         private System.Windows.Forms.Button btn_VIMAX;
         private System.Windows.Forms.ToolStripMenuItem tsmi_DumpAppInfo;
+        private System.Windows.Forms.NumericUpDown nud_X;
+        private System.Windows.Forms.NumericUpDown nud_Y;
     }
 }
 
