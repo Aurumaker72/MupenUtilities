@@ -64,10 +64,15 @@ Get the raw input value at any frame in a dialog located under "More" button.
 ### RDRAM
 View and edit savestates' RDRAM section. You can save and block special addresses to make it easier to remember what goes where.
 
-## Mupen [WIP]
-Hook into mupen64 process memory and view some data like version string.
+### Game
+View and edit some simple game variables.
 
-### __Mupen hook might be unbearably slow or not work on some systems!__
+Supported Games:
+- Super Mario 64 USA
+
+## Mupen
+Hook into Mupen64 process memory and view some data like version string.
+Keep in mind that this Mupen hook is very slow and might not work on some systems.
 
 ## Requirements
 __Using__
@@ -101,16 +106,17 @@ In the bin/x86/Release folder you will find a MupenUtilities executable and the 
 **Important:** Do not separate the dlls and executable.
 
 ## Other
-🌐This program automatically checks for updates when internet is connected.
+-This program automatically checks for updates when internet is connected
 
-⚠️This program accesses other program's memory and might be marked as unsafe. 
+-This program accesses other program's memory and might be marked as unsafe
 
-🥚There is a easter egg in the TAS Studio utility dialog
+-There is a easter egg in the TAS Studio utility dialog
 
-🧵This program is multithreaded
+-This program is multithreaded
 
-🎛️This program does not fully support more than one controller
+-This program does not fully support more than one controller
 
-🖌️This application supports themes
+-This application supports themes
 
-🔌This application features a special exception handler which allows fast reporting of bugs
+-This application features a special exception handler which allows fast reporting of bugs
+
