@@ -71,6 +71,16 @@ namespace MupenUtils.Forms
             this.lbl_FirstAt = new System.Windows.Forms.Label();
             this.lbl_Ctl = new System.Windows.Forms.Label();
             this.cbox_Ctl = new System.Windows.Forms.ComboBox();
+            this.gp_JoyFinder = new System.Windows.Forms.GroupBox();
+            this.lbl_JoyStatus = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btn_GoJoystickFind = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.nud_X = new System.Windows.Forms.NumericUpDown();
+            this.nud_Y = new System.Windows.Forms.NumericUpDown();
+            this.chk_X = new System.Windows.Forms.CheckBox();
+            this.chk_Y = new System.Windows.Forms.CheckBox();
             this.gp_Buttons.SuspendLayout();
             this.gp_joystick.SuspendLayout();
             this.gp_Misc.SuspendLayout();
@@ -81,6 +91,10 @@ namespace MupenUtils.Forms
             this.tbp_Analysis.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gp_Context.SuspendLayout();
+            this.gp_JoyFinder.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).BeginInit();
             this.SuspendLayout();
             // 
             // gp_Buttons
@@ -410,6 +424,7 @@ namespace MupenUtils.Forms
             // 
             // tbp_Analysis
             // 
+            this.tbp_Analysis.Controls.Add(this.gp_JoyFinder);
             this.tbp_Analysis.Controls.Add(this.groupBox1);
             this.tbp_Analysis.Location = new System.Drawing.Point(4, 25);
             this.tbp_Analysis.Name = "tbp_Analysis";
@@ -450,6 +465,7 @@ namespace MupenUtils.Forms
             this.btn_SetInMain.TabIndex = 2;
             this.btn_SetInMain.Text = "set frame in main  program";
             this.btn_SetInMain.UseVisualStyleBackColor = true;
+            this.btn_SetInMain.Visible = false;
             // 
             // btn_GoBruteforceButton
             // 
@@ -467,7 +483,7 @@ namespace MupenUtils.Forms
             this.gp_Context.Controls.Add(this.lbl_FirstAt);
             this.gp_Context.Location = new System.Drawing.Point(6, 21);
             this.gp_Context.Name = "gp_Context";
-            this.gp_Context.Size = new System.Drawing.Size(287, 46);
+            this.gp_Context.Size = new System.Drawing.Size(352, 46);
             this.gp_Context.TabIndex = 1;
             this.gp_Context.TabStop = false;
             this.gp_Context.Text = "Context";
@@ -476,7 +492,7 @@ namespace MupenUtils.Forms
             // 
             this.cmb_Buttons.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_Buttons.FormattingEnabled = true;
-            this.cmb_Buttons.Location = new System.Drawing.Point(195, 15);
+            this.cmb_Buttons.Location = new System.Drawing.Point(260, 15);
             this.cmb_Buttons.Name = "cmb_Buttons";
             this.cmb_Buttons.Size = new System.Drawing.Size(86, 24);
             this.cmb_Buttons.TabIndex = 0;
@@ -509,6 +525,108 @@ namespace MupenUtils.Forms
             this.cbox_Ctl.Size = new System.Drawing.Size(121, 24);
             this.cbox_Ctl.TabIndex = 3;
             // 
+            // gp_JoyFinder
+            // 
+            this.gp_JoyFinder.Controls.Add(this.lbl_JoyStatus);
+            this.gp_JoyFinder.Controls.Add(this.button1);
+            this.gp_JoyFinder.Controls.Add(this.btn_GoJoystickFind);
+            this.gp_JoyFinder.Controls.Add(this.groupBox3);
+            this.gp_JoyFinder.Location = new System.Drawing.Point(8, 144);
+            this.gp_JoyFinder.Name = "gp_JoyFinder";
+            this.gp_JoyFinder.Size = new System.Drawing.Size(628, 132);
+            this.gp_JoyFinder.TabIndex = 2;
+            this.gp_JoyFinder.TabStop = false;
+            this.gp_JoyFinder.Text = "Joystick";
+            // 
+            // lbl_JoyStatus
+            // 
+            this.lbl_JoyStatus.AutoSize = true;
+            this.lbl_JoyStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_JoyStatus.Location = new System.Drawing.Point(2, 98);
+            this.lbl_JoyStatus.Name = "lbl_JoyStatus";
+            this.lbl_JoyStatus.Size = new System.Drawing.Size(35, 20);
+            this.lbl_JoyStatus.TabIndex = 3;
+            this.lbl_JoyStatus.Text = "Idle";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(317, 93);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(206, 33);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "set frame in main  program";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            // 
+            // btn_GoJoystickFind
+            // 
+            this.btn_GoJoystickFind.Location = new System.Drawing.Point(529, 93);
+            this.btn_GoJoystickFind.Name = "btn_GoJoystickFind";
+            this.btn_GoJoystickFind.Size = new System.Drawing.Size(93, 33);
+            this.btn_GoJoystickFind.TabIndex = 2;
+            this.btn_GoJoystickFind.Text = "Go";
+            this.btn_GoJoystickFind.UseVisualStyleBackColor = true;
+            this.btn_GoJoystickFind.Click += new System.EventHandler(this.btn_GoJoystickFind_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.chk_Y);
+            this.groupBox3.Controls.Add(this.chk_X);
+            this.groupBox3.Controls.Add(this.nud_Y);
+            this.groupBox3.Controls.Add(this.nud_X);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Location = new System.Drawing.Point(6, 21);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(616, 66);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Context";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(192, 16);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Find the first joystick instance of";
+            // 
+            // nud_X
+            // 
+            this.nud_X.Location = new System.Drawing.Point(260, 16);
+            this.nud_X.Name = "nud_X";
+            this.nud_X.Size = new System.Drawing.Size(86, 22);
+            this.nud_X.TabIndex = 1;
+            // 
+            // nud_Y
+            // 
+            this.nud_Y.Location = new System.Drawing.Point(396, 15);
+            this.nud_Y.Name = "nud_Y";
+            this.nud_Y.Size = new System.Drawing.Size(86, 22);
+            this.nud_Y.TabIndex = 1;
+            // 
+            // chk_X
+            // 
+            this.chk_X.AutoSize = true;
+            this.chk_X.Location = new System.Drawing.Point(217, 17);
+            this.chk_X.Name = "chk_X";
+            this.chk_X.Size = new System.Drawing.Size(37, 20);
+            this.chk_X.TabIndex = 3;
+            this.chk_X.Text = "X";
+            this.chk_X.UseVisualStyleBackColor = true;
+            this.chk_X.CheckedChanged += new System.EventHandler(this.chk_X_CheckedChanged);
+            // 
+            // chk_Y
+            // 
+            this.chk_Y.AutoSize = true;
+            this.chk_Y.Location = new System.Drawing.Point(352, 17);
+            this.chk_Y.Name = "chk_Y";
+            this.chk_Y.Size = new System.Drawing.Size(38, 20);
+            this.chk_Y.TabIndex = 3;
+            this.chk_Y.Text = "Y";
+            this.chk_Y.UseVisualStyleBackColor = true;
+            this.chk_Y.CheckedChanged += new System.EventHandler(this.chk_X_CheckedChanged);
+            // 
             // InputStatsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -539,6 +657,12 @@ namespace MupenUtils.Forms
             this.groupBox1.PerformLayout();
             this.gp_Context.ResumeLayout(false);
             this.gp_Context.PerformLayout();
+            this.gp_JoyFinder.ResumeLayout(false);
+            this.gp_JoyFinder.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -588,5 +712,15 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Label lbl_StatusButton;
         private System.Windows.Forms.Label lbl_Ctl;
         private System.Windows.Forms.ComboBox cbox_Ctl;
+        private System.Windows.Forms.GroupBox gp_JoyFinder;
+        private System.Windows.Forms.Label lbl_JoyStatus;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_GoJoystickFind;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown nud_Y;
+        private System.Windows.Forms.NumericUpDown nud_X;
+        private System.Windows.Forms.CheckBox chk_Y;
+        private System.Windows.Forms.CheckBox chk_X;
     }
 }

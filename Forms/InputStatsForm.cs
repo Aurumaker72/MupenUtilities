@@ -150,7 +150,7 @@ namespace MupenUtils.Forms
                 case 1: inputList = inputCtl2; break;
                 case 2: inputList = inputCtl3; break;
                 case 3: inputList = inputCtl4; break;
-                default: throw new ArgumentException("Invalid controller index");
+                default: MessageBox.Show("oob controller"); return;
             }
 
             for (int i = 0; i < inputList.Count; i++)
@@ -201,14 +201,15 @@ namespace MupenUtils.Forms
         {
             List<int> inputList;
             int searchedButton = cmb_Buttons.SelectedIndex;
-            
+            foundFrame = null;
+
             switch (selectedController)
             {
                 case 0: inputList = inputCtl1; break;
                 case 1: inputList = inputCtl2; break;
                 case 2: inputList = inputCtl3; break;
                 case 3: inputList = inputCtl4; break;
-                default: throw new ArgumentException("Invalid controller index");
+                default: MessageBox.Show("oob controller"); return;
             }
 
             for (int i = 0; i < inputList.Count; i++)
@@ -224,6 +225,77 @@ namespace MupenUtils.Forms
                 lbl_StatusButton.Text = "Couldn\'t find button " + MainForm.inputStructNames[searchedButton];
             else
                 lbl_StatusButton.Text = "First instance of button " + MainForm.inputStructNames[searchedButton] + " at " + foundFrame;
+        }
+
+        private void btn_GoJoystickFind_Click(object sender, EventArgs e)
+        {
+            List<int> inputList;
+
+            int? searchedX = (int)nud_X.Value;
+            int? searchedY = (int)nud_Y.Value;
+
+            if (!chk_X.Checked) searchedX = null;
+            if (!chk_Y.Checked) searchedY = null;
+
+            if (searchedX == null && searchedY == null)
+            {
+                lbl_JoyStatus.Text = "Nothing to search for";
+            }
+
+            foundFrame = null;
+
+            switch (selectedController)
+            {
+                case 0: inputList = inputCtl1; break;
+                case 1: inputList = inputCtl2; break;
+                case 2: inputList = inputCtl3; break;
+                case 3: inputList = inputCtl4; break;
+                default: MessageBox.Show("oob controller"); return;
+            }
+
+            for (int i = 0; i < inputList.Count; i++)
+            {
+                // bad programming but im rushing to make some features here before vacation
+                if (searchedX == null && searchedY != null)
+                {
+                    if (ExtensionMethods.GetSByte(inputList[i], 3) == searchedY)
+                    {
+                        foundFrame = i;
+                        break;
+                    }
+                }
+                if (searchedX != null && searchedY == null)
+                {
+                    if (ExtensionMethods.GetSByte(inputList[i], 2) == searchedX)
+                    {
+                        foundFrame = i;
+                        break;
+                    }
+                }
+                if (searchedX != null && searchedY != null)
+                {
+                    if (ExtensionMethods.GetSByte(inputList[i], 2) == searchedX && ExtensionMethods.GetSByte(inputList[i], 3) == searchedY)
+                    {
+                        foundFrame = i;
+                        break;
+                    }
+                }
+            }
+
+            if (foundFrame == null)
+            {
+                if (searchedX == null && searchedY != null) lbl_JoyStatus.Text = String.Format("Couldn\'t find Y {0}", searchedY);
+                if (searchedX != null && searchedY == null) lbl_JoyStatus.Text = String.Format("Couldn\'t find X {0}", searchedX);
+                if (searchedX != null && searchedY != null) lbl_JoyStatus.Text = String.Format("Couldn\'t find X {0} Y {1}", searchedX, searchedY);
+            }
+            else
+                lbl_JoyStatus.Text = "First instance of combination at " + foundFrame;
+        }
+
+        private void chk_X_CheckedChanged(object sender, EventArgs e)
+        {
+            nud_X.Enabled = chk_X.Checked;
+            nud_Y.Enabled = chk_Y.Checked;
         }
     }
 }
