@@ -161,7 +161,8 @@ namespace MupenUtils
 
         int lastValue;
 
-        int beginRegion, endRegion;
+        int beginRegion = -1, endRegion = -1;
+        bool regionExist;
 
         public static int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
@@ -400,6 +401,7 @@ namespace MupenUtils
             nud_Y.Minimum = -127;
             nud_Y.Maximum = 128;
 
+            UpdateTASStudioRegionUI();
             //SetWindowLong(nud_X.Handle, -20, UDS_HORZ);
 
             exceptionForm = new ExceptionForm();
@@ -713,6 +715,12 @@ namespace MupenUtils
                 EnableM64View(false, false, true);
             }
             btn_PathSel.Text = txt;
+        }
+        void UpdateTASStudioRegionUI()
+        {
+            regionExist = (beginRegion >= MINIMUM_FRAME) && (endRegion >= MINIMUM_FRAME) && (endRegion > beginRegion);
+
+            tsmi_RegionReplacement.Enabled = regionExist;
         }
 
         #endregion
@@ -2390,6 +2398,8 @@ namespace MupenUtils
                 Process.Start("https://github.com/Aurumaker72/MupenUtilities/issues/new?assignees=&labels=&template=exception-with-crash-log.md&title=Mupen+Utilities+Telemetry");
             }
         }
+
+        
         private void tsmi_EndRegion_Click(object sender, EventArgs e)
         {
             if (tasStudioAutoScroll)
@@ -2397,6 +2407,7 @@ namespace MupenUtils
             else
                 endRegion = dgv_Main.SelectedCells[0].RowIndex;
 
+            UpdateTASStudioRegionUI();
             //MessageBox.Show("Set region end to frame " + endRegion, this.Text);
 
         }
@@ -2407,9 +2418,15 @@ namespace MupenUtils
                 beginRegion = dgv_Main.SelectedRows[0].Index;
             else
                 beginRegion = dgv_Main.SelectedCells[0].RowIndex;
+            UpdateTASStudioRegionUI();
 
             //MessageBox.Show("Set region begin to frame " + beginRegion, this.Text);
         }
+        private void tsmi_ClearRegion_Click(object sender, EventArgs e)
+        {
+            beginRegion = endRegion = 0; // or -1
+        }
+
         private void replacementwithRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReplacementForm.from = beginRegion;
@@ -2422,7 +2439,15 @@ namespace MupenUtils
             replacementForm.ShowDialog();
 
         }
+        private void tsmi_SelRegion_Click(object sender, EventArgs e)
+        {
+            for (int i = beginRegion; i < endRegion; i++)
+            {
+                dgv_Main.Rows[i].Selected = true;
+            }
+            
 
+        }
         #endregion
 
         #region Joystick Behaviour
@@ -2510,7 +2535,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-       
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

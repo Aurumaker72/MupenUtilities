@@ -154,16 +154,18 @@ namespace MupenUtils
             this.tsmi_LiveTasStudio = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Autoscroll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
-            this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_Markers = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_BeginRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_EndRegion = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.replacementwithRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_ClearRegion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_RegionReplacement = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
+            this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.tsmi_SelRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -1571,6 +1573,57 @@ namespace MupenUtils
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(207, 6);
+            // 
+            // tsmi_Markers
+            // 
+            this.tsmi_Markers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_BeginRegion,
+            this.tsmi_EndRegion,
+            this.tsmi_ClearRegion,
+            this.toolStripSeparator8,
+            this.tsmi_RegionReplacement,
+            this.tsmi_SelRegion});
+            this.tsmi_Markers.Name = "tsmi_Markers";
+            this.tsmi_Markers.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Markers.Text = "Markers";
+            // 
+            // tsmi_BeginRegion
+            // 
+            this.tsmi_BeginRegion.Name = "tsmi_BeginRegion";
+            this.tsmi_BeginRegion.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_BeginRegion.Text = "Begin Region";
+            this.tsmi_BeginRegion.Click += new System.EventHandler(this.tsmi_BeginRegion_Click);
+            // 
+            // tsmi_EndRegion
+            // 
+            this.tsmi_EndRegion.Name = "tsmi_EndRegion";
+            this.tsmi_EndRegion.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_EndRegion.Text = "End Region";
+            this.tsmi_EndRegion.Click += new System.EventHandler(this.tsmi_EndRegion_Click);
+            // 
+            // tsmi_ClearRegion
+            // 
+            this.tsmi_ClearRegion.Name = "tsmi_ClearRegion";
+            this.tsmi_ClearRegion.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_ClearRegion.Text = "Clear Region";
+            this.tsmi_ClearRegion.Click += new System.EventHandler(this.tsmi_ClearRegion_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(265, 6);
+            // 
+            // tsmi_RegionReplacement
+            // 
+            this.tsmi_RegionReplacement.Name = "tsmi_RegionReplacement";
+            this.tsmi_RegionReplacement.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_RegionReplacement.Text = "Replacement (with region)";
+            this.tsmi_RegionReplacement.Click += new System.EventHandler(this.replacementwithRegionToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -1604,47 +1657,12 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
-            // toolStripSeparator6
+            // tsmi_SelRegion
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(207, 6);
-            // 
-            // tsmi_Markers
-            // 
-            this.tsmi_Markers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_BeginRegion,
-            this.tsmi_EndRegion,
-            this.toolStripSeparator7,
-            this.replacementwithRegionToolStripMenuItem});
-            this.tsmi_Markers.Name = "tsmi_Markers";
-            this.tsmi_Markers.Size = new System.Drawing.Size(210, 26);
-            this.tsmi_Markers.Text = "Markers";
-            // 
-            // tsmi_BeginRegion
-            // 
-            this.tsmi_BeginRegion.Name = "tsmi_BeginRegion";
-            this.tsmi_BeginRegion.Size = new System.Drawing.Size(224, 26);
-            this.tsmi_BeginRegion.Text = "Begin Region";
-            this.tsmi_BeginRegion.Click += new System.EventHandler(this.tsmi_BeginRegion_Click);
-            // 
-            // tsmi_EndRegion
-            // 
-            this.tsmi_EndRegion.Name = "tsmi_EndRegion";
-            this.tsmi_EndRegion.Size = new System.Drawing.Size(224, 26);
-            this.tsmi_EndRegion.Text = "End Region";
-            this.tsmi_EndRegion.Click += new System.EventHandler(this.tsmi_EndRegion_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(265, 6);
-            // 
-            // replacementwithRegionToolStripMenuItem
-            // 
-            this.replacementwithRegionToolStripMenuItem.Name = "replacementwithRegionToolStripMenuItem";
-            this.replacementwithRegionToolStripMenuItem.Size = new System.Drawing.Size(268, 26);
-            this.replacementwithRegionToolStripMenuItem.Text = "Replacement (with region)";
-            this.replacementwithRegionToolStripMenuItem.Click += new System.EventHandler(this.replacementwithRegionToolStripMenuItem_Click);
+            this.tsmi_SelRegion.Name = "tsmi_SelRegion";
+            this.tsmi_SelRegion.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_SelRegion.Text = "Select Region";
+            this.tsmi_SelRegion.Click += new System.EventHandler(this.tsmi_SelRegion_Click);
             // 
             // MainForm
             // 
@@ -1829,8 +1847,10 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_Markers;
         private System.Windows.Forms.ToolStripMenuItem tsmi_BeginRegion;
         private System.Windows.Forms.ToolStripMenuItem tsmi_EndRegion;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripMenuItem replacementwithRegionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_RegionReplacement;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_ClearRegion;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_SelRegion;
     }
 }
 
