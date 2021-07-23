@@ -398,7 +398,7 @@ namespace MupenUtils.Forms
             this.gp_Stats.Size = new System.Drawing.Size(638, 293);
             this.gp_Stats.TabIndex = 0;
             this.gp_Stats.TabStop = false;
-            this.gp_Stats.Text = "Input Analysis";
+            this.gp_Stats.Text = "Statistics";
             // 
             // tab_InputAnalysis
             // 
@@ -463,7 +463,7 @@ namespace MupenUtils.Forms
             this.btn_SetInMain.Name = "btn_SetInMain";
             this.btn_SetInMain.Size = new System.Drawing.Size(206, 33);
             this.btn_SetInMain.TabIndex = 2;
-            this.btn_SetInMain.Text = "set frame in main  program";
+            this.btn_SetInMain.Text = "Goto";
             this.btn_SetInMain.UseVisualStyleBackColor = true;
             this.btn_SetInMain.Visible = false;
             // 
@@ -554,7 +554,7 @@ namespace MupenUtils.Forms
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(206, 33);
             this.button1.TabIndex = 2;
-            this.button1.Text = "set frame in main  program";
+            this.button1.Text = "Goto";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             // 

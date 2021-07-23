@@ -127,6 +127,7 @@ namespace MupenUtils
         bool forwardsPlayback = true;
         public static bool readOnly = true;
         public static bool rehookMupen = false;
+        public static bool encodeMode = false;
 
         /*TAS Studio*/
         public static int markedGoToFrame = 0;
@@ -1626,7 +1627,7 @@ namespace MupenUtils
                     tasStudioForm = new TASStudioMoreForm();
                 tasStudioForm.ShowDialog();
             }
-
+            
             
             if (e.KeyCode == Keys.C && e.Modifiers == Keys.Control)
             {
@@ -1920,6 +1921,11 @@ namespace MupenUtils
             {
                 ExtensionMethods.FullScreen(this);
             }
+            if(FileLoaded && e.KeyCode == Keys.Space)
+            {
+                TogglePlay();
+                this.ActiveControl = null;
+            }
             if (!readOnly && JOY_Keyboard)
             {
                 if (this.ActiveControl == pb_JoystickPic) return;
@@ -1950,6 +1956,23 @@ namespace MupenUtils
 
 
             }
+            if (e.KeyCode == Keys.F1)
+            {
+                MessageBox.Show("Encoding mode is now " + (encodeMode ? "enabled" : "disabled") + "\nPress again to toggle");
+                
+                // encoding mode
+                encodeMode ^= true;
+                btn_Input_Debug.Visible =
+                    btn_PlayDirection.Visible =
+                    btn_PlayPause.Visible =
+                    btn_FrameBack.Visible =
+                    btn_FrameBack2.Visible =
+                    btn_FrameFront.Visible =
+                    btn_FrameFront2.Visible =
+                    tr_MovieScrub.Visible =
+                    cbox_Controllers.Visible =
+                    txt_Frame.Visible = !encodeMode;
+            }
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -1976,11 +1999,15 @@ namespace MupenUtils
             MupenUtilities.Properties.Settings.Default.Save();
         }
 
+        void TogglePlay()
+        {
+            stepFrameTimer.Enabled = !stepFrameTimer.Enabled;
+            btn_PlayPause.Text = stepFrameTimer.Enabled ? "| |" : forwardsPlayback ? "|>" : "<|";
+        }
         private void btn_PlayPause_Click(object sender, EventArgs e)
         {
             // Toggle timer
-            stepFrameTimer.Enabled = !stepFrameTimer.Enabled;
-            btn_PlayPause.Text = stepFrameTimer.Enabled ? "| |" : forwardsPlayback ? "|>" : "<|";
+            TogglePlay();
         }
         private void btn_PlayDirection_Click(object sender, EventArgs e)
         {
