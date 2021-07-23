@@ -118,7 +118,7 @@ namespace MupenUtils.Forms
             }
 
 
-            if (string.IsNullOrEmpty(pathSource) || string.IsNullOrWhiteSpace(pathSource) || string.IsNullOrEmpty(pathTarget) || string.IsNullOrWhiteSpace(pathTarget))
+            if (string.IsNullOrEmpty(pathSource) || string.IsNullOrWhiteSpace(pathSource) || string.IsNullOrEmpty(pathTarget) || string.IsNullOrWhiteSpace(pathTarget) || !File.Exists(pathSource) || !File.Exists(pathTarget))
             {
 
                 lbl_Repl_Status.Text = "Failed";
