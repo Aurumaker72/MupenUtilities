@@ -594,6 +594,16 @@ namespace MupenUtils.Forms
             // nud_X
             // 
             this.nud_X.Location = new System.Drawing.Point(260, 16);
+            this.nud_X.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.nud_X.Minimum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            -2147483648});
             this.nud_X.Name = "nud_X";
             this.nud_X.Size = new System.Drawing.Size(86, 22);
             this.nud_X.TabIndex = 1;
@@ -601,6 +611,16 @@ namespace MupenUtils.Forms
             // nud_Y
             // 
             this.nud_Y.Location = new System.Drawing.Point(396, 15);
+            this.nud_Y.Maximum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            0});
+            this.nud_Y.Minimum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            -2147483648});
             this.nud_Y.Name = "nud_Y";
             this.nud_Y.Size = new System.Drawing.Size(86, 22);
             this.nud_Y.TabIndex = 1;
