@@ -35,7 +35,8 @@ namespace MupenUtils.Helpers
             "Sending the debug log upon a crash helps me fix bugs",
             "\'Live TAS Studio\' will keep TAS Studio up-to-date with your latest inputs",
             "Most modifiable settings are saved to config",
-            "Right click the movie trackbar to change its properties"
+            "Right click the movie trackbar to change its properties",
+            "Press \'F1\' to toggle Encoding Mode"
         };
 
         public static string GetRandomTip()
