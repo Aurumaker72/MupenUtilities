@@ -970,11 +970,11 @@ namespace MupenUtils
                 {
 
 
-                    if (br.BaseStream.Position + 4 > fs.Length)
-                    {
-                        findx++;
-                        continue;
-                    }
+                    //if (br.BaseStream.Position + 4 > fs.Length)
+                    //{
+                    //    findx++;
+                    //    continue;
+                    //}
 
 
 
@@ -1033,7 +1033,7 @@ namespace MupenUtils
             txt_Desc.Invoke((MethodInvoker)(() => txt_Desc.Text = MovieHeader.description));
 
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = MINIMUM_FRAME));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = inputListCtl1.Count));
+            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)frames));
 
             for (int i = 0; i < MovieHeader.num_controllers; i++)
                 cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Add("Controller " + (i + 1))));
