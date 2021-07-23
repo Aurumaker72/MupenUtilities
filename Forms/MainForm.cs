@@ -421,6 +421,7 @@ namespace MupenUtils
             tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
             tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
             cbox_Controllers.Visible = gp_TASStudio.Dock != DockStyle.Fill;
+            nud_X.Visible = nud_Y.Visible = gp_TASStudio.Dock != DockStyle.Fill;
         }
 
         void SetUITheme(UIThemes uitheme)
