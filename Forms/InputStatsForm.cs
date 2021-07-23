@@ -67,7 +67,7 @@ namespace MupenUtils.Forms
                 sumY[i1] = 0;
             for (int i1 = 0; i1 < emptyFrames.Length; i1++)
                 emptyFrames[i1] = 0;
-
+            
             for (int i = 0; i < 4; i++)
                 if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i + 1));
 

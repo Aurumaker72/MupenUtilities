@@ -977,7 +977,6 @@ namespace MupenUtils
                     if (ControllersEnabled[3])
                         inputListCtl4.Add(br.ReadInt32());
 
-                    Debug.WriteLine(ExtensionMethods.GetSByte(inputListCtl1[(int)findx], 2));
                     findx++;
                 }
             }
@@ -1049,29 +1048,33 @@ namespace MupenUtils
 
             if (MovieHeader.num_controllers > 1)
             {
-                lbl_Ctrls.ForeColor = Color.Red;
+                lbl_Ctrls.Invoke((MethodInvoker)(() => lbl_Ctrls.ForeColor = Color.Red));
+
                 triggerDiag = true;
             }
 
-            if (cmb_Country.SelectedIndex == 11)
-                lbl_RomCountry.ForeColor = Color.Red;
+            cmb_Country.Invoke((MethodInvoker)delegate {
+                if (cmb_Country.SelectedIndex == 11)
+                lbl_RomCountry.Invoke((MethodInvoker)(() => lbl_RomCountry.ForeColor = Color.Red));
+                
+            });
 
             if (MovieHeader.startFlags > 4 || MovieHeader.startFlags < 1)
-                lb_starttype.ForeColor = Color.Red;
+            lb_starttype.Invoke((MethodInvoker)(() => lb_starttype.ForeColor = Color.Red));
 
             if (MovieHeader.magic != 439629389)
             {
-                lbl_misc_Magic.ForeColor = Color.Red;
+                lbl_misc_Magic.Invoke((MethodInvoker)(() => lbl_misc_Magic.ForeColor = Color.Red));
                 triggerDiag = true;
             }
             if (MovieHeader.length_vis == 0 || MovieHeader.vis_per_second == 0)
             {
-                lb_VIs.ForeColor = Color.Red;
+                lb_VIs.Invoke((MethodInvoker)(() => lb_VIs.ForeColor = Color.Red));
                 triggerDiag = true;
             }
             if(MovieHeader.version != 3)
             {
-                lbl_misc_version.ForeColor = Color.Red;
+                lbl_misc_version.Invoke((MethodInvoker)(() => lbl_misc_version.ForeColor = Color.Red));
                 triggerDiag = true;
             }
 
