@@ -2509,13 +2509,13 @@ namespace MupenUtils
                 JOY_Abs = RelativeToAbsolute(pos);
             }
 
-            //if (user && !readOnly)  (frame);
-
             SuspendLayout(); // freeze form repaint
             nud_X.Value = ExtensionMethods.Clamp(JOY_Rel.X, -128, 127);
             nud_Y.Value = ExtensionMethods.Clamp(JOY_Rel.Y, -127, 128);
-            
-            
+
+
+            txt_Angle.Text = Math.Round((Math.Atan2(JOY_Rel.Y, JOY_Rel.X) * 57.295779513)).ToString();
+
             ResumeLayout(true);
 
             pb_JoystickPic.Refresh();

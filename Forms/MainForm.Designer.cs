@@ -161,11 +161,13 @@ namespace MupenUtils
             this.tsmi_ClearRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_RegionReplacement = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_SelRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.tsmi_SelRegion = new System.Windows.Forms.ToolStripMenuItem();
+            this.txt_Angle = new System.Windows.Forms.TextBox();
+            this.lbl_Deg = new System.Windows.Forms.Label();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -877,6 +879,7 @@ namespace MupenUtils
             // 
             // gp_input
             // 
+            this.gp_input.Controls.Add(this.txt_Angle);
             this.gp_input.Controls.Add(this.nud_Y);
             this.gp_input.Controls.Add(this.nud_X);
             this.gp_input.Controls.Add(this.cbox_Controllers);
@@ -885,6 +888,7 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.btn_Input_Debug);
             this.gp_input.Controls.Add(this.pb_JoystickPic);
             this.gp_input.Controls.Add(this.txt_Frame);
+            this.gp_input.Controls.Add(this.lbl_Deg);
             this.gp_input.Controls.Add(this.lbl_Y);
             this.gp_input.Controls.Add(this.lbl_X);
             this.gp_input.Controls.Add(this.chk_RESERVED2);
@@ -923,7 +927,7 @@ namespace MupenUtils
             // 
             // nud_Y
             // 
-            this.nud_Y.Location = new System.Drawing.Point(30, 153);
+            this.nud_Y.Location = new System.Drawing.Point(33, 120);
             this.nud_Y.Name = "nud_Y";
             this.nud_Y.Size = new System.Drawing.Size(64, 22);
             this.nud_Y.TabIndex = 4;
@@ -933,7 +937,7 @@ namespace MupenUtils
             // 
             // nud_X
             // 
-            this.nud_X.Location = new System.Drawing.Point(30, 128);
+            this.nud_X.Location = new System.Drawing.Point(33, 95);
             this.nud_X.Name = "nud_X";
             this.nud_X.Size = new System.Drawing.Size(64, 22);
             this.nud_X.TabIndex = 4;
@@ -1037,7 +1041,7 @@ namespace MupenUtils
             // lbl_Y
             // 
             this.lbl_Y.AutoSize = true;
-            this.lbl_Y.Location = new System.Drawing.Point(6, 155);
+            this.lbl_Y.Location = new System.Drawing.Point(12, 122);
             this.lbl_Y.Name = "lbl_Y";
             this.lbl_Y.Size = new System.Drawing.Size(16, 16);
             this.lbl_Y.TabIndex = 0;
@@ -1046,7 +1050,7 @@ namespace MupenUtils
             // lbl_X
             // 
             this.lbl_X.AutoSize = true;
-            this.lbl_X.Location = new System.Drawing.Point(6, 130);
+            this.lbl_X.Location = new System.Drawing.Point(12, 97);
             this.lbl_X.Name = "lbl_X";
             this.lbl_X.Size = new System.Drawing.Size(15, 16);
             this.lbl_X.TabIndex = 0;
@@ -1055,7 +1059,7 @@ namespace MupenUtils
             // chk_RESERVED2
             // 
             this.chk_RESERVED2.AutoSize = true;
-            this.chk_RESERVED2.Location = new System.Drawing.Point(96, 96);
+            this.chk_RESERVED2.Location = new System.Drawing.Point(96, 71);
             this.chk_RESERVED2.Name = "chk_RESERVED2";
             this.chk_RESERVED2.Size = new System.Drawing.Size(67, 20);
             this.chk_RESERVED2.TabIndex = 2;
@@ -1067,7 +1071,7 @@ namespace MupenUtils
             // 
             this.chk_restart.AutoSize = true;
             this.chk_restart.Enabled = false;
-            this.chk_restart.Location = new System.Drawing.Point(96, 48);
+            this.chk_restart.Location = new System.Drawing.Point(96, 25);
             this.chk_restart.Name = "chk_restart";
             this.chk_restart.Size = new System.Drawing.Size(72, 20);
             this.chk_restart.TabIndex = 1;
@@ -1078,7 +1082,7 @@ namespace MupenUtils
             // chk_RESERVED1
             // 
             this.chk_RESERVED1.AutoSize = true;
-            this.chk_RESERVED1.Location = new System.Drawing.Point(96, 72);
+            this.chk_RESERVED1.Location = new System.Drawing.Point(96, 47);
             this.chk_RESERVED1.Name = "chk_RESERVED1";
             this.chk_RESERVED1.Size = new System.Drawing.Size(67, 20);
             this.chk_RESERVED1.TabIndex = 1;
@@ -1156,7 +1160,7 @@ namespace MupenUtils
             // 
             this.chk_Right.AutoSize = true;
             this.chk_Right.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Right.Location = new System.Drawing.Point(61, 65);
+            this.chk_Right.Location = new System.Drawing.Point(61, 46);
             this.chk_Right.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Right.Name = "chk_Right";
             this.chk_Right.Size = new System.Drawing.Size(39, 20);
@@ -1170,7 +1174,7 @@ namespace MupenUtils
             // 
             this.chk_Down.AutoSize = true;
             this.chk_Down.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Down.Location = new System.Drawing.Point(40, 85);
+            this.chk_Down.Location = new System.Drawing.Point(40, 66);
             this.chk_Down.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Down.Name = "chk_Down";
             this.chk_Down.Size = new System.Drawing.Size(39, 20);
@@ -1184,7 +1188,7 @@ namespace MupenUtils
             // 
             this.chk_Left.AutoSize = true;
             this.chk_Left.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Left.Location = new System.Drawing.Point(19, 65);
+            this.chk_Left.Location = new System.Drawing.Point(19, 46);
             this.chk_Left.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Left.Name = "chk_Left";
             this.chk_Left.Size = new System.Drawing.Size(36, 20);
@@ -1198,7 +1202,7 @@ namespace MupenUtils
             // 
             this.chk_Up.AutoSize = true;
             this.chk_Up.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Up.Location = new System.Drawing.Point(40, 46);
+            this.chk_Up.Location = new System.Drawing.Point(40, 27);
             this.chk_Up.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Up.Name = "chk_Up";
             this.chk_Up.Size = new System.Drawing.Size(39, 20);
@@ -1536,47 +1540,47 @@ namespace MupenUtils
             this.toolStripSeparator6,
             this.tsmi_Markers});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(211, 174);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(181, 146);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(207, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmi_LiveTasStudio
             // 
             this.tsmi_LiveTasStudio.Checked = true;
             this.tsmi_LiveTasStudio.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_LiveTasStudio.Name = "tsmi_LiveTasStudio";
-            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(180, 26);
             this.tsmi_LiveTasStudio.Text = "Live TAS Studio";
             this.tsmi_LiveTasStudio.Click += new System.EventHandler(this.tsmi_LiveTasStudio_Click_1);
             // 
             // tsmi_Autoscroll
             // 
             this.tsmi_Autoscroll.Name = "tsmi_Autoscroll";
-            this.tsmi_Autoscroll.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Autoscroll.Size = new System.Drawing.Size(180, 26);
             this.tsmi_Autoscroll.Text = "Move Mode";
             this.tsmi_Autoscroll.Click += new System.EventHandler(this.tsmi_Autoscroll_Click);
             // 
             // tsmi_TasStudio_Big
             // 
             this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
-            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(180, 26);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(207, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmi_Markers
             // 
@@ -1588,7 +1592,7 @@ namespace MupenUtils
             this.tsmi_RegionReplacement,
             this.tsmi_SelRegion});
             this.tsmi_Markers.Name = "tsmi_Markers";
-            this.tsmi_Markers.Size = new System.Drawing.Size(210, 26);
+            this.tsmi_Markers.Size = new System.Drawing.Size(180, 26);
             this.tsmi_Markers.Text = "Markers";
             // 
             // tsmi_BeginRegion
@@ -1624,6 +1628,13 @@ namespace MupenUtils
             this.tsmi_RegionReplacement.Text = "Replacement (with region)";
             this.tsmi_RegionReplacement.Click += new System.EventHandler(this.replacementwithRegionToolStripMenuItem_Click);
             // 
+            // tsmi_SelRegion
+            // 
+            this.tsmi_SelRegion.Name = "tsmi_SelRegion";
+            this.tsmi_SelRegion.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_SelRegion.Text = "Select Region";
+            this.tsmi_SelRegion.Click += new System.EventHandler(this.tsmi_SelRegion_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -1640,7 +1651,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1650,19 +1660,28 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
-            // tsmi_SelRegion
+            // txt_Angle
             // 
-            this.tsmi_SelRegion.Name = "tsmi_SelRegion";
-            this.tsmi_SelRegion.Size = new System.Drawing.Size(268, 26);
-            this.tsmi_SelRegion.Text = "Select Region";
-            this.tsmi_SelRegion.Click += new System.EventHandler(this.tsmi_SelRegion_Click);
+            this.txt_Angle.Location = new System.Drawing.Point(33, 145);
+            this.txt_Angle.Name = "txt_Angle";
+            this.txt_Angle.ReadOnly = true;
+            this.txt_Angle.Size = new System.Drawing.Size(64, 22);
+            this.txt_Angle.TabIndex = 5;
+            // 
+            // lbl_Deg
+            // 
+            this.lbl_Deg.AutoSize = true;
+            this.lbl_Deg.Location = new System.Drawing.Point(16, 148);
+            this.lbl_Deg.Name = "lbl_Deg";
+            this.lbl_Deg.Size = new System.Drawing.Size(11, 16);
+            this.lbl_Deg.TabIndex = 0;
+            this.lbl_Deg.Text = "°";
             // 
             // MainForm
             // 
@@ -1851,6 +1870,8 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_ClearRegion;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem tsmi_SelRegion;
+        private System.Windows.Forms.TextBox txt_Angle;
+        private System.Windows.Forms.Label lbl_Deg;
     }
 }
 
