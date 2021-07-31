@@ -23,7 +23,9 @@ namespace MupenUtils.Forms
             Assign,
             Or,
             And,
-            Xor
+            Xor,
+            Shl1Src,
+            None
         };
         ReplaceModes ReplaceMode = ReplaceModes.Assign;
         bool ReplaceUseNOT = false;
@@ -124,6 +126,12 @@ namespace MupenUtils.Forms
                 lbl_Substatus.Text = "Invalid path";
                 return;
             }
+            //if(pathSource == pathTarget)
+            //{
+            //    lbl_Repl_Status.Text = "Error";
+            //    lbl_Substatus.Text = "Source and target paths are identical";
+            //    return;
+            //}
             src = File.ReadAllBytes(pathSource);
             trg = File.ReadAllBytes(pathTarget);
 
@@ -230,8 +238,28 @@ namespace MupenUtils.Forms
                             trg[i] ^= (byte)~(src[i]);
                     }
                     break;
+                case ReplaceModes.Shl1Src:
+                    if (ReplaceUseNOT)
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                        {
+                            trg[i] = (byte)(src[i] << 1);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = INPUT_BEGIN + from; i < to; i++)
+                        {
+                            trg[i] = (byte)(~src[i] << 1);
+                        }
+                    }
+                    break;
+                case ReplaceModes.None:
+                    for (int i = INPUT_BEGIN + from; i < to; i++) trg[i] = 0;
+                    break;
                 default:
-                    MessageBox.Show("Replace mode not found. Try again with another mode combination.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    lbl_Repl_Status.Text = "Failed";
+                    lbl_Substatus.Text = "Unknown replacement mode.\nTry again with another one";
                     break;
             }
 
