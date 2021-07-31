@@ -47,7 +47,6 @@ namespace MupenUtils
             this.gp_M64 = new System.Windows.Forms.GroupBox();
             this.gp_header = new System.Windows.Forms.GroupBox();
             this.gp_User = new System.Windows.Forms.GroupBox();
-            this.btn_VIMAX = new System.Windows.Forms.Button();
             this.txt_PathName = new System.Windows.Forms.TextBox();
             this.lbl_Name = new System.Windows.Forms.Label();
             this.txt_Desc = new System.Windows.Forms.TextBox();
@@ -92,6 +91,7 @@ namespace MupenUtils
             this.txt_Rsp = new System.Windows.Forms.TextBox();
             this.btn_Reload = new System.Windows.Forms.Button();
             this.gp_input = new System.Windows.Forms.GroupBox();
+            this.txt_Angle = new System.Windows.Forms.TextBox();
             this.nud_Y = new System.Windows.Forms.NumericUpDown();
             this.nud_X = new System.Windows.Forms.NumericUpDown();
             this.cbox_Controllers = new System.Windows.Forms.ComboBox();
@@ -101,6 +101,7 @@ namespace MupenUtils
             this.btn_Input_Debug = new System.Windows.Forms.Button();
             this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.txt_Frame = new System.Windows.Forms.TextBox();
+            this.lbl_Deg = new System.Windows.Forms.Label();
             this.lbl_Y = new System.Windows.Forms.Label();
             this.lbl_X = new System.Windows.Forms.Label();
             this.chk_RESERVED2 = new System.Windows.Forms.CheckBox();
@@ -166,8 +167,6 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.txt_Angle = new System.Windows.Forms.TextBox();
-            this.lbl_Deg = new System.Windows.Forms.Label();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -386,7 +385,6 @@ namespace MupenUtils
             // 
             // gp_User
             // 
-            this.gp_User.Controls.Add(this.btn_VIMAX);
             this.gp_User.Controls.Add(this.txt_PathName);
             this.gp_User.Controls.Add(this.lbl_Name);
             this.gp_User.Controls.Add(this.txt_Desc);
@@ -407,17 +405,6 @@ namespace MupenUtils
             this.gp_User.TabIndex = 0;
             this.gp_User.TabStop = false;
             this.gp_User.Text = "Specific";
-            // 
-            // btn_VIMAX
-            // 
-            this.btn_VIMAX.Location = new System.Drawing.Point(212, 147);
-            this.btn_VIMAX.Name = "btn_VIMAX";
-            this.btn_VIMAX.Size = new System.Drawing.Size(48, 23);
-            this.btn_VIMAX.TabIndex = 0;
-            this.btn_VIMAX.TabStop = false;
-            this.btn_VIMAX.Text = "Max";
-            this.btn_VIMAX.UseVisualStyleBackColor = true;
-            this.btn_VIMAX.Click += new System.EventHandler(this.btn_VIMAX_Click);
             // 
             // txt_PathName
             // 
@@ -482,7 +469,7 @@ namespace MupenUtils
             this.txt_VIs.Location = new System.Drawing.Point(128, 148);
             this.txt_VIs.Margin = new System.Windows.Forms.Padding(4);
             this.txt_VIs.Name = "txt_VIs";
-            this.txt_VIs.Size = new System.Drawing.Size(77, 22);
+            this.txt_VIs.Size = new System.Drawing.Size(132, 22);
             this.txt_VIs.TabIndex = 0;
             this.txt_VIs.TabStop = false;
             this.txt_VIs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GenericNumberOnly_KeyPress);
@@ -925,6 +912,14 @@ namespace MupenUtils
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input";
             // 
+            // txt_Angle
+            // 
+            this.txt_Angle.Location = new System.Drawing.Point(33, 145);
+            this.txt_Angle.Name = "txt_Angle";
+            this.txt_Angle.ReadOnly = true;
+            this.txt_Angle.Size = new System.Drawing.Size(64, 22);
+            this.txt_Angle.TabIndex = 5;
+            // 
             // nud_Y
             // 
             this.nud_Y.Location = new System.Drawing.Point(33, 120);
@@ -1037,6 +1032,15 @@ namespace MupenUtils
             this.txt_Frame.TabIndex = 0;
             this.txt_Frame.TabStop = false;
             this.txt_Frame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Frame_KeyDown);
+            // 
+            // lbl_Deg
+            // 
+            this.lbl_Deg.AutoSize = true;
+            this.lbl_Deg.Location = new System.Drawing.Point(16, 148);
+            this.lbl_Deg.Name = "lbl_Deg";
+            this.lbl_Deg.Size = new System.Drawing.Size(11, 16);
+            this.lbl_Deg.TabIndex = 0;
+            this.lbl_Deg.Text = "°";
             // 
             // lbl_Y
             // 
@@ -1666,23 +1670,6 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
-            // txt_Angle
-            // 
-            this.txt_Angle.Location = new System.Drawing.Point(33, 145);
-            this.txt_Angle.Name = "txt_Angle";
-            this.txt_Angle.ReadOnly = true;
-            this.txt_Angle.Size = new System.Drawing.Size(64, 22);
-            this.txt_Angle.TabIndex = 5;
-            // 
-            // lbl_Deg
-            // 
-            this.lbl_Deg.AutoSize = true;
-            this.lbl_Deg.Location = new System.Drawing.Point(16, 148);
-            this.lbl_Deg.Name = "lbl_Deg";
-            this.lbl_Deg.Size = new System.Drawing.Size(11, 16);
-            this.lbl_Deg.TabIndex = 0;
-            this.lbl_Deg.Text = "°";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1858,7 +1845,6 @@ namespace MupenUtils
         private System.Windows.Forms.TextBox txt_VI_s;
         private System.Windows.Forms.Label lbl_VI_s;
         private System.Windows.Forms.Button btn_Reload;
-        private System.Windows.Forms.Button btn_VIMAX;
         private System.Windows.Forms.ToolStripMenuItem tsmi_DumpAppInfo;
         private System.Windows.Forms.NumericUpDown nud_X;
         private System.Windows.Forms.NumericUpDown nud_Y;

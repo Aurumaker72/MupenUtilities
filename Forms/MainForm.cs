@@ -2692,6 +2692,8 @@ namespace MupenUtils
             str += "usage type: " + UsageType.ToString() + "\n";
             str += "file path: " + Path + "\n";
             str += "theme: " + UITheme.ToString() + "\n";
+            str += "os: " + ExtensionMethods.FriendlyName() + "\n";
+            str += "cores: " + Environment.ProcessorCount + "\n";
             foreach(var ctl in ctx_Input_Debug.Items)
             {
                 if (ctl is ToolStripSeparator) continue;
