@@ -60,7 +60,6 @@ namespace MupenUtils.Forms
 
         private void btn_Repl_BrowseSrc_Click(object sender, EventArgs e)
         {
-            btn_Repl_Go.Enabled = pathSource != pathTarget;
             lbl_Repl_Status.Text = "Choosing file";
 
             object[] res = UIHelper.OpenFileDialog("Select Source M64");
@@ -72,13 +71,10 @@ namespace MupenUtils.Forms
             MupenUtilities.Properties.Settings.Default.LastPathReplaceSrc = pathSource;
             MupenUtilities.Properties.Settings.Default.Save();
 
-            if (pathSource == pathTarget)
-                lbl_Repl_Status.Text = "Identical paths";
         }
 
         private void btn_Repl_BrowseTrg_Click(object sender, EventArgs e)
         {
-            btn_Repl_Go.Enabled = pathSource != pathTarget;
 
             lbl_Repl_Status.Text = "Choosing file";
 
@@ -91,8 +87,6 @@ namespace MupenUtils.Forms
             MupenUtilities.Properties.Settings.Default.LastPathReplaceTrg = pathTarget;
             MupenUtilities.Properties.Settings.Default.Save();
 
-            if (pathSource == pathTarget)
-                lbl_Repl_Status.Text = "Identical paths";
         }
 
 
@@ -136,7 +130,7 @@ namespace MupenUtils.Forms
             if (trg.Length < src.Length)
             {
                 lbl_Repl_Status.Text = "Failed";
-                lbl_Substatus.Text = "Target movie is shorter than source movie";
+                lbl_Substatus.Text = "Target movie file is shorter than source movie";
                 return;
             }
 
@@ -162,7 +156,7 @@ namespace MupenUtils.Forms
                 }
             }
 
-            if (to - from < 0 || from >= to || to > src.Length)
+            if (to - from < 0 || from >= to || to > src.Length || from < 0 || to < 0)
             {
                 lbl_Repl_Status.Text = "Failed";
                 lbl_Substatus.Text = "Invalid from/to value. ";
@@ -173,7 +167,11 @@ namespace MupenUtils.Forms
                     lbl_Substatus.Text += "\nEnd frame value is larger than movie. ";
                 if (from == to)
                     lbl_Substatus.Text += "\nFrame values are equal. ";
-                    
+                if (from < 0)
+                    lbl_Substatus.Text += "\nBegin frame value is negative.";
+                if (to < 0)
+                    lbl_Substatus.Text += "\nEnd frame value is negative.";
+
                 return;
             }
 
