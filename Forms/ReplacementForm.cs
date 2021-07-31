@@ -149,6 +149,7 @@ namespace MupenUtils.Forms
                 {
                     lbl_Repl_Status.Text = "Failed";
                     lbl_Substatus.Text = "Integer parsing error";
+                    return;
                 }
                 if (chk_Repl_All.Checked)
                 {
