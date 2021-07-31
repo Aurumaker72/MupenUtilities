@@ -64,6 +64,9 @@ The copy mode dictates how the inputs get copied from one movie to another.
 
 - Frame values are equal.
 
+- Frame value is negative.
+
+
 ### How to find the first button/joystick value in a movie
 Do you want to find the first frame at which a specific button or joystick combination is held?
 - With a M64 loaded, open the Input Analysis dialog by clicking on "More" and then on "Input Analysis"
