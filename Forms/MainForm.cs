@@ -1905,6 +1905,10 @@ namespace MupenUtils
                 {
                     LoadST();
                 }
+                else if (ext.Equals(".cmb", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    LoadCombo();
+                }
                 else if (ext.Equals(".exe", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (Path.Contains("mupen"))
