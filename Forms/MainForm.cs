@@ -81,12 +81,6 @@ namespace MupenUtils
         public const string PROGRAM_VERSION = "1.9";
         public const string PROGRAM_NAME = "Mupen Utilities";
 
-        public const string M64_LOADED_TEXT = "M64 Loaded";
-        public const string M64_LOADING_TEXT = "M64 Loading";
-        public const string M64_FAILED_TEXT = "Failed to load M64.";
-        public const string M64_SELECTED_TEXT = "Type: M64";
-        public const string ST_SELECTED_TEXT = "Type: ST";
-
         public const byte UPDATE_CLIENT_OUTDATED = 0;
         public const byte UPDATE_CLIENT_AHEAD = 1;
         public const byte UPDATE_EQUAL = 2;
@@ -146,15 +140,12 @@ namespace MupenUtils
         // M64 Data 
         public static M64.MovieStruct MovieHeader;
         public static bool[] ControllersEnabled = new bool[4];
-
-        ulong frames = 0;
+        ulong frames = 0; // special
         public CheckBox[] controllerButtonsChk;
-
         public static List<int> inputListCtl1 = new List<int>();
         public static List<int> inputListCtl2 = new List<int>();
         public static List<int> inputListCtl3 = new List<int>();
         public static List<int> inputListCtl4 = new List<int>();
-
         public static List<int>[] inputLists = { inputListCtl1, inputListCtl2, inputListCtl3, inputListCtl4 };
 
         public static byte selectedController = 0;
