@@ -2708,9 +2708,16 @@ namespace MupenUtils
 
             if (readOnly) linepen = new Pen(Color.Gray, 3);
 
-            if (UITheme == UIThemes.Default) linepen = new Pen(Color.Blue, 3);
-            else if (UITheme == UIThemes.Gray) linepen = new Pen(Color.Black, 3);
-            else if (UITheme == UIThemes.Dark) linepen = new Pen(Color.Gray, 3);
+            if (!readOnly)
+            {
+                if (UITheme == UIThemes.Default) linepen = new Pen(Color.Blue, 3);
+                else if (UITheme == UIThemes.Gray) linepen = new Pen(Color.Black, 3);
+                else if (UITheme == UIThemes.Dark) linepen = new Pen(Color.Gray, 3);
+            }
+            else
+            {
+                linepen = new Pen(Color.Gray, 3);
+            }
 
             if (UITheme == UIThemes.Default) e.Graphics.FillRectangle(new SolidBrush(Color.FromKnownColor(KnownColor.Control)), pb_JoystickPic.ClientRectangle);
             else if (UITheme == UIThemes.Gray) e.Graphics.FillRectangle(Brushes.Gray, pb_JoystickPic.ClientRectangle);
