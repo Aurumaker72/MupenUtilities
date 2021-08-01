@@ -55,7 +55,7 @@ namespace MupenUtils.Forms
         }
         void UpdateInfos()
         {
-            if (!MainForm.FileLoaded || MainForm.UsageType == MainForm.UsageTypes.Combo) return;
+            if (!MainForm.FileLoaded) return;
 
             cbox_Ctl.Items.Clear();
 
@@ -67,10 +67,18 @@ namespace MupenUtils.Forms
                 sumY[i1] = 0;
             for (int i1 = 0; i1 < emptyFrames.Length; i1++)
                 emptyFrames[i1] = 0;
-            
-            for (int i = 0; i < 4; i++)
-                if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i + 1));
 
+            if (MainForm.UsageType == MainForm.UsageTypes.M64)
+            {
+                for (int i = 0; i < 4; i++)
+                    if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i + 1));
+            }
+            else
+            {
+                // uh
+                for (int i = 0; i < MainForm.cmbInput.Count; i++)
+                    cbox_Ctl.Items.Add("Combo " + (i + 1));
+            }
 
             Array.Clear(buttonStats, 0, buttonStats.Length);
 
@@ -188,7 +196,7 @@ namespace MupenUtils.Forms
         private void InputStatsForm_Shown(object sender, EventArgs e)
         {
             foreach (Control ctl in Controls)
-                ctl.Enabled = MainForm.FileLoaded && MainForm.UsageType == MainForm.UsageTypes.M64;
+                ctl.Enabled = MainForm.FileLoaded;
 
             UpdateInfos();
 

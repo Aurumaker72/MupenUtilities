@@ -685,11 +685,8 @@ namespace MupenUtils
                     gp_input.Dock = DockStyle.Right;
                     gp_CMB.Visible = false;
                     btn_Save.Enabled = btn_SaveAs.Enabled = true;
-                    foreach (var list in inputLists)
-                    {
-                        list.Clear();
-                        frames = 0;
-                    }
+                    frames = 1;
+                    SetFrame(0);
                     break;
                 case UsageTypes.ST:
                     txt = "Browse ST";
@@ -712,13 +709,9 @@ namespace MupenUtils
                     gp_M64.Text = "Combo";
                     gp_CMB.Visible = true;
                     btn_Save.Enabled = btn_SaveAs.Enabled = false;
-                    foreach (var list in inputLists)
-                    {
-                        list.Clear();
-                        frames = 0;
-                    }
+                    frames = 1;
+                    SetFrame(0);
                     break;
-
                 case UsageTypes.Autodetect:
                     txt = "Autodetect";
                     btn_LoadLatest.Enabled = false;
@@ -924,9 +917,8 @@ namespace MupenUtils
             
 
             BinaryReader br = new BinaryReader(fs);
-            
-            int iter = 0;
 
+            int iter = 0;
             
 
             while (br.PeekChar() != -1)
@@ -972,7 +964,7 @@ namespace MupenUtils
             {
                 inputLists[i] = cmbInput[i];
             }
-
+            
             PreloadTASStudio();
 
             EnableM64View_ThreadSafe(true);
@@ -2047,7 +2039,8 @@ namespace MupenUtils
                 dgv_Main.Rows[index].Selected = true;
             }
 
-            if(index < tr_MovieScrub.Maximum && index > tr_MovieScrub.Minimum) tr_MovieScrub.Value = frame;
+            if(index <= tr_MovieScrub.Maximum && index >= tr_MovieScrub.Minimum) tr_MovieScrub.Value = frame;
+            
         }
         void AdvanceInputAuto(object obj, EventArgs e)
         {
@@ -2357,6 +2350,8 @@ namespace MupenUtils
         }
         private void cbox_Controllers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            SetFrame(MINIMUM_FRAME);
+            UpdateFrameControlUI();
             if (UsageType == UsageTypes.M64)
             {
                 if (cbox_Controllers.SelectedIndex + 1 > MovieHeader.num_controllers)
@@ -2367,8 +2362,9 @@ namespace MupenUtils
             }
             selectedController = Convert.ToByte(cbox_Controllers.SelectedIndex);
 
-        update:
-            GetInput(frame, true, frame);
+            update:
+
+            GetInput(inputLists[selectedController][frame], true, frame);
             cbox_Controllers.SelectedIndex = selectedController;
             if(UsageType == UsageTypes.Combo)
             {

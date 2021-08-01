@@ -1718,7 +1718,7 @@ namespace MupenUtils
             // 
             this.txt_ComboName.Location = new System.Drawing.Point(77, 30);
             this.txt_ComboName.Name = "txt_ComboName";
-            this.txt_ComboName.Size = new System.Drawing.Size(100, 22);
+            this.txt_ComboName.Size = new System.Drawing.Size(264, 22);
             this.txt_ComboName.TabIndex = 0;
             this.txt_ComboName.TabStop = false;
             // 
@@ -1735,7 +1735,7 @@ namespace MupenUtils
             // 
             this.txt_CMBSamples.Location = new System.Drawing.Point(77, 59);
             this.txt_CMBSamples.Name = "txt_CMBSamples";
-            this.txt_CMBSamples.Size = new System.Drawing.Size(100, 22);
+            this.txt_CMBSamples.Size = new System.Drawing.Size(132, 22);
             this.txt_CMBSamples.TabIndex = 0;
             this.txt_CMBSamples.TabStop = false;
             // 
