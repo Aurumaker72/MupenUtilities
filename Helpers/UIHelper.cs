@@ -28,11 +28,15 @@ namespace MupenUtils
             {
                 filter = "All Files (*.*)|*.*";
                 title = "Select";
+            }else if(usageType == MainForm.UsageTypes.Combo)
+            {
+                filter = "Combo Files (*.cmb)|*.cmb|All Files (*.*)|*.*";
+                title = "Select Combo";
             }
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 InitialDirectory = "C:\\",
-                FilterIndex = 2
+                FilterIndex = 0
             };
             openFileDialog.Title = title;
             openFileDialog.Filter = filter;

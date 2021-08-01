@@ -40,6 +40,7 @@ namespace MupenUtils
             this.rb_ReplacementSel = new System.Windows.Forms.RadioButton();
             this.rb_MUPSel = new System.Windows.Forms.RadioButton();
             this.rb_STsel = new System.Windows.Forms.RadioButton();
+            this.rb_CMBSel = new System.Windows.Forms.RadioButton();
             this.rb_M64sel = new System.Windows.Forms.RadioButton();
             this.btn_LoadLatest = new System.Windows.Forms.Button();
             this.btn_SaveAs = new System.Windows.Forms.Button();
@@ -167,6 +168,11 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.gp_CMB = new System.Windows.Forms.GroupBox();
+            this.lbl_CMBName = new System.Windows.Forms.Label();
+            this.txt_ComboName = new System.Windows.Forms.TextBox();
+            this.lbl_CMBSamples = new System.Windows.Forms.Label();
+            this.txt_CMBSamples = new System.Windows.Forms.TextBox();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_header.SuspendLayout();
@@ -185,11 +191,12 @@ namespace MupenUtils
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
+            this.gp_CMB.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
             // 
-            this.btn_PathSel.Location = new System.Drawing.Point(402, 16);
+            this.btn_PathSel.Location = new System.Drawing.Point(405, 17);
             this.btn_PathSel.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PathSel.Name = "btn_PathSel";
             this.btn_PathSel.Size = new System.Drawing.Size(100, 28);
@@ -217,6 +224,7 @@ namespace MupenUtils
             this.gp_Path.Controls.Add(this.rb_ReplacementSel);
             this.gp_Path.Controls.Add(this.rb_MUPSel);
             this.gp_Path.Controls.Add(this.rb_STsel);
+            this.gp_Path.Controls.Add(this.rb_CMBSel);
             this.gp_Path.Controls.Add(this.rb_M64sel);
             this.gp_Path.Controls.Add(this.txt_Path);
             this.gp_Path.Controls.Add(this.btn_LoadLatest);
@@ -233,7 +241,7 @@ namespace MupenUtils
             // 
             // btn_Tips
             // 
-            this.btn_Tips.Location = new System.Drawing.Point(504, 16);
+            this.btn_Tips.Location = new System.Drawing.Point(507, 17);
             this.btn_Tips.Name = "btn_Tips";
             this.btn_Tips.Size = new System.Drawing.Size(55, 28);
             this.btn_Tips.TabIndex = 0;
@@ -247,7 +255,7 @@ namespace MupenUtils
             this.chk_readonly.AutoSize = true;
             this.chk_readonly.Checked = true;
             this.chk_readonly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_readonly.Location = new System.Drawing.Point(300, 50);
+            this.chk_readonly.Location = new System.Drawing.Point(311, 50);
             this.chk_readonly.Name = "chk_readonly";
             this.chk_readonly.Size = new System.Drawing.Size(92, 20);
             this.chk_readonly.TabIndex = 0;
@@ -258,7 +266,7 @@ namespace MupenUtils
             // 
             // btn_Override
             // 
-            this.btn_Override.Location = new System.Drawing.Point(466, 45);
+            this.btn_Override.Location = new System.Drawing.Point(469, 46);
             this.btn_Override.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Override.Name = "btn_Override";
             this.btn_Override.Size = new System.Drawing.Size(93, 28);
@@ -271,19 +279,19 @@ namespace MupenUtils
             // rb_ReplacementSel
             // 
             this.rb_ReplacementSel.AutoSize = true;
-            this.rb_ReplacementSel.Location = new System.Drawing.Point(186, 50);
+            this.rb_ReplacementSel.Location = new System.Drawing.Point(253, 50);
             this.rb_ReplacementSel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_ReplacementSel.Name = "rb_ReplacementSel";
-            this.rb_ReplacementSel.Size = new System.Drawing.Size(109, 20);
+            this.rb_ReplacementSel.Size = new System.Drawing.Size(57, 20);
             this.rb_ReplacementSel.TabIndex = 0;
-            this.rb_ReplacementSel.Text = "Replacement";
+            this.rb_ReplacementSel.Text = "Repl";
             this.rb_ReplacementSel.UseVisualStyleBackColor = true;
-            this.rb_ReplacementSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_Replacementsel_MouseDown);
+            this.rb_ReplacementSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_ReplacementSel_MouseDown);
             // 
             // rb_MUPSel
             // 
             this.rb_MUPSel.AutoSize = true;
-            this.rb_MUPSel.Location = new System.Drawing.Point(114, 50);
+            this.rb_MUPSel.Location = new System.Drawing.Point(119, 50);
             this.rb_MUPSel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_MUPSel.Name = "rb_MUPSel";
             this.rb_MUPSel.Size = new System.Drawing.Size(69, 20);
@@ -295,7 +303,7 @@ namespace MupenUtils
             // rb_STsel
             // 
             this.rb_STsel.AutoSize = true;
-            this.rb_STsel.Location = new System.Drawing.Point(66, 50);
+            this.rb_STsel.Location = new System.Drawing.Point(69, 50);
             this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
             this.rb_STsel.Name = "rb_STsel";
             this.rb_STsel.Size = new System.Drawing.Size(46, 20);
@@ -303,6 +311,18 @@ namespace MupenUtils
             this.rb_STsel.Text = "ST";
             this.rb_STsel.UseVisualStyleBackColor = true;
             this.rb_STsel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_STsel_MouseDown);
+            // 
+            // rb_CMBSel
+            // 
+            this.rb_CMBSel.AutoSize = true;
+            this.rb_CMBSel.Location = new System.Drawing.Point(192, 50);
+            this.rb_CMBSel.Margin = new System.Windows.Forms.Padding(4);
+            this.rb_CMBSel.Name = "rb_CMBSel";
+            this.rb_CMBSel.Size = new System.Drawing.Size(57, 20);
+            this.rb_CMBSel.TabIndex = 0;
+            this.rb_CMBSel.Text = "CMB";
+            this.rb_CMBSel.UseVisualStyleBackColor = true;
+            this.rb_CMBSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_CMBSel_MouseDown);
             // 
             // rb_M64sel
             // 
@@ -318,7 +338,7 @@ namespace MupenUtils
             // 
             // btn_LoadLatest
             // 
-            this.btn_LoadLatest.Location = new System.Drawing.Point(402, 45);
+            this.btn_LoadLatest.Location = new System.Drawing.Point(405, 46);
             this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
             this.btn_LoadLatest.Name = "btn_LoadLatest";
             this.btn_LoadLatest.Size = new System.Drawing.Size(62, 28);
@@ -330,7 +350,7 @@ namespace MupenUtils
             // 
             // btn_SaveAs
             // 
-            this.btn_SaveAs.Location = new System.Drawing.Point(117, 448);
+            this.btn_SaveAs.Location = new System.Drawing.Point(373, 448);
             this.btn_SaveAs.Margin = new System.Windows.Forms.Padding(4);
             this.btn_SaveAs.Name = "btn_SaveAs";
             this.btn_SaveAs.Size = new System.Drawing.Size(98, 28);
@@ -342,7 +362,7 @@ namespace MupenUtils
             // 
             // btn_Save
             // 
-            this.btn_Save.Location = new System.Drawing.Point(11, 448);
+            this.btn_Save.Location = new System.Drawing.Point(267, 448);
             this.btn_Save.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(98, 28);
@@ -355,6 +375,7 @@ namespace MupenUtils
             // gp_M64
             // 
             this.gp_M64.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gp_M64.Controls.Add(this.gp_CMB);
             this.gp_M64.Controls.Add(this.gp_header);
             this.gp_M64.Controls.Add(this.btn_Reload);
             this.gp_M64.Controls.Add(this.btn_SaveAs);
@@ -378,7 +399,7 @@ namespace MupenUtils
             this.gp_header.Controls.Add(this.gp_Plugins);
             this.gp_header.Location = new System.Drawing.Point(4, 19);
             this.gp_header.Name = "gp_header";
-            this.gp_header.Size = new System.Drawing.Size(573, 416);
+            this.gp_header.Size = new System.Drawing.Size(573, 422);
             this.gp_header.TabIndex = 0;
             this.gp_header.TabStop = false;
             this.gp_header.Text = "Header";
@@ -854,7 +875,7 @@ namespace MupenUtils
             // 
             // btn_Reload
             // 
-            this.btn_Reload.Location = new System.Drawing.Point(223, 448);
+            this.btn_Reload.Location = new System.Drawing.Point(479, 448);
             this.btn_Reload.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Reload.Name = "btn_Reload";
             this.btn_Reload.Size = new System.Drawing.Size(98, 28);
@@ -1670,6 +1691,54 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
+            // gp_CMB
+            // 
+            this.gp_CMB.Controls.Add(this.txt_CMBSamples);
+            this.gp_CMB.Controls.Add(this.lbl_CMBSamples);
+            this.gp_CMB.Controls.Add(this.txt_ComboName);
+            this.gp_CMB.Controls.Add(this.lbl_CMBName);
+            this.gp_CMB.Location = new System.Drawing.Point(11, 19);
+            this.gp_CMB.Name = "gp_CMB";
+            this.gp_CMB.Size = new System.Drawing.Size(566, 91);
+            this.gp_CMB.TabIndex = 0;
+            this.gp_CMB.TabStop = false;
+            this.gp_CMB.Text = "Header (Combo)";
+            this.gp_CMB.Visible = false;
+            // 
+            // lbl_CMBName
+            // 
+            this.lbl_CMBName.AutoSize = true;
+            this.lbl_CMBName.Location = new System.Drawing.Point(14, 34);
+            this.lbl_CMBName.Name = "lbl_CMBName";
+            this.lbl_CMBName.Size = new System.Drawing.Size(44, 16);
+            this.lbl_CMBName.TabIndex = 0;
+            this.lbl_CMBName.Text = "Name";
+            // 
+            // txt_ComboName
+            // 
+            this.txt_ComboName.Location = new System.Drawing.Point(77, 30);
+            this.txt_ComboName.Name = "txt_ComboName";
+            this.txt_ComboName.Size = new System.Drawing.Size(100, 22);
+            this.txt_ComboName.TabIndex = 0;
+            this.txt_ComboName.TabStop = false;
+            // 
+            // lbl_CMBSamples
+            // 
+            this.lbl_CMBSamples.AutoSize = true;
+            this.lbl_CMBSamples.Location = new System.Drawing.Point(14, 63);
+            this.lbl_CMBSamples.Name = "lbl_CMBSamples";
+            this.lbl_CMBSamples.Size = new System.Drawing.Size(53, 16);
+            this.lbl_CMBSamples.TabIndex = 0;
+            this.lbl_CMBSamples.Text = "Frames";
+            // 
+            // txt_CMBSamples
+            // 
+            this.txt_CMBSamples.Location = new System.Drawing.Point(77, 59);
+            this.txt_CMBSamples.Name = "txt_CMBSamples";
+            this.txt_CMBSamples.Size = new System.Drawing.Size(100, 22);
+            this.txt_CMBSamples.TabIndex = 0;
+            this.txt_CMBSamples.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1716,6 +1785,8 @@ namespace MupenUtils
             this.ctx_TasStudio.ResumeLayout(false);
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
+            this.gp_CMB.ResumeLayout(false);
+            this.gp_CMB.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1858,6 +1929,12 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_SelRegion;
         private System.Windows.Forms.TextBox txt_Angle;
         private System.Windows.Forms.Label lbl_Deg;
+        private System.Windows.Forms.RadioButton rb_CMBSel;
+        private System.Windows.Forms.GroupBox gp_CMB;
+        private System.Windows.Forms.Label lbl_CMBName;
+        private System.Windows.Forms.TextBox txt_CMBSamples;
+        private System.Windows.Forms.Label lbl_CMBSamples;
+        private System.Windows.Forms.TextBox txt_ComboName;
     }
 }
 

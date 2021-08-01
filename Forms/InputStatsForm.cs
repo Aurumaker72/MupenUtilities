@@ -55,7 +55,7 @@ namespace MupenUtils.Forms
         }
         void UpdateInfos()
         {
-            if (!MainForm.FileLoaded) return;
+            if (!MainForm.FileLoaded || MainForm.UsageType == MainForm.UsageTypes.Combo) return;
 
             cbox_Ctl.Items.Clear();
 
@@ -188,7 +188,7 @@ namespace MupenUtils.Forms
         private void InputStatsForm_Shown(object sender, EventArgs e)
         {
             foreach (Control ctl in Controls)
-                ctl.Enabled = MainForm.FileLoaded;
+                ctl.Enabled = MainForm.FileLoaded && MainForm.UsageType == MainForm.UsageTypes.M64;
 
             UpdateInfos();
 

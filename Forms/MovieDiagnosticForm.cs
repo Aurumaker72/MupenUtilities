@@ -60,8 +60,14 @@ namespace MupenUtilities.Forms
         {
             this.Text = MainForm.PROGRAM_NAME + " - Movie Diagnostic Tool";
 
-            
+            if (MainForm.UsageType != MainForm.UsageTypes.M64)
+                warnText = "No M64 is loaded";
+
             lbl_info.Text = warnText;
+
+            
+            
+
             DoChecks();
         }
 
@@ -73,7 +79,7 @@ namespace MupenUtilities.Forms
 
         void DoChecks()
         {
-            if (MainForm.Path == null) return;
+            if (MainForm.Path == null || MainForm.UsageType == MainForm.UsageTypes.Combo) return;
 
             lbl_info.Visible = false;
             lb_Checks.Items.Clear();

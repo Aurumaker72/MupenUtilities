@@ -148,6 +148,11 @@ namespace MupenUtils
         public static List<int> inputListCtl4 = new List<int>();
         public static List<int>[] inputLists = { inputListCtl1, inputListCtl2, inputListCtl3, inputListCtl4 };
 
+        public static List<List<int>> cmbInput = new List<List<int>>();
+        public static List<int> cmbLens = new List<int>();
+        public static List<string> cmbNames = new List<string>();
+        public static int combos = 0;
+
         public static byte selectedController = 0;
 
         int lastValue;
@@ -177,7 +182,8 @@ namespace MupenUtils
             ST,
             Mupen,
             Replacement,
-            Autodetect
+            Combo,
+            Autodetect,
         };
         public static UsageTypes UsageType = UsageTypes.M64;
 
@@ -416,7 +422,7 @@ namespace MupenUtils
             tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
             tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
             cbox_Controllers.Visible = gp_TASStudio.Dock != DockStyle.Fill;
-            nud_X.Visible = nud_Y.Visible = gp_TASStudio.Dock != DockStyle.Fill;
+            nud_X.Visible = nud_Y.Visible = txt_Angle.Visible = gp_TASStudio.Dock != DockStyle.Fill;
         }
 
         void SetUITheme(UIThemes uitheme)
@@ -559,7 +565,7 @@ namespace MupenUtils
         {
 
             if (m64loadBusy) return;
-            if (!force && UsageType != UsageTypes.M64) return;
+            if (!force && UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo) return;
 
 
             Size s;
@@ -662,7 +668,7 @@ namespace MupenUtils
         void UpdateVisualsTop(bool serialize)
         {
             btn_LoadLatest.Enabled = true;
-            btn_Override.Enabled = UsageType == UsageTypes.M64;
+            btn_Override.Enabled = UsageType == UsageTypes.M64 || UsageType == UsageTypes.Combo;
             string txt = "?";
 
             switch (UsageType)
@@ -674,6 +680,16 @@ namespace MupenUtils
                 case UsageTypes.M64:
                     txt = "Browse M64";
                     rb_M64sel.Checked = true;
+                    gp_header.Visible = true;
+                    gp_M64.Text = "M64";
+                    gp_input.Dock = DockStyle.Right;
+                    gp_CMB.Visible = false;
+                    btn_Save.Enabled = btn_SaveAs.Enabled = true;
+                    foreach (var list in inputLists)
+                    {
+                        list.Clear();
+                        frames = 0;
+                    }
                     break;
                 case UsageTypes.ST:
                     txt = "Browse ST";
@@ -689,10 +705,23 @@ namespace MupenUtils
                     btn_LoadLatest.Enabled = false;
                     rb_ReplacementSel.Checked = true;
                     break;
+                case UsageTypes.Combo:
+                    txt = "Browse CMB";
+                    rb_CMBSel.Checked = true;
+                    gp_header.Visible = false;
+                    gp_M64.Text = "Combo";
+                    gp_CMB.Visible = true;
+                    btn_Save.Enabled = btn_SaveAs.Enabled = false;
+                    foreach (var list in inputLists)
+                    {
+                        list.Clear();
+                        frames = 0;
+                    }
+                    break;
+
                 case UsageTypes.Autodetect:
                     txt = "Autodetect";
                     btn_LoadLatest.Enabled = false;
-
                     // special care
                     rb_M64sel.Checked = rb_MUPSel.Checked = rb_ReplacementSel.Checked = rb_STsel.Checked = false;
                     break;
@@ -704,7 +733,7 @@ namespace MupenUtils
                 MupenUtilities.Properties.Settings.Default.Save();
                 Debug.WriteLine("saved usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
             }
-            if (UsageType != UsageTypes.M64)
+            if (UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo)
             {
                 EnableM64View(false, false, true);
             }
@@ -862,6 +891,95 @@ namespace MupenUtils
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
 
         }
+        void LoadCombo()
+        {
+            string errReason = "";
+            if (!System.IO.Path.GetExtension(Path).Equals(".cmb", StringComparison.InvariantCultureIgnoreCase)) errReason += "Extension invalid. ";
+            if (String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path)) errReason += "Path invalid. ";
+            if (!File.Exists(Path)) errReason += "File does not exist. ";
+            if (errReason != "")
+            {
+                ErrorProcessing(errReason);
+                return;
+            }
+
+            FileStream fs;
+            try
+            {
+                fs = File.Open(Path, FileMode.Open);
+            }
+            catch
+            {
+                ErrorProcessing("File already in use");
+                return;
+            }
+
+            // destroy everything
+            inputListCtl1.Clear();
+            inputListCtl2.Clear();
+            inputListCtl3.Clear();
+            inputListCtl4.Clear();
+            cbox_Controllers.Items.Clear();
+            SetJoystickValue(new Point(0, 0),RELATIVE,false);
+            
+
+            BinaryReader br = new BinaryReader(fs);
+            
+            int iter = 0;
+
+            
+
+            while (br.PeekChar() != -1)
+            {
+                StringBuilder sbCmbName = new StringBuilder();
+                cmbInput.Add(new List<int>());
+
+                char buffer = 'd'; // ame tu cosita 
+                while (buffer != '\0')
+                {
+                    buffer = (char)br.ReadByte();
+                    sbCmbName.Append(buffer);
+                }
+
+
+                cmbNames.Add(sbCmbName.ToString());
+
+                int cmbLen = br.ReadInt32();
+
+                cmbLens.Add(cmbLen);
+
+                for (int i = 0; i < cmbLen; i++)
+                    cmbInput[iter].Add(br.ReadInt32());
+
+
+                // finished loading one combo off to next one
+                cbox_Controllers.Items.Add("Combo " + (iter+1));
+                iter++;
+            }
+
+            combos = cmbNames.Count;
+
+            
+
+            tr_MovieScrub.Maximum = cmbLens[selectedController];
+            frames = (ulong)cmbLens[selectedController];
+            FileLoaded = true;
+
+            txt_CMBSamples.Text = cmbLens[selectedController].ToString();
+            txt_ComboName.Text = cmbNames[selectedController].ToString();
+
+            for (int i = 0; i < cmbInput.Count; i++)
+            {
+                inputLists[i] = cmbInput[i];
+            }
+
+            PreloadTASStudio();
+
+            EnableM64View_ThreadSafe(true);
+        }
+
+
+
         void ReadM64()
         {
             if (m64loadBusy)
@@ -1422,12 +1540,15 @@ namespace MupenUtils
             } // get value at that frame. If this fails then m64 is corrupted 
             catch
             {
+                if (UsageType != UsageTypes.M64) return;
+
                 EnableM64View(false, false, false);
                 stepFrameTimer.Enabled = false;
                 //MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.\nThis can be caused by a corrupted m64 or loading movies in quick succession", PROGRAM_NAME + " - Fatal desync");
                 MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause of a desync in the frame controller";
                 MovieDiag();
                 return;
+
             }
 
             for (int i = 0; i < controllerButtonsChk.Length; i++)
@@ -1445,6 +1566,7 @@ namespace MupenUtils
         }
         void UpdateTASStudio(int frameTarget)
         {
+            if (UsageType == UsageTypes.Combo) return;
             if (liveTasStudio)
             {
                 dgv_Main.ReadOnly = false;
@@ -1546,7 +1668,7 @@ namespace MupenUtils
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
-            if (UsageType != UsageTypes.M64 && UsageType != UsageTypes.ST)
+            if (UsageType != UsageTypes.M64 && UsageType != UsageTypes.ST && UsageType != UsageTypes.Combo)
             {
                 e.Effect = DragDropEffects.None;
                 return;
@@ -1775,6 +1897,8 @@ namespace MupenUtils
             }
             else if (UsageType == UsageTypes.ST)
                 LoadST();
+            else if (UsageType == UsageTypes.Combo)
+                LoadCombo();
             else if (UsageType == UsageTypes.Autodetect)
             {
 
@@ -1826,6 +1950,7 @@ namespace MupenUtils
             }
             else if (UsageType == UsageTypes.ST) LoadST();
             else if (UsageType == UsageTypes.Mupen) MupenHook();
+            else if (UsageType == UsageTypes.Combo) LoadCombo();
         }
         private void rb_M64sel_MouseDown(object sender, MouseEventArgs e)
         {
@@ -1852,7 +1977,7 @@ namespace MupenUtils
                 UsageType = UsageTypes.Mupen;
             UpdateVisualsTop(true);
         }
-        private void rb_Replacementsel_MouseDown(object sender, MouseEventArgs e)
+        private void rb_ReplacementSel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
                 UsageType = UsageTypes.Autodetect;
@@ -1860,6 +1985,16 @@ namespace MupenUtils
                 UsageType = UsageTypes.Replacement;
             UpdateVisualsTop(true);
         }
+
+        private void rb_CMBSel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right) UsageType = UsageTypes.Autodetect;
+            else if (e.Button == MouseButtons.Left)
+                UsageType = UsageTypes.Combo;
+
+            UpdateVisualsTop(true);
+        }
+
 
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
@@ -2169,6 +2304,15 @@ namespace MupenUtils
                     txt.ReadOnly = readOnly;
                 }
             }
+            foreach (Control ctl in gp_CMB.Controls)
+            {
+                if (ctl is TextBox)
+                {
+                    TextBox txt = ctl as TextBox;
+                    txt.ReadOnly = readOnly;
+                }
+            }
+
             // Joystick buttons + Joystick
             pb_JoystickPic.Enabled = !readOnly;
             nud_X.Enabled = !readOnly;
@@ -2213,16 +2357,24 @@ namespace MupenUtils
         }
         private void cbox_Controllers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbox_Controllers.SelectedIndex + 1 > MovieHeader.num_controllers)
+            if (UsageType == UsageTypes.M64)
             {
-                selectedController = 0;
-                goto update;
+                if (cbox_Controllers.SelectedIndex + 1 > MovieHeader.num_controllers)
+                {
+                    selectedController = 0;
+                    goto update;
+                }
             }
             selectedController = Convert.ToByte(cbox_Controllers.SelectedIndex);
 
         update:
             GetInput(frame, true, frame);
             cbox_Controllers.SelectedIndex = selectedController;
+            if(UsageType == UsageTypes.Combo)
+            {
+                txt_CMBSamples.Text = cmbLens[selectedController].ToString();
+                txt_ComboName.Text = cmbNames[selectedController].ToString();
+            }
         }
 
         private void btn_CtlFlags_Click(object sender, EventArgs e)
@@ -2530,7 +2682,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        
+       
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
