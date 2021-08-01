@@ -701,6 +701,9 @@ namespace MupenUtils
                 case UsageTypes.Autodetect:
                     txt = "Autodetect";
                     btn_LoadLatest.Enabled = false;
+
+                    // special care
+                    rb_M64sel.Checked = rb_MUPSel.Checked = rb_ReplacementSel.Checked = rb_STsel.Checked = false;
                     break;
             }
 
@@ -2167,7 +2170,6 @@ namespace MupenUtils
             txt_Rom.ReadOnly = readOnly;
             txt_CTRLS.ReadOnly = readOnly;
             cbox_startType.Enabled = !readOnly;
-            btn_VIMAX.Enabled = !readOnly;
             foreach (Control ctl in gp_Plugins.Controls)
             {
                 if (ctl is TextBox)

@@ -40,7 +40,9 @@ namespace MupenUtils
             openFileDialog.CheckPathExists =
             openFileDialog.RestoreDirectory = true;
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK || openFileDialog.ShowDialog() == DialogResult.Yes)
+            DialogResult dr = openFileDialog.ShowDialog();
+
+            if (dr == DialogResult.OK || dr == DialogResult.Yes)
                 path = openFileDialog.FileName;
             else
                 return new object[] { "FAIL", false };
