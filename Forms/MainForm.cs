@@ -1674,7 +1674,7 @@ namespace MupenUtils
             string file = files[0];
             if (files.Length > 1)
             {
-                MessageBox.Show("You are attempting to load more than one file, picking first one from list...", PROGRAM_NAME + " - Too much data");
+                MessageBox.Show("You are attempting to load more than one file, picking first one from list...", PROGRAM_NAME);
             }
 
             if (!ExtensionMethods.ValidPath(file))
@@ -1693,6 +1693,10 @@ namespace MupenUtils
             else if (UsageType == UsageTypes.ST)
             {
                 LoadST();
+            }
+            else if (UsageType == UsageTypes.Combo)
+            {
+                LoadCombo();
             }
         }
 
