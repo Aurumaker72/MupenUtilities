@@ -50,17 +50,18 @@ namespace MupenUtils
             openFileDialog.Dispose();
             return new object[] { path, true };
         }
-        public static object[] SaveFileDialog(string title)
+        public static object[] SaveFileDialog(string title, string filter)
         {
             string path = string.Empty;
 
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 InitialDirectory = "C:\\",
-                FilterIndex = 2
             };
             saveFileDialog.Title = title;
             saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.Filter = filter;
+            saveFileDialog.FilterIndex = 0;
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 path = saveFileDialog.FileName;

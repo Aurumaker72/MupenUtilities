@@ -315,7 +315,7 @@ namespace MupenUtils.Forms
 
             lbl_Repl_Status.Text = "Choosing output";
 
-            object[] res = UIHelper.SaveFileDialog("Select Output");
+            object[] res = UIHelper.SaveFileDialog("Select Output", "M64 Files (*.m64)|*.m64|All files (*.*)|*.*");
             if ((string)res[0] != "FAIL" && (bool)res[1])
                 pathOutput = (string)res[0];
 

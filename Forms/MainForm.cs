@@ -1132,7 +1132,7 @@ namespace MupenUtils
             string tmpPath;
             if (saveAs)
             {
-                object[] res = UIHelper.SaveFileDialog("Save As");
+                object[] res = UIHelper.SaveFileDialog("Save As", "M64 Files (*.m64)|*.m64|All files (*.*)|*.*");
                 if ((bool)res[1])
                     tmpPath = (string)res[0];
                 else
