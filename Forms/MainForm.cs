@@ -2190,6 +2190,7 @@ namespace MupenUtils
                     chk.Enabled = !readOnly;
                 }
             }
+            cmb_Country.Enabled = !readOnly;
             dgv_Main.ReadOnly = readOnly;
            
         }
