@@ -20,11 +20,14 @@ namespace MupenUtils.Forms
             foreach (Control ctl in this.Controls)
                 ctl.Enabled = MainForm.FileLoaded;
 
+            chk_Cflg_Mempak.Enabled = chk_Cflg_Present.Enabled = chk_Cflg_Rumblepak.Enabled = !MainForm.readOnly;
+
             if (MainForm.FileLoaded)
             {
                 cbox_Cflg_ControllerSelect.SelectedIndex = 0;
                 MainForm.notifiedReupdateControllerFlags = true;
             }
+
         }
 
         private void cbox_Cflg_ControllerSelect_SelectedIndexChanged(object sender, EventArgs e)
