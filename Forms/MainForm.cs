@@ -738,6 +738,8 @@ namespace MupenUtils
             regionExist = (beginRegion >= MINIMUM_FRAME) && (endRegion >= MINIMUM_FRAME) && (endRegion > beginRegion);
 
             tsmi_RegionReplacement.Enabled = regionExist;
+
+            dgv_Main.Refresh();
         }
 
         #endregion
@@ -1559,6 +1561,7 @@ namespace MupenUtils
         }
         void UpdateTASStudio(int frameTarget)
         {
+
             //if (UsageType == UsageTypes.Combo) return;
             if (liveTasStudio)
             {
@@ -1744,6 +1747,14 @@ namespace MupenUtils
             {
                 e.Graphics.DrawString((e.RowIndex).ToString(), e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
             }
+
+            if(beginRegion != -1 && e.RowIndex == beginRegion)
+            using (SolidBrush b = new SolidBrush(Color.Red))
+                e.Graphics.FillRectangle(b, new Rectangle(e.RowBounds.Location.X + 20, e.RowBounds.Location.Y + 6, 10, 10));
+
+            if (endRegion != -1 && e.RowIndex == endRegion)
+                using (SolidBrush b = new SolidBrush(Color.Blue))
+                    e.Graphics.FillRectangle(b, new Rectangle(e.RowBounds.Location.X + 20, e.RowBounds.Location.Y + 6, 10, 10));
         }
         private void dgv_Main_KeyDown(object sender, KeyEventArgs e)
         {
@@ -2575,7 +2586,9 @@ namespace MupenUtils
         }
         private void tsmi_ClearRegion_Click(object sender, EventArgs e)
         {
-            beginRegion = endRegion = 0; // or -1
+            beginRegion = endRegion = -1; // or -1
+            UpdateTASStudioRegionUI();
+
         }
 
         private void replacementwithRegionToolStripMenuItem_Click(object sender, EventArgs e)
