@@ -915,7 +915,10 @@ namespace MupenUtils
             inputListCtl4.Clear();
             cbox_Controllers.Items.Clear();
             SetJoystickValue(new Point(0, 0),RELATIVE,false);
-            
+            foreach (var l in cmbInput) l.Clear();
+            cmbInput.Clear();
+            cmbLens.Clear();
+            cmbNames.Clear();
 
             BinaryReader br = new BinaryReader(fs);
 
