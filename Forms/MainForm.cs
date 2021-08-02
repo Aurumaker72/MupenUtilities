@@ -345,8 +345,6 @@ namespace MupenUtils
             ts.Checked = true;
 
             //#if DEBUG
-            ctx_Input_Debug.Items.Add(new ToolStripSeparator());
-            ToolStripMenuItem tsmi_DBG_Crash = new ToolStripMenuItem();
             tsmi_DBG_Crash.MouseDown += (s, e) => throw new Exception("Intentional crash");
             tsmi_DBG_Crash.Text = "Debug - Crash";
             ctx_Input_Debug.Items.Add(tsmi_DBG_Crash);

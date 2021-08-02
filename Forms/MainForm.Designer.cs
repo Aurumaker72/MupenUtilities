@@ -173,6 +173,8 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_DBG_Crash = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -1455,9 +1457,11 @@ namespace MupenUtils
             this.tsmi_DumpAppInfo,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_CRCPopulate,
-            this.tsmi_Input_Sticky});
+            this.tsmi_Input_Sticky,
+            this.toolStripSeparator7,
+            this.tsmi_DBG_Crash});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 360);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 420);
             // 
             // tsmi_SimpleMode
             // 
@@ -1742,6 +1746,17 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(240, 6);
+            // 
+            // tsmi_DBG_Crash
+            // 
+            this.tsmi_DBG_Crash.Name = "tsmi_DBG_Crash";
+            this.tsmi_DBG_Crash.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_DBG_Crash.Text = "Crash";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1938,6 +1953,8 @@ namespace MupenUtils
         private System.Windows.Forms.TextBox txt_CMBSamples;
         private System.Windows.Forms.Label lbl_CMBSamples;
         private System.Windows.Forms.TextBox txt_ComboName;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_DBG_Crash;
     }
 }
 
