@@ -58,7 +58,7 @@ namespace MupenUtils.Forms
         private void ExceptionForm_Shown(object sender, EventArgs e)
         {
 
-            this.Text = ProductName + " - Exception";
+            this.Text = ProductName + " " + MainForm.PROGRAM_VERSION + " - Exception";
 
 
 

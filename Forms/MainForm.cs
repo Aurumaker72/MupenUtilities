@@ -2875,6 +2875,7 @@ namespace MupenUtils
             string exStr = "";
             exStr += "message: " + ex.Message + "\n";
             exStr += "stack trace: " + ex.StackTrace + "\n";
+            exStr += "version: " + PROGRAM_VERSION.ToString() + "\n";
             exStr += "file loaded: " + FileLoaded.ToString() + "\n";
             exStr += "mupen running: " + mupenRunning.ToString() + "\n";
             exStr += "loaded invalid file: " + loadedInvalidFile.ToString() + "\n";
@@ -2891,6 +2892,7 @@ namespace MupenUtils
         {
 
             string str = "";
+            str += "version: " + PROGRAM_VERSION.ToString() + "\n";
             str += "file loaded: " + FileLoaded.ToString() + "\n";
             str += "mupen running: " + mupenRunning.ToString() + "\n";
             str += "loaded invalid file: " + loadedInvalidFile.ToString() + "\n";
