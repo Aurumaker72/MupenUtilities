@@ -2070,7 +2070,7 @@ namespace MupenUtils
             txt_Frame.Text = frame.ToString();
 
             int index = frame;
-            if (index <= dgv_Main.Rows.Count)
+            if (index < dgv_Main.Rows.Count)
             {
                 dgv_Main.CurrentCell = dgv_Main.Rows[index].Cells[0];
                 dgv_Main.Rows[index].Selected = true;
