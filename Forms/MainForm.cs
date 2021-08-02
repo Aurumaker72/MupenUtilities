@@ -934,6 +934,8 @@ namespace MupenUtils
                     {
                         // ran through entire file but no NUL terminator...
                         ErrorProcessing("Malformed combo file: No NUL Terminator.");
+                        br.Close();
+                        fs.Close();
                         return;
                     }
                     buffer = (char)br.ReadByte();
@@ -949,6 +951,8 @@ namespace MupenUtils
                 if (br.BaseStream.Position + 4 > br.BaseStream.Length)
                 {
                     ErrorProcessing("Malformed combo file: Combo length is longer than file.");
+                    br.Close();
+                    fs.Close();
                     return;
                 }
                 for (int i = 0; i < cmbLen; i++)
