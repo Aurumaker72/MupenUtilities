@@ -948,7 +948,7 @@ namespace MupenUtils
                 int cmbLen = br.ReadInt32();
 
                 cmbLens.Add(cmbLen);
-                if (br.BaseStream.Position + 4 > br.BaseStream.Length)
+                if (cmbLen > br.BaseStream.Length)
                 {
                     ErrorProcessing("Malformed combo file: Combo length is longer than file.");
                     br.Close();
