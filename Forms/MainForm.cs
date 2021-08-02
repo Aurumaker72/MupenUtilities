@@ -1749,11 +1749,11 @@ namespace MupenUtils
             }
 
             if(beginRegion != -1 && e.RowIndex == beginRegion)
-            using (SolidBrush b = new SolidBrush(Color.Red))
-                e.Graphics.FillRectangle(b, new Rectangle(e.RowBounds.Location.X + 20, e.RowBounds.Location.Y + 6, 10, 10));
+                using (SolidBrush b = new SolidBrush(Color.FromArgb(128, Color.Blue)))
+                    e.Graphics.FillRectangle(b, new Rectangle(e.RowBounds.Location.X + 20, e.RowBounds.Location.Y + 6, 10, 10));
 
             if (endRegion != -1 && e.RowIndex == endRegion)
-                using (SolidBrush b = new SolidBrush(Color.Blue))
+                using (SolidBrush b = new SolidBrush(Color.FromArgb(128, Color.Red)))
                     e.Graphics.FillRectangle(b, new Rectangle(e.RowBounds.Location.X + 20, e.RowBounds.Location.Y + 6, 10, 10));
         }
         private void dgv_Main_KeyDown(object sender, KeyEventArgs e)
