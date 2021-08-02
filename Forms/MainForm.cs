@@ -930,6 +930,12 @@ namespace MupenUtils
                 char buffer = 'd'; // ame tu cosita 
                 while (buffer != '\0')
                 {
+                    if(br.PeekChar() == -1)
+                    {
+                        // ran through entire file but no NUL terminator...
+                        ErrorProcessing("Malformed combo file: No NUL Terminator.");
+                        return;
+                    }
                     buffer = (char)br.ReadByte();
                     sbCmbName.Append(buffer);
                 }
@@ -940,7 +946,11 @@ namespace MupenUtils
                 int cmbLen = br.ReadInt32();
 
                 cmbLens.Add(cmbLen);
-
+                if (br.BaseStream.Position + 4 > br.BaseStream.Length)
+                {
+                    ErrorProcessing("Malformed combo file: Combo length is longer than file.");
+                    return;
+                }
                 for (int i = 0; i < cmbLen; i++)
                     cmbInput[iter].Add(br.ReadInt32());
 
@@ -949,6 +959,8 @@ namespace MupenUtils
                 cbox_Controllers.Items.Add("Combo " + (iter+1));
                 iter++;
             }
+            br.Close();
+            fs.Close();
 
             combos = cmbNames.Count;
 
