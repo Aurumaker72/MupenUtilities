@@ -90,6 +90,8 @@ namespace MupenUtils.Forms
             this.pb_LogoBad.Size = new System.Drawing.Size(176, 160);
             this.pb_LogoBad.TabIndex = 0;
             this.pb_LogoBad.TabStop = false;
+            this.pb_LogoBad.MouseEnter += new System.EventHandler(this.pb_LogoBad_MouseEnter);
+            this.pb_LogoBad.MouseLeave += new System.EventHandler(this.pb_LogoBad_MouseLeave);
             // 
             // btn_Quit
             // 
@@ -125,7 +127,8 @@ namespace MupenUtils.Forms
             this.Controls.Add(this.lbl_info);
             this.Controls.Add(this.lbl_Exception);
             this.Controls.Add(this.pb_LogoBad);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ExceptionForm";
             this.ShowIcon = false;

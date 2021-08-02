@@ -10,6 +10,16 @@ namespace MupenUtils.Forms
         public static Exception mException;
         string mPath;
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams myCp = base.CreateParams;
+                myCp.Style &= 0x00C00000;
+                return myCp;
+            }
+        }
+        
         public ExceptionForm()
         {
             InitializeComponent();
@@ -23,7 +33,7 @@ namespace MupenUtils.Forms
 
         private void btn_Continue_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void btn_CrashLog_Click(object sender, EventArgs e)
@@ -59,6 +69,15 @@ namespace MupenUtils.Forms
         private void btn_OpenCrashLog_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void pb_LogoBad_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pb_LogoBad_MouseLeave(object sender, EventArgs e)
+        {
         }
     }
 }
