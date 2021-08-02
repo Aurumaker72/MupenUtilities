@@ -166,6 +166,7 @@ namespace MupenUtils
 
         // Joystick input
         Point JOY_Rel, JOY_Abs, JOY_middle;
+        double JOY_Theta;
         bool JOY_mouseDown, JOY_followMouse, JOY_Keyboard;
         bool lockType;
         UpdateNotifier updateNotifier = new UpdateNotifier();
@@ -847,9 +848,7 @@ namespace MupenUtils
             {
                 string a = "";
                 for (int i = 0; i < MUPEN_VERSION.Length; i++)
-                {
                     a += str[indexes[i1] + i];
-                }
                 finalName = a;
             }
 
@@ -964,10 +963,12 @@ namespace MupenUtils
             {
                 inputLists[i] = cmbInput[i];
             }
-            
+
             PreloadTASStudio();
 
             EnableM64View_ThreadSafe(true);
+
+            cbox_Controllers.SelectedIndex = 0;
         }
 
 
@@ -1558,7 +1559,7 @@ namespace MupenUtils
         }
         void UpdateTASStudio(int frameTarget)
         {
-            if (UsageType == UsageTypes.Combo) return;
+            //if (UsageType == UsageTypes.Combo) return;
             if (liveTasStudio)
             {
                 dgv_Main.ReadOnly = false;
@@ -2282,7 +2283,6 @@ namespace MupenUtils
         void UpdateReadOnly()
         {
             readOnly = chk_readonly.Checked;
-            chk_readonly.Text = readOnly ? "Read-only" : "Read-write";
             //if(!readOnly) ShowStatus("Read-Write mode: All changes will be flushed to a new file upon pressing \'Save File\'", st_Status1);
             //else ShowStatus("Read-only mode: You can only view M64 data", st_Status1);
             // Groupboxes + Child controls
@@ -2328,7 +2328,7 @@ namespace MupenUtils
             }
             cmb_Country.Enabled = !readOnly;
             dgv_Main.ReadOnly = readOnly;
-           
+            txt_Angle.ReadOnly = readOnly;
         }
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
@@ -2664,16 +2664,34 @@ namespace MupenUtils
             nud_Y.Value = ExtensionMethods.Clamp(JOY_Rel.Y, -127, 128);
 
 
-            txt_Angle.Text = Math.Round((Math.Atan2(JOY_Rel.Y, JOY_Rel.X) * 57.295779513)).ToString();
+            
+
+            JOY_Theta = Math.Atan2(JOY_Rel.Y, JOY_Rel.X);
+            txt_Angle.Text = Math.Round((JOY_Theta * 57.295779513)).ToString();
+
+
+            pb_JoystickPic.Refresh();
 
             ResumeLayout(true);
 
-            pb_JoystickPic.Refresh();
+            
 
 
 
         }
-
+        private void txt_Angle_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+        }
+        private void txt_Angle_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+            double x, y, trgtheta;
+            trgtheta = double.Parse(txt_Angle.Text) * Math.PI / 180;
+            x = Math.Cos(trgtheta) * 127/2;
+            y = Math.Sin(trgtheta) * 128/2;
+            SetJoystickValue(new Point((int)Math.Round(x), ((int)Math.Round(y))), RELATIVE, false);
+        }
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
@@ -2686,7 +2704,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-       
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

@@ -46,6 +46,11 @@ namespace MupenUtils
             this.btn_SaveAs = new System.Windows.Forms.Button();
             this.btn_Save = new System.Windows.Forms.Button();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
+            this.gp_CMB = new System.Windows.Forms.GroupBox();
+            this.txt_CMBSamples = new System.Windows.Forms.TextBox();
+            this.lbl_CMBSamples = new System.Windows.Forms.Label();
+            this.txt_ComboName = new System.Windows.Forms.TextBox();
+            this.lbl_CMBName = new System.Windows.Forms.Label();
             this.gp_header = new System.Windows.Forms.GroupBox();
             this.gp_User = new System.Windows.Forms.GroupBox();
             this.txt_PathName = new System.Windows.Forms.TextBox();
@@ -168,13 +173,9 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.gp_CMB = new System.Windows.Forms.GroupBox();
-            this.lbl_CMBName = new System.Windows.Forms.Label();
-            this.txt_ComboName = new System.Windows.Forms.TextBox();
-            this.lbl_CMBSamples = new System.Windows.Forms.Label();
-            this.txt_CMBSamples = new System.Windows.Forms.TextBox();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
+            this.gp_CMB.SuspendLayout();
             this.gp_header.SuspendLayout();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
@@ -191,7 +192,6 @@ namespace MupenUtils
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
-            this.gp_CMB.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -390,6 +390,54 @@ namespace MupenUtils
             this.gp_M64.TabIndex = 0;
             this.gp_M64.TabStop = false;
             this.gp_M64.Text = "M64";
+            // 
+            // gp_CMB
+            // 
+            this.gp_CMB.Controls.Add(this.txt_CMBSamples);
+            this.gp_CMB.Controls.Add(this.lbl_CMBSamples);
+            this.gp_CMB.Controls.Add(this.txt_ComboName);
+            this.gp_CMB.Controls.Add(this.lbl_CMBName);
+            this.gp_CMB.Location = new System.Drawing.Point(11, 19);
+            this.gp_CMB.Name = "gp_CMB";
+            this.gp_CMB.Size = new System.Drawing.Size(566, 91);
+            this.gp_CMB.TabIndex = 0;
+            this.gp_CMB.TabStop = false;
+            this.gp_CMB.Text = "Header (Combo)";
+            this.gp_CMB.Visible = false;
+            // 
+            // txt_CMBSamples
+            // 
+            this.txt_CMBSamples.Location = new System.Drawing.Point(77, 59);
+            this.txt_CMBSamples.Name = "txt_CMBSamples";
+            this.txt_CMBSamples.Size = new System.Drawing.Size(132, 22);
+            this.txt_CMBSamples.TabIndex = 0;
+            this.txt_CMBSamples.TabStop = false;
+            // 
+            // lbl_CMBSamples
+            // 
+            this.lbl_CMBSamples.AutoSize = true;
+            this.lbl_CMBSamples.Location = new System.Drawing.Point(14, 63);
+            this.lbl_CMBSamples.Name = "lbl_CMBSamples";
+            this.lbl_CMBSamples.Size = new System.Drawing.Size(53, 16);
+            this.lbl_CMBSamples.TabIndex = 0;
+            this.lbl_CMBSamples.Text = "Frames";
+            // 
+            // txt_ComboName
+            // 
+            this.txt_ComboName.Location = new System.Drawing.Point(77, 30);
+            this.txt_ComboName.Name = "txt_ComboName";
+            this.txt_ComboName.Size = new System.Drawing.Size(264, 22);
+            this.txt_ComboName.TabIndex = 0;
+            this.txt_ComboName.TabStop = false;
+            // 
+            // lbl_CMBName
+            // 
+            this.lbl_CMBName.AutoSize = true;
+            this.lbl_CMBName.Location = new System.Drawing.Point(14, 34);
+            this.lbl_CMBName.Name = "lbl_CMBName";
+            this.lbl_CMBName.Size = new System.Drawing.Size(44, 16);
+            this.lbl_CMBName.TabIndex = 0;
+            this.lbl_CMBName.Text = "Name";
             // 
             // gp_header
             // 
@@ -937,9 +985,10 @@ namespace MupenUtils
             // 
             this.txt_Angle.Location = new System.Drawing.Point(33, 145);
             this.txt_Angle.Name = "txt_Angle";
-            this.txt_Angle.ReadOnly = true;
             this.txt_Angle.Size = new System.Drawing.Size(64, 22);
             this.txt_Angle.TabIndex = 5;
+            this.txt_Angle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Angle_KeyDown);
+            this.txt_Angle.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_Angle_KeyUp);
             // 
             // nud_Y
             // 
@@ -1676,6 +1725,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
+            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1685,59 +1735,12 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
+            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
-            // 
-            // gp_CMB
-            // 
-            this.gp_CMB.Controls.Add(this.txt_CMBSamples);
-            this.gp_CMB.Controls.Add(this.lbl_CMBSamples);
-            this.gp_CMB.Controls.Add(this.txt_ComboName);
-            this.gp_CMB.Controls.Add(this.lbl_CMBName);
-            this.gp_CMB.Location = new System.Drawing.Point(11, 19);
-            this.gp_CMB.Name = "gp_CMB";
-            this.gp_CMB.Size = new System.Drawing.Size(566, 91);
-            this.gp_CMB.TabIndex = 0;
-            this.gp_CMB.TabStop = false;
-            this.gp_CMB.Text = "Header (Combo)";
-            this.gp_CMB.Visible = false;
-            // 
-            // lbl_CMBName
-            // 
-            this.lbl_CMBName.AutoSize = true;
-            this.lbl_CMBName.Location = new System.Drawing.Point(14, 34);
-            this.lbl_CMBName.Name = "lbl_CMBName";
-            this.lbl_CMBName.Size = new System.Drawing.Size(44, 16);
-            this.lbl_CMBName.TabIndex = 0;
-            this.lbl_CMBName.Text = "Name";
-            // 
-            // txt_ComboName
-            // 
-            this.txt_ComboName.Location = new System.Drawing.Point(77, 30);
-            this.txt_ComboName.Name = "txt_ComboName";
-            this.txt_ComboName.Size = new System.Drawing.Size(264, 22);
-            this.txt_ComboName.TabIndex = 0;
-            this.txt_ComboName.TabStop = false;
-            // 
-            // lbl_CMBSamples
-            // 
-            this.lbl_CMBSamples.AutoSize = true;
-            this.lbl_CMBSamples.Location = new System.Drawing.Point(14, 63);
-            this.lbl_CMBSamples.Name = "lbl_CMBSamples";
-            this.lbl_CMBSamples.Size = new System.Drawing.Size(53, 16);
-            this.lbl_CMBSamples.TabIndex = 0;
-            this.lbl_CMBSamples.Text = "Frames";
-            // 
-            // txt_CMBSamples
-            // 
-            this.txt_CMBSamples.Location = new System.Drawing.Point(77, 59);
-            this.txt_CMBSamples.Name = "txt_CMBSamples";
-            this.txt_CMBSamples.Size = new System.Drawing.Size(132, 22);
-            this.txt_CMBSamples.TabIndex = 0;
-            this.txt_CMBSamples.TabStop = false;
             // 
             // MainForm
             // 
@@ -1763,6 +1766,8 @@ namespace MupenUtils
             this.gp_Path.ResumeLayout(false);
             this.gp_Path.PerformLayout();
             this.gp_M64.ResumeLayout(false);
+            this.gp_CMB.ResumeLayout(false);
+            this.gp_CMB.PerformLayout();
             this.gp_header.ResumeLayout(false);
             this.gp_User.ResumeLayout(false);
             this.gp_User.PerformLayout();
@@ -1785,8 +1790,6 @@ namespace MupenUtils
             this.ctx_TasStudio.ResumeLayout(false);
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
-            this.gp_CMB.ResumeLayout(false);
-            this.gp_CMB.PerformLayout();
             this.ResumeLayout(false);
 
         }
