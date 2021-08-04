@@ -2722,8 +2722,8 @@ namespace MupenUtils
             if (e.KeyCode != Keys.Enter) return;
             double x, y, trgtheta;
             trgtheta = double.Parse(txt_Angle.Text) * Math.PI / 180;
-            x = Math.Cos(trgtheta) * 127/2;
-            y = Math.Sin(trgtheta) * 128/2;
+            x = Math.Cos(trgtheta) * 127;
+            y = Math.Sin(trgtheta) * 128;
             SetJoystickValue(new Point((int)Math.Round(x), ((int)Math.Round(y))), RELATIVE, false);
         }
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
