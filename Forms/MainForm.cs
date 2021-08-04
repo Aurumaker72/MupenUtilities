@@ -1086,8 +1086,12 @@ namespace MupenUtils
 
             frames = MovieHeader.length_samples;
             uint findx = 0;
+            
             // position 1024
+            if(MovieHeader.version == 3)
             br.BaseStream.Seek(1024, SeekOrigin.Begin);
+            else
+            br.BaseStream.Seek(0x200, SeekOrigin.Begin);
             while (findx <= frames)
             {
                 for (int i = 0; i < MovieHeader.num_controllers; i++)
@@ -1768,7 +1772,7 @@ namespace MupenUtils
             if(beginRegion != -1 && e.RowIndex == beginRegion)
                 using (SolidBrush b = new SolidBrush(Color.FromArgb(128, Color.Blue)))
                     e.Graphics.FillRectangle(b, new Rectangle(e.RowBounds.Location.X + 20, e.RowBounds.Location.Y + 6, 10, 10));
-
+            
             if (endRegion != -1 && e.RowIndex == endRegion)
                 using (SolidBrush b = new SolidBrush(Color.FromArgb(128, Color.Red)))
                     e.Graphics.FillRectangle(b, new Rectangle(e.RowBounds.Location.X + 20, e.RowBounds.Location.Y + 6, 10, 10));
