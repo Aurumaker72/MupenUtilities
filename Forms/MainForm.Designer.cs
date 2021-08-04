@@ -97,7 +97,7 @@ namespace MupenUtils
             this.txt_Rsp = new System.Windows.Forms.TextBox();
             this.btn_Reload = new System.Windows.Forms.Button();
             this.gp_input = new System.Windows.Forms.GroupBox();
-            this.txt_Angle = new System.Windows.Forms.TextBox();
+            this.nud_Angle = new System.Windows.Forms.NumericUpDown();
             this.nud_Y = new System.Windows.Forms.NumericUpDown();
             this.nud_X = new System.Windows.Forms.NumericUpDown();
             this.cbox_Controllers = new System.Windows.Forms.ComboBox();
@@ -155,6 +155,8 @@ namespace MupenUtils
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_CRCPopulate = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_DBG_Crash = new System.Windows.Forms.ToolStripMenuItem();
             this.ctx_TasStudio = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -173,8 +175,6 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_DBG_Crash = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -185,6 +185,7 @@ namespace MupenUtils
             this.gp_M64_misc.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_input.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
             this.gp_TASStudio.SuspendLayout();
@@ -937,7 +938,7 @@ namespace MupenUtils
             // 
             // gp_input
             // 
-            this.gp_input.Controls.Add(this.txt_Angle);
+            this.gp_input.Controls.Add(this.nud_Angle);
             this.gp_input.Controls.Add(this.nud_Y);
             this.gp_input.Controls.Add(this.nud_X);
             this.gp_input.Controls.Add(this.cbox_Controllers);
@@ -983,14 +984,18 @@ namespace MupenUtils
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input";
             // 
-            // txt_Angle
+            // nud_Angle
             // 
-            this.txt_Angle.Location = new System.Drawing.Point(33, 145);
-            this.txt_Angle.Name = "txt_Angle";
-            this.txt_Angle.Size = new System.Drawing.Size(64, 22);
-            this.txt_Angle.TabIndex = 5;
-            this.txt_Angle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Angle_KeyDown);
-            this.txt_Angle.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_Angle_KeyUp);
+            this.nud_Angle.Location = new System.Drawing.Point(33, 144);
+            this.nud_Angle.Maximum = 180;
+            this.nud_Angle.Minimum = -180;
+            this.nud_Angle.Name = "nud_Angle";
+            this.nud_Angle.Size = new System.Drawing.Size(64, 22);
+            this.nud_Angle.TabIndex = 0;
+            this.nud_Angle.TabStop = false;
+            this.nud_Angle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_Angle_KeyDown);
+            this.nud_Angle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_Angle_MouseUp);
+            this.nud_Angle.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.nud_Angle_MouseUp);
             // 
             // nud_Y
             // 
@@ -1001,6 +1006,7 @@ namespace MupenUtils
             this.nud_Y.ValueChanged += new System.EventHandler(this.nud_X_ValueChanged);
             this.nud_Y.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
             this.nud_Y.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            this.nud_Y.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
             // 
             // nud_X
             // 
@@ -1011,6 +1017,7 @@ namespace MupenUtils
             this.nud_X.ValueChanged += new System.EventHandler(this.nud_X_ValueChanged);
             this.nud_X.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
             this.nud_X.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            this.nud_X.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
             // 
             // cbox_Controllers
             // 
@@ -1461,7 +1468,7 @@ namespace MupenUtils
             this.toolStripSeparator7,
             this.tsmi_DBG_Crash});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 420);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 392);
             // 
             // tsmi_SimpleMode
             // 
@@ -1606,6 +1613,17 @@ namespace MupenUtils
             this.tsmi_Input_Sticky.Visible = false;
             this.tsmi_Input_Sticky.Click += new System.EventHandler(this.tsmi_Input_Sticky_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(240, 6);
+            // 
+            // tsmi_DBG_Crash
+            // 
+            this.tsmi_DBG_Crash.Name = "tsmi_DBG_Crash";
+            this.tsmi_DBG_Crash.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_DBG_Crash.Text = "Crash";
+            // 
             // ctx_TasStudio
             // 
             this.ctx_TasStudio.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -1746,17 +1764,6 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
             // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(240, 6);
-            // 
-            // tsmi_DBG_Crash
-            // 
-            this.tsmi_DBG_Crash.Name = "tsmi_DBG_Crash";
-            this.tsmi_DBG_Crash.Size = new System.Drawing.Size(243, 26);
-            this.tsmi_DBG_Crash.Text = "Crash";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1795,6 +1802,7 @@ namespace MupenUtils
             this.gp_Plugins.PerformLayout();
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
             this.gp_TASStudio.ResumeLayout(false);
@@ -1945,7 +1953,6 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_ClearRegion;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem tsmi_SelRegion;
-        private System.Windows.Forms.TextBox txt_Angle;
         private System.Windows.Forms.Label lbl_Deg;
         private System.Windows.Forms.RadioButton rb_CMBSel;
         private System.Windows.Forms.GroupBox gp_CMB;
@@ -1955,6 +1962,7 @@ namespace MupenUtils
         private System.Windows.Forms.TextBox txt_ComboName;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem tsmi_DBG_Crash;
+        private System.Windows.Forms.NumericUpDown nud_Angle;
     }
 }
 

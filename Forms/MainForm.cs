@@ -421,7 +421,7 @@ namespace MupenUtils
             tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
             tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
             cbox_Controllers.Visible = gp_TASStudio.Dock != DockStyle.Fill;
-            nud_X.Visible = nud_Y.Visible = txt_Angle.Visible = gp_TASStudio.Dock != DockStyle.Fill;
+            nud_X.Visible = nud_Y.Visible = nud_Angle.Visible = gp_TASStudio.Dock != DockStyle.Fill;
         }
 
         void SetUITheme(UIThemes uitheme)
@@ -2360,7 +2360,7 @@ namespace MupenUtils
             }
             cmb_Country.Enabled = !readOnly;
             dgv_Main.ReadOnly = readOnly;
-            txt_Angle.ReadOnly = readOnly;
+            nud_Angle.ReadOnly = readOnly;
         }
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
@@ -2701,7 +2701,7 @@ namespace MupenUtils
             
 
             JOY_Theta = Math.Atan2(JOY_Rel.Y, JOY_Rel.X);
-            txt_Angle.Text = Math.Round((JOY_Theta * 57.295779513)).ToString();
+            nud_Angle.Value = (decimal)Math.Round((JOY_Theta * (180/Math.PI)));
 
 
             pb_JoystickPic.Refresh();
@@ -2713,19 +2713,27 @@ namespace MupenUtils
 
 
         }
-        private void txt_Angle_KeyUp(object sender, KeyEventArgs e)
-        {
-            
-        }
-        private void txt_Angle_KeyDown(object sender, KeyEventArgs e)
+        
+        private void nud_Angle_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter) return;
             double x, y, trgtheta;
-            trgtheta = double.Parse(txt_Angle.Text) * Math.PI / 180;
+            trgtheta = double.Parse(nud_Angle.Value.ToString()) * Math.PI / 180;
             x = Math.Cos(trgtheta) * 127;
             y = Math.Sin(trgtheta) * 128;
             SetJoystickValue(new Point((int)Math.Round(x), ((int)Math.Round(y))), RELATIVE, false);
         }
+
+        private void nud_Angle_MouseUp(object sender, MouseEventArgs e)
+        {
+            double x, y, trgtheta;
+            trgtheta = double.Parse(nud_Angle.Value.ToString()) * Math.PI / 180;
+            x = Math.Cos(trgtheta) * 127;
+            y = Math.Sin(trgtheta) * 128;
+            SetJoystickValue(new Point((int)Math.Round(x), ((int)Math.Round(y))), RELATIVE, false);
+        }
+
+        
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
         private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
