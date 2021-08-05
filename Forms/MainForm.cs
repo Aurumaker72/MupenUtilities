@@ -961,7 +961,6 @@ namespace MupenUtils
 
 
                 // finished loading one combo off to next one
-                cbox_Controllers.Items.Add("Combo " + (iter+1));
                 iter++;
             }
             br.Close();
@@ -977,6 +976,15 @@ namespace MupenUtils
 
             txt_CMBSamples.Text = cmbLens[selectedController].ToString();
             txt_ComboName.Text = cmbNames[selectedController].ToString();
+
+            if(cmbInput.Count > 4)
+            {
+                ErrorProcessing("This combo collection has more than 4 combos inside. Only the first 4 will be considered.");
+                cmbInput.Resize(4);
+            }
+
+            for (int i = 0; i < cmbInput.Count; i++)
+            cbox_Controllers.Items.Add("Combo " + (i + 1));
 
             for (int i = 0; i < cmbInput.Count; i++)
             {
@@ -2726,6 +2734,7 @@ namespace MupenUtils
 
         private void nud_Angle_MouseUp(object sender, MouseEventArgs e)
         {
+            // also registered for mousewheel
             double x, y, trgtheta;
             trgtheta = double.Parse(nud_Angle.Value.ToString()) * Math.PI / 180;
             x = Math.Cos(trgtheta) * 127;

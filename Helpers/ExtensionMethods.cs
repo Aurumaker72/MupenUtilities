@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -165,7 +166,14 @@ public static class ExtensionMethods
             return result.ToArray();
         }
     }
-
+    public static void Resize<T>(this List<T> list, int sz, T c = default(T))
+    {
+        int cur = list.Count;
+        if (sz < cur)
+            list.RemoveRange(sz, cur - sz);
+        else if (sz > cur)
+            list.AddRange(Enumerable.Repeat(c, sz - cur));
+    }
     public static byte[] Decompress(byte[] compressed)
     {
         using (MemoryStream memory = new MemoryStream(compressed))
