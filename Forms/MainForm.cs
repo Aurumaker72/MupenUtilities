@@ -2315,8 +2315,14 @@ namespace MupenUtils
         private void btn_Reload_Click(object sender, EventArgs e)
         {
             if (!FileLoaded) return;
-            m64load = new Thread(() => ReadM64());
-            m64load.Start();
+            if (UsageType == UsageTypes.M64)
+            {
+                m64load = new Thread(() => ReadM64());
+                m64load.Start();
+            }else if(UsageType == UsageTypes.Combo)
+            {
+                LoadCombo();
+            }
         }
         private void btn_Tips_Click(object sender, EventArgs e) => ShowTipsForm();
 
