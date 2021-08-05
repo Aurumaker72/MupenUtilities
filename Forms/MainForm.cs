@@ -129,6 +129,7 @@ namespace MupenUtils
         public static bool forceGoto = false;
         public static bool forceResizeCell = false;
         public static bool tasStudioAutoScroll = true;
+        public static bool reloadTASStudioOnControllerChange = true;
         int[] copied;
         int cellSize = 10;
 
@@ -683,7 +684,6 @@ namespace MupenUtils
                     gp_M64.Text = "M64";
                     gp_input.Dock = DockStyle.Right;
                     gp_CMB.Visible = false;
-                    btn_Save.Enabled = btn_SaveAs.Enabled = true;
                     frames = 1;
                     SetFrame(0);
                     break;
@@ -707,7 +707,6 @@ namespace MupenUtils
                     gp_header.Visible = false;
                     gp_M64.Text = "Combo";
                     gp_CMB.Visible = true;
-                    btn_Save.Enabled = btn_SaveAs.Enabled = false;
                     frames = 1;
                     SetFrame(0);
                     break;
@@ -998,7 +997,65 @@ namespace MupenUtils
             cbox_Controllers.SelectedIndex = 0;
         }
 
+        void WriteCombo(bool saveAs)
+        {
+            if (!FileLoaded)
+            {
+                RedControl(btn_PathSel);
+                return;
+            }
 
+            string tmpPath;
+            if (saveAs)
+            {
+                object[] res = UIHelper.SaveFileDialog("Save As", "Combo Files (*.cmb)|*.cmb|All files (*.*)|*.*");
+                if ((bool)res[1])
+                    tmpPath = (string)res[0];
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
+
+                while (File.Exists(tmpPath))
+                {
+
+                    Debug.WriteLine("File already exists, trying " + tmpPath);
+                    tmpPath = tmpPath + "-modified";
+                }
+
+                tmpPath = tmpPath + ".cmb";
+
+            }
+
+            SavePath = tmpPath;
+
+
+            FileStream fs = new FileStream(SavePath, FileMode.Create);
+            BinaryWriter br = new BinaryWriter(fs);
+            for (int i = 0; i < cmbInput.Count; i++)
+            {
+                br.Write(cmbNames[i]);
+                br.Write(cmbLens[i]);
+                for (int j = 0; j < cmbInput[i].Count; j++)
+                {
+                    br.Write(cmbInput[i][j]);
+                }
+            }
+
+            br.Flush();
+            br.Close();
+            fs.Close();
+
+            if (!saveAs)
+                MessageBox.Show("Finished saving combo at " + SavePath + "\n(Relative path from this exe's location)", PROGRAM_NAME);
+            else
+                MessageBox.Show("Finished saving combo at " + SavePath, PROGRAM_NAME);
+
+        }
 
         void ReadM64()
         {
@@ -1379,7 +1436,11 @@ namespace MupenUtils
             br.Close();
             fs.Close();
 
-            MessageBox.Show("Finished saving M64 at " + SavePath + "\n(Relative path from this exe's location)", PROGRAM_NAME + " - Saved M64");
+            if(!saveAs)
+            MessageBox.Show("Finished saving M64 at " + SavePath + "\n(Relative path from this exe's location)", PROGRAM_NAME );
+            else
+                MessageBox.Show("Finished saving M64 at " + SavePath, PROGRAM_NAME);
+
             //ShowStatus("Finished Saving M64 (" + SavePath + ")", st_Status1);
 
         }
@@ -2310,8 +2371,20 @@ namespace MupenUtils
         {
             JoystickFromNudControl();
         }
-        private void btn_Savem64_MouseClick(object sender, MouseEventArgs e) => WriteM64(false);
-        private void btn_SaveAs_Click(object sender, EventArgs e) => WriteM64(true);
+        private void btn_Savem64_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (UsageType == UsageTypes.M64)
+                WriteM64(false);
+            else if (UsageType == UsageTypes.Combo)
+                WriteCombo(false);
+        }
+        private void btn_SaveAs_Click(object sender, EventArgs e)
+        {
+            if (UsageType == UsageTypes.M64)
+                WriteM64(true);
+            else if (UsageType == UsageTypes.Combo)
+                WriteCombo(true);
+        }
         private void btn_Reload_Click(object sender, EventArgs e)
         {
             if (!FileLoaded) return;
@@ -2425,6 +2498,7 @@ namespace MupenUtils
                 txt_CMBSamples.Text = cmbLens[selectedController].ToString();
                 txt_ComboName.Text = cmbNames[selectedController].ToString();
             }
+            
         }
 
         private void btn_CtlFlags_Click(object sender, EventArgs e)
@@ -2761,7 +2835,23 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        
+        private void cbox_Controllers_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(reloadTASStudioOnControllerChange)
+            PreloadTASStudio();
+        }
+
+        private void cbox_Controllers_KeyUp(object sender, MouseEventArgs e)
+        {
+            if (reloadTASStudioOnControllerChange)
+                PreloadTASStudio();
+        }
+
+        private void tsmi_ReloadTASStudioOnCtlChange_Click(object sender, EventArgs e)
+        {
+            reloadTASStudioOnControllerChange ^= true;
+            tsmi_ReloadTASStudioOnCtlChange.Checked = reloadTASStudioOnControllerChange;
+        }
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

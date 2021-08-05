@@ -175,6 +175,7 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.tsmi_ReloadTASStudioOnCtlChange = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -987,8 +988,16 @@ namespace MupenUtils
             // nud_Angle
             // 
             this.nud_Angle.Location = new System.Drawing.Point(33, 144);
-            this.nud_Angle.Maximum = 180;
-            this.nud_Angle.Minimum = -180;
+            this.nud_Angle.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.nud_Angle.Minimum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            -2147483648});
             this.nud_Angle.Name = "nud_Angle";
             this.nud_Angle.Size = new System.Drawing.Size(64, 22);
             this.nud_Angle.TabIndex = 0;
@@ -1029,6 +1038,8 @@ namespace MupenUtils
             this.cbox_Controllers.TabIndex = 0;
             this.cbox_Controllers.TabStop = false;
             this.cbox_Controllers.SelectedIndexChanged += new System.EventHandler(this.cbox_Controllers_SelectedIndexChanged);
+            this.cbox_Controllers.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cbox_Controllers_KeyUp);
+            this.cbox_Controllers.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cbox_Controllers_KeyUp);
             // 
             // gp_TASStudio
             // 
@@ -1631,52 +1642,53 @@ namespace MupenUtils
             this.utilityToolStripMenuItem,
             this.toolStripSeparator5,
             this.tsmi_LiveTasStudio,
+            this.tsmi_ReloadTASStudioOnCtlChange,
             this.tsmi_Autoscroll,
             this.tsmi_TasStudio_Big,
             this.toolStripSeparator6,
             this.tsmi_Markers});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(181, 146);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 200);
             // 
             // utilityToolStripMenuItem
             // 
             this.utilityToolStripMenuItem.Name = "utilityToolStripMenuItem";
-            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.utilityToolStripMenuItem.Size = new System.Drawing.Size(270, 26);
             this.utilityToolStripMenuItem.Text = "Utility";
             this.utilityToolStripMenuItem.Click += new System.EventHandler(this.utilityToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(267, 6);
             // 
             // tsmi_LiveTasStudio
             // 
             this.tsmi_LiveTasStudio.Checked = true;
             this.tsmi_LiveTasStudio.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmi_LiveTasStudio.Name = "tsmi_LiveTasStudio";
-            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(270, 26);
             this.tsmi_LiveTasStudio.Text = "Live TAS Studio";
             this.tsmi_LiveTasStudio.Click += new System.EventHandler(this.tsmi_LiveTasStudio_Click_1);
             // 
             // tsmi_Autoscroll
             // 
             this.tsmi_Autoscroll.Name = "tsmi_Autoscroll";
-            this.tsmi_Autoscroll.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_Autoscroll.Size = new System.Drawing.Size(270, 26);
             this.tsmi_Autoscroll.Text = "Move Mode";
             this.tsmi_Autoscroll.Click += new System.EventHandler(this.tsmi_Autoscroll_Click);
             // 
             // tsmi_TasStudio_Big
             // 
             this.tsmi_TasStudio_Big.Name = "tsmi_TasStudio_Big";
-            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_TasStudio_Big.Size = new System.Drawing.Size(270, 26);
             this.tsmi_TasStudio_Big.Text = "Maximize";
             this.tsmi_TasStudio_Big.Click += new System.EventHandler(this.tsmi_TasStudio_Big_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(267, 6);
             // 
             // tsmi_Markers
             // 
@@ -1688,7 +1700,7 @@ namespace MupenUtils
             this.tsmi_RegionReplacement,
             this.tsmi_SelRegion});
             this.tsmi_Markers.Name = "tsmi_Markers";
-            this.tsmi_Markers.Size = new System.Drawing.Size(180, 26);
+            this.tsmi_Markers.Size = new System.Drawing.Size(270, 26);
             this.tsmi_Markers.Text = "Markers";
             // 
             // tsmi_BeginRegion
@@ -1763,6 +1775,13 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
+            // 
+            // tsmi_ReloadTASStudioOnCtlChange
+            // 
+            this.tsmi_ReloadTASStudioOnCtlChange.Name = "tsmi_ReloadTASStudioOnCtlChange";
+            this.tsmi_ReloadTASStudioOnCtlChange.Size = new System.Drawing.Size(270, 26);
+            this.tsmi_ReloadTASStudioOnCtlChange.Text = "Reload on Controller Change";
+            this.tsmi_ReloadTASStudioOnCtlChange.Click += new System.EventHandler(this.tsmi_ReloadTASStudioOnCtlChange_Click);
             // 
             // MainForm
             // 
@@ -1963,6 +1982,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem tsmi_DBG_Crash;
         private System.Windows.Forms.NumericUpDown nud_Angle;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_ReloadTASStudioOnCtlChange;
     }
 }
 
