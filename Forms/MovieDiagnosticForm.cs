@@ -1,4 +1,5 @@
-﻿using MupenUtils;
+﻿using MupenUtilities.Helpers;
+using MupenUtils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static MupenUtilities.Helpers.M64;
 
 namespace MupenUtilities.Forms
 {
@@ -17,39 +19,7 @@ namespace MupenUtilities.Forms
     {
         public static string warnText = "An automatic movie diagnostic was performed\r\nbecause your movie contains suspicious properties";
 
-        public struct MovieStruct
-        {
-            public ulong magic;        // M64\0x1a
-            public ulong version;  // 3
-            public ulong uid;      // used to match savestates to a particular movie
-
-            public ulong length_vis; // number of "frames" in the movie
-            public ulong rerecord_count;
-            public byte vis_per_second; // "frames" per second
-            public byte num_controllers;
-            public ushort reserved1;
-            public ulong length_samples;
-
-            public ushort startFlags; // should equal 2 if the movie is from a clean start
-            public ushort reserved2;
-            public ulong controllerFlags;
-            public ulong reservedFlags;
-
-            public string oldAuthorInfo;
-            public string oldDescription;
-            public string romNom; // internal rom name
-            public ulong romCRC;
-            public ushort romCountry;
-            public string reservedBytes;
-            public string videoPluginName;
-            public string soundPluginName;
-            public string inputPluginName;
-            public string rspPluginName;
-            public string authorInfos; // utf8-encoded
-            public string description; // utf8-encoded
-
-            
-        }
+        
         public List<int> inputs = new List<int>();
         public MovieDiagnosticForm()
         {
@@ -83,33 +53,13 @@ namespace MupenUtilities.Forms
             lbl_info.Visible = false;
             lb_Checks.Items.Clear();
 
-            FileStream fs = new FileStream(MainForm.Path, FileMode.Open);
-            BinaryReader br = new BinaryReader(fs);
-
             MovieStruct movieData;
-
-            movieData.magic = br.ReadUInt32();
-            movieData.version = br.ReadUInt32();
-            movieData.uid = br.ReadUInt32();
-            movieData.length_vis = br.ReadUInt32();
-            movieData.rerecord_count = br.ReadUInt32();
-            movieData.vis_per_second = br.ReadByte();
-            movieData.num_controllers = br.ReadByte();
-            br.ReadBytes(2);
-            movieData.length_samples = br.ReadUInt32();
-            movieData.startFlags = br.ReadUInt16();
-            br.ReadBytes(2);
-            movieData.controllerFlags = br.ReadUInt32();
-            br.ReadBytes(160);
-            br.ReadBytes(32);
-            movieData.romCRC = br.ReadUInt32();
-            movieData.romCountry = br.ReadUInt16();
-            br.ReadBytes(56);
-            br.ReadBytes(64 * 4);
-            br.ReadBytes(222);
-            br.ReadBytes(256);
+            movieData = M64.ParseMovie(MainForm.Path);
 
             bool failedInputTest = false;
+
+            FileStream fs = new FileStream(MainForm.Path, FileMode.Open);
+            BinaryReader br = new BinaryReader(fs);
 
             br.BaseStream.Seek(1024, SeekOrigin.Begin);
             ulong findx = 0;
@@ -139,7 +89,7 @@ namespace MupenUtilities.Forms
 
 
             //////////////////////////////////////////////
-            string[] checks = new string[8];
+            string[] checks = new string[9];
             int successfulChecks = 0, failedChecks = 0;
 
             lb_Checks.Items.Add( (checks[0] = GetCheck(movieData.magic == 0x4D36341A || movieData.magic == 439629389, "Malformed magic cookie"                                                                                                                       )).ToString());
@@ -150,7 +100,8 @@ namespace MupenUtilities.Forms
             lb_Checks.Items.Add((checks[5] = GetCheck(!failedInputTest, "Frame-Input value Mismatch")).ToString());
             lb_Checks.Items.Add((checks[6] = GetCheck(movieData.vis_per_second > 10 && movieData.vis_per_second <= 60, "Non-standard VI/s")).ToString());
             lb_Checks.Items.Add((checks[7] = GetCheck(movieData.length_vis > 0, "Not enough VIs")).ToString());
-
+            lb_Checks.Items.Add((checks[8] = GetCheck(movieData.soundPluginName.Contains("Azimer"), "Bad Audio Plugin")).ToString());
+            
             foreach (var a in checks)
             {
                 if (a.Equals("PASS")) successfulChecks++;
