@@ -7,7 +7,7 @@
 
 
 ## ⚙️ Feature-rich Utility application for Mupen64 ⚙️</b> 
-### [Usage Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/usage.md)
+### [Usage Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/usage.md) [Troubleshooting Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/troubleshoot.md)
 
 
 ![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/main/app.PNG)
