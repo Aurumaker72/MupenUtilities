@@ -434,7 +434,7 @@ namespace MupenUtils
             Color dgv_BackColor = Color.FromKnownColor(KnownColor.Control);
             Color dgv_GridColor = Color.FromKnownColor(KnownColor.Black);
             Color miscColor = Color.FromKnownColor(KnownColor.Control);
-            double alpha = 100;
+            double alpha = 1;
 
             if (uitheme == UIThemes.Gray)
             {
@@ -515,7 +515,6 @@ namespace MupenUtils
             standardBitArh = IntPtr.Size == 4;
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
             this.Text += " DEBUG ";
-
 #else
             this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
 #endif
@@ -572,7 +571,7 @@ namespace MupenUtils
             ExpandedMenu = flag;
             if (change) FileLoaded = flag;
 
-
+            
             s = flag ? BIG_SIZE : new Size(100 + btn_Override.Location.X + 20, 150);
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
@@ -588,14 +587,12 @@ namespace MupenUtils
             SuspendLayout();
 
             this.MinimumSize = flag ? new Size(200, 200) : new Size(1, 1);
-
             this.Size = s;
-
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             this.MaximizeBox = flag;
             gp_M64.Visible = flag;
 
-            ResumeLayout();
+            ResumeLayout(true);
 
 
 
