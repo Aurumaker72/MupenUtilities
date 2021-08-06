@@ -161,6 +161,7 @@ namespace MupenUtils
             this.utilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_LiveTasStudio = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_ReloadTASStudioOnCtlChange = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Autoscroll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_TasStudio_Big = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -175,7 +176,6 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.tsmi_ReloadTASStudioOnCtlChange = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -1648,7 +1648,7 @@ namespace MupenUtils
             this.toolStripSeparator6,
             this.tsmi_Markers});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 200);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 172);
             // 
             // utilityToolStripMenuItem
             // 
@@ -1670,6 +1670,15 @@ namespace MupenUtils
             this.tsmi_LiveTasStudio.Size = new System.Drawing.Size(270, 26);
             this.tsmi_LiveTasStudio.Text = "Live TAS Studio";
             this.tsmi_LiveTasStudio.Click += new System.EventHandler(this.tsmi_LiveTasStudio_Click_1);
+            // 
+            // tsmi_ReloadTASStudioOnCtlChange
+            // 
+            this.tsmi_ReloadTASStudioOnCtlChange.Checked = true;
+            this.tsmi_ReloadTASStudioOnCtlChange.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmi_ReloadTASStudioOnCtlChange.Name = "tsmi_ReloadTASStudioOnCtlChange";
+            this.tsmi_ReloadTASStudioOnCtlChange.Size = new System.Drawing.Size(270, 26);
+            this.tsmi_ReloadTASStudioOnCtlChange.Text = "Reload on Controller Change";
+            this.tsmi_ReloadTASStudioOnCtlChange.Click += new System.EventHandler(this.tsmi_ReloadTASStudioOnCtlChange_Click);
             // 
             // tsmi_Autoscroll
             // 
@@ -1759,7 +1768,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1769,19 +1777,11 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
-            // 
-            // tsmi_ReloadTASStudioOnCtlChange
-            // 
-            this.tsmi_ReloadTASStudioOnCtlChange.Name = "tsmi_ReloadTASStudioOnCtlChange";
-            this.tsmi_ReloadTASStudioOnCtlChange.Size = new System.Drawing.Size(270, 26);
-            this.tsmi_ReloadTASStudioOnCtlChange.Text = "Reload on Controller Change";
-            this.tsmi_ReloadTASStudioOnCtlChange.Click += new System.EventHandler(this.tsmi_ReloadTASStudioOnCtlChange_Click);
             // 
             // MainForm
             // 

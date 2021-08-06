@@ -434,7 +434,7 @@ namespace MupenUtils
             Color dgv_BackColor = Color.FromKnownColor(KnownColor.Control);
             Color dgv_GridColor = Color.FromKnownColor(KnownColor.Black);
             Color miscColor = Color.FromKnownColor(KnownColor.Control);
-
+            double alpha = 100;
 
             if (uitheme == UIThemes.Gray)
             {
@@ -469,9 +469,9 @@ namespace MupenUtils
                 dgv_GridColor = Color.Black;
             }else if(uitheme == UIThemes.Transparent)
             {
-                this.Opacity = .8;
+                alpha = .8;
             }
-
+            this.Opacity = alpha;
             this.ForAllControls(c =>
                 {
                     if (c is GroupBox) c.BackColor = gp_BackColor;
