@@ -567,7 +567,7 @@ namespace MupenUtils
             if (!force && UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo) return;
 
 
-            Size s;
+            Size s; 
             ExpandedMenu = flag;
             if (change) FileLoaded = flag;
 

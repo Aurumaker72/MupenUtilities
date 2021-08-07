@@ -69,7 +69,7 @@ namespace MupenUtils
                     type = 4;
                     break;
                 default:
-                    type = short.MaxValue;
+                    type = short.MaxValue; // this is sort of compatible with mupen
                     break;
             }
             return type;
@@ -164,8 +164,12 @@ namespace MupenUtils
                     index = 0;
                     break;
                 case '7':
+                    // piece of shit incorrectly sized bitmap
+                    Bitmap final = new Bitmap(MupenUtilities.Properties.Resources.n64beta);
+                    Graphics gfx = Graphics.FromImage(final);
+                    gfx.DrawImage(final, 0, 0, MupenUtilities.Properties.Resources.usa.Width, MupenUtilities.Properties.Resources.usa.Height);
                     code = "Beta";
-                    image = MupenUtilities.Properties.Resources.n64beta;
+                    image = final;
                     index = 1;
                     break;
 
