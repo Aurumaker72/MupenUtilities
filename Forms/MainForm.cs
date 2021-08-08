@@ -571,7 +571,7 @@ namespace MupenUtils
         {
 
             if (m64loadBusy) return;
-            if (!force && UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo) return;
+            if (!force && UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo && UsageType != UsageTypes.Any) return;
 
 
             Size s; 
@@ -728,7 +728,7 @@ namespace MupenUtils
                 MupenUtilities.Properties.Settings.Default.Save();
                 Debug.WriteLine("saved usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
             }
-            if (UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo)
+            if (UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo && UsageType != UsageTypes.Any)
             {
                 EnableM64View(false, false, true);
             }
@@ -1112,6 +1112,7 @@ namespace MupenUtils
                     return;
                 }
             }
+
             long len = new FileInfo(Path).Length;
             if (len < 1027)
             {
@@ -1119,14 +1120,15 @@ namespace MupenUtils
                 m64loadBusy = false;
                 return;
             }
-            foreach (Process procarr in Process.GetProcesses())
-            {
-                if (String.Equals(procarr.ProcessName, "mupen64", StringComparison.InvariantCultureIgnoreCase) || procarr.ProcessName.Contains("mupen64"))
-                {
-                    mupenRunning = true;
-                    break;
-                }
-            }
+
+            //foreach (Process procarr in Process.GetProcesses())
+            //{
+            //    if (String.Equals(procarr.ProcessName, "mupen64", StringComparison.InvariantCultureIgnoreCase) || procarr.ProcessName.Contains("mupen64"))
+            //    {
+            //        mupenRunning = true;
+            //        break;
+            //    }
+            //}
 
             ASCIIEncoding ascii = new ASCIIEncoding();
             UTF8Encoding utf8 = new UTF8Encoding();
@@ -1489,7 +1491,7 @@ namespace MupenUtils
             br.Flush();
             br.Close();
             fs.Close();
-
+            
             if(!saveAs)
             MessageBox.Show("Finished saving M64 at " + SavePath + "\n(Relative path from this exe's location)", PROGRAM_NAME );
             else
@@ -1681,7 +1683,7 @@ namespace MupenUtils
             {
                 if (UsageType != UsageTypes.M64) return;
 
-               EnableM64View(false, false, false);
+                EnableM64View(false, false, false);
                 stepFrameTimer.Enabled = false;
                 //MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.\nThis can be caused by a corrupted m64 or loading movies in quick succession", PROGRAM_NAME + " - Fatal desync");
                 MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause of a desync in the frame controller";
@@ -1833,7 +1835,7 @@ namespace MupenUtils
             MupenUtilities.Properties.Settings.Default.LastPath = Path;
             MupenUtilities.Properties.Settings.Default.Save();
 
-            if (UsageType == UsageTypes.M64)
+            if (UsageType == UsageTypes.M64 || UsageType == UsageTypes.Any)
             {
                 m64load = new Thread(() => ReadM64());
                 m64load.Start();
@@ -2042,7 +2044,7 @@ namespace MupenUtils
             MupenUtilities.Properties.Settings.Default.LastPath = Path;
             MupenUtilities.Properties.Settings.Default.Save();
 
-            if (UsageType == UsageTypes.M64)
+            if (UsageType == UsageTypes.M64 || UsageType == UsageTypes.Any)
             {
                 m64load = new Thread(() => ReadM64());
                 m64load.Start();
