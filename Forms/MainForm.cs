@@ -1720,9 +1720,6 @@ namespace MupenUtils
             //if (UsageType == UsageTypes.Combo) return;
             if (liveTasStudio)
             {
-                dgv_Main.ReadOnly = false;
-                // workaround because windows controls are fucked
-
                 for (int i = 0; i < inputStructNames.Length; i++)
                 {
                     string cellValue = "";
@@ -1745,8 +1742,6 @@ namespace MupenUtils
 
                     dgv_Main.Rows[frameTarget].Cells[i].Value = cellValue;
                 }
-                dgv_Main.ReadOnly = true;
-
             }
         }
         void GetInput(int value, bool setinput, int targetFrame)
@@ -2512,7 +2507,7 @@ namespace MupenUtils
                 }
             }
             cmb_Country.Enabled = !readOnly;
-            dgv_Main.ReadOnly = readOnly;
+            dgv_Main.ReadOnly = true;
             nud_Angle.ReadOnly = readOnly;
         }
 
