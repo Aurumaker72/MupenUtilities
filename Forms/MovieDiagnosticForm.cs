@@ -92,18 +92,17 @@ namespace MupenUtilities.Forms
 
 
             //////////////////////////////////////////////
-            string[] checks = new string[9];
+            string[] checks = new string[8];
             int successfulChecks = 0, failedChecks = 0;
 
             lb_Checks.Items.Add( (checks[0] = GetCheck(movieData.magic == 0x4D36341A || movieData.magic == 439629389, "Malformed magic cookie"                                                                                                                       )).ToString());
             lb_Checks.Items.Add( (checks[1] = GetCheck(movieData.version == 3, "Old version"                                                                                                                                                                         )).ToString());
             lb_Checks.Items.Add( (checks[2] = GetCheck(movieData.num_controllers > 0 && movieData.num_controllers < 4, "Illegal controllers amount"                                                                                                                  )).ToString());
             lb_Checks.Items.Add( (checks[3] = GetCheck(!DataHelper.GetMovieStartupType(movieData.startFlags).Contains("Unknown"), "Invalid movie startup type"                                                                                                )).ToString());
-            lb_Checks.Items.Add( (checks[4] = GetCheck(!ExtensionMethods.GetBit(movieData.controllerFlags, 1) && !ExtensionMethods.GetBit(movieData.controllerFlags, 2) && !ExtensionMethods.GetBit(movieData.controllerFlags, 3), "Unsupported controller activated")).ToString());
-            lb_Checks.Items.Add((checks[5] = GetCheck(!failedInputTest, "Frame-Input value Mismatch")).ToString());
-            lb_Checks.Items.Add((checks[6] = GetCheck(movieData.vis_per_second > 10 && movieData.vis_per_second <= 60, "Non-standard VI/s")).ToString());
-            lb_Checks.Items.Add((checks[7] = GetCheck(movieData.length_vis > 0, "Not enough VIs")).ToString());
-            lb_Checks.Items.Add((checks[8] = GetCheck(!movieData.soundPluginName.Contains("Azimer"), "Bad Audio Plugin")).ToString());
+            lb_Checks.Items.Add((checks[4] = GetCheck(!failedInputTest, "Frame-Input value Mismatch")).ToString());
+            lb_Checks.Items.Add((checks[5] = GetCheck(movieData.vis_per_second > 10 && movieData.vis_per_second <= 60, "Non-standard VI/s")).ToString());
+            lb_Checks.Items.Add((checks[6] = GetCheck(movieData.length_vis > 0, "Not enough VIs")).ToString());
+            lb_Checks.Items.Add((checks[7] = GetCheck(!movieData.soundPluginName.Contains("Azimer"), "Bad Audio Plugin")).ToString());
             
             foreach (var a in checks)
             {

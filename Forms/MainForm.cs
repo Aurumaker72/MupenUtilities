@@ -1198,8 +1198,7 @@ namespace MupenUtils
             if (loadinputs)
                 while (findx <= frames)
                 {
-                    for (int i = 0; i < MovieHeader.num_controllers; i++)
-                    {
+                    
 
 
 
@@ -1231,7 +1230,7 @@ namespace MupenUtils
                             inputListCtl4.Add(br.ReadInt32());
                         }
                         findx++;
-                    }
+                    
                 }
 
 
@@ -1278,8 +1277,11 @@ namespace MupenUtils
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = MINIMUM_FRAME));
             tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Maximum = (int)frames));
 
+
             for (int i = 0; i < MovieHeader.num_controllers; i++)
                 cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Add("Controller " + (i + 1))));
+
+            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
 
             //cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
 
@@ -1299,13 +1301,6 @@ namespace MupenUtils
         void CheckSuspiciousProperties()
         {
             bool triggerDiag = false;
-
-            if (MovieHeader.num_controllers > 1)
-            {
-                lbl_Ctrls.Invoke((MethodInvoker)(() => lbl_Ctrls.ForeColor = Color.Red));
-
-                triggerDiag = true;
-            }
 
             cmb_Country.Invoke((MethodInvoker)delegate {
                 if (cmb_Country.SelectedIndex == 11)
@@ -2561,7 +2556,8 @@ namespace MupenUtils
             selectedController = Convert.ToByte(cbox_Controllers.SelectedIndex);
 
             update:
-
+            if (reloadTASStudioOnControllerChange)
+                PreloadTASStudio();
             GetInput(inputLists[selectedController][frame], true, frame);
             cbox_Controllers.SelectedIndex = selectedController;
             if(UsageType == UsageTypes.Combo)
@@ -2794,14 +2790,14 @@ namespace MupenUtils
         }
         private void cbox_Controllers_KeyUp(object sender, KeyEventArgs e)
         {
-            if (reloadTASStudioOnControllerChange)
-                PreloadTASStudio();
+            //if (reloadTASStudioOnControllerChange)
+            //    PreloadTASStudio();
         }
 
         private void cbox_Controllers_KeyUp(object sender, MouseEventArgs e)
         {
-            if (reloadTASStudioOnControllerChange)
-                PreloadTASStudio();
+            //if (reloadTASStudioOnControllerChange)
+            //    PreloadTASStudio();
         }
 
         private void tsmi_ReloadTASStudioOnCtlChange_Click(object sender, EventArgs e)
