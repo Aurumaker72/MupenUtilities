@@ -46,6 +46,7 @@ namespace MupenUtils
             this.btn_SaveAs = new System.Windows.Forms.Button();
             this.btn_Save = new System.Windows.Forms.Button();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
+            this.btn_SaveOptions = new System.Windows.Forms.Button();
             this.gp_CMB = new System.Windows.Forms.GroupBox();
             this.txt_CMBSamples = new System.Windows.Forms.TextBox();
             this.lbl_CMBSamples = new System.Windows.Forms.Label();
@@ -176,7 +177,6 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
-            this.btn_SaveOptions = new System.Windows.Forms.Button();
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
@@ -400,6 +400,16 @@ namespace MupenUtils
             this.gp_M64.TabIndex = 0;
             this.gp_M64.TabStop = false;
             this.gp_M64.Text = "M64";
+            // 
+            // btn_SaveOptions
+            // 
+            this.btn_SaveOptions.Location = new System.Drawing.Point(139, 448);
+            this.btn_SaveOptions.Name = "btn_SaveOptions";
+            this.btn_SaveOptions.Size = new System.Drawing.Size(121, 28);
+            this.btn_SaveOptions.TabIndex = 1;
+            this.btn_SaveOptions.Text = "Save Options";
+            this.btn_SaveOptions.UseVisualStyleBackColor = true;
+            this.btn_SaveOptions.Click += new System.EventHandler(this.btn_SaveOptions_Click);
             // 
             // gp_CMB
             // 
@@ -655,7 +665,6 @@ namespace MupenUtils
             this.txt_Crc.Location = new System.Drawing.Point(128, 49);
             this.txt_Crc.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Crc.Name = "txt_Crc";
-            this.txt_Crc.ReadOnly = true;
             this.txt_Crc.Size = new System.Drawing.Size(132, 22);
             this.txt_Crc.TabIndex = 0;
             this.txt_Crc.TabStop = false;
@@ -1790,16 +1799,6 @@ namespace MupenUtils
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
-            // 
-            // btn_SaveOptions
-            // 
-            this.btn_SaveOptions.Location = new System.Drawing.Point(139, 448);
-            this.btn_SaveOptions.Name = "btn_SaveOptions";
-            this.btn_SaveOptions.Size = new System.Drawing.Size(121, 28);
-            this.btn_SaveOptions.TabIndex = 1;
-            this.btn_SaveOptions.Text = "Save Options";
-            this.btn_SaveOptions.UseVisualStyleBackColor = true;
-            this.btn_SaveOptions.Click += new System.EventHandler(this.btn_SaveOptions_Click);
             // 
             // ctx_SaveOption
             // 

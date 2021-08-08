@@ -1408,18 +1408,26 @@ namespace MupenUtils
                 Array.Clear(zeroar1, 0, zeroar1.Length);
                 Array.Clear(zeroar2, 0, zeroar2.Length);
 
-                MovieHeader.uid = Convert.ToUInt32(txt_misc_UID.Text, 16);
-                MovieHeader.length_vis = UInt32.Parse(txt_VIs.Text);
-                MovieHeader.rerecord_count = UInt32.Parse(txt_RR.Text);
-                MovieHeader.num_controllers = byte.Parse(txt_CTRLS.Text);
-                MovieHeader.romNom = txt_Rom.Text;
-                MovieHeader.videoPluginName = txt_videoplugin.Text;
-                MovieHeader.soundPluginName = txtbox_Audioplugin.Text;
-                MovieHeader.inputPluginName = txt_inputplugin.Text;
-                MovieHeader.rspPluginName = txt_Rsp.Text;
-                MovieHeader.authorInfos = txt_Author.Text;
-                MovieHeader.description = txt_Desc.Text;
-                MovieHeader.vis_per_second = byte.Parse(txt_VI_s.Text);
+                try
+                {
+                    MovieHeader.uid = Convert.ToUInt32(txt_misc_UID.Text, 16);
+                    MovieHeader.length_vis = UInt32.Parse(txt_VIs.Text);
+                    MovieHeader.rerecord_count = UInt32.Parse(txt_RR.Text);
+                    MovieHeader.num_controllers = byte.Parse(txt_CTRLS.Text);
+                    MovieHeader.romNom = txt_Rom.Text;
+                    MovieHeader.videoPluginName = txt_videoplugin.Text;
+                    MovieHeader.soundPluginName = txtbox_Audioplugin.Text;
+                    MovieHeader.inputPluginName = txt_inputplugin.Text;
+                    MovieHeader.rspPluginName = txt_Rsp.Text;
+                    MovieHeader.authorInfos = txt_Author.Text;
+                    MovieHeader.description = txt_Desc.Text;
+                    MovieHeader.vis_per_second = byte.Parse(txt_VI_s.Text);
+                    MovieHeader.romCRC = uint.Parse(txt_Crc.Text);
+                }catch(FormatException e)
+                {
+                    // aaahh idiot user you dumbass
+                    MessageBox.Show("Error parsing a textbox\'s text. Please double check that you wrote valid text in each modified property. The saving process will attempt to continue", PROGRAM_NAME);
+                }
 
                 // lol cringe
                 br.Write(magic); // Int32 - Magic (4D36341A)
@@ -2252,7 +2260,7 @@ namespace MupenUtils
             }
             if (e.KeyCode == Keys.F1)
             {
-                MessageBox.Show("Encoding mode is now " + (encodeMode ? "enabled" : "disabled") + "\nPress again to toggle");
+                //MessageBox.Show("Encoding mode is now " + (encodeMode ? "enabled" : "disabled") + "\nPress again to toggle");
                 
                 // encoding mode
                 encodeMode ^= true;
@@ -2461,6 +2469,7 @@ namespace MupenUtils
             }
             txt_Rom.ReadOnly = readOnly;
             txt_CTRLS.ReadOnly = readOnly;
+            txt_Crc.ReadOnly = readOnly;
             cbox_startType.Enabled = !readOnly;
             foreach (Control ctl in gp_Plugins.Controls)
             {
