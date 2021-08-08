@@ -2215,10 +2215,10 @@ namespace MupenUtils
             {
                 ExtensionMethods.FullScreen(this);
             }
-            if(FileLoaded && e.KeyCode == Keys.Space)
+            if (this.ActiveControl == pb_JoystickPic && FileLoaded && e.KeyCode == Keys.Space)
             {
                 TogglePlay();
-                this.ActiveControl = null;
+                //this.ActiveControl = null;
             }
             if (!readOnly && JOY_Keyboard)
             {

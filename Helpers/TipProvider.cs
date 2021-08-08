@@ -36,7 +36,10 @@ namespace MupenUtils.Helpers
             "\'Live TAS Studio\' will keep TAS Studio up-to-date with your latest inputs",
             "Most modifiable settings are saved to config",
             "Right click the movie trackbar to change its properties",
-            "Press \'F1\' to toggle Encoding Mode"
+            "Press \'F1\' to toggle Encoding Mode",
+            "Scroll on the X, Y and Angle textboxes for the joystick to change them",
+            "Use the M64 Diagnostic tool under \'More\' to diagnose movies which act weird",
+            "Press space to pause/unpause playback"
         };
 
         public static string GetRandomTip()
