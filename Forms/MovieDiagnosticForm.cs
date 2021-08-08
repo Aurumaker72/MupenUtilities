@@ -148,9 +148,12 @@ namespace MupenUtilities.Forms
 
         private void btn_Continue_Click(object sender, EventArgs e)
         {
-            timesContinued++;
-            if(timesContinued == 1) btn_Continue.Text = "Ignore";
-            if (timesContinued > 1) MainForm.ignoreIllegalDesync = true;
+            if (!warnText.Contains("requested"))
+            {
+                timesContinued++;
+                if (timesContinued == 1) btn_Continue.Text = "Ignore";
+                if (timesContinued > 1) MainForm.ignoreIllegalDesync = true;
+            }
             this.Hide();
         }
     }

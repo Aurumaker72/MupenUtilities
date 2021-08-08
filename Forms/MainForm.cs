@@ -1207,34 +1207,29 @@ namespace MupenUtils
                         // this is really gross but its necessary to avoid evil m64s
 
                         if (ControllersEnabled[0])
-                            if (1024 + 8 + findx > lenfs)
-                            {
-                                findx++;
-                                continue;
-                            }
-                        inputListCtl1.Add(br.ReadInt32());
+                        {
+                            if (br.BaseStream.Position + 4 > lenfs)
+                                break;
+                            inputListCtl1.Add(br.ReadInt32());
+                        }
                         if (ControllersEnabled[1])
-                            if (1024 + 8 + findx > lenfs)
-                            {
-                                findx++;
-                                continue;
-                            }
-                        inputListCtl2.Add(br.ReadInt32());
+                        {
+                            if (br.BaseStream.Position + 4 > lenfs)
+                                break;
+                            inputListCtl2.Add(br.ReadInt32());
+                        }
                         if (ControllersEnabled[2])
-                            if (1024 + 8 + findx > lenfs)
-                            {
-                                findx++;
-                                continue;
-                            }
-                        inputListCtl3.Add(br.ReadInt32());
+                        {
+                            if (br.BaseStream.Position + 4 > lenfs)
+                                break;
+                            inputListCtl3.Add(br.ReadInt32());
+                        }
                         if (ControllersEnabled[3])
-                            if (1024 + 8 + findx > lenfs)
-                            {
-                                findx++;
-                                continue;
-                            }
-                        inputListCtl4.Add(br.ReadInt32());
-
+                        {
+                            if (br.BaseStream.Position + 4 > lenfs)
+                                break;
+                            inputListCtl4.Add(br.ReadInt32());
+                        }
                         findx++;
                     }
                 }
