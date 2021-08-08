@@ -81,6 +81,30 @@ public static class ExtensionMethods
         *val &= ~((int)0xff << (8 * pos));
         *val |= ((int)b << (8 * pos));
     }
+    public static void Memset(byte[] array, byte value)
+    {
+        if (array == null)
+        {
+            throw new ArgumentNullException("array");
+        }
+
+        int block = 32, index = 0;
+        int length = Math.Min(block, array.Length);
+
+        //Fill the initial array
+        while (index < length)
+        {
+            array[index++] = value;
+        }
+
+        length = array.Length;
+        while (index < length)
+        {
+            Buffer.BlockCopy(array, 0, array, index, Math.Min(block, length - index));
+            index += block;
+            block *= 2;
+        }
+    }
 
     public static bool ValidStringInt(string str, int min, int max)
     {

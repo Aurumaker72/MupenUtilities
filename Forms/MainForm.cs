@@ -94,6 +94,8 @@ namespace MupenUtils
         public const string MUPEN_VERSION = "Mupen 64 1.0.0";
         public const string MUPEN_SPLIT = "Mupen 64";
 
+        public const uint MAXIMUM_SUGGESTED_FRAMES = uint.MaxValue / 2;
+
         public Size BIG_SIZE = new Size(1438, 620);
         public static bool standardBitArh;
         // [] means reserved, <^>v is direction
@@ -197,6 +199,11 @@ namespace MupenUtils
             Transparent
         };
         public static UIThemes UITheme = UIThemes.Default;
+
+
+        /* Save Options */
+        public static bool saveCompressed = false;
+        public static bool saveSamplesOnly = false;
 
         #region WINAPI extern
         const int PROCESS_QUERY_INFORMATION = 0x0400;
@@ -736,6 +743,11 @@ namespace MupenUtils
             dgv_Main.Refresh();
         }
 
+        void UpdateSaveButtonsVisuals()
+        {
+            
+        }
+
         #endregion
 
         #region I/O
@@ -1033,16 +1045,28 @@ namespace MupenUtils
 
             FileStream fs = new FileStream(SavePath, FileMode.Create);
             BinaryWriter br = new BinaryWriter(fs);
-            for (int i = 0; i < cmbInput.Count; i++)
+            if (saveSamplesOnly)
             {
-                br.Write(cmbNames[i]);
-                br.Write(cmbLens[i]);
-                for (int j = 0; j < cmbInput[i].Count; j++)
+                for (int i = 0; i < cmbInput.Count; i++)
                 {
-                    br.Write(cmbInput[i][j]);
+                    for (int j = 0; j < cmbInput[i].Count; j++)
+                    {
+                        br.Write(cmbInput[i][j]);
+                    }
                 }
             }
-
+            else
+            {
+                for (int i = 0; i < cmbInput.Count; i++)
+                {
+                    br.Write(cmbNames[i]);
+                    br.Write(cmbLens[i]);
+                    for (int j = 0; j < cmbInput[i].Count; j++)
+                    {
+                        br.Write(cmbInput[i][j]);
+                    }
+                }
+            }
             br.Flush();
             br.Close();
             fs.Close();
@@ -1154,6 +1178,19 @@ namespace MupenUtils
             br.BaseStream.Seek(1024, SeekOrigin.Begin);
             else
             br.BaseStream.Seek(0x200, SeekOrigin.Begin);
+
+            bool loadinputs = true;
+            if(frames > MAXIMUM_SUGGESTED_FRAMES)
+            {
+                loadinputs = MessageBox.Show("Your movie has A LOT of VIs. If this movie was hexed (intended to have this many VIs), press Yes. Otherwise press no to cancel loading inputs.", PROGRAM_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes;
+            }
+            if(frames == 0)
+            {
+                // ???
+                loadinputs = false;
+            }
+
+            if (loadinputs)
             while (findx <= frames)
             {
                 for (int i = 0; i < MovieHeader.num_controllers; i++)
@@ -1228,7 +1265,8 @@ namespace MupenUtils
             for (int i = 0; i < MovieHeader.num_controllers; i++)
                 cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Add("Controller " + (i + 1))));
 
-            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
+            //cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
+
             ResumeLayout(true);
 
             PreloadTASStudio();
@@ -1349,86 +1387,97 @@ namespace MupenUtils
 
             FileStream fs = File.Open(SavePath, FileMode.Create);
             BinaryWriter br = new BinaryWriter(fs);
-            //ShowStatus("Saving M64...", st_Status1);
-            byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
-            byte[] magic = new byte[4] { 0x4D, 0x36, 0x34, 0x1A };
-            //Array.Reverse(magic);
-            //magic[0] = 0x4D;
-            //magic[1] = 0x36;
-            //magic[2] = 0x34;
-            //magic[3] = 0x1A;
-            //magic[4] = 0x03;
-            Array.Clear(zeroar1, 0, zeroar1.Length);
-            Array.Clear(zeroar2, 0, zeroar2.Length);
-
-            MovieHeader.uid = Convert.ToUInt32(txt_misc_UID.Text, 16);
-            MovieHeader.length_vis = UInt32.Parse(txt_VIs.Text);
-            MovieHeader.rerecord_count = UInt32.Parse(txt_RR.Text);
-            MovieHeader.num_controllers = byte.Parse(txt_CTRLS.Text);
-            MovieHeader.romNom = txt_Rom.Text;
-            MovieHeader.videoPluginName = txt_videoplugin.Text;
-            MovieHeader.soundPluginName = txtbox_Audioplugin.Text;
-            MovieHeader.inputPluginName = txt_inputplugin.Text;
-            MovieHeader.rspPluginName = txt_Rsp.Text;
-            MovieHeader.authorInfos = txt_Author.Text;
-            MovieHeader.description = txt_Desc.Text;
-            MovieHeader.vis_per_second = byte.Parse(txt_VI_s.Text);
-
-            // lol cringe
-            br.Write(magic); // Int32 - Magic (4D36341A)
-            br.Write(0x3); // UInt32 - Version number (3)
-            br.Write(MovieHeader.uid); // UInt32 - UID
-            br.Write((UInt32)MovieHeader.length_vis); // UInt32 - VIs
-            br.Write((UInt32)MovieHeader.rerecord_count); // UInt32 - RRs
-            br.Write(MovieHeader.vis_per_second); // Byte - VI/s
-            br.Write(MovieHeader.num_controllers); // Byte - Controllers
-            br.Write((Int16)0); // 2 Bytes - RESERVED
-            br.Write(MovieHeader.length_samples); // UInt32 - Input Samples
-
-            br.Write((UInt16)DataHelper.GetMovieStartupTypeIndex(cbox_startType.SelectedItem.ToString())); // UInt16 - Movie start type
-            br.Write((Int16)0); // 2 bytes - RESERVED
-            br.Write(MovieHeader.controllerFlags); // UInt32 - Controller Flags
-            br.Write(zeroar1, 0, zeroar1.Length); // 160 bytes - RESERVED
-            byte[] romname;
-            romname = ASCIIEncoding.ASCII.GetBytes(MovieHeader.romNom);
-            Array.Resize(ref romname, 32);
-            br.Write(romname, 0, 32);
-            br.Write(MovieHeader.romCRC);
-            br.Write(MovieHeader.romCountry);
-            br.Write(zeroar2, 0, zeroar2.Length); // 56 bytes - RESERVED
-
-
-            byte[] gfx = new byte[64];
-            byte[] audio = new byte[64];
-            byte[] input = new byte[64];
-            byte[] rsp = new byte[64];
-            byte[] author = new byte[222];
-            byte[] desc = new byte[256];
-
-            gfx = Encoding.ASCII.GetBytes(MovieHeader.videoPluginName);
-            audio = Encoding.ASCII.GetBytes(MovieHeader.soundPluginName);
-            input = Encoding.ASCII.GetBytes(MovieHeader.inputPluginName);
-            rsp = Encoding.ASCII.GetBytes(MovieHeader.rspPluginName);
-            author = Encoding.UTF8.GetBytes(MovieHeader.authorInfos);
-            desc = Encoding.UTF8.GetBytes(MovieHeader.description);
-
-            Array.Resize(ref gfx, 64);
-            Array.Resize(ref audio, 64);
-            Array.Resize(ref input, 64);
-            Array.Resize(ref rsp, 64);
-            Array.Resize(ref author, 222);
-            Array.Resize(ref desc, 256);
-
-            br.Write(gfx, 0, 64);
-            br.Write(audio, 0, 64);
-            br.Write(input, 0, 64);
-            br.Write(rsp, 0, 64);
-            br.Write(author, 0, 222);
-            br.Write(desc, 0, 256);
-            for (int i = 0; i < inputListCtl1.Count; i++)
+            if (saveSamplesOnly)
             {
-                br.Write(inputListCtl1[i]);
+                for (int i = 0; i < inputListCtl1.Count; i++)
+                {
+                    br.Write(inputListCtl1[i]);
+                }
             }
+            else
+            {
+                //ShowStatus("Saving M64...", st_Status1);
+                byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
+                byte[] magic = new byte[4] { 0x4D, 0x36, 0x34, 0x1A };
+                //Array.Reverse(magic);
+                //magic[0] = 0x4D;
+                //magic[1] = 0x36;
+                //magic[2] = 0x34;
+                //magic[3] = 0x1A;
+                //magic[4] = 0x03;
+                Array.Clear(zeroar1, 0, zeroar1.Length);
+                Array.Clear(zeroar2, 0, zeroar2.Length);
+
+                MovieHeader.uid = Convert.ToUInt32(txt_misc_UID.Text, 16);
+                MovieHeader.length_vis = UInt32.Parse(txt_VIs.Text);
+                MovieHeader.rerecord_count = UInt32.Parse(txt_RR.Text);
+                MovieHeader.num_controllers = byte.Parse(txt_CTRLS.Text);
+                MovieHeader.romNom = txt_Rom.Text;
+                MovieHeader.videoPluginName = txt_videoplugin.Text;
+                MovieHeader.soundPluginName = txtbox_Audioplugin.Text;
+                MovieHeader.inputPluginName = txt_inputplugin.Text;
+                MovieHeader.rspPluginName = txt_Rsp.Text;
+                MovieHeader.authorInfos = txt_Author.Text;
+                MovieHeader.description = txt_Desc.Text;
+                MovieHeader.vis_per_second = byte.Parse(txt_VI_s.Text);
+
+                // lol cringe
+                br.Write(magic); // Int32 - Magic (4D36341A)
+                br.Write(0x3); // UInt32 - Version number (3)
+                br.Write(MovieHeader.uid); // UInt32 - UID
+                br.Write((UInt32)MovieHeader.length_vis); // UInt32 - VIs
+                br.Write((UInt32)MovieHeader.rerecord_count); // UInt32 - RRs
+                br.Write(MovieHeader.vis_per_second); // Byte - VI/s
+                br.Write(MovieHeader.num_controllers); // Byte - Controllers
+                br.Write((Int16)0); // 2 Bytes - RESERVED
+                br.Write(MovieHeader.length_samples); // UInt32 - Input Samples
+
+                br.Write((UInt16)DataHelper.GetMovieStartupTypeIndex(cbox_startType.SelectedItem.ToString())); // UInt16 - Movie start type
+                br.Write((Int16)0); // 2 bytes - RESERVED
+                br.Write(MovieHeader.controllerFlags); // UInt32 - Controller Flags
+                br.Write(zeroar1, 0, zeroar1.Length); // 160 bytes - RESERVED
+                byte[] romname;
+                romname = ASCIIEncoding.ASCII.GetBytes(MovieHeader.romNom);
+                Array.Resize(ref romname, 32);
+                br.Write(romname, 0, 32);
+                br.Write(MovieHeader.romCRC);
+                br.Write(MovieHeader.romCountry);
+                br.Write(zeroar2, 0, zeroar2.Length); // 56 bytes - RESERVED
+
+
+                byte[] gfx = new byte[64];
+                byte[] audio = new byte[64];
+                byte[] input = new byte[64];
+                byte[] rsp = new byte[64];
+                byte[] author = new byte[222];
+                byte[] desc = new byte[256];
+
+                gfx = Encoding.ASCII.GetBytes(MovieHeader.videoPluginName);
+                audio = Encoding.ASCII.GetBytes(MovieHeader.soundPluginName);
+                input = Encoding.ASCII.GetBytes(MovieHeader.inputPluginName);
+                rsp = Encoding.ASCII.GetBytes(MovieHeader.rspPluginName);
+                author = Encoding.UTF8.GetBytes(MovieHeader.authorInfos);
+                desc = Encoding.UTF8.GetBytes(MovieHeader.description);
+
+                Array.Resize(ref gfx, 64);
+                Array.Resize(ref audio, 64);
+                Array.Resize(ref input, 64);
+                Array.Resize(ref rsp, 64);
+                Array.Resize(ref author, 222);
+                Array.Resize(ref desc, 256);
+
+                br.Write(gfx, 0, 64);
+                br.Write(audio, 0, 64);
+                br.Write(input, 0, 64);
+                br.Write(rsp, 0, 64);
+                br.Write(author, 0, 222);
+                br.Write(desc, 0, 256);
+                for (int i = 0; i < inputListCtl1.Count; i++)
+                {
+                    br.Write(inputListCtl1[i]);
+                }
+            }
+
             br.Flush();
             br.Close();
             fs.Close();
@@ -1624,7 +1673,7 @@ namespace MupenUtils
             {
                 if (UsageType != UsageTypes.M64) return;
 
-                EnableM64View(false, false, false);
+               EnableM64View(false, false, false);
                 stepFrameTimer.Enabled = false;
                 //MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.\nThis can be caused by a corrupted m64 or loading movies in quick succession", PROGRAM_NAME + " - Fatal desync");
                 MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause of a desync in the frame controller";
@@ -2718,6 +2767,40 @@ namespace MupenUtils
             
 
         }
+        private void cbox_Controllers_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (reloadTASStudioOnControllerChange)
+                PreloadTASStudio();
+        }
+
+        private void cbox_Controllers_KeyUp(object sender, MouseEventArgs e)
+        {
+            if (reloadTASStudioOnControllerChange)
+                PreloadTASStudio();
+        }
+
+        private void tsmi_ReloadTASStudioOnCtlChange_Click(object sender, EventArgs e)
+        {
+            reloadTASStudioOnControllerChange ^= true;
+            tsmi_ReloadTASStudioOnCtlChange.Checked = reloadTASStudioOnControllerChange;
+        }
+
+        private void tsmi_saveCompressed_Click(object sender, EventArgs e)
+        {
+            saveCompressed ^= true;
+            tsmi_saveCompressed.Checked = saveCompressed;
+        }
+
+        private void tsmi_samplesOnly_Click(object sender, EventArgs e)
+        {
+            saveSamplesOnly ^= true;
+            tsmi_samplesOnly.Checked = saveSamplesOnly;
+        }
+
+        private void btn_SaveOptions_Click(object sender, EventArgs e)
+        {
+            ctx_SaveOption.Show(MousePosition);
+        }
         #endregion
 
         #region Joystick Behaviour
@@ -2832,23 +2915,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        private void cbox_Controllers_KeyUp(object sender, KeyEventArgs e)
-        {
-            if(reloadTASStudioOnControllerChange)
-            PreloadTASStudio();
-        }
-
-        private void cbox_Controllers_KeyUp(object sender, MouseEventArgs e)
-        {
-            if (reloadTASStudioOnControllerChange)
-                PreloadTASStudio();
-        }
-
-        private void tsmi_ReloadTASStudioOnCtlChange_Click(object sender, EventArgs e)
-        {
-            reloadTASStudioOnControllerChange ^= true;
-            tsmi_ReloadTASStudioOnCtlChange.Checked = reloadTASStudioOnControllerChange;
-        }
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

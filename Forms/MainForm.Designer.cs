@@ -176,6 +176,10 @@ namespace MupenUtils
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
             this.tsmi_movieScrubStepLarge = new System.Windows.Forms.ToolStripTextBox();
+            this.btn_SaveOptions = new System.Windows.Forms.Button();
+            this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -196,6 +200,7 @@ namespace MupenUtils
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
+            this.ctx_SaveOption.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -379,6 +384,7 @@ namespace MupenUtils
             // gp_M64
             // 
             this.gp_M64.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gp_M64.Controls.Add(this.btn_SaveOptions);
             this.gp_M64.Controls.Add(this.gp_CMB);
             this.gp_M64.Controls.Add(this.gp_header);
             this.gp_M64.Controls.Add(this.btn_Reload);
@@ -1768,6 +1774,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
+            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1777,11 +1784,46 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
+            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
             this.tsmi_movieScrubStepLarge.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsmi_movieScrubStepLarge_KeyDown);
             this.tsmi_movieScrubStepLarge.Click += new System.EventHandler(this.tsmi_movieScrubStep_Click);
+            // 
+            // btn_SaveOptions
+            // 
+            this.btn_SaveOptions.Location = new System.Drawing.Point(139, 448);
+            this.btn_SaveOptions.Name = "btn_SaveOptions";
+            this.btn_SaveOptions.Size = new System.Drawing.Size(121, 28);
+            this.btn_SaveOptions.TabIndex = 1;
+            this.btn_SaveOptions.Text = "Save Options";
+            this.btn_SaveOptions.UseVisualStyleBackColor = true;
+            this.btn_SaveOptions.Click += new System.EventHandler(this.btn_SaveOptions_Click);
+            // 
+            // ctx_SaveOption
+            // 
+            this.ctx_SaveOption.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ctx_SaveOption.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_saveCompressed,
+            this.tsmi_samplesOnly});
+            this.ctx_SaveOption.Name = "ctx_SaveOption";
+            this.ctx_SaveOption.Size = new System.Drawing.Size(357, 52);
+            // 
+            // tsmi_saveCompressed
+            // 
+            this.tsmi_saveCompressed.Enabled = false;
+            this.tsmi_saveCompressed.Name = "tsmi_saveCompressed";
+            this.tsmi_saveCompressed.Size = new System.Drawing.Size(356, 24);
+            this.tsmi_saveCompressed.Text = "Save Compressed (Unreadable by mupen)";
+            this.tsmi_saveCompressed.Click += new System.EventHandler(this.tsmi_saveCompressed_Click);
+            // 
+            // tsmi_samplesOnly
+            // 
+            this.tsmi_samplesOnly.Name = "tsmi_samplesOnly";
+            this.tsmi_samplesOnly.Size = new System.Drawing.Size(356, 24);
+            this.tsmi_samplesOnly.Text = "Save Samples Only";
+            this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
             // 
             // MainForm
             // 
@@ -1832,6 +1874,7 @@ namespace MupenUtils
             this.ctx_TasStudio.ResumeLayout(false);
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
+            this.ctx_SaveOption.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1983,6 +2026,10 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_DBG_Crash;
         private System.Windows.Forms.NumericUpDown nud_Angle;
         private System.Windows.Forms.ToolStripMenuItem tsmi_ReloadTASStudioOnCtlChange;
+        private System.Windows.Forms.Button btn_SaveOptions;
+        private System.Windows.Forms.ContextMenuStrip ctx_SaveOption;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_saveCompressed;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_samplesOnly;
     }
 }
 
