@@ -875,7 +875,7 @@ namespace MupenUtils
             mupenData.PROCESS_NAME = procName;
             MupenHookForm.MupenData = mupenData;
             MupenHookForm.searched = searched;
-            mupenHookForm.Show();
+            mupenHookForm.ShowDialog();
         }
 
         void ErrorProcessing(string failReason)
