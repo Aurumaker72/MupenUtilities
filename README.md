@@ -11,7 +11,7 @@
 [Troubleshooting Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/troubleshooting.md)
 
 
-![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/main/app.PNG)
+![](https://github.com/Aurumaker72/MupenUtilities/blob/main/showcase.PNG)
 
 
 ## M64
@@ -114,8 +114,6 @@ In the bin/x86/Release folder you will find a MupenUtilities executable and the 
 -There is a easter egg in the TAS Studio utility dialog
 
 -This program is multithreaded
-
--This program does not fully support more than one controller
 
 -This application supports themes
 
