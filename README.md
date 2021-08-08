@@ -11,7 +11,7 @@
 [Troubleshooting Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/troubleshooting.md)
 
 
-![](https://raw.githubusercontent.com/Aurumaker72/MupenUtilities/main/app.PNG)
+![](https://github.com/Aurumaker72/MupenUtilities/blob/main/showcase.PNG)
 
 
 ## M64
