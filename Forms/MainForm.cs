@@ -176,7 +176,7 @@ namespace MupenUtils
         UpdateNotifier updateNotifier = new UpdateNotifier();
         SmoothingMode JOY_SmoothingMode = SmoothingMode.AntiAlias;
 
-        Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0) };
+        Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0,0) };
 
         public static bool notifiedReupdateControllerFlags;
 
@@ -341,6 +341,7 @@ namespace MupenUtils
             originalGroupboxLocation[1] = gp_M64_misc.Location;
             originalGroupboxLocation[2] = gpRom.Location;
             originalGroupboxLocation[3] = gp_Plugins.Location;
+            originalGroupboxLocation[4] = new Point(gp_TASStudio.Size); // cursed
 
             //tsmi_Themes.Checked = MupenUtilities.Properties.Settings.Default.DarkMode;
             //darkMode = tsmi_Themes.Checked;
@@ -429,10 +430,16 @@ namespace MupenUtils
         void SetTASStudioBig()
         {
             gp_TASStudio.Dock = gp_TASStudio.Dock == DockStyle.Right ? DockStyle.Fill : DockStyle.Right;
-            tr_MovieScrub.Visible = gp_TASStudio.Dock == DockStyle.Right;
             tsmi_TasStudio_Big.Checked = gp_TASStudio.Dock == DockStyle.Fill;
-            cbox_Controllers.Visible = gp_TASStudio.Dock != DockStyle.Fill;
-            nud_X.Visible = nud_Y.Visible = nud_Angle.Visible = gp_TASStudio.Dock != DockStyle.Fill;
+            panel_Input.Visible = gp_TASStudio.Dock != DockStyle.Fill;
+        }
+        void SetInputsGroupboxBig()
+        {
+            gp_input.Dock = (gp_input.Dock == DockStyle.Right) ? DockStyle.Fill : DockStyle.Right;
+            gp_header.Visible = gp_input.Dock != DockStyle.Fill;
+            tsmi_MaximizeInputGp.Checked = gp_input.Dock == DockStyle.Fill;
+            gp_TASStudio.Size = gp_input.Dock == DockStyle.Fill ? new Size((int)(originalGroupboxLocation[4].X * 1.5), originalGroupboxLocation[4].Y) : new Size(originalGroupboxLocation[4]);
+            tsmi_TasStudio_Big.Enabled = gp_input.Dock != DockStyle.Fill;
         }
 
         void SetUITheme(UIThemes uitheme)
@@ -2517,7 +2524,8 @@ namespace MupenUtils
             pb_JoystickPic.Enabled = !readOnly;
             nud_X.Enabled = !readOnly;
             nud_Y.Enabled = !readOnly;
-            foreach (Control ctl in gp_input.Controls)
+            nud_Angle.Enabled = !readOnly;
+            foreach (Control ctl in panel_Input.Controls)
             {
                 if (ctl is CheckBox)
                 {
@@ -2527,7 +2535,7 @@ namespace MupenUtils
             }
             cmb_Country.Enabled = !readOnly;
             dgv_Main.ReadOnly = true;
-            nud_Angle.ReadOnly = readOnly;
+
         }
 
         private void tr_MovieScrub_Scroll(object sender, EventArgs e)
@@ -2846,6 +2854,10 @@ namespace MupenUtils
         {
             ctx_SaveOption.Show(MousePosition);
         }
+        private void tsmi_MaximizeInputGp_Click(object sender, EventArgs e)
+        {
+            SetInputsGroupboxBig();
+        }
         #endregion
 
         #region Joystick Behaviour
@@ -2862,12 +2874,12 @@ namespace MupenUtils
 
         void SnapJoystick()
         {
-            if (JOY_Rel.X < 5 && JOY_Rel.X > -5)
+            if (JOY_Rel.X < 8 && JOY_Rel.X > -8)
             {
                 JOY_Rel.X = 0;
                 JOY_Abs.X = pb_JoystickPic.Width / 2;
             }
-            else if (JOY_Rel.Y < 5 && JOY_Rel.Y > -5)
+            else if (JOY_Rel.Y < 8 && JOY_Rel.Y > -8)
             {
                 JOY_Rel.Y = 0;
                 JOY_Abs.Y = pb_JoystickPic.Height / 2;
@@ -2960,7 +2972,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        
+       
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -2976,6 +2988,8 @@ namespace MupenUtils
 
         private void DrawJoystick(PaintEventArgs e)
         {
+            //if (!FileLoaded) return;
+
             e.Graphics.SmoothingMode = JOY_SmoothingMode;
 
             Pen linepen = Pens.Red;

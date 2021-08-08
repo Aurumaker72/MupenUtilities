@@ -181,6 +181,8 @@ namespace MupenUtils
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_RegToBase64 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_MaximizeInputGp = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_Input = new System.Windows.Forms.Panel();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -202,6 +204,7 @@ namespace MupenUtils
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
             this.ctx_SaveOption.SuspendLayout();
+            this.panel_Input.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -390,8 +393,8 @@ namespace MupenUtils
             this.gp_M64.Controls.Add(this.gp_header);
             this.gp_M64.Controls.Add(this.btn_Reload);
             this.gp_M64.Controls.Add(this.btn_SaveAs);
-            this.gp_M64.Controls.Add(this.gp_input);
             this.gp_M64.Controls.Add(this.btn_Save);
+            this.gp_M64.Controls.Add(this.gp_input);
             this.gp_M64.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_M64.Location = new System.Drawing.Point(0, 89);
             this.gp_M64.Margin = new System.Windows.Forms.Padding(4);
@@ -955,42 +958,8 @@ namespace MupenUtils
             // 
             // gp_input
             // 
-            this.gp_input.Controls.Add(this.nud_Angle);
-            this.gp_input.Controls.Add(this.nud_Y);
-            this.gp_input.Controls.Add(this.nud_X);
-            this.gp_input.Controls.Add(this.cbox_Controllers);
+            this.gp_input.Controls.Add(this.panel_Input);
             this.gp_input.Controls.Add(this.gp_TASStudio);
-            this.gp_input.Controls.Add(this.tr_MovieScrub);
-            this.gp_input.Controls.Add(this.btn_Input_Debug);
-            this.gp_input.Controls.Add(this.pb_JoystickPic);
-            this.gp_input.Controls.Add(this.txt_Frame);
-            this.gp_input.Controls.Add(this.lbl_Deg);
-            this.gp_input.Controls.Add(this.lbl_Y);
-            this.gp_input.Controls.Add(this.lbl_X);
-            this.gp_input.Controls.Add(this.chk_RESERVED2);
-            this.gp_input.Controls.Add(this.chk_restart);
-            this.gp_input.Controls.Add(this.chk_RESERVED1);
-            this.gp_input.Controls.Add(this.btn_PlayDirection);
-            this.gp_input.Controls.Add(this.btn_PlayPause);
-            this.gp_input.Controls.Add(this.chk_Cright);
-            this.gp_input.Controls.Add(this.chk_Cdown);
-            this.gp_input.Controls.Add(this.chk_Cleft);
-            this.gp_input.Controls.Add(this.chk_Right);
-            this.gp_input.Controls.Add(this.chk_Down);
-            this.gp_input.Controls.Add(this.chk_Left);
-            this.gp_input.Controls.Add(this.chk_Up);
-            this.gp_input.Controls.Add(this.chk_Cup);
-            this.gp_input.Controls.Add(this.chk_R);
-            this.gp_input.Controls.Add(this.chk_Z);
-            this.gp_input.Controls.Add(this.chk_L);
-            this.gp_input.Controls.Add(this.Chk_start);
-            this.gp_input.Controls.Add(this.chk_B);
-            this.gp_input.Controls.Add(this.chk_A);
-            this.gp_input.Controls.Add(this.lbl_FrameSelected);
-            this.gp_input.Controls.Add(this.btn_FrameFront2);
-            this.gp_input.Controls.Add(this.btn_FrameFront);
-            this.gp_input.Controls.Add(this.btn_FrameBack2);
-            this.gp_input.Controls.Add(this.btn_FrameBack);
             this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
             this.gp_input.Location = new System.Drawing.Point(584, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
@@ -1003,7 +972,7 @@ namespace MupenUtils
             // 
             // nud_Angle
             // 
-            this.nud_Angle.Location = new System.Drawing.Point(33, 144);
+            this.nud_Angle.Location = new System.Drawing.Point(28, 122);
             this.nud_Angle.Maximum = new decimal(new int[] {
             180,
             0,
@@ -1024,7 +993,7 @@ namespace MupenUtils
             // 
             // nud_Y
             // 
-            this.nud_Y.Location = new System.Drawing.Point(33, 120);
+            this.nud_Y.Location = new System.Drawing.Point(28, 98);
             this.nud_Y.Name = "nud_Y";
             this.nud_Y.Size = new System.Drawing.Size(64, 22);
             this.nud_Y.TabIndex = 4;
@@ -1035,7 +1004,7 @@ namespace MupenUtils
             // 
             // nud_X
             // 
-            this.nud_X.Location = new System.Drawing.Point(33, 95);
+            this.nud_X.Location = new System.Drawing.Point(28, 73);
             this.nud_X.Name = "nud_X";
             this.nud_X.Size = new System.Drawing.Size(64, 22);
             this.nud_X.TabIndex = 4;
@@ -1048,7 +1017,7 @@ namespace MupenUtils
             // 
             this.cbox_Controllers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbox_Controllers.FormattingEnabled = true;
-            this.cbox_Controllers.Location = new System.Drawing.Point(12, 360);
+            this.cbox_Controllers.Location = new System.Drawing.Point(7, 338);
             this.cbox_Controllers.Name = "cbox_Controllers";
             this.cbox_Controllers.Size = new System.Drawing.Size(121, 24);
             this.cbox_Controllers.TabIndex = 0;
@@ -1061,9 +1030,9 @@ namespace MupenUtils
             // 
             this.gp_TASStudio.Controls.Add(this.dgv_Main);
             this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_TASStudio.Location = new System.Drawing.Point(358, 19);
+            this.gp_TASStudio.Location = new System.Drawing.Point(360, 19);
             this.gp_TASStudio.Name = "gp_TASStudio";
-            this.gp_TASStudio.Size = new System.Drawing.Size(470, 438);
+            this.gp_TASStudio.Size = new System.Drawing.Size(468, 438);
             this.gp_TASStudio.TabIndex = 0;
             this.gp_TASStudio.TabStop = false;
             this.gp_TASStudio.Text = "TAS Studio";
@@ -1078,7 +1047,7 @@ namespace MupenUtils
             this.dgv_Main.Name = "dgv_Main";
             this.dgv_Main.RowHeadersWidth = 51;
             this.dgv_Main.RowTemplate.Height = 24;
-            this.dgv_Main.Size = new System.Drawing.Size(464, 417);
+            this.dgv_Main.Size = new System.Drawing.Size(462, 417);
             this.dgv_Main.TabIndex = 0;
             this.dgv_Main.TabStop = false;
             this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Main_CellDoubleClick);
@@ -1092,7 +1061,7 @@ namespace MupenUtils
             // tr_MovieScrub
             // 
             this.tr_MovieScrub.BackColor = System.Drawing.SystemColors.Control;
-            this.tr_MovieScrub.Location = new System.Drawing.Point(138, 360);
+            this.tr_MovieScrub.Location = new System.Drawing.Point(133, 338);
             this.tr_MovieScrub.Maximum = 2;
             this.tr_MovieScrub.Minimum = 1;
             this.tr_MovieScrub.Name = "tr_MovieScrub";
@@ -1107,9 +1076,9 @@ namespace MupenUtils
             // 
             // btn_Input_Debug
             // 
-            this.btn_Input_Debug.Location = new System.Drawing.Point(250, 195);
+            this.btn_Input_Debug.Location = new System.Drawing.Point(245, 173);
             this.btn_Input_Debug.Name = "btn_Input_Debug";
-            this.btn_Input_Debug.Size = new System.Drawing.Size(102, 30);
+            this.btn_Input_Debug.Size = new System.Drawing.Size(105, 30);
             this.btn_Input_Debug.TabIndex = 0;
             this.btn_Input_Debug.TabStop = false;
             this.btn_Input_Debug.Text = "More...";
@@ -1119,7 +1088,9 @@ namespace MupenUtils
             // pb_JoystickPic
             // 
             this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
-            this.pb_JoystickPic.Location = new System.Drawing.Point(190, 25);
+            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
+            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pb_JoystickPic.Location = new System.Drawing.Point(185, 3);
             this.pb_JoystickPic.Name = "pb_JoystickPic";
             this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
             this.pb_JoystickPic.TabIndex = 3;
@@ -1132,7 +1103,7 @@ namespace MupenUtils
             // 
             // txt_Frame
             // 
-            this.txt_Frame.Location = new System.Drawing.Point(270, 328);
+            this.txt_Frame.Location = new System.Drawing.Point(265, 306);
             this.txt_Frame.Name = "txt_Frame";
             this.txt_Frame.Size = new System.Drawing.Size(35, 22);
             this.txt_Frame.TabIndex = 0;
@@ -1142,7 +1113,7 @@ namespace MupenUtils
             // lbl_Deg
             // 
             this.lbl_Deg.AutoSize = true;
-            this.lbl_Deg.Location = new System.Drawing.Point(16, 148);
+            this.lbl_Deg.Location = new System.Drawing.Point(11, 126);
             this.lbl_Deg.Name = "lbl_Deg";
             this.lbl_Deg.Size = new System.Drawing.Size(11, 16);
             this.lbl_Deg.TabIndex = 0;
@@ -1151,7 +1122,7 @@ namespace MupenUtils
             // lbl_Y
             // 
             this.lbl_Y.AutoSize = true;
-            this.lbl_Y.Location = new System.Drawing.Point(12, 122);
+            this.lbl_Y.Location = new System.Drawing.Point(7, 100);
             this.lbl_Y.Name = "lbl_Y";
             this.lbl_Y.Size = new System.Drawing.Size(16, 16);
             this.lbl_Y.TabIndex = 0;
@@ -1160,7 +1131,7 @@ namespace MupenUtils
             // lbl_X
             // 
             this.lbl_X.AutoSize = true;
-            this.lbl_X.Location = new System.Drawing.Point(12, 97);
+            this.lbl_X.Location = new System.Drawing.Point(7, 75);
             this.lbl_X.Name = "lbl_X";
             this.lbl_X.Size = new System.Drawing.Size(15, 16);
             this.lbl_X.TabIndex = 0;
@@ -1169,7 +1140,7 @@ namespace MupenUtils
             // chk_RESERVED2
             // 
             this.chk_RESERVED2.AutoSize = true;
-            this.chk_RESERVED2.Location = new System.Drawing.Point(96, 71);
+            this.chk_RESERVED2.Location = new System.Drawing.Point(91, 49);
             this.chk_RESERVED2.Name = "chk_RESERVED2";
             this.chk_RESERVED2.Size = new System.Drawing.Size(67, 20);
             this.chk_RESERVED2.TabIndex = 2;
@@ -1181,7 +1152,7 @@ namespace MupenUtils
             // 
             this.chk_restart.AutoSize = true;
             this.chk_restart.Enabled = false;
-            this.chk_restart.Location = new System.Drawing.Point(96, 25);
+            this.chk_restart.Location = new System.Drawing.Point(91, 3);
             this.chk_restart.Name = "chk_restart";
             this.chk_restart.Size = new System.Drawing.Size(72, 20);
             this.chk_restart.TabIndex = 1;
@@ -1192,7 +1163,7 @@ namespace MupenUtils
             // chk_RESERVED1
             // 
             this.chk_RESERVED1.AutoSize = true;
-            this.chk_RESERVED1.Location = new System.Drawing.Point(96, 47);
+            this.chk_RESERVED1.Location = new System.Drawing.Point(91, 25);
             this.chk_RESERVED1.Name = "chk_RESERVED1";
             this.chk_RESERVED1.Size = new System.Drawing.Size(67, 20);
             this.chk_RESERVED1.TabIndex = 1;
@@ -1202,7 +1173,7 @@ namespace MupenUtils
             // 
             // btn_PlayDirection
             // 
-            this.btn_PlayDirection.Location = new System.Drawing.Point(12, 325);
+            this.btn_PlayDirection.Location = new System.Drawing.Point(7, 303);
             this.btn_PlayDirection.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PlayDirection.Name = "btn_PlayDirection";
             this.btn_PlayDirection.Size = new System.Drawing.Size(32, 28);
@@ -1214,7 +1185,7 @@ namespace MupenUtils
             // 
             // btn_PlayPause
             // 
-            this.btn_PlayPause.Location = new System.Drawing.Point(149, 325);
+            this.btn_PlayPause.Location = new System.Drawing.Point(144, 303);
             this.btn_PlayPause.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PlayPause.Name = "btn_PlayPause";
             this.btn_PlayPause.Size = new System.Drawing.Size(32, 28);
@@ -1228,7 +1199,7 @@ namespace MupenUtils
             // 
             this.chk_Cright.AutoSize = true;
             this.chk_Cright.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cright.Location = new System.Drawing.Point(72, 236);
+            this.chk_Cright.Location = new System.Drawing.Point(67, 214);
             this.chk_Cright.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Cright.Name = "chk_Cright";
             this.chk_Cright.Size = new System.Drawing.Size(45, 20);
@@ -1242,7 +1213,7 @@ namespace MupenUtils
             // 
             this.chk_Cdown.AutoSize = true;
             this.chk_Cdown.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cdown.Location = new System.Drawing.Point(43, 263);
+            this.chk_Cdown.Location = new System.Drawing.Point(38, 241);
             this.chk_Cdown.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Cdown.Name = "chk_Cdown";
             this.chk_Cdown.Size = new System.Drawing.Size(45, 20);
@@ -1256,7 +1227,7 @@ namespace MupenUtils
             // 
             this.chk_Cleft.AutoSize = true;
             this.chk_Cleft.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cleft.Location = new System.Drawing.Point(14, 236);
+            this.chk_Cleft.Location = new System.Drawing.Point(9, 214);
             this.chk_Cleft.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Cleft.Name = "chk_Cleft";
             this.chk_Cleft.Size = new System.Drawing.Size(45, 20);
@@ -1270,7 +1241,7 @@ namespace MupenUtils
             // 
             this.chk_Right.AutoSize = true;
             this.chk_Right.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Right.Location = new System.Drawing.Point(61, 46);
+            this.chk_Right.Location = new System.Drawing.Point(56, 24);
             this.chk_Right.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Right.Name = "chk_Right";
             this.chk_Right.Size = new System.Drawing.Size(39, 20);
@@ -1284,7 +1255,7 @@ namespace MupenUtils
             // 
             this.chk_Down.AutoSize = true;
             this.chk_Down.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Down.Location = new System.Drawing.Point(40, 66);
+            this.chk_Down.Location = new System.Drawing.Point(35, 44);
             this.chk_Down.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Down.Name = "chk_Down";
             this.chk_Down.Size = new System.Drawing.Size(39, 20);
@@ -1298,7 +1269,7 @@ namespace MupenUtils
             // 
             this.chk_Left.AutoSize = true;
             this.chk_Left.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Left.Location = new System.Drawing.Point(19, 46);
+            this.chk_Left.Location = new System.Drawing.Point(14, 24);
             this.chk_Left.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Left.Name = "chk_Left";
             this.chk_Left.Size = new System.Drawing.Size(36, 20);
@@ -1312,7 +1283,7 @@ namespace MupenUtils
             // 
             this.chk_Up.AutoSize = true;
             this.chk_Up.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Up.Location = new System.Drawing.Point(40, 27);
+            this.chk_Up.Location = new System.Drawing.Point(35, 5);
             this.chk_Up.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Up.Name = "chk_Up";
             this.chk_Up.Size = new System.Drawing.Size(39, 20);
@@ -1326,7 +1297,7 @@ namespace MupenUtils
             // 
             this.chk_Cup.AutoSize = true;
             this.chk_Cup.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cup.Location = new System.Drawing.Point(43, 210);
+            this.chk_Cup.Location = new System.Drawing.Point(33, 188);
             this.chk_Cup.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Cup.Name = "chk_Cup";
             this.chk_Cup.Size = new System.Drawing.Size(45, 20);
@@ -1339,7 +1310,7 @@ namespace MupenUtils
             // chk_R
             // 
             this.chk_R.AutoSize = true;
-            this.chk_R.Location = new System.Drawing.Point(203, 197);
+            this.chk_R.Location = new System.Drawing.Point(198, 175);
             this.chk_R.Margin = new System.Windows.Forms.Padding(4);
             this.chk_R.Name = "chk_R";
             this.chk_R.Size = new System.Drawing.Size(39, 20);
@@ -1352,7 +1323,7 @@ namespace MupenUtils
             // chk_Z
             // 
             this.chk_Z.AutoSize = true;
-            this.chk_Z.Location = new System.Drawing.Point(96, 187);
+            this.chk_Z.Location = new System.Drawing.Point(91, 165);
             this.chk_Z.Margin = new System.Windows.Forms.Padding(4);
             this.chk_Z.Name = "chk_Z";
             this.chk_Z.Size = new System.Drawing.Size(37, 20);
@@ -1365,7 +1336,7 @@ namespace MupenUtils
             // chk_L
             // 
             this.chk_L.AutoSize = true;
-            this.chk_L.Location = new System.Drawing.Point(149, 207);
+            this.chk_L.Location = new System.Drawing.Point(144, 185);
             this.chk_L.Margin = new System.Windows.Forms.Padding(4);
             this.chk_L.Name = "chk_L";
             this.chk_L.Size = new System.Drawing.Size(36, 20);
@@ -1378,7 +1349,7 @@ namespace MupenUtils
             // Chk_start
             // 
             this.Chk_start.AutoSize = true;
-            this.Chk_start.Location = new System.Drawing.Point(139, 266);
+            this.Chk_start.Location = new System.Drawing.Point(134, 244);
             this.Chk_start.Margin = new System.Windows.Forms.Padding(4);
             this.Chk_start.Name = "Chk_start";
             this.Chk_start.Size = new System.Drawing.Size(56, 20);
@@ -1391,7 +1362,7 @@ namespace MupenUtils
             // chk_B
             // 
             this.chk_B.AutoSize = true;
-            this.chk_B.Location = new System.Drawing.Point(203, 246);
+            this.chk_B.Location = new System.Drawing.Point(198, 224);
             this.chk_B.Margin = new System.Windows.Forms.Padding(4);
             this.chk_B.Name = "chk_B";
             this.chk_B.Size = new System.Drawing.Size(38, 20);
@@ -1404,7 +1375,7 @@ namespace MupenUtils
             // chk_A
             // 
             this.chk_A.AutoSize = true;
-            this.chk_A.Location = new System.Drawing.Point(256, 266);
+            this.chk_A.Location = new System.Drawing.Point(251, 244);
             this.chk_A.Margin = new System.Windows.Forms.Padding(4);
             this.chk_A.Name = "chk_A";
             this.chk_A.Size = new System.Drawing.Size(38, 20);
@@ -1417,7 +1388,7 @@ namespace MupenUtils
             // lbl_FrameSelected
             // 
             this.lbl_FrameSelected.AutoSize = true;
-            this.lbl_FrameSelected.Location = new System.Drawing.Point(132, 295);
+            this.lbl_FrameSelected.Location = new System.Drawing.Point(127, 273);
             this.lbl_FrameSelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_FrameSelected.Name = "lbl_FrameSelected";
             this.lbl_FrameSelected.Size = new System.Drawing.Size(56, 16);
@@ -1426,7 +1397,7 @@ namespace MupenUtils
             // 
             // btn_FrameFront2
             // 
-            this.btn_FrameFront2.Location = new System.Drawing.Point(216, 325);
+            this.btn_FrameFront2.Location = new System.Drawing.Point(211, 303);
             this.btn_FrameFront2.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FrameFront2.Name = "btn_FrameFront2";
             this.btn_FrameFront2.Size = new System.Drawing.Size(53, 28);
@@ -1438,7 +1409,7 @@ namespace MupenUtils
             // 
             // btn_FrameFront
             // 
-            this.btn_FrameFront.Location = new System.Drawing.Point(180, 325);
+            this.btn_FrameFront.Location = new System.Drawing.Point(175, 303);
             this.btn_FrameFront.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FrameFront.Name = "btn_FrameFront";
             this.btn_FrameFront.Size = new System.Drawing.Size(36, 28);
@@ -1450,7 +1421,7 @@ namespace MupenUtils
             // 
             // btn_FrameBack2
             // 
-            this.btn_FrameBack2.Location = new System.Drawing.Point(60, 325);
+            this.btn_FrameBack2.Location = new System.Drawing.Point(55, 303);
             this.btn_FrameBack2.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FrameBack2.Name = "btn_FrameBack2";
             this.btn_FrameBack2.Size = new System.Drawing.Size(53, 28);
@@ -1462,7 +1433,7 @@ namespace MupenUtils
             // 
             // btn_FrameBack
             // 
-            this.btn_FrameBack.Location = new System.Drawing.Point(114, 325);
+            this.btn_FrameBack.Location = new System.Drawing.Point(109, 303);
             this.btn_FrameBack.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FrameBack.Name = "btn_FrameBack";
             this.btn_FrameBack.Size = new System.Drawing.Size(36, 28);
@@ -1484,6 +1455,7 @@ namespace MupenUtils
             this.tsmi_GetInput,
             this.toolStripSeparator3,
             this.tsmi_Themes,
+            this.tsmi_MaximizeInputGp,
             this.toolStripSeparator4,
             this.tsmi_AAJoystick,
             this.tsmi_Agressive,
@@ -1495,7 +1467,7 @@ namespace MupenUtils
             this.toolStripSeparator7,
             this.tsmi_DBG_Crash});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 392);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 418);
             // 
             // tsmi_SimpleMode
             // 
@@ -1556,28 +1528,28 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // transparentToolStripMenuItem
             // 
             this.transparentToolStripMenuItem.Name = "transparentToolStripMenuItem";
-            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.transparentToolStripMenuItem.Text = "Transparent";
             this.transparentToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
@@ -1664,7 +1636,7 @@ namespace MupenUtils
             this.toolStripSeparator6,
             this.tsmi_Markers});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 200);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 172);
             // 
             // utilityToolStripMenuItem
             // 
@@ -1833,6 +1805,57 @@ namespace MupenUtils
             this.tsmi_RegToBase64.Text = "Region to Base64";
             this.tsmi_RegToBase64.Click += new System.EventHandler(this.tsmi_RegToBase64_Click);
             // 
+            // tsmi_MaximizeInputGp
+            // 
+            this.tsmi_MaximizeInputGp.Name = "tsmi_MaximizeInputGp";
+            this.tsmi_MaximizeInputGp.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_MaximizeInputGp.Text = "Maximize";
+            this.tsmi_MaximizeInputGp.Click += new System.EventHandler(this.tsmi_MaximizeInputGp_Click);
+            // 
+            // panel_Input
+            // 
+            this.panel_Input.AutoSize = true;
+            this.panel_Input.Controls.Add(this.pb_JoystickPic);
+            this.panel_Input.Controls.Add(this.nud_Angle);
+            this.panel_Input.Controls.Add(this.btn_FrameBack);
+            this.panel_Input.Controls.Add(this.nud_Y);
+            this.panel_Input.Controls.Add(this.btn_FrameBack2);
+            this.panel_Input.Controls.Add(this.nud_X);
+            this.panel_Input.Controls.Add(this.btn_FrameFront);
+            this.panel_Input.Controls.Add(this.cbox_Controllers);
+            this.panel_Input.Controls.Add(this.btn_FrameFront2);
+            this.panel_Input.Controls.Add(this.lbl_FrameSelected);
+            this.panel_Input.Controls.Add(this.tr_MovieScrub);
+            this.panel_Input.Controls.Add(this.chk_A);
+            this.panel_Input.Controls.Add(this.btn_Input_Debug);
+            this.panel_Input.Controls.Add(this.chk_B);
+            this.panel_Input.Controls.Add(this.Chk_start);
+            this.panel_Input.Controls.Add(this.txt_Frame);
+            this.panel_Input.Controls.Add(this.chk_L);
+            this.panel_Input.Controls.Add(this.lbl_Deg);
+            this.panel_Input.Controls.Add(this.chk_Z);
+            this.panel_Input.Controls.Add(this.lbl_Y);
+            this.panel_Input.Controls.Add(this.chk_R);
+            this.panel_Input.Controls.Add(this.lbl_X);
+            this.panel_Input.Controls.Add(this.chk_Cup);
+            this.panel_Input.Controls.Add(this.chk_RESERVED2);
+            this.panel_Input.Controls.Add(this.chk_Up);
+            this.panel_Input.Controls.Add(this.chk_restart);
+            this.panel_Input.Controls.Add(this.chk_Left);
+            this.panel_Input.Controls.Add(this.chk_RESERVED1);
+            this.panel_Input.Controls.Add(this.chk_Down);
+            this.panel_Input.Controls.Add(this.btn_PlayDirection);
+            this.panel_Input.Controls.Add(this.chk_Right);
+            this.panel_Input.Controls.Add(this.btn_PlayPause);
+            this.panel_Input.Controls.Add(this.chk_Cleft);
+            this.panel_Input.Controls.Add(this.chk_Cright);
+            this.panel_Input.Controls.Add(this.chk_Cdown);
+            this.panel_Input.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel_Input.Location = new System.Drawing.Point(4, 19);
+            this.panel_Input.Name = "panel_Input";
+            this.panel_Input.Size = new System.Drawing.Size(353, 438);
+            this.panel_Input.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1883,6 +1906,8 @@ namespace MupenUtils
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
             this.ctx_SaveOption.ResumeLayout(false);
+            this.panel_Input.ResumeLayout(false);
+            this.panel_Input.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2039,6 +2064,8 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_saveCompressed;
         private System.Windows.Forms.ToolStripMenuItem tsmi_samplesOnly;
         private System.Windows.Forms.ToolStripMenuItem tsmi_RegToBase64;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_MaximizeInputGp;
+        private System.Windows.Forms.Panel panel_Input;
     }
 }
 
