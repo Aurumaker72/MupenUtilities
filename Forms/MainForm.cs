@@ -742,6 +742,7 @@ namespace MupenUtils
             regionExist = (beginRegion >= MINIMUM_FRAME) && (endRegion >= MINIMUM_FRAME) && (endRegion > beginRegion);
 
             tsmi_RegionReplacement.Enabled = regionExist;
+            tsmi_RegToBase64.Enabled = regionExist;
 
             dgv_Main.Refresh();
         }
@@ -2783,6 +2784,16 @@ namespace MupenUtils
             
 
         }
+        private void tsmi_RegToBase64_Click(object sender, EventArgs e)
+        {
+            int[] reg = inputLists[selectedController].GetRange(beginRegion, endRegion-beginRegion).ToArray();
+            byte[] result = new byte[reg.Length * sizeof(int)];
+            Buffer.BlockCopy(reg, 0, result, 0, result.Length);
+            Clipboard.SetText(Convert.ToBase64String(result));
+
+
+        }
+
         private void cbox_Controllers_KeyUp(object sender, KeyEventArgs e)
         {
             //if (reloadTASStudioOnControllerChange)

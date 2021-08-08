@@ -180,6 +180,7 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_RegToBase64 = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -1663,7 +1664,7 @@ namespace MupenUtils
             this.toolStripSeparator6,
             this.tsmi_Markers});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 172);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 200);
             // 
             // utilityToolStripMenuItem
             // 
@@ -1721,6 +1722,7 @@ namespace MupenUtils
             this.tsmi_EndRegion,
             this.tsmi_ClearRegion,
             this.toolStripSeparator8,
+            this.tsmi_RegToBase64,
             this.tsmi_RegionReplacement,
             this.tsmi_SelRegion});
             this.tsmi_Markers.Name = "tsmi_Markers";
@@ -1823,6 +1825,13 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Size = new System.Drawing.Size(356, 24);
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
+            // 
+            // tsmi_RegToBase64
+            // 
+            this.tsmi_RegToBase64.Name = "tsmi_RegToBase64";
+            this.tsmi_RegToBase64.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_RegToBase64.Text = "Region to Base64";
+            this.tsmi_RegToBase64.Click += new System.EventHandler(this.tsmi_RegToBase64_Click);
             // 
             // MainForm
             // 
@@ -2029,6 +2038,7 @@ namespace MupenUtils
         private System.Windows.Forms.ContextMenuStrip ctx_SaveOption;
         private System.Windows.Forms.ToolStripMenuItem tsmi_saveCompressed;
         private System.Windows.Forms.ToolStripMenuItem tsmi_samplesOnly;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_RegToBase64;
     }
 }
 
