@@ -21,6 +21,9 @@ namespace MupenUtilities.Forms
 
         
         public List<int> inputs = new List<int>();
+
+        int timesContinued = 0;
+
         public MovieDiagnosticForm()
         {
             InitializeComponent();
@@ -145,6 +148,9 @@ namespace MupenUtilities.Forms
 
         private void btn_Continue_Click(object sender, EventArgs e)
         {
+            timesContinued++;
+            if(timesContinued == 1) btn_Continue.Text = "Ignore";
+            if (timesContinued > 1) MainForm.ignoreIllegalDesync = true;
             this.Hide();
         }
     }

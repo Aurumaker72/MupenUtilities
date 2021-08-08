@@ -139,6 +139,7 @@ namespace MupenUtils
         public static bool mupenRunning = false;
         public static bool loadedInvalidFile = false;
         public static bool m64loadBusy = false;
+        public static bool ignoreIllegalDesync = false;
 
         // M64 Data 
         public static M64.MovieStruct MovieHeader;
@@ -418,6 +419,8 @@ namespace MupenUtils
         #region UI
         void MovieDiag()
         {
+            if (ignoreIllegalDesync) return;
+
             if (movieDiagForm == null)
                 movieDiagForm = new MovieDiagnosticForm();
 
@@ -1173,7 +1176,7 @@ namespace MupenUtils
             // We need a buffer to check if end of file reached
 
             frames = MovieHeader.length_samples;
-            uint findx = 0;
+            uint findx = 0, lenfs = (uint)fs.Length;
             
             // position 1024
             if(MovieHeader.version == 3)
@@ -1193,32 +1196,48 @@ namespace MupenUtils
             }
 
             if (loadinputs)
-            while (findx <= frames)
-            {
-                for (int i = 0; i < MovieHeader.num_controllers; i++)
+                while (findx <= frames)
                 {
-
-
-                    //if (br.BaseStream.Position + 4 > fs.Length)
-                    //{
-                    //    findx++;
-                    //    continue;
-                    //}
+                    for (int i = 0; i < MovieHeader.num_controllers; i++)
+                    {
 
 
 
-                    if (ControllersEnabled[0])
+
+                        // this is really gross but its necessary to avoid evil m64s
+
+                        if (ControllersEnabled[0])
+                            if (1024 + 8 + findx > lenfs)
+                            {
+                                findx++;
+                                continue;
+                            }
                         inputListCtl1.Add(br.ReadInt32());
-                    if (ControllersEnabled[1])
+                        if (ControllersEnabled[1])
+                            if (1024 + 8 + findx > lenfs)
+                            {
+                                findx++;
+                                continue;
+                            }
                         inputListCtl2.Add(br.ReadInt32());
-                    if (ControllersEnabled[2])
+                        if (ControllersEnabled[2])
+                            if (1024 + 8 + findx > lenfs)
+                            {
+                                findx++;
+                                continue;
+                            }
                         inputListCtl3.Add(br.ReadInt32());
-                    if (ControllersEnabled[3])
+                        if (ControllersEnabled[3])
+                            if (1024 + 8 + findx > lenfs)
+                            {
+                                findx++;
+                                continue;
+                            }
                         inputListCtl4.Add(br.ReadInt32());
 
-                    findx++;
+                        findx++;
+                    }
                 }
-            }
 
 
 
@@ -1681,7 +1700,7 @@ namespace MupenUtils
             } // get value at that frame. If this fails then m64 is corrupted 
             catch
             {
-                if (UsageType != UsageTypes.M64) return;
+                if (UsageType != UsageTypes.M64 || ignoreIllegalDesync) return;
 
                 EnableM64View(false, false, false);
                 stepFrameTimer.Enabled = false;

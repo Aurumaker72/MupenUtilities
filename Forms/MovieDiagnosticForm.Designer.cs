@@ -51,7 +51,7 @@ namespace MupenUtilities.Forms
             this.gp_Moviediag.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_Moviediag.Location = new System.Drawing.Point(0, 0);
             this.gp_Moviediag.Name = "gp_Moviediag";
-            this.gp_Moviediag.Size = new System.Drawing.Size(544, 229);
+            this.gp_Moviediag.Size = new System.Drawing.Size(540, 225);
             this.gp_Moviediag.TabIndex = 0;
             this.gp_Moviediag.TabStop = false;
             this.gp_Moviediag.Text = "Movie Diagnostic";
@@ -123,7 +123,7 @@ namespace MupenUtilities.Forms
             // MovieDiagnosticForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(544, 229);
+            this.ClientSize = new System.Drawing.Size(540, 225);
             this.ControlBox = false;
             this.Controls.Add(this.gp_Moviediag);
             this.DoubleBuffered = true;
