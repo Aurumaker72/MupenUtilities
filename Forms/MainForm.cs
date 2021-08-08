@@ -1360,11 +1360,11 @@ namespace MupenUtils
                 RedControl(btn_PathSel);
                 return;
             }
-            if (MovieHeader.num_controllers != 1)
-            {
-                MessageBox.Show("This movie can not be saved because it enables too many controllers", PROGRAM_NAME);
-                return;
-            }
+            //if (MovieHeader.num_controllers != 1)
+            //{
+            //    MessageBox.Show("fuck off", PROGRAM_NAME);
+            //    return;
+            //}
 
             string tmpPath;
             if (saveAs)
@@ -1401,9 +1401,18 @@ namespace MupenUtils
             BinaryWriter br = new BinaryWriter(fs);
             if (saveSamplesOnly)
             {
-                for (int i = 0; i < inputListCtl1.Count; i++)
+                for (int i = 0; i < inputListCtl1.Count/*All should have same amount of inputs... right*/; i++)
                 {
-                    br.Write(inputListCtl1[i]);
+
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 0))
+                        br.Write(inputListCtl1[i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 1) && i < inputListCtl2.Count)
+                        br.Write(inputListCtl2[i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 2) && i < inputListCtl3.Count)
+                        br.Write(inputListCtl3[i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 3) && i < inputListCtl4.Count)
+                        br.Write(inputListCtl4[i]);
+                    
                 }
             }
             else
@@ -1492,9 +1501,18 @@ namespace MupenUtils
                 br.Write(rsp, 0, 64);
                 br.Write(author, 0, 222);
                 br.Write(desc, 0, 256);
+
+                
                 for (int i = 0; i < inputListCtl1.Count; i++)
                 {
-                    br.Write(inputListCtl1[i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 0))
+                        br.Write(inputListCtl1[i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 1) && i < inputListCtl2.Count)
+                        br.Write(inputListCtl2[i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 2) && i < inputListCtl3.Count)
+                        br.Write(inputListCtl3[i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 3) && i < inputListCtl4.Count)
+                        br.Write(inputListCtl4[i]);
                 }
             }
 
