@@ -1141,10 +1141,6 @@ namespace MupenUtils
             //    }
             //}
 
-            ASCIIEncoding ascii = new ASCIIEncoding();
-            UTF8Encoding utf8 = new UTF8Encoding();
-            
-
             // Reset
             inputListCtl1.Clear();
             inputListCtl2.Clear();
@@ -1424,15 +1420,8 @@ namespace MupenUtils
             }
             else
             {
-                //ShowStatus("Saving M64...", st_Status1);
                 byte[] zeroar1 = new byte[160]; byte[] zeroar2 = new byte[56];
                 byte[] magic = new byte[4] { 0x4D, 0x36, 0x34, 0x1A };
-                //Array.Reverse(magic);
-                //magic[0] = 0x4D;
-                //magic[1] = 0x36;
-                //magic[2] = 0x34;
-                //magic[3] = 0x1A;
-                //magic[4] = 0x03;
                 Array.Clear(zeroar1, 0, zeroar1.Length);
                 Array.Clear(zeroar2, 0, zeroar2.Length);
 
