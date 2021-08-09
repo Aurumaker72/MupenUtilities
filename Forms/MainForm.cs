@@ -1721,7 +1721,7 @@ namespace MupenUtils
                 EnableM64View(false, false, false);
                 stepFrameTimer.Enabled = false;
                 //MessageBox.Show("Failed to find input value at frame " + frame + ". The application might behave unexpectedly until a restart.\nThis can be caused by a corrupted m64 or loading movies in quick succession", PROGRAM_NAME + " - Fatal desync");
-                MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause of a desync in the frame controller";
+                MovieDiagnosticForm.warnText = "An automatic movie diagnostic was performed\r\nbecause of a desync";
                 MovieDiag();
                 return;
 
