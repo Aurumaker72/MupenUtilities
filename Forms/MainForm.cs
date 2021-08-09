@@ -1438,7 +1438,11 @@ namespace MupenUtils
 
                 try
                 {
-                    MovieHeader.uid = Convert.ToUInt32(txt_misc_UID.Text, 16);
+                    byte[] uid = new byte[4];
+                    uid = BitConverter.GetBytes(Convert.ToUInt32(txt_misc_UID.Text, 16));
+                    Array.Reverse(uid);
+
+                    MovieHeader.uid = BitConverter.ToUInt32(uid,0);
                     MovieHeader.length_vis = UInt32.Parse(txt_VIs.Text);
                     MovieHeader.rerecord_count = UInt32.Parse(txt_RR.Text);
                     MovieHeader.num_controllers = byte.Parse(txt_CTRLS.Text);
