@@ -650,6 +650,7 @@ namespace MupenUtils.Forms
             this.cbox_Ctl.Name = "cbox_Ctl";
             this.cbox_Ctl.Size = new System.Drawing.Size(121, 24);
             this.cbox_Ctl.TabIndex = 3;
+            this.cbox_Ctl.SelectedIndexChanged += new System.EventHandler(this.cbox_Ctl_SelectedIndexChanged);
             // 
             // InputStatsForm
             // 

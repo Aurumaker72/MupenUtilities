@@ -56,10 +56,7 @@ namespace MupenUtils.Forms
         void UpdateInfos()
         {
             if (!MainForm.FileLoaded) return;
-
-            cbox_Ctl.Items.Clear();
-
-            cmb_Buttons.SelectedIndex = 0;
+            
 
             for (int i1 = 0; i1 < sumX.Length; i1++)
                 sumX[i1] = 0;
@@ -68,17 +65,8 @@ namespace MupenUtils.Forms
             for (int i1 = 0; i1 < emptyFrames.Length; i1++)
                 emptyFrames[i1] = 0;
 
-            if (MainForm.UsageType == MainForm.UsageTypes.M64)
-            {
-                for (int i = 0; i < 4; i++)
-                    if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i + 1));
-            }
-            else
-            {
-                // uh
-                for (int i = 0; i < MainForm.cmbInput.Count; i++)
-                    cbox_Ctl.Items.Add("Combo " + (i + 1));
-            }
+            
+
 
             Array.Clear(buttonStats, 0, buttonStats.Length);
 
@@ -188,15 +176,25 @@ namespace MupenUtils.Forms
 
 
         }
-        private void cbox_Ctl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //UpdateInfos();
-        }
+        
 
         private void InputStatsForm_Shown(object sender, EventArgs e)
         {
             foreach (Control ctl in Controls)
                 ctl.Enabled = MainForm.FileLoaded;
+
+            cbox_Ctl.Items.Clear();
+            if (MainForm.UsageType == MainForm.UsageTypes.M64)
+            {
+                for (int i = 0; i < 4; i++)
+                    if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i + 1));
+            }
+            else
+            {
+                // uh
+                for (int i = 0; i < MainForm.cmbInput.Count; i++)
+                    cbox_Ctl.Items.Add("Combo " + (i + 1));
+            }
 
             UpdateInfos();
 
@@ -312,6 +310,11 @@ namespace MupenUtils.Forms
         {
             nud_X.Enabled = chk_X.Checked;
             nud_Y.Enabled = chk_Y.Checked;
+        }
+
+        private void cbox_Ctl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateInfos();
         }
     }
 }
