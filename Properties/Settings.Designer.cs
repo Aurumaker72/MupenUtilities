@@ -25,42 +25,6 @@ namespace MupenUtilities.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastPath {
-            get {
-                return ((string)(this["LastPath"]));
-            }
-            set {
-                this["LastPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastPathReplaceSrc {
-            get {
-                return ((string)(this["LastPathReplaceSrc"]));
-            }
-            set {
-                this["LastPathReplaceSrc"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastPathReplaceTrg {
-            get {
-                return ((string)(this["LastPathReplaceTrg"]));
-            }
-            set {
-                this["LastPathReplaceTrg"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public byte UITheme {
             get {
@@ -104,6 +68,54 @@ namespace MupenUtilities.Properties {
             }
             set {
                 this["JoystickKeyboard"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastPath {
+            get {
+                return ((string)(this["LastPath"]));
+            }
+            set {
+                this["LastPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastPathReplaceSrc {
+            get {
+                return ((string)(this["LastPathReplaceSrc"]));
+            }
+            set {
+                this["LastPathReplaceSrc"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastPathReplaceTrg {
+            get {
+                return ((string)(this["LastPathReplaceTrg"]));
+            }
+            set {
+                this["LastPathReplaceTrg"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ReloadTASStudioOnControllerChange {
+            get {
+                return ((bool)(this["ReloadTASStudioOnControllerChange"]));
+            }
+            set {
+                this["ReloadTASStudioOnControllerChange"] = value;
             }
         }
     }

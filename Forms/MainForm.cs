@@ -401,6 +401,9 @@ namespace MupenUtils
             JOY_Keyboard = MupenUtilities.Properties.Settings.Default.JoystickKeyboard;
             tsmi_JoyKeyboard.Checked = JOY_Keyboard;
 
+            reloadTASStudioOnControllerChange = MupenUtilities.Properties.Settings.Default.ReloadTASStudioOnControllerChange;
+            tsmi_ReloadTASStudioOnCtlChange.Checked = reloadTASStudioOnControllerChange;
+
             nud_X.Minimum = -128;
             nud_X.Maximum = 127;
 
@@ -2829,6 +2832,8 @@ namespace MupenUtils
         {
             reloadTASStudioOnControllerChange ^= true;
             tsmi_ReloadTASStudioOnCtlChange.Checked = reloadTASStudioOnControllerChange;
+            MupenUtilities.Properties.Settings.Default.ReloadTASStudioOnControllerChange = reloadTASStudioOnControllerChange;
+            MupenUtilities.Properties.Settings.Default.Save();
         }
 
         private void tsmi_saveCompressed_Click(object sender, EventArgs e)
