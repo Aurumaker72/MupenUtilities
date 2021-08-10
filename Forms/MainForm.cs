@@ -2040,6 +2040,49 @@ namespace MupenUtils
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
+        void AutodetectLoad()
+        {
+            string ext = System.IO.Path.GetExtension(Path);
+            if (ext.Equals(".m64", StringComparison.InvariantCultureIgnoreCase))
+            {
+                m64load = new Thread(() => ReadM64());
+                m64load.Start();
+
+            }
+            else if (ext.Equals(".st", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".savestate", StringComparison.InvariantCultureIgnoreCase))
+            {
+                LoadST();
+            }
+            else if (ext.Equals(".cmb", StringComparison.InvariantCultureIgnoreCase))
+            {
+                LoadCombo();
+            }
+            else if (ext.Equals(".exe", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (Path.Contains("mupen"))
+                {
+                    var proc = Process.Start(Path);
+                    while (string.IsNullOrEmpty(proc.MainWindowTitle))
+                    {
+                        System.Threading.Thread.Sleep(100);
+                        proc.Refresh();
+                    }
+
+                    MupenHook();
+                }
+                else
+                {
+                    ErrorProcessing("Executable not mupen");
+                    return;
+                }
+
+            }
+            else
+            {
+                ErrorProcessing("Type " + ext + " could not be resolved to any usage type");
+                return;
+            }
+        }
         private void btn_PathSel_MouseClick(object sender, MouseEventArgs e)
         {
             Debug.WriteLine("browse...");
@@ -2085,47 +2128,7 @@ namespace MupenUtils
                 LoadCombo();
             else if (UsageType == UsageTypes.Autodetect)
             {
-
-                string ext = System.IO.Path.GetExtension(Path);
-                if (ext.Equals(".m64", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    m64load = new Thread(() => ReadM64());
-                    m64load.Start();
-
-                }
-                else if (ext.Equals(".st", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".savestate", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    LoadST();
-                }
-                else if (ext.Equals(".cmb", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    LoadCombo();
-                }
-                else if (ext.Equals(".exe", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    if (Path.Contains("mupen"))
-                    {
-                        var proc = Process.Start(Path);
-                        while (string.IsNullOrEmpty(proc.MainWindowTitle))
-                        {
-                            System.Threading.Thread.Sleep(100);
-                            proc.Refresh();
-                        }
-
-                        MupenHook();
-                    }
-                    else
-                    {
-                        ErrorProcessing("Executable not mupen");
-                        return;
-                    }
-
-                }
-                else
-                {
-                    ErrorProcessing("Type " + ext + " could not be resolved to any usage type");
-                    return;
-                }
+                AutodetectLoad();
             }
         }
         private void btn_Last_MouseClick(object sender, MouseEventArgs e)
@@ -2474,14 +2477,7 @@ namespace MupenUtils
         private void btn_Reload_Click(object sender, EventArgs e)
         {
             if (!FileLoaded) return;
-            if (UsageType == UsageTypes.M64)
-            {
-                m64load = new Thread(() => ReadM64());
-                m64load.Start();
-            }else if(UsageType == UsageTypes.Combo)
-            {
-                LoadCombo();
-            }
+            AutodetectLoad();
         }
         private void btn_Tips_Click(object sender, EventArgs e) => ShowTipsForm();
 
