@@ -400,7 +400,7 @@ namespace MupenUtils
 
             JOY_Keyboard = MupenUtilities.Properties.Settings.Default.JoystickKeyboard;
             tsmi_JoyKeyboard.Checked = JOY_Keyboard;
-
+                
             reloadTASStudioOnControllerChange = MupenUtilities.Properties.Settings.Default.ReloadTASStudioOnControllerChange;
             tsmi_ReloadTASStudioOnCtlChange.Checked = reloadTASStudioOnControllerChange;
 
@@ -409,6 +409,10 @@ namespace MupenUtils
 
             nud_Y.Minimum = -127;
             nud_Y.Maximum = 128;
+
+            nud_Angle.Maximum = decimal.MaxValue;
+            nud_Angle.Minimum = decimal.MinValue;
+            nud_Angle.Increment = 1;
 
             UpdateTASStudioRegionUI();
             //SetWindowLong(nud_X.Handle, -20, UDS_HORZ);
@@ -685,7 +689,7 @@ namespace MupenUtils
         void UpdateVisualsTop(bool serialize)
         {
             btn_LoadLatest.Enabled = true;
-            btn_Override.Enabled = UsageType == UsageTypes.M64 || UsageType == UsageTypes.Combo;
+            btn_Override.Enabled = UsageType == UsageTypes.M64 || UsageType == UsageTypes.Combo || UsageType == UsageTypes.Autodetect;
             string txt = "?";
 
             switch (UsageType)
@@ -741,7 +745,7 @@ namespace MupenUtils
                 MupenUtilities.Properties.Settings.Default.Save();
                 Debug.WriteLine("saved usage type " + MupenUtilities.Properties.Settings.Default.UsageType.ToString());
             }
-            if (UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo && UsageType != UsageTypes.Any)
+            if (UsageType != UsageTypes.M64 && UsageType != UsageTypes.Combo && UsageType != UsageTypes.Any && UsageType != UsageTypes.Autodetect)
             {
                 EnableM64View(false, false, true);
             }
@@ -779,12 +783,12 @@ namespace MupenUtils
             catch { return; }
             if (!plain)
             {
-                for (int i = 0; i < inputListCtl1.Count; i++)
-                    br.Write(inputListCtl1[i]);
+                for (int i = 0; i < inputLists[selectedController].Count; i++)
+                    br.Write(inputLists[selectedController][i]);
 
                 br.Flush(); br.Close();
 
-                MessageBox.Show(String.Format("Dumped {0} input samples to {1}", inputListCtl1.Count, fs.Name));
+                MessageBox.Show(String.Format("Succesfully dumped inputs.\nPath: {1}\nCount: {0}\nController: {2}", inputLists[selectedController].Count, fs.Name, selectedController+1), PROGRAM_NAME);
 
                 fs.Close();
             }
