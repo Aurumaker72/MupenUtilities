@@ -2059,7 +2059,7 @@ namespace MupenUtils
             }
             else if (ext.Equals(".exe", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (Path.Contains("mupen"))
+                if (System.IO.Path.GetFileNameWithoutExtension(Path).Contains("mupen"))
                 {
                     var proc = Process.Start(Path);
                     while (string.IsNullOrEmpty(proc.MainWindowTitle))
