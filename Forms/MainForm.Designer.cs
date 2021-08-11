@@ -98,43 +98,44 @@ namespace MupenUtils
             this.txt_Rsp = new System.Windows.Forms.TextBox();
             this.btn_Reload = new System.Windows.Forms.Button();
             this.gp_input = new System.Windows.Forms.GroupBox();
-            this.nud_Angle = new System.Windows.Forms.NumericUpDown();
-            this.nud_Y = new System.Windows.Forms.NumericUpDown();
-            this.nud_X = new System.Windows.Forms.NumericUpDown();
-            this.cbox_Controllers = new System.Windows.Forms.ComboBox();
-            this.gp_TASStudio = new System.Windows.Forms.GroupBox();
-            this.dgv_Main = new System.Windows.Forms.DataGridView();
-            this.tr_MovieScrub = new System.Windows.Forms.TrackBar();
-            this.btn_Input_Debug = new System.Windows.Forms.Button();
+            this.panel_Input = new System.Windows.Forms.Panel();
             this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
+            this.nud_Angle = new System.Windows.Forms.NumericUpDown();
+            this.btn_FrameBack = new System.Windows.Forms.Button();
+            this.nud_Y = new System.Windows.Forms.NumericUpDown();
+            this.btn_FrameBack2 = new System.Windows.Forms.Button();
+            this.nud_X = new System.Windows.Forms.NumericUpDown();
+            this.btn_FrameFront = new System.Windows.Forms.Button();
+            this.cbox_Controllers = new System.Windows.Forms.ComboBox();
+            this.btn_FrameFront2 = new System.Windows.Forms.Button();
+            this.lbl_FrameSelected = new System.Windows.Forms.Label();
+            this.tr_MovieScrub = new System.Windows.Forms.TrackBar();
+            this.chk_A = new System.Windows.Forms.CheckBox();
+            this.btn_Input_Debug = new System.Windows.Forms.Button();
+            this.chk_B = new System.Windows.Forms.CheckBox();
+            this.Chk_start = new System.Windows.Forms.CheckBox();
             this.txt_Frame = new System.Windows.Forms.TextBox();
+            this.chk_L = new System.Windows.Forms.CheckBox();
             this.lbl_Deg = new System.Windows.Forms.Label();
+            this.chk_Z = new System.Windows.Forms.CheckBox();
             this.lbl_Y = new System.Windows.Forms.Label();
+            this.chk_R = new System.Windows.Forms.CheckBox();
             this.lbl_X = new System.Windows.Forms.Label();
+            this.chk_Cup = new System.Windows.Forms.CheckBox();
             this.chk_RESERVED2 = new System.Windows.Forms.CheckBox();
+            this.chk_Up = new System.Windows.Forms.CheckBox();
             this.chk_restart = new System.Windows.Forms.CheckBox();
+            this.chk_Left = new System.Windows.Forms.CheckBox();
             this.chk_RESERVED1 = new System.Windows.Forms.CheckBox();
+            this.chk_Down = new System.Windows.Forms.CheckBox();
             this.btn_PlayDirection = new System.Windows.Forms.Button();
+            this.chk_Right = new System.Windows.Forms.CheckBox();
             this.btn_PlayPause = new System.Windows.Forms.Button();
+            this.chk_Cleft = new System.Windows.Forms.CheckBox();
             this.chk_Cright = new System.Windows.Forms.CheckBox();
             this.chk_Cdown = new System.Windows.Forms.CheckBox();
-            this.chk_Cleft = new System.Windows.Forms.CheckBox();
-            this.chk_Right = new System.Windows.Forms.CheckBox();
-            this.chk_Down = new System.Windows.Forms.CheckBox();
-            this.chk_Left = new System.Windows.Forms.CheckBox();
-            this.chk_Up = new System.Windows.Forms.CheckBox();
-            this.chk_Cup = new System.Windows.Forms.CheckBox();
-            this.chk_R = new System.Windows.Forms.CheckBox();
-            this.chk_Z = new System.Windows.Forms.CheckBox();
-            this.chk_L = new System.Windows.Forms.CheckBox();
-            this.Chk_start = new System.Windows.Forms.CheckBox();
-            this.chk_B = new System.Windows.Forms.CheckBox();
-            this.chk_A = new System.Windows.Forms.CheckBox();
-            this.lbl_FrameSelected = new System.Windows.Forms.Label();
-            this.btn_FrameFront2 = new System.Windows.Forms.Button();
-            this.btn_FrameFront = new System.Windows.Forms.Button();
-            this.btn_FrameBack2 = new System.Windows.Forms.Button();
-            this.btn_FrameBack = new System.Windows.Forms.Button();
+            this.gp_TASStudio = new System.Windows.Forms.GroupBox();
+            this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -148,6 +149,7 @@ namespace MupenUtils
             this.grayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transparentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_MaximizeInputGp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
@@ -171,6 +173,7 @@ namespace MupenUtils
             this.tsmi_EndRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_ClearRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_RegToBase64 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_RegionReplacement = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SelRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -180,9 +183,7 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_RegToBase64 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_MaximizeInputGp = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_Input = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -193,18 +194,19 @@ namespace MupenUtils
             this.gp_M64_misc.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_input.SuspendLayout();
+            this.panel_Input.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
             this.gp_TASStudio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.ctx_Input_Debug.SuspendLayout();
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
             this.ctx_SaveOption.SuspendLayout();
-            this.panel_Input.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -961,18 +963,66 @@ namespace MupenUtils
             this.gp_input.Controls.Add(this.panel_Input);
             this.gp_input.Controls.Add(this.gp_TASStudio);
             this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_input.Location = new System.Drawing.Point(584, 19);
+            this.gp_input.Location = new System.Drawing.Point(585, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
             this.gp_input.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_input.Size = new System.Drawing.Size(832, 461);
+            this.gp_input.Size = new System.Drawing.Size(831, 461);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input";
             // 
+            // panel_Input
+            // 
+            this.panel_Input.AutoSize = true;
+            this.panel_Input.Controls.Add(this.panel1);
+            this.panel_Input.Controls.Add(this.pb_JoystickPic);
+            this.panel_Input.Controls.Add(this.btn_FrameBack);
+            this.panel_Input.Controls.Add(this.btn_FrameBack2);
+            this.panel_Input.Controls.Add(this.btn_FrameFront);
+            this.panel_Input.Controls.Add(this.cbox_Controllers);
+            this.panel_Input.Controls.Add(this.btn_FrameFront2);
+            this.panel_Input.Controls.Add(this.lbl_FrameSelected);
+            this.panel_Input.Controls.Add(this.tr_MovieScrub);
+            this.panel_Input.Controls.Add(this.chk_A);
+            this.panel_Input.Controls.Add(this.btn_Input_Debug);
+            this.panel_Input.Controls.Add(this.chk_B);
+            this.panel_Input.Controls.Add(this.Chk_start);
+            this.panel_Input.Controls.Add(this.txt_Frame);
+            this.panel_Input.Controls.Add(this.chk_L);
+            this.panel_Input.Controls.Add(this.chk_Z);
+            this.panel_Input.Controls.Add(this.chk_R);
+            this.panel_Input.Controls.Add(this.chk_Cup);
+            this.panel_Input.Controls.Add(this.btn_PlayDirection);
+            this.panel_Input.Controls.Add(this.btn_PlayPause);
+            this.panel_Input.Controls.Add(this.chk_Cleft);
+            this.panel_Input.Controls.Add(this.chk_Cright);
+            this.panel_Input.Controls.Add(this.chk_Cdown);
+            this.panel_Input.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel_Input.Location = new System.Drawing.Point(4, 19);
+            this.panel_Input.Name = "panel_Input";
+            this.panel_Input.Size = new System.Drawing.Size(353, 438);
+            this.panel_Input.TabIndex = 5;
+            // 
+            // pb_JoystickPic
+            // 
+            this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
+            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
+            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pb_JoystickPic.Location = new System.Drawing.Point(3, 3);
+            this.pb_JoystickPic.Name = "pb_JoystickPic";
+            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
+            this.pb_JoystickPic.TabIndex = 3;
+            this.pb_JoystickPic.TabStop = false;
+            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
+            this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
+            this.pb_JoystickPic.MouseLeave += new System.EventHandler(this.pb_JoystickPic_MouseLeave);
+            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
+            this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
+            // 
             // nud_Angle
             // 
-            this.nud_Angle.Location = new System.Drawing.Point(28, 122);
+            this.nud_Angle.Location = new System.Drawing.Point(22, 31);
             this.nud_Angle.Maximum = new decimal(new int[] {
             180,
             0,
@@ -991,9 +1041,21 @@ namespace MupenUtils
             this.nud_Angle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_Angle_MouseUp);
             this.nud_Angle.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.nud_Angle_MouseUp);
             // 
+            // btn_FrameBack
+            // 
+            this.btn_FrameBack.Location = new System.Drawing.Point(109, 303);
+            this.btn_FrameBack.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_FrameBack.Name = "btn_FrameBack";
+            this.btn_FrameBack.Size = new System.Drawing.Size(36, 28);
+            this.btn_FrameBack.TabIndex = 0;
+            this.btn_FrameBack.TabStop = false;
+            this.btn_FrameBack.Text = "<";
+            this.btn_FrameBack.UseVisualStyleBackColor = true;
+            this.btn_FrameBack.Click += new System.EventHandler(this.btn_FrameBack_Click);
+            // 
             // nud_Y
             // 
-            this.nud_Y.Location = new System.Drawing.Point(28, 98);
+            this.nud_Y.Location = new System.Drawing.Point(108, 3);
             this.nud_Y.Name = "nud_Y";
             this.nud_Y.Size = new System.Drawing.Size(64, 22);
             this.nud_Y.TabIndex = 4;
@@ -1002,9 +1064,21 @@ namespace MupenUtils
             this.nud_Y.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
             this.nud_Y.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
             // 
+            // btn_FrameBack2
+            // 
+            this.btn_FrameBack2.Location = new System.Drawing.Point(55, 303);
+            this.btn_FrameBack2.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_FrameBack2.Name = "btn_FrameBack2";
+            this.btn_FrameBack2.Size = new System.Drawing.Size(53, 28);
+            this.btn_FrameBack2.TabIndex = 0;
+            this.btn_FrameBack2.TabStop = false;
+            this.btn_FrameBack2.Text = "<<";
+            this.btn_FrameBack2.UseVisualStyleBackColor = true;
+            this.btn_FrameBack2.Click += new System.EventHandler(this.btn_FrameBack2_Click);
+            // 
             // nud_X
             // 
-            this.nud_X.Location = new System.Drawing.Point(28, 73);
+            this.nud_X.Location = new System.Drawing.Point(22, 3);
             this.nud_X.Name = "nud_X";
             this.nud_X.Size = new System.Drawing.Size(64, 22);
             this.nud_X.TabIndex = 4;
@@ -1012,6 +1086,18 @@ namespace MupenUtils
             this.nud_X.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nud_X_KeyDown);
             this.nud_X.MouseUp += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
             this.nud_X.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.nud_X_MouseUp);
+            // 
+            // btn_FrameFront
+            // 
+            this.btn_FrameFront.Location = new System.Drawing.Point(175, 303);
+            this.btn_FrameFront.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_FrameFront.Name = "btn_FrameFront";
+            this.btn_FrameFront.Size = new System.Drawing.Size(36, 28);
+            this.btn_FrameFront.TabIndex = 0;
+            this.btn_FrameFront.TabStop = false;
+            this.btn_FrameFront.Text = ">";
+            this.btn_FrameFront.UseVisualStyleBackColor = true;
+            this.btn_FrameFront.Click += new System.EventHandler(this.btn_FrameFront_Click);
             // 
             // cbox_Controllers
             // 
@@ -1026,11 +1112,344 @@ namespace MupenUtils
             this.cbox_Controllers.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cbox_Controllers_KeyUp);
             this.cbox_Controllers.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cbox_Controllers_KeyUp);
             // 
+            // btn_FrameFront2
+            // 
+            this.btn_FrameFront2.Location = new System.Drawing.Point(211, 303);
+            this.btn_FrameFront2.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_FrameFront2.Name = "btn_FrameFront2";
+            this.btn_FrameFront2.Size = new System.Drawing.Size(53, 28);
+            this.btn_FrameFront2.TabIndex = 0;
+            this.btn_FrameFront2.TabStop = false;
+            this.btn_FrameFront2.Text = ">>";
+            this.btn_FrameFront2.UseVisualStyleBackColor = true;
+            this.btn_FrameFront2.Click += new System.EventHandler(this.btn_FrameFront2_Click);
+            // 
+            // lbl_FrameSelected
+            // 
+            this.lbl_FrameSelected.AutoSize = true;
+            this.lbl_FrameSelected.Location = new System.Drawing.Point(130, 283);
+            this.lbl_FrameSelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_FrameSelected.Name = "lbl_FrameSelected";
+            this.lbl_FrameSelected.Size = new System.Drawing.Size(56, 16);
+            this.lbl_FrameSelected.TabIndex = 0;
+            this.lbl_FrameSelected.Text = "Frame 0";
+            // 
+            // tr_MovieScrub
+            // 
+            this.tr_MovieScrub.BackColor = System.Drawing.SystemColors.Control;
+            this.tr_MovieScrub.Location = new System.Drawing.Point(133, 338);
+            this.tr_MovieScrub.Maximum = 2;
+            this.tr_MovieScrub.Minimum = 1;
+            this.tr_MovieScrub.Name = "tr_MovieScrub";
+            this.tr_MovieScrub.Size = new System.Drawing.Size(176, 56);
+            this.tr_MovieScrub.TabIndex = 0;
+            this.tr_MovieScrub.TabStop = false;
+            this.tr_MovieScrub.TickFrequency = 0;
+            this.tr_MovieScrub.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tr_MovieScrub.Value = 1;
+            this.tr_MovieScrub.Scroll += new System.EventHandler(this.tr_MovieScrub_Scroll);
+            this.tr_MovieScrub.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tr_MovieScrub_MouseDown);
+            // 
+            // chk_A
+            // 
+            this.chk_A.AutoSize = true;
+            this.chk_A.Location = new System.Drawing.Point(246, 263);
+            this.chk_A.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_A.Name = "chk_A";
+            this.chk_A.Size = new System.Drawing.Size(38, 20);
+            this.chk_A.TabIndex = 0;
+            this.chk_A.TabStop = false;
+            this.chk_A.Text = "A";
+            this.chk_A.UseVisualStyleBackColor = true;
+            this.chk_A.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // btn_Input_Debug
+            // 
+            this.btn_Input_Debug.Location = new System.Drawing.Point(244, 169);
+            this.btn_Input_Debug.Name = "btn_Input_Debug";
+            this.btn_Input_Debug.Size = new System.Drawing.Size(105, 30);
+            this.btn_Input_Debug.TabIndex = 0;
+            this.btn_Input_Debug.TabStop = false;
+            this.btn_Input_Debug.Text = "More...";
+            this.btn_Input_Debug.UseVisualStyleBackColor = true;
+            this.btn_Input_Debug.Click += new System.EventHandler(this.btn_Input_Debug_Click);
+            // 
+            // chk_B
+            // 
+            this.chk_B.AutoSize = true;
+            this.chk_B.Location = new System.Drawing.Point(193, 243);
+            this.chk_B.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_B.Name = "chk_B";
+            this.chk_B.Size = new System.Drawing.Size(38, 20);
+            this.chk_B.TabIndex = 0;
+            this.chk_B.TabStop = false;
+            this.chk_B.Text = "B";
+            this.chk_B.UseVisualStyleBackColor = true;
+            this.chk_B.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // Chk_start
+            // 
+            this.Chk_start.AutoSize = true;
+            this.Chk_start.Location = new System.Drawing.Point(129, 263);
+            this.Chk_start.Margin = new System.Windows.Forms.Padding(4);
+            this.Chk_start.Name = "Chk_start";
+            this.Chk_start.Size = new System.Drawing.Size(56, 20);
+            this.Chk_start.TabIndex = 0;
+            this.Chk_start.TabStop = false;
+            this.Chk_start.Text = "Start";
+            this.Chk_start.UseVisualStyleBackColor = true;
+            this.Chk_start.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // txt_Frame
+            // 
+            this.txt_Frame.Location = new System.Drawing.Point(265, 306);
+            this.txt_Frame.Name = "txt_Frame";
+            this.txt_Frame.Size = new System.Drawing.Size(35, 22);
+            this.txt_Frame.TabIndex = 0;
+            this.txt_Frame.TabStop = false;
+            this.txt_Frame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Frame_KeyDown);
+            // 
+            // chk_L
+            // 
+            this.chk_L.AutoSize = true;
+            this.chk_L.Location = new System.Drawing.Point(139, 204);
+            this.chk_L.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_L.Name = "chk_L";
+            this.chk_L.Size = new System.Drawing.Size(36, 20);
+            this.chk_L.TabIndex = 0;
+            this.chk_L.TabStop = false;
+            this.chk_L.Text = "L";
+            this.chk_L.UseVisualStyleBackColor = true;
+            this.chk_L.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // lbl_Deg
+            // 
+            this.lbl_Deg.AutoSize = true;
+            this.lbl_Deg.Location = new System.Drawing.Point(5, 35);
+            this.lbl_Deg.Name = "lbl_Deg";
+            this.lbl_Deg.Size = new System.Drawing.Size(11, 16);
+            this.lbl_Deg.TabIndex = 0;
+            this.lbl_Deg.Text = "°";
+            // 
+            // chk_Z
+            // 
+            this.chk_Z.AutoSize = true;
+            this.chk_Z.Location = new System.Drawing.Point(86, 184);
+            this.chk_Z.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Z.Name = "chk_Z";
+            this.chk_Z.Size = new System.Drawing.Size(37, 20);
+            this.chk_Z.TabIndex = 0;
+            this.chk_Z.TabStop = false;
+            this.chk_Z.Text = "Z";
+            this.chk_Z.UseVisualStyleBackColor = true;
+            this.chk_Z.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // lbl_Y
+            // 
+            this.lbl_Y.AutoSize = true;
+            this.lbl_Y.Location = new System.Drawing.Point(89, 5);
+            this.lbl_Y.Name = "lbl_Y";
+            this.lbl_Y.Size = new System.Drawing.Size(16, 16);
+            this.lbl_Y.TabIndex = 0;
+            this.lbl_Y.Text = "Y";
+            // 
+            // chk_R
+            // 
+            this.chk_R.AutoSize = true;
+            this.chk_R.Location = new System.Drawing.Point(193, 194);
+            this.chk_R.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_R.Name = "chk_R";
+            this.chk_R.Size = new System.Drawing.Size(39, 20);
+            this.chk_R.TabIndex = 0;
+            this.chk_R.TabStop = false;
+            this.chk_R.Text = "R";
+            this.chk_R.UseVisualStyleBackColor = true;
+            this.chk_R.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // lbl_X
+            // 
+            this.lbl_X.AutoSize = true;
+            this.lbl_X.Location = new System.Drawing.Point(5, 5);
+            this.lbl_X.Name = "lbl_X";
+            this.lbl_X.Size = new System.Drawing.Size(15, 16);
+            this.lbl_X.TabIndex = 0;
+            this.lbl_X.Text = "X";
+            // 
+            // chk_Cup
+            // 
+            this.chk_Cup.AutoSize = true;
+            this.chk_Cup.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Cup.Location = new System.Drawing.Point(33, 207);
+            this.chk_Cup.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Cup.Name = "chk_Cup";
+            this.chk_Cup.Size = new System.Drawing.Size(45, 20);
+            this.chk_Cup.TabIndex = 0;
+            this.chk_Cup.TabStop = false;
+            this.chk_Cup.Text = "C^";
+            this.chk_Cup.UseVisualStyleBackColor = false;
+            this.chk_Cup.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // chk_RESERVED2
+            // 
+            this.chk_RESERVED2.AutoSize = true;
+            this.chk_RESERVED2.Location = new System.Drawing.Point(88, 119);
+            this.chk_RESERVED2.Name = "chk_RESERVED2";
+            this.chk_RESERVED2.Size = new System.Drawing.Size(67, 20);
+            this.chk_RESERVED2.TabIndex = 2;
+            this.chk_RESERVED2.Text = "Res. 2";
+            this.chk_RESERVED2.UseVisualStyleBackColor = true;
+            this.chk_RESERVED2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // chk_Up
+            // 
+            this.chk_Up.AutoSize = true;
+            this.chk_Up.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Up.Location = new System.Drawing.Point(26, 74);
+            this.chk_Up.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Up.Name = "chk_Up";
+            this.chk_Up.Size = new System.Drawing.Size(39, 20);
+            this.chk_Up.TabIndex = 0;
+            this.chk_Up.TabStop = false;
+            this.chk_Up.Text = "U";
+            this.chk_Up.UseVisualStyleBackColor = false;
+            this.chk_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // chk_restart
+            // 
+            this.chk_restart.AutoSize = true;
+            this.chk_restart.Enabled = false;
+            this.chk_restart.Location = new System.Drawing.Point(88, 73);
+            this.chk_restart.Name = "chk_restart";
+            this.chk_restart.Size = new System.Drawing.Size(72, 20);
+            this.chk_restart.TabIndex = 1;
+            this.chk_restart.Text = "Restart";
+            this.chk_restart.UseVisualStyleBackColor = true;
+            this.chk_restart.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // chk_Left
+            // 
+            this.chk_Left.AutoSize = true;
+            this.chk_Left.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Left.Location = new System.Drawing.Point(5, 93);
+            this.chk_Left.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Left.Name = "chk_Left";
+            this.chk_Left.Size = new System.Drawing.Size(36, 20);
+            this.chk_Left.TabIndex = 0;
+            this.chk_Left.TabStop = false;
+            this.chk_Left.Text = "L";
+            this.chk_Left.UseVisualStyleBackColor = false;
+            this.chk_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // chk_RESERVED1
+            // 
+            this.chk_RESERVED1.AutoSize = true;
+            this.chk_RESERVED1.Location = new System.Drawing.Point(88, 95);
+            this.chk_RESERVED1.Name = "chk_RESERVED1";
+            this.chk_RESERVED1.Size = new System.Drawing.Size(67, 20);
+            this.chk_RESERVED1.TabIndex = 1;
+            this.chk_RESERVED1.Text = "Res. 1";
+            this.chk_RESERVED1.UseVisualStyleBackColor = true;
+            this.chk_RESERVED1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // chk_Down
+            // 
+            this.chk_Down.AutoSize = true;
+            this.chk_Down.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Down.Location = new System.Drawing.Point(26, 113);
+            this.chk_Down.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Down.Name = "chk_Down";
+            this.chk_Down.Size = new System.Drawing.Size(39, 20);
+            this.chk_Down.TabIndex = 0;
+            this.chk_Down.TabStop = false;
+            this.chk_Down.Text = "D";
+            this.chk_Down.UseVisualStyleBackColor = false;
+            this.chk_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // btn_PlayDirection
+            // 
+            this.btn_PlayDirection.Location = new System.Drawing.Point(7, 303);
+            this.btn_PlayDirection.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_PlayDirection.Name = "btn_PlayDirection";
+            this.btn_PlayDirection.Size = new System.Drawing.Size(32, 28);
+            this.btn_PlayDirection.TabIndex = 0;
+            this.btn_PlayDirection.TabStop = false;
+            this.btn_PlayDirection.Text = ">";
+            this.btn_PlayDirection.UseVisualStyleBackColor = true;
+            this.btn_PlayDirection.Click += new System.EventHandler(this.btn_PlayDirection_Click);
+            // 
+            // chk_Right
+            // 
+            this.chk_Right.AutoSize = true;
+            this.chk_Right.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Right.Location = new System.Drawing.Point(47, 93);
+            this.chk_Right.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Right.Name = "chk_Right";
+            this.chk_Right.Size = new System.Drawing.Size(39, 20);
+            this.chk_Right.TabIndex = 0;
+            this.chk_Right.TabStop = false;
+            this.chk_Right.Text = "R";
+            this.chk_Right.UseVisualStyleBackColor = false;
+            this.chk_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // btn_PlayPause
+            // 
+            this.btn_PlayPause.Location = new System.Drawing.Point(144, 303);
+            this.btn_PlayPause.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_PlayPause.Name = "btn_PlayPause";
+            this.btn_PlayPause.Size = new System.Drawing.Size(32, 28);
+            this.btn_PlayPause.TabIndex = 0;
+            this.btn_PlayPause.TabStop = false;
+            this.btn_PlayPause.Text = "|>";
+            this.btn_PlayPause.UseVisualStyleBackColor = true;
+            this.btn_PlayPause.Click += new System.EventHandler(this.btn_PlayPause_Click);
+            // 
+            // chk_Cleft
+            // 
+            this.chk_Cleft.AutoSize = true;
+            this.chk_Cleft.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Cleft.Location = new System.Drawing.Point(8, 233);
+            this.chk_Cleft.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Cleft.Name = "chk_Cleft";
+            this.chk_Cleft.Size = new System.Drawing.Size(45, 20);
+            this.chk_Cleft.TabIndex = 0;
+            this.chk_Cleft.TabStop = false;
+            this.chk_Cleft.Text = "C<";
+            this.chk_Cleft.UseVisualStyleBackColor = false;
+            this.chk_Cleft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // chk_Cright
+            // 
+            this.chk_Cright.AutoSize = true;
+            this.chk_Cright.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Cright.Location = new System.Drawing.Point(56, 233);
+            this.chk_Cright.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Cright.Name = "chk_Cright";
+            this.chk_Cright.Size = new System.Drawing.Size(45, 20);
+            this.chk_Cright.TabIndex = 0;
+            this.chk_Cright.TabStop = false;
+            this.chk_Cright.Text = "C>";
+            this.chk_Cright.UseVisualStyleBackColor = false;
+            this.chk_Cright.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
+            // chk_Cdown
+            // 
+            this.chk_Cdown.AutoSize = true;
+            this.chk_Cdown.BackColor = System.Drawing.Color.Transparent;
+            this.chk_Cdown.Location = new System.Drawing.Point(33, 258);
+            this.chk_Cdown.Margin = new System.Windows.Forms.Padding(4);
+            this.chk_Cdown.Name = "chk_Cdown";
+            this.chk_Cdown.Size = new System.Drawing.Size(45, 20);
+            this.chk_Cdown.TabIndex = 0;
+            this.chk_Cdown.TabStop = false;
+            this.chk_Cdown.Text = "Cv";
+            this.chk_Cdown.UseVisualStyleBackColor = false;
+            this.chk_Cdown.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
+            // 
             // gp_TASStudio
             // 
             this.gp_TASStudio.Controls.Add(this.dgv_Main);
             this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_TASStudio.Location = new System.Drawing.Point(360, 19);
+            this.gp_TASStudio.Location = new System.Drawing.Point(359, 19);
             this.gp_TASStudio.Name = "gp_TASStudio";
             this.gp_TASStudio.Size = new System.Drawing.Size(468, 438);
             this.gp_TASStudio.TabIndex = 0;
@@ -1057,391 +1476,6 @@ namespace MupenUtils
             this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_Main_KeyDown);
             this.dgv_Main.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_Main_MouseClick);
             this.dgv_Main.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.dgv_Main_MouseWheel);
-            // 
-            // tr_MovieScrub
-            // 
-            this.tr_MovieScrub.BackColor = System.Drawing.SystemColors.Control;
-            this.tr_MovieScrub.Location = new System.Drawing.Point(133, 338);
-            this.tr_MovieScrub.Maximum = 2;
-            this.tr_MovieScrub.Minimum = 1;
-            this.tr_MovieScrub.Name = "tr_MovieScrub";
-            this.tr_MovieScrub.Size = new System.Drawing.Size(176, 56);
-            this.tr_MovieScrub.TabIndex = 0;
-            this.tr_MovieScrub.TabStop = false;
-            this.tr_MovieScrub.TickFrequency = 0;
-            this.tr_MovieScrub.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tr_MovieScrub.Value = 1;
-            this.tr_MovieScrub.Scroll += new System.EventHandler(this.tr_MovieScrub_Scroll);
-            this.tr_MovieScrub.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tr_MovieScrub_MouseDown);
-            // 
-            // btn_Input_Debug
-            // 
-            this.btn_Input_Debug.Location = new System.Drawing.Point(245, 173);
-            this.btn_Input_Debug.Name = "btn_Input_Debug";
-            this.btn_Input_Debug.Size = new System.Drawing.Size(105, 30);
-            this.btn_Input_Debug.TabIndex = 0;
-            this.btn_Input_Debug.TabStop = false;
-            this.btn_Input_Debug.Text = "More...";
-            this.btn_Input_Debug.UseVisualStyleBackColor = true;
-            this.btn_Input_Debug.Click += new System.EventHandler(this.btn_Input_Debug_Click);
-            // 
-            // pb_JoystickPic
-            // 
-            this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
-            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
-            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pb_JoystickPic.Location = new System.Drawing.Point(185, 3);
-            this.pb_JoystickPic.Name = "pb_JoystickPic";
-            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
-            this.pb_JoystickPic.TabIndex = 3;
-            this.pb_JoystickPic.TabStop = false;
-            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
-            this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
-            this.pb_JoystickPic.MouseLeave += new System.EventHandler(this.pb_JoystickPic_MouseLeave);
-            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
-            this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
-            // 
-            // txt_Frame
-            // 
-            this.txt_Frame.Location = new System.Drawing.Point(265, 306);
-            this.txt_Frame.Name = "txt_Frame";
-            this.txt_Frame.Size = new System.Drawing.Size(35, 22);
-            this.txt_Frame.TabIndex = 0;
-            this.txt_Frame.TabStop = false;
-            this.txt_Frame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Frame_KeyDown);
-            // 
-            // lbl_Deg
-            // 
-            this.lbl_Deg.AutoSize = true;
-            this.lbl_Deg.Location = new System.Drawing.Point(11, 126);
-            this.lbl_Deg.Name = "lbl_Deg";
-            this.lbl_Deg.Size = new System.Drawing.Size(11, 16);
-            this.lbl_Deg.TabIndex = 0;
-            this.lbl_Deg.Text = "°";
-            // 
-            // lbl_Y
-            // 
-            this.lbl_Y.AutoSize = true;
-            this.lbl_Y.Location = new System.Drawing.Point(7, 100);
-            this.lbl_Y.Name = "lbl_Y";
-            this.lbl_Y.Size = new System.Drawing.Size(16, 16);
-            this.lbl_Y.TabIndex = 0;
-            this.lbl_Y.Text = "Y";
-            // 
-            // lbl_X
-            // 
-            this.lbl_X.AutoSize = true;
-            this.lbl_X.Location = new System.Drawing.Point(7, 75);
-            this.lbl_X.Name = "lbl_X";
-            this.lbl_X.Size = new System.Drawing.Size(15, 16);
-            this.lbl_X.TabIndex = 0;
-            this.lbl_X.Text = "X";
-            // 
-            // chk_RESERVED2
-            // 
-            this.chk_RESERVED2.AutoSize = true;
-            this.chk_RESERVED2.Location = new System.Drawing.Point(91, 49);
-            this.chk_RESERVED2.Name = "chk_RESERVED2";
-            this.chk_RESERVED2.Size = new System.Drawing.Size(67, 20);
-            this.chk_RESERVED2.TabIndex = 2;
-            this.chk_RESERVED2.Text = "Res. 2";
-            this.chk_RESERVED2.UseVisualStyleBackColor = true;
-            this.chk_RESERVED2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_restart
-            // 
-            this.chk_restart.AutoSize = true;
-            this.chk_restart.Enabled = false;
-            this.chk_restart.Location = new System.Drawing.Point(91, 3);
-            this.chk_restart.Name = "chk_restart";
-            this.chk_restart.Size = new System.Drawing.Size(72, 20);
-            this.chk_restart.TabIndex = 1;
-            this.chk_restart.Text = "Restart";
-            this.chk_restart.UseVisualStyleBackColor = true;
-            this.chk_restart.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_RESERVED1
-            // 
-            this.chk_RESERVED1.AutoSize = true;
-            this.chk_RESERVED1.Location = new System.Drawing.Point(91, 25);
-            this.chk_RESERVED1.Name = "chk_RESERVED1";
-            this.chk_RESERVED1.Size = new System.Drawing.Size(67, 20);
-            this.chk_RESERVED1.TabIndex = 1;
-            this.chk_RESERVED1.Text = "Res. 1";
-            this.chk_RESERVED1.UseVisualStyleBackColor = true;
-            this.chk_RESERVED1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // btn_PlayDirection
-            // 
-            this.btn_PlayDirection.Location = new System.Drawing.Point(7, 303);
-            this.btn_PlayDirection.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_PlayDirection.Name = "btn_PlayDirection";
-            this.btn_PlayDirection.Size = new System.Drawing.Size(32, 28);
-            this.btn_PlayDirection.TabIndex = 0;
-            this.btn_PlayDirection.TabStop = false;
-            this.btn_PlayDirection.Text = ">";
-            this.btn_PlayDirection.UseVisualStyleBackColor = true;
-            this.btn_PlayDirection.Click += new System.EventHandler(this.btn_PlayDirection_Click);
-            // 
-            // btn_PlayPause
-            // 
-            this.btn_PlayPause.Location = new System.Drawing.Point(144, 303);
-            this.btn_PlayPause.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_PlayPause.Name = "btn_PlayPause";
-            this.btn_PlayPause.Size = new System.Drawing.Size(32, 28);
-            this.btn_PlayPause.TabIndex = 0;
-            this.btn_PlayPause.TabStop = false;
-            this.btn_PlayPause.Text = "|>";
-            this.btn_PlayPause.UseVisualStyleBackColor = true;
-            this.btn_PlayPause.Click += new System.EventHandler(this.btn_PlayPause_Click);
-            // 
-            // chk_Cright
-            // 
-            this.chk_Cright.AutoSize = true;
-            this.chk_Cright.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cright.Location = new System.Drawing.Point(67, 214);
-            this.chk_Cright.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Cright.Name = "chk_Cright";
-            this.chk_Cright.Size = new System.Drawing.Size(45, 20);
-            this.chk_Cright.TabIndex = 0;
-            this.chk_Cright.TabStop = false;
-            this.chk_Cright.Text = "C>";
-            this.chk_Cright.UseVisualStyleBackColor = false;
-            this.chk_Cright.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_Cdown
-            // 
-            this.chk_Cdown.AutoSize = true;
-            this.chk_Cdown.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cdown.Location = new System.Drawing.Point(38, 241);
-            this.chk_Cdown.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Cdown.Name = "chk_Cdown";
-            this.chk_Cdown.Size = new System.Drawing.Size(45, 20);
-            this.chk_Cdown.TabIndex = 0;
-            this.chk_Cdown.TabStop = false;
-            this.chk_Cdown.Text = "Cv";
-            this.chk_Cdown.UseVisualStyleBackColor = false;
-            this.chk_Cdown.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_Cleft
-            // 
-            this.chk_Cleft.AutoSize = true;
-            this.chk_Cleft.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cleft.Location = new System.Drawing.Point(9, 214);
-            this.chk_Cleft.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Cleft.Name = "chk_Cleft";
-            this.chk_Cleft.Size = new System.Drawing.Size(45, 20);
-            this.chk_Cleft.TabIndex = 0;
-            this.chk_Cleft.TabStop = false;
-            this.chk_Cleft.Text = "C<";
-            this.chk_Cleft.UseVisualStyleBackColor = false;
-            this.chk_Cleft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_Right
-            // 
-            this.chk_Right.AutoSize = true;
-            this.chk_Right.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Right.Location = new System.Drawing.Point(56, 24);
-            this.chk_Right.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Right.Name = "chk_Right";
-            this.chk_Right.Size = new System.Drawing.Size(39, 20);
-            this.chk_Right.TabIndex = 0;
-            this.chk_Right.TabStop = false;
-            this.chk_Right.Text = "R";
-            this.chk_Right.UseVisualStyleBackColor = false;
-            this.chk_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_Down
-            // 
-            this.chk_Down.AutoSize = true;
-            this.chk_Down.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Down.Location = new System.Drawing.Point(35, 44);
-            this.chk_Down.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Down.Name = "chk_Down";
-            this.chk_Down.Size = new System.Drawing.Size(39, 20);
-            this.chk_Down.TabIndex = 0;
-            this.chk_Down.TabStop = false;
-            this.chk_Down.Text = "D";
-            this.chk_Down.UseVisualStyleBackColor = false;
-            this.chk_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_Left
-            // 
-            this.chk_Left.AutoSize = true;
-            this.chk_Left.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Left.Location = new System.Drawing.Point(14, 24);
-            this.chk_Left.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Left.Name = "chk_Left";
-            this.chk_Left.Size = new System.Drawing.Size(36, 20);
-            this.chk_Left.TabIndex = 0;
-            this.chk_Left.TabStop = false;
-            this.chk_Left.Text = "L";
-            this.chk_Left.UseVisualStyleBackColor = false;
-            this.chk_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_Up
-            // 
-            this.chk_Up.AutoSize = true;
-            this.chk_Up.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Up.Location = new System.Drawing.Point(35, 5);
-            this.chk_Up.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Up.Name = "chk_Up";
-            this.chk_Up.Size = new System.Drawing.Size(39, 20);
-            this.chk_Up.TabIndex = 0;
-            this.chk_Up.TabStop = false;
-            this.chk_Up.Text = "U";
-            this.chk_Up.UseVisualStyleBackColor = false;
-            this.chk_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_Cup
-            // 
-            this.chk_Cup.AutoSize = true;
-            this.chk_Cup.BackColor = System.Drawing.Color.Transparent;
-            this.chk_Cup.Location = new System.Drawing.Point(33, 188);
-            this.chk_Cup.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Cup.Name = "chk_Cup";
-            this.chk_Cup.Size = new System.Drawing.Size(45, 20);
-            this.chk_Cup.TabIndex = 0;
-            this.chk_Cup.TabStop = false;
-            this.chk_Cup.Text = "C^";
-            this.chk_Cup.UseVisualStyleBackColor = false;
-            this.chk_Cup.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_R
-            // 
-            this.chk_R.AutoSize = true;
-            this.chk_R.Location = new System.Drawing.Point(198, 175);
-            this.chk_R.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_R.Name = "chk_R";
-            this.chk_R.Size = new System.Drawing.Size(39, 20);
-            this.chk_R.TabIndex = 0;
-            this.chk_R.TabStop = false;
-            this.chk_R.Text = "R";
-            this.chk_R.UseVisualStyleBackColor = true;
-            this.chk_R.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_Z
-            // 
-            this.chk_Z.AutoSize = true;
-            this.chk_Z.Location = new System.Drawing.Point(91, 165);
-            this.chk_Z.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_Z.Name = "chk_Z";
-            this.chk_Z.Size = new System.Drawing.Size(37, 20);
-            this.chk_Z.TabIndex = 0;
-            this.chk_Z.TabStop = false;
-            this.chk_Z.Text = "Z";
-            this.chk_Z.UseVisualStyleBackColor = true;
-            this.chk_Z.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_L
-            // 
-            this.chk_L.AutoSize = true;
-            this.chk_L.Location = new System.Drawing.Point(144, 185);
-            this.chk_L.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_L.Name = "chk_L";
-            this.chk_L.Size = new System.Drawing.Size(36, 20);
-            this.chk_L.TabIndex = 0;
-            this.chk_L.TabStop = false;
-            this.chk_L.Text = "L";
-            this.chk_L.UseVisualStyleBackColor = true;
-            this.chk_L.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // Chk_start
-            // 
-            this.Chk_start.AutoSize = true;
-            this.Chk_start.Location = new System.Drawing.Point(134, 244);
-            this.Chk_start.Margin = new System.Windows.Forms.Padding(4);
-            this.Chk_start.Name = "Chk_start";
-            this.Chk_start.Size = new System.Drawing.Size(56, 20);
-            this.Chk_start.TabIndex = 0;
-            this.Chk_start.TabStop = false;
-            this.Chk_start.Text = "Start";
-            this.Chk_start.UseVisualStyleBackColor = true;
-            this.Chk_start.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_B
-            // 
-            this.chk_B.AutoSize = true;
-            this.chk_B.Location = new System.Drawing.Point(198, 224);
-            this.chk_B.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_B.Name = "chk_B";
-            this.chk_B.Size = new System.Drawing.Size(38, 20);
-            this.chk_B.TabIndex = 0;
-            this.chk_B.TabStop = false;
-            this.chk_B.Text = "B";
-            this.chk_B.UseVisualStyleBackColor = true;
-            this.chk_B.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // chk_A
-            // 
-            this.chk_A.AutoSize = true;
-            this.chk_A.Location = new System.Drawing.Point(251, 244);
-            this.chk_A.Margin = new System.Windows.Forms.Padding(4);
-            this.chk_A.Name = "chk_A";
-            this.chk_A.Size = new System.Drawing.Size(38, 20);
-            this.chk_A.TabIndex = 0;
-            this.chk_A.TabStop = false;
-            this.chk_A.Text = "A";
-            this.chk_A.UseVisualStyleBackColor = true;
-            this.chk_A.MouseUp += new System.Windows.Forms.MouseEventHandler(this.InputChk_Changed);
-            // 
-            // lbl_FrameSelected
-            // 
-            this.lbl_FrameSelected.AutoSize = true;
-            this.lbl_FrameSelected.Location = new System.Drawing.Point(127, 273);
-            this.lbl_FrameSelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl_FrameSelected.Name = "lbl_FrameSelected";
-            this.lbl_FrameSelected.Size = new System.Drawing.Size(56, 16);
-            this.lbl_FrameSelected.TabIndex = 0;
-            this.lbl_FrameSelected.Text = "Frame 0";
-            // 
-            // btn_FrameFront2
-            // 
-            this.btn_FrameFront2.Location = new System.Drawing.Point(211, 303);
-            this.btn_FrameFront2.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_FrameFront2.Name = "btn_FrameFront2";
-            this.btn_FrameFront2.Size = new System.Drawing.Size(53, 28);
-            this.btn_FrameFront2.TabIndex = 0;
-            this.btn_FrameFront2.TabStop = false;
-            this.btn_FrameFront2.Text = ">>";
-            this.btn_FrameFront2.UseVisualStyleBackColor = true;
-            this.btn_FrameFront2.Click += new System.EventHandler(this.btn_FrameFront2_Click);
-            // 
-            // btn_FrameFront
-            // 
-            this.btn_FrameFront.Location = new System.Drawing.Point(175, 303);
-            this.btn_FrameFront.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_FrameFront.Name = "btn_FrameFront";
-            this.btn_FrameFront.Size = new System.Drawing.Size(36, 28);
-            this.btn_FrameFront.TabIndex = 0;
-            this.btn_FrameFront.TabStop = false;
-            this.btn_FrameFront.Text = ">";
-            this.btn_FrameFront.UseVisualStyleBackColor = true;
-            this.btn_FrameFront.Click += new System.EventHandler(this.btn_FrameFront_Click);
-            // 
-            // btn_FrameBack2
-            // 
-            this.btn_FrameBack2.Location = new System.Drawing.Point(55, 303);
-            this.btn_FrameBack2.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_FrameBack2.Name = "btn_FrameBack2";
-            this.btn_FrameBack2.Size = new System.Drawing.Size(53, 28);
-            this.btn_FrameBack2.TabIndex = 0;
-            this.btn_FrameBack2.TabStop = false;
-            this.btn_FrameBack2.Text = "<<";
-            this.btn_FrameBack2.UseVisualStyleBackColor = true;
-            this.btn_FrameBack2.Click += new System.EventHandler(this.btn_FrameBack2_Click);
-            // 
-            // btn_FrameBack
-            // 
-            this.btn_FrameBack.Location = new System.Drawing.Point(109, 303);
-            this.btn_FrameBack.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_FrameBack.Name = "btn_FrameBack";
-            this.btn_FrameBack.Size = new System.Drawing.Size(36, 28);
-            this.btn_FrameBack.TabIndex = 0;
-            this.btn_FrameBack.TabStop = false;
-            this.btn_FrameBack.Text = "<";
-            this.btn_FrameBack.UseVisualStyleBackColor = true;
-            this.btn_FrameBack.Click += new System.EventHandler(this.btn_FrameBack_Click);
             // 
             // ctx_Input_Debug
             // 
@@ -1528,30 +1562,37 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // transparentToolStripMenuItem
             // 
             this.transparentToolStripMenuItem.Name = "transparentToolStripMenuItem";
-            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.transparentToolStripMenuItem.Text = "Transparent";
             this.transparentToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
+            // 
+            // tsmi_MaximizeInputGp
+            // 
+            this.tsmi_MaximizeInputGp.Name = "tsmi_MaximizeInputGp";
+            this.tsmi_MaximizeInputGp.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_MaximizeInputGp.Text = "Maximize";
+            this.tsmi_MaximizeInputGp.Click += new System.EventHandler(this.tsmi_MaximizeInputGp_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1727,6 +1768,13 @@ namespace MupenUtils
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(265, 6);
             // 
+            // tsmi_RegToBase64
+            // 
+            this.tsmi_RegToBase64.Name = "tsmi_RegToBase64";
+            this.tsmi_RegToBase64.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_RegToBase64.Text = "Region to Base64";
+            this.tsmi_RegToBase64.Click += new System.EventHandler(this.tsmi_RegToBase64_Click);
+            // 
             // tsmi_RegionReplacement
             // 
             this.tsmi_RegionReplacement.Name = "tsmi_RegionReplacement";
@@ -1757,7 +1805,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1767,7 +1814,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
@@ -1798,63 +1844,25 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
             // 
-            // tsmi_RegToBase64
+            // panel1
             // 
-            this.tsmi_RegToBase64.Name = "tsmi_RegToBase64";
-            this.tsmi_RegToBase64.Size = new System.Drawing.Size(268, 26);
-            this.tsmi_RegToBase64.Text = "Region to Base64";
-            this.tsmi_RegToBase64.Click += new System.EventHandler(this.tsmi_RegToBase64_Click);
-            // 
-            // tsmi_MaximizeInputGp
-            // 
-            this.tsmi_MaximizeInputGp.Name = "tsmi_MaximizeInputGp";
-            this.tsmi_MaximizeInputGp.Size = new System.Drawing.Size(243, 26);
-            this.tsmi_MaximizeInputGp.Text = "Maximize";
-            this.tsmi_MaximizeInputGp.Click += new System.EventHandler(this.tsmi_MaximizeInputGp_Click);
-            // 
-            // panel_Input
-            // 
-            this.panel_Input.AutoSize = true;
-            this.panel_Input.Controls.Add(this.pb_JoystickPic);
-            this.panel_Input.Controls.Add(this.nud_Angle);
-            this.panel_Input.Controls.Add(this.btn_FrameBack);
-            this.panel_Input.Controls.Add(this.nud_Y);
-            this.panel_Input.Controls.Add(this.btn_FrameBack2);
-            this.panel_Input.Controls.Add(this.nud_X);
-            this.panel_Input.Controls.Add(this.btn_FrameFront);
-            this.panel_Input.Controls.Add(this.cbox_Controllers);
-            this.panel_Input.Controls.Add(this.btn_FrameFront2);
-            this.panel_Input.Controls.Add(this.lbl_FrameSelected);
-            this.panel_Input.Controls.Add(this.tr_MovieScrub);
-            this.panel_Input.Controls.Add(this.chk_A);
-            this.panel_Input.Controls.Add(this.btn_Input_Debug);
-            this.panel_Input.Controls.Add(this.chk_B);
-            this.panel_Input.Controls.Add(this.Chk_start);
-            this.panel_Input.Controls.Add(this.txt_Frame);
-            this.panel_Input.Controls.Add(this.chk_L);
-            this.panel_Input.Controls.Add(this.lbl_Deg);
-            this.panel_Input.Controls.Add(this.chk_Z);
-            this.panel_Input.Controls.Add(this.lbl_Y);
-            this.panel_Input.Controls.Add(this.chk_R);
-            this.panel_Input.Controls.Add(this.lbl_X);
-            this.panel_Input.Controls.Add(this.chk_Cup);
-            this.panel_Input.Controls.Add(this.chk_RESERVED2);
-            this.panel_Input.Controls.Add(this.chk_Up);
-            this.panel_Input.Controls.Add(this.chk_restart);
-            this.panel_Input.Controls.Add(this.chk_Left);
-            this.panel_Input.Controls.Add(this.chk_RESERVED1);
-            this.panel_Input.Controls.Add(this.chk_Down);
-            this.panel_Input.Controls.Add(this.btn_PlayDirection);
-            this.panel_Input.Controls.Add(this.chk_Right);
-            this.panel_Input.Controls.Add(this.btn_PlayPause);
-            this.panel_Input.Controls.Add(this.chk_Cleft);
-            this.panel_Input.Controls.Add(this.chk_Cright);
-            this.panel_Input.Controls.Add(this.chk_Cdown);
-            this.panel_Input.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel_Input.Location = new System.Drawing.Point(4, 19);
-            this.panel_Input.Name = "panel_Input";
-            this.panel_Input.Size = new System.Drawing.Size(353, 438);
-            this.panel_Input.TabIndex = 5;
+            this.panel1.Controls.Add(this.nud_Angle);
+            this.panel1.Controls.Add(this.chk_Right);
+            this.panel1.Controls.Add(this.chk_Down);
+            this.panel1.Controls.Add(this.chk_RESERVED1);
+            this.panel1.Controls.Add(this.chk_Left);
+            this.panel1.Controls.Add(this.chk_restart);
+            this.panel1.Controls.Add(this.nud_Y);
+            this.panel1.Controls.Add(this.chk_Up);
+            this.panel1.Controls.Add(this.chk_RESERVED2);
+            this.panel1.Controls.Add(this.nud_X);
+            this.panel1.Controls.Add(this.lbl_Deg);
+            this.panel1.Controls.Add(this.lbl_Y);
+            this.panel1.Controls.Add(this.lbl_X);
+            this.panel1.Location = new System.Drawing.Point(175, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(175, 164);
+            this.panel1.TabIndex = 5;
             // 
             // MainForm
             // 
@@ -1894,20 +1902,22 @@ namespace MupenUtils
             this.gp_Plugins.PerformLayout();
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
+            this.panel_Input.ResumeLayout(false);
+            this.panel_Input.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
             this.gp_TASStudio.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ctx_Input_Debug.ResumeLayout(false);
             this.ctx_TasStudio.ResumeLayout(false);
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
             this.ctx_SaveOption.ResumeLayout(false);
-            this.panel_Input.ResumeLayout(false);
-            this.panel_Input.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2066,6 +2076,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_RegToBase64;
         private System.Windows.Forms.ToolStripMenuItem tsmi_MaximizeInputGp;
         private System.Windows.Forms.Panel panel_Input;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
