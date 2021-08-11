@@ -56,7 +56,7 @@ namespace MupenUtils.Forms
         void UpdateInfos()
         {
             if (!MainForm.FileLoaded) return;
-            
+
 
             for (int i1 = 0; i1 < sumX.Length; i1++)
                 sumX[i1] = 0;
@@ -65,7 +65,7 @@ namespace MupenUtils.Forms
             for (int i1 = 0; i1 < emptyFrames.Length; i1++)
                 emptyFrames[i1] = 0;
 
-            
+
 
 
             Array.Clear(buttonStats, 0, buttonStats.Length);
@@ -175,6 +175,21 @@ namespace MupenUtils.Forms
             lbl_IsTAS.Text = confidence > 0.9 ? "Is TAS: Yes" : "Is TAS: No";
 
 
+            int buttonsCount = 0;
+
+            for (int i = 0; i < inputList.Count; i++)
+            {
+                for (int j = 0; j < MainForm.inputStructNames.Length-2; j++)
+                {
+                    if (buttonStats[selectedController, j] > 0)
+                        ++buttonsCount;
+                }
+                
+            }
+
+            lbl_BPS.Text = "Buttons/Sec Avg: " + buttonsCount/inputList.Count;
+            lbl_Buttons.Text = "Total Buttons: " + buttonsCount;
+
         }
         
 
@@ -187,7 +202,7 @@ namespace MupenUtils.Forms
             if (MainForm.UsageType == MainForm.UsageTypes.M64)
             {
                 for (int i = 0; i < 4; i++)
-                    if (MainForm.ControllersEnabled[i]) cbox_Ctl.Items.Add("Controller " + (i + 1));
+                    if (ExtensionMethods.GetBit(MainForm.MovieHeader.controllerFlags, i)) cbox_Ctl.Items.Add("Controller " + (i + 1));
             }
             else
             {

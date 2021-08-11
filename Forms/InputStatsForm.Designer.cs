@@ -81,6 +81,8 @@ namespace MupenUtils.Forms
             this.lbl_FirstAt = new System.Windows.Forms.Label();
             this.lbl_Ctl = new System.Windows.Forms.Label();
             this.cbox_Ctl = new System.Windows.Forms.ComboBox();
+            this.lbl_BPS = new System.Windows.Forms.Label();
+            this.lbl_Buttons = new System.Windows.Forms.Label();
             this.gp_Buttons.SuspendLayout();
             this.gp_joystick.SuspendLayout();
             this.gp_Misc.SuspendLayout();
@@ -118,7 +120,7 @@ namespace MupenUtils.Forms
             this.gp_Buttons.Controls.Add(this.lbl_A);
             this.gp_Buttons.Location = new System.Drawing.Point(379, 69);
             this.gp_Buttons.Name = "gp_Buttons";
-            this.gp_Buttons.Size = new System.Drawing.Size(252, 221);
+            this.gp_Buttons.Size = new System.Drawing.Size(252, 261);
             this.gp_Buttons.TabIndex = 0;
             this.gp_Buttons.TabStop = false;
             this.gp_Buttons.Text = "Buttons";
@@ -281,9 +283,9 @@ namespace MupenUtils.Forms
             this.gp_joystick.Controls.Add(this.txt_X);
             this.gp_joystick.Controls.Add(this.label2);
             this.gp_joystick.Controls.Add(this.lbl_SumX);
-            this.gp_joystick.Location = new System.Drawing.Point(8, 173);
+            this.gp_joystick.Location = new System.Drawing.Point(8, 197);
             this.gp_joystick.Name = "gp_joystick";
-            this.gp_joystick.Size = new System.Drawing.Size(365, 117);
+            this.gp_joystick.Size = new System.Drawing.Size(365, 130);
             this.gp_joystick.TabIndex = 0;
             this.gp_joystick.TabStop = false;
             this.gp_joystick.Text = "Joystick";
@@ -328,12 +330,14 @@ namespace MupenUtils.Forms
             // 
             // gp_Misc
             // 
+            this.gp_Misc.Controls.Add(this.lbl_Buttons);
+            this.gp_Misc.Controls.Add(this.lbl_BPS);
             this.gp_Misc.Controls.Add(this.lbl_EmptyFrames);
             this.gp_Misc.Controls.Add(this.lbl_IsTAS);
             this.gp_Misc.Controls.Add(this.lbl_ABC);
             this.gp_Misc.Location = new System.Drawing.Point(8, 69);
             this.gp_Misc.Name = "gp_Misc";
-            this.gp_Misc.Size = new System.Drawing.Size(365, 98);
+            this.gp_Misc.Size = new System.Drawing.Size(365, 120);
             this.gp_Misc.TabIndex = 0;
             this.gp_Misc.TabStop = false;
             this.gp_Misc.Text = "Miscellaneous";
@@ -395,7 +399,7 @@ namespace MupenUtils.Forms
             this.gp_Stats.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_Stats.Location = new System.Drawing.Point(3, 3);
             this.gp_Stats.Name = "gp_Stats";
-            this.gp_Stats.Size = new System.Drawing.Size(638, 293);
+            this.gp_Stats.Size = new System.Drawing.Size(638, 333);
             this.gp_Stats.TabIndex = 0;
             this.gp_Stats.TabStop = false;
             this.gp_Stats.Text = "Statistics";
@@ -408,7 +412,7 @@ namespace MupenUtils.Forms
             this.tab_InputAnalysis.Location = new System.Drawing.Point(0, 36);
             this.tab_InputAnalysis.Name = "tab_InputAnalysis";
             this.tab_InputAnalysis.SelectedIndex = 0;
-            this.tab_InputAnalysis.Size = new System.Drawing.Size(652, 328);
+            this.tab_InputAnalysis.Size = new System.Drawing.Size(652, 368);
             this.tab_InputAnalysis.TabIndex = 0;
             // 
             // tbp_Analysis1
@@ -417,7 +421,7 @@ namespace MupenUtils.Forms
             this.tbp_Analysis1.Location = new System.Drawing.Point(4, 25);
             this.tbp_Analysis1.Name = "tbp_Analysis1";
             this.tbp_Analysis1.Padding = new System.Windows.Forms.Padding(3);
-            this.tbp_Analysis1.Size = new System.Drawing.Size(644, 299);
+            this.tbp_Analysis1.Size = new System.Drawing.Size(644, 339);
             this.tbp_Analysis1.TabIndex = 0;
             this.tbp_Analysis1.Text = "Statistics";
             this.tbp_Analysis1.UseVisualStyleBackColor = true;
@@ -429,7 +433,7 @@ namespace MupenUtils.Forms
             this.tbp_Analysis.Location = new System.Drawing.Point(4, 25);
             this.tbp_Analysis.Name = "tbp_Analysis";
             this.tbp_Analysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tbp_Analysis.Size = new System.Drawing.Size(644, 299);
+            this.tbp_Analysis.Size = new System.Drawing.Size(644, 339);
             this.tbp_Analysis.TabIndex = 1;
             this.tbp_Analysis.Text = "Finder";
             this.tbp_Analysis.UseVisualStyleBackColor = true;
@@ -442,7 +446,7 @@ namespace MupenUtils.Forms
             this.gp_JoyFinder.Controls.Add(this.groupBox3);
             this.gp_JoyFinder.Location = new System.Drawing.Point(8, 144);
             this.gp_JoyFinder.Name = "gp_JoyFinder";
-            this.gp_JoyFinder.Size = new System.Drawing.Size(628, 132);
+            this.gp_JoyFinder.Size = new System.Drawing.Size(628, 187);
             this.gp_JoyFinder.TabIndex = 2;
             this.gp_JoyFinder.TabStop = false;
             this.gp_JoyFinder.Text = "Joystick";
@@ -652,11 +656,29 @@ namespace MupenUtils.Forms
             this.cbox_Ctl.TabIndex = 3;
             this.cbox_Ctl.SelectedIndexChanged += new System.EventHandler(this.cbox_Ctl_SelectedIndexChanged);
             // 
+            // lbl_BPS
+            // 
+            this.lbl_BPS.AutoSize = true;
+            this.lbl_BPS.Location = new System.Drawing.Point(169, 56);
+            this.lbl_BPS.Name = "lbl_BPS";
+            this.lbl_BPS.Size = new System.Drawing.Size(82, 16);
+            this.lbl_BPS.TabIndex = 0;
+            this.lbl_BPS.Text = "Buttons/Sec:";
+            // 
+            // lbl_Buttons
+            // 
+            this.lbl_Buttons.AutoSize = true;
+            this.lbl_Buttons.Location = new System.Drawing.Point(16, 80);
+            this.lbl_Buttons.Name = "lbl_Buttons";
+            this.lbl_Buttons.Size = new System.Drawing.Size(87, 16);
+            this.lbl_Buttons.TabIndex = 0;
+            this.lbl_Buttons.Text = "Total buttons:";
+            // 
             // InputStatsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(652, 364);
+            this.ClientSize = new System.Drawing.Size(652, 404);
             this.Controls.Add(this.lbl_Ctl);
             this.Controls.Add(this.cbox_Ctl);
             this.Controls.Add(this.tab_InputAnalysis);
@@ -747,5 +769,7 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.NumericUpDown nud_X;
         private System.Windows.Forms.CheckBox chk_Y;
         private System.Windows.Forms.CheckBox chk_X;
+        private System.Windows.Forms.Label lbl_BPS;
+        private System.Windows.Forms.Label lbl_Buttons;
     }
 }
