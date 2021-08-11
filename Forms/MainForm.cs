@@ -2371,6 +2371,8 @@ namespace MupenUtils
             tsmi_SimpleMode.Checked = simpleMode;
             nud_X.Visible
                 = nud_Y.Visible
+                = nud_Angle.Visible 
+                = lbl_Deg.Visible
                 = lbl_X.Visible
                 = lbl_Y.Visible
                 = txt_Frame.Visible
