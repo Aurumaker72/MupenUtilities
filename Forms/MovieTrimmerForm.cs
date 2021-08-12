@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -70,8 +71,6 @@ namespace MupenUtilities.Forms
 
 
             FileStream fs = File.Open(pathSource, FileMode.Open, FileAccess.Read);
-            FileStream fsOut = null;
-            if(ExtensionMethods.ValidPath(pathOutput)) fsOut = File.Open(pathOutput, FileMode.Create, FileAccess.ReadWrite);
             BinaryReader br = new BinaryReader(fs);
 
             List<int> inputList = new List<int>();
@@ -91,38 +90,35 @@ namespace MupenUtilities.Forms
 
             int lastInput = -1;
 
-            for (int i = inputList.Count - 1; i >= 0; i--)
-            {
-                if (inputList[i] == (Int32)0) continue;
-                // found it
-                lastInput = i;
-                break;
-            }
+            int the = inputList.Count - 1;
+            while (inputList[the] == 0) --the;
+            lastInput = the;
+
+            
+
             if(lastInput == -1)
             {
                 br.Close();
                 fs.Close();
-                if (ExtensionMethods.ValidPath(pathOutput))
-                    fsOut.Close();
                 MessageBox.Show("Scanned entire movie but no 0 input", Text);
                 return;
             }
 
-            if (ExtensionMethods.ValidPath(pathOutput))
+            Debug.WriteLine(lastInput * 4 + 1024);
+
+            
+
+            string path = ExtensionMethods.ValidPath(pathOutput) ? pathOutput : "output.m64";
+
+            using (FileStream fsOut = new FileStream(path, FileMode.OpenOrCreate))
             {
                 fs.CopyTo(fsOut);
-                fsOut.SetLength(Math.Max(0, lastInput * 4 + 1024));
-            }
-            else
-            {
-                fs.SetLength(Math.Max(0, lastInput * 4 + 1024));
+                fsOut.SetLength(lastInput * sizeof(int) + 1024);
+                fsOut.Flush();
             }
 
             br.Close();
             fs.Close();
-            if (ExtensionMethods.ValidPath(pathOutput))
-                fsOut.Close();
-            //fs.CopyTo(fs);
             
 
         }
