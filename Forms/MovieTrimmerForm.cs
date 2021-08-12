@@ -114,6 +114,14 @@ namespace MupenUtilities.Forms
             {
                 fs.CopyTo(fsOut);
                 fsOut.SetLength(lastInput * sizeof(int) + 1024);
+
+                if (chk_TrimAdjustSamplesInHeader.Checked)
+                {
+
+                    fsOut.Write(BitConverter.GetBytes(fsOut.Length - 1024), 0x018, 1);
+                }
+
+
                 fsOut.Flush();
             }
 
