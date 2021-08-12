@@ -151,7 +151,18 @@ public static class ExtensionMethods
         }
         catch { return ""; }
     }
-
+    public static int[] ByteArrToIntArr(byte[] buf)
+    {
+        int[] intArr = new int[buf.Length / 4];
+        int offset = 0;
+        for (int i = 0; i < intArr.Length; i++)
+        {
+            intArr[i] = (buf[3 + offset] & 0xFF) | ((buf[2 + offset] & 0xFF) << 8) |
+                        ((buf[1 + offset] & 0xFF) << 16) | ((buf[0 + offset] & 0xFF) << 24);
+            offset += 4;
+        }
+        return intArr;
+    }
     public static string FriendlyName()
     {
         string ProductName = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");

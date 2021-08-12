@@ -195,6 +195,12 @@
     <Compile Include="Forms\MovieDiagnosticForm.Designer.cs">
       <DependentUpon>MovieDiagnosticForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MovieTrimmerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MovieTrimmerForm.Designer.cs">
+      <DependentUpon>MovieTrimmerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MupenHookForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -260,6 +266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MovieDiagnosticForm.resx">
       <DependentUpon>MovieDiagnosticForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MovieTrimmerForm.resx">
+      <DependentUpon>MovieTrimmerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MupenHookForm.resx">
       <DependentUpon>MupenHookForm.cs</DependentUpon>

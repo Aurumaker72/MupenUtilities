@@ -106,6 +106,7 @@ namespace MupenUtils
         AdvancedDebugForm debugForm;//= new AdvancedDebugForm();
         TASStudioMoreForm tasStudioForm;//= new TASStudioMoreForm();
         ReplacementForm replacementForm;//= new ReplacementForm();
+        MovieTrimmerForm trimmerForm;
         ControllerFlagsForm controllerFlagsForm;//= new ControllerFlagsForm();
         MupenHookForm mupenHookForm;//= new MupenHookForm();
         STForm stForm;//= new STForm();
@@ -189,6 +190,7 @@ namespace MupenUtils
             Replacement,
             Combo,
             Autodetect,
+            Trimmer,
         };
         public static UsageTypes UsageType = UsageTypes.M64;
 
@@ -722,6 +724,11 @@ namespace MupenUtils
                     btn_LoadLatest.Enabled = false;
                     rb_ReplacementSel.Checked = true;
                     break;
+                case UsageTypes.Trimmer:
+                    txt = "Trimmer";
+                    btn_LoadLatest.Enabled = false;
+                    rb_Trimmer.Checked = true;
+                    break;
                 case UsageTypes.Combo:
                     txt = "Browse CMB";
                     rb_CMBSel.Checked = true;
@@ -760,7 +767,7 @@ namespace MupenUtils
 
             dgv_Main.Refresh();
         }
-
+        
         void UpdateSaveButtonsVisuals()
         {
             
@@ -2087,12 +2094,14 @@ namespace MupenUtils
         {
             Debug.WriteLine("browse...");
 
+            // for these:
+            // special care - skip continuing to openfiledialog
             if (UsageType == UsageTypes.Mupen)
             {
-                MupenHook(); // skip dialog
+                MupenHook();
                 return;
             }
-            if (UsageType == UsageTypes.Replacement)
+            else if (UsageType == UsageTypes.Replacement)
             {
                 if (replacementForm == null)
                     replacementForm = new ReplacementForm();
@@ -2100,6 +2109,14 @@ namespace MupenUtils
                 ReplacementForm.useExternalData = false;
 
                 replacementForm.ShowDialog();
+                return;
+            }
+            else if (UsageType == UsageTypes.Trimmer)
+            {
+                if (trimmerForm == null)
+                    trimmerForm = new MovieTrimmerForm();
+
+                trimmerForm.ShowDialog();
                 return;
             }
 
@@ -2186,7 +2203,14 @@ namespace MupenUtils
             UpdateVisualsTop(true);
         }
 
+        private void rb_Trimmer_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right) UsageType = UsageTypes.Autodetect;
+            else if (e.Button == MouseButtons.Left)
+                UsageType = UsageTypes.Trimmer;
 
+            UpdateVisualsTop(true);
+        }
         private void btn_Override_MouseDown(object sender, MouseEventArgs e)
         {
             EnableM64View(!ExpandedMenu, false, false);
@@ -2563,6 +2587,7 @@ namespace MupenUtils
         }
         private void cbox_Controllers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             SetFrame(MINIMUM_FRAME);
             UpdateFrameControlUI();
             if (UsageType == UsageTypes.M64)
@@ -2579,7 +2604,7 @@ namespace MupenUtils
             if (reloadTASStudioOnControllerChange)
                 PreloadTASStudio();
             GetInput(inputLists[selectedController][frame], true, frame);
-            cbox_Controllers.SelectedIndex = selectedController;
+            cbox_Controllers.SelectedIndex = selectedController; // wtf how does this work
             if(UsageType == UsageTypes.Combo)
             {
                 txt_CMBSamples.Text = cmbLens[selectedController].ToString();
@@ -2972,7 +2997,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-       
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
