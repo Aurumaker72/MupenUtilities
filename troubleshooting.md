@@ -13,3 +13,6 @@ If you are experiencing focus loss and unresponsiveness when typing in textboxes
 
 ### Unpausing/seeking through movie lags
 Get a better computer. But first test your PC using [TimerBench](https://www.overclockers.at/articles/timerbench-ein-benchmark-fuer-windows-timer)
+
+### Desyncs
+Please scan your movie using the Movie Diagnostic tool under "More..." and "Movie Diagnostic".
