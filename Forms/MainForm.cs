@@ -599,7 +599,6 @@ namespace MupenUtils
 
             
             s = flag ? BIG_SIZE : new Size(100 + btn_Override.Location.X + 20, 150);
-            gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
             if (!flag) this.WindowState = FormWindowState.Normal;
             btn_FrameBack.Enabled = FileLoaded;
             btn_FrameBack2.Enabled = FileLoaded;
@@ -609,15 +608,13 @@ namespace MupenUtils
             btn_PlayPause.Enabled = FileLoaded;
             tr_MovieScrub.Enabled = FileLoaded;
             txt_Frame.Enabled = FileLoaded;
-
-            SuspendLayout();
-
-            this.MinimumSize = flag ? new Size(200, 200) : new Size(1, 1);
-            this.Size = s;
             this.FormBorderStyle = flag ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
             this.MaximizeBox = flag;
             gp_M64.Visible = flag;
+            gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
 
+            SuspendLayout();
+            this.Size = s;
             ResumeLayout(true);
 
 
