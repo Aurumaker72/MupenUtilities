@@ -165,6 +165,9 @@ namespace MupenUtils.Forms
                 }
             }
 
+            from /= 4;
+            to /= 4;
+
             if (to - from < 0 || from >= to || to > src.Length || from < 0 || to < 0)
             {
                 lbl_Repl_Status.Text = "Failed";

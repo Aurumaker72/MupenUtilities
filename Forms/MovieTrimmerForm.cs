@@ -103,9 +103,6 @@ namespace MupenUtilities.Forms
                 MessageBox.Show("Scanned entire movie but no 0 input", Text);
                 return;
             }
-
-            Debug.WriteLine(lastInput * 4 + 1024);
-
             
 
             string path = ExtensionMethods.ValidPath(pathOutput) ? pathOutput : "output.m64";
@@ -113,11 +110,10 @@ namespace MupenUtilities.Forms
             using (FileStream fsOut = new FileStream(path, FileMode.OpenOrCreate))
             {
                 fs.CopyTo(fsOut);
-                fsOut.SetLength(lastInput * sizeof(int) + 1024);
+                fsOut.SetLength(lastInput / sizeof(int) + 1024);
 
                 if (chk_TrimAdjustSamplesInHeader.Checked)
                 {
-
                     fsOut.Write(BitConverter.GetBytes(fsOut.Length - 1024), 0x018, 1);
                 }
 
