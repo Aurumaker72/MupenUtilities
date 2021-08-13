@@ -2702,7 +2702,26 @@ namespace MupenUtils
             
 
         }
+        unsafe void FlipMovieY()
+        {
+            if (!FileLoaded || readOnly)
+            {
+                MessageBox.Show("No movie loaded or readonly mode active. Please load a movie or disable readonly mode");
+                return;
+            }
 
+            for (int i = 0; i < inputLists[selectedController].Count; i++)
+            {
+                int fuck = inputLists[selectedController][i];
+                ExtensionMethods.SetByte(&fuck, (byte)-ExtensionMethods.GetSByte(inputLists[selectedController][i], 3), 3);
+                inputLists[selectedController][i] = fuck;
+            }
+            MessageBox.Show(String.Format("Flipped Y axis for every frame in movie."), PROGRAM_NAME);
+        }
+        private void tsmi_FlipY_Click(object sender, EventArgs e)
+        {
+            FlipMovieY();
+        }
         private void tsmi_CRCPopulate_Click(object sender, EventArgs e)
         {
             int len = DataHelper.validCrcs.Count;
@@ -2993,7 +3012,6 @@ namespace MupenUtils
         {
             this.ActiveControl = null;
         }
-
         
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)

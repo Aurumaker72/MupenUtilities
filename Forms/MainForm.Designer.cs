@@ -34,6 +34,7 @@ namespace MupenUtils
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
             this.gp_Path = new System.Windows.Forms.GroupBox();
+            this.rb_Trimmer = new System.Windows.Forms.RadioButton();
             this.btn_Tips = new System.Windows.Forms.Button();
             this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.btn_Override = new System.Windows.Forms.Button();
@@ -184,7 +185,7 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
-            this.rb_Trimmer = new System.Windows.Forms.RadioButton();
+            this.tsmi_FlipY = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -255,6 +256,18 @@ namespace MupenUtils
             this.gp_Path.TabIndex = 2;
             this.gp_Path.TabStop = false;
             this.gp_Path.Text = "File";
+            // 
+            // rb_Trimmer
+            // 
+            this.rb_Trimmer.AutoSize = true;
+            this.rb_Trimmer.Location = new System.Drawing.Point(310, 50);
+            this.rb_Trimmer.Name = "rb_Trimmer";
+            this.rb_Trimmer.Size = new System.Drawing.Size(78, 20);
+            this.rb_Trimmer.TabIndex = 1;
+            this.rb_Trimmer.TabStop = true;
+            this.rb_Trimmer.Text = "Trimmer";
+            this.rb_Trimmer.UseVisualStyleBackColor = true;
+            this.rb_Trimmer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_Trimmer_MouseDown);
             // 
             // btn_Tips
             // 
@@ -1519,11 +1532,12 @@ namespace MupenUtils
             this.tsmi_DumpAppInfo,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_CRCPopulate,
+            this.tsmi_FlipY,
             this.tsmi_Input_Sticky,
             this.toolStripSeparator7,
             this.tsmi_DBG_Crash});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 418);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 472);
             // 
             // tsmi_SimpleMode
             // 
@@ -1868,17 +1882,12 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
             // 
-            // rb_Trimmer
+            // tsmi_FlipY
             // 
-            this.rb_Trimmer.AutoSize = true;
-            this.rb_Trimmer.Location = new System.Drawing.Point(310, 50);
-            this.rb_Trimmer.Name = "rb_Trimmer";
-            this.rb_Trimmer.Size = new System.Drawing.Size(78, 20);
-            this.rb_Trimmer.TabIndex = 1;
-            this.rb_Trimmer.TabStop = true;
-            this.rb_Trimmer.Text = "Trimmer";
-            this.rb_Trimmer.UseVisualStyleBackColor = true;
-            this.rb_Trimmer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_Trimmer_MouseDown);
+            this.tsmi_FlipY.Name = "tsmi_FlipY";
+            this.tsmi_FlipY.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_FlipY.Text = "Flip Y axis permanent";
+            this.tsmi_FlipY.Click += new System.EventHandler(this.tsmi_FlipY_Click);
             // 
             // MainForm
             // 
@@ -2094,6 +2103,7 @@ namespace MupenUtils
         private System.Windows.Forms.Panel panel_Input;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton rb_Trimmer;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_FlipY;
     }
 }
 
