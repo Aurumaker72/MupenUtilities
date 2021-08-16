@@ -39,7 +39,8 @@ namespace MupenUtils.Helpers
             "Press \'F1\' to toggle Encoding Mode",
             "Scroll on the X, Y and Angle textboxes for the joystick to change them",
             "Use the M64 Diagnostic tool under \'More\' to diagnose movies which act weird",
-            "Press space to pause/unpause playback"
+            "Press space to pause/unpause playback",
+            "Press \'F5\', \'F6\' to begin and end a region respectively"
         };
 
         public static string GetRandomTip()
