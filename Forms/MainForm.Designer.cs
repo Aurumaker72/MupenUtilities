@@ -69,7 +69,6 @@ namespace MupenUtils
             this.txt_Author = new System.Windows.Forms.TextBox();
             this.gpRom = new System.Windows.Forms.GroupBox();
             this.cmb_Country = new System.Windows.Forms.ComboBox();
-            this.pb_RomCountry = new System.Windows.Forms.PictureBox();
             this.txt_Rom = new System.Windows.Forms.TextBox();
             this.txt_Crc = new System.Windows.Forms.TextBox();
             this.lbl_ROMNAME = new System.Windows.Forms.Label();
@@ -114,7 +113,6 @@ namespace MupenUtils
             this.lbl_Deg = new System.Windows.Forms.Label();
             this.lbl_Y = new System.Windows.Forms.Label();
             this.lbl_X = new System.Windows.Forms.Label();
-            this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.btn_FrameBack = new System.Windows.Forms.Button();
             this.btn_FrameBack2 = new System.Windows.Forms.Button();
             this.btn_FrameFront = new System.Windows.Forms.Button();
@@ -188,13 +186,14 @@ namespace MupenUtils
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Regfill = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.pb_RomCountry = new System.Windows.Forms.PictureBox();
+            this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
             this.gp_header.SuspendLayout();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).BeginInit();
             this.gp_M64_misc.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_input.SuspendLayout();
@@ -203,7 +202,6 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.nud_Angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
             this.gp_TASStudio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
@@ -211,6 +209,8 @@ namespace MupenUtils
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
             this.ctx_SaveOption.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
@@ -663,16 +663,6 @@ namespace MupenUtils
             this.cmb_Country.TabIndex = 0;
             this.cmb_Country.TabStop = false;
             this.cmb_Country.SelectedIndexChanged += new System.EventHandler(this.cmb_Country_SelectedIndexChanged);
-            // 
-            // pb_RomCountry
-            // 
-            this.pb_RomCountry.BackColor = System.Drawing.Color.Transparent;
-            this.pb_RomCountry.Location = new System.Drawing.Point(100, 84);
-            this.pb_RomCountry.Name = "pb_RomCountry";
-            this.pb_RomCountry.Size = new System.Drawing.Size(24, 24);
-            this.pb_RomCountry.TabIndex = 1;
-            this.pb_RomCountry.TabStop = false;
-            this.pb_RomCountry.Click += new System.EventHandler(this.pb_RomCountry_Click);
             // 
             // txt_Rom
             // 
@@ -1201,22 +1191,6 @@ namespace MupenUtils
             this.lbl_X.TabIndex = 0;
             this.lbl_X.Text = "X";
             // 
-            // pb_JoystickPic
-            // 
-            this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
-            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
-            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pb_JoystickPic.Location = new System.Drawing.Point(3, 3);
-            this.pb_JoystickPic.Name = "pb_JoystickPic";
-            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
-            this.pb_JoystickPic.TabIndex = 3;
-            this.pb_JoystickPic.TabStop = false;
-            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
-            this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
-            this.pb_JoystickPic.MouseLeave += new System.EventHandler(this.pb_JoystickPic_MouseLeave);
-            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
-            this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
-            // 
             // btn_FrameBack
             // 
             this.btn_FrameBack.Location = new System.Drawing.Point(109, 303);
@@ -1722,7 +1696,7 @@ namespace MupenUtils
             this.toolStripSeparator6,
             this.tsmi_Markers});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 200);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 172);
             // 
             // utilityToolStripMenuItem
             // 
@@ -1905,6 +1879,32 @@ namespace MupenUtils
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(265, 6);
             // 
+            // pb_RomCountry
+            // 
+            this.pb_RomCountry.BackColor = System.Drawing.Color.Transparent;
+            this.pb_RomCountry.Location = new System.Drawing.Point(100, 84);
+            this.pb_RomCountry.Name = "pb_RomCountry";
+            this.pb_RomCountry.Size = new System.Drawing.Size(24, 24);
+            this.pb_RomCountry.TabIndex = 1;
+            this.pb_RomCountry.TabStop = false;
+            this.pb_RomCountry.Click += new System.EventHandler(this.pb_RomCountry_Click);
+            // 
+            // pb_JoystickPic
+            // 
+            this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
+            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
+            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pb_JoystickPic.Location = new System.Drawing.Point(3, 3);
+            this.pb_JoystickPic.Name = "pb_JoystickPic";
+            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
+            this.pb_JoystickPic.TabIndex = 3;
+            this.pb_JoystickPic.TabStop = false;
+            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
+            this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
+            this.pb_JoystickPic.MouseLeave += new System.EventHandler(this.pb_JoystickPic_MouseLeave);
+            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
+            this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1936,7 +1936,6 @@ namespace MupenUtils
             this.gp_User.PerformLayout();
             this.gpRom.ResumeLayout(false);
             this.gpRom.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).EndInit();
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
             this.gp_Plugins.ResumeLayout(false);
@@ -1950,7 +1949,6 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.nud_Angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
             this.gp_TASStudio.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
@@ -1959,6 +1957,8 @@ namespace MupenUtils
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
             this.ctx_SaveOption.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ResumeLayout(false);
 
         }

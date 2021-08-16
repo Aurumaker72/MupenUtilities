@@ -149,11 +149,7 @@ namespace MupenUtils
         public static bool[] ControllersEnabled = new bool[4];
         ulong frames = 0; // special
         public CheckBox[] controllerButtonsChk;
-        public static List<int> inputListCtl1 = new List<int>();
-        public static List<int> inputListCtl2 = new List<int>();
-        public static List<int> inputListCtl3 = new List<int>();
-        public static List<int> inputListCtl4 = new List<int>();
-        public static List<int>[] inputLists = { inputListCtl1, inputListCtl2, inputListCtl3, inputListCtl4 };
+        public static List<List<int>> inputLists = new List<List<int>>();
 
         public static List<List<int>> cmbInput = new List<List<int>>();
         public static List<int> cmbLens = new List<int>();
@@ -325,7 +321,15 @@ namespace MupenUtils
             {
                 c.TabIndex = 0; c.TabStop = false;
             });
-            
+
+            inputLists = new List<List<int>>();
+
+            // :cringe:
+            for (int i = 0; i < ushort.MaxValue; i++)
+            {
+                inputLists.Add(new List<int>());
+            }
+
             rb_M64sel.Checked = true;
             rb_M64sel.TabStop = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -957,10 +961,10 @@ namespace MupenUtils
             }
 
             // destroy everything
-            inputListCtl1.Clear();
-            inputListCtl2.Clear();
-            inputListCtl3.Clear();
-            inputListCtl4.Clear();
+            foreach (var list in inputLists)
+            {
+                list.Clear();
+            }
             cbox_Controllers.Items.Clear();
             SetJoystickValue(new Point(0, 0),RELATIVE,false);
             foreach (var l in cmbInput) l.Clear();
@@ -1027,11 +1031,11 @@ namespace MupenUtils
             txt_CMBSamples.Text = cmbLens[selectedController].ToString();
             txt_ComboName.Text = cmbNames[selectedController].ToString();
 
-            if(cmbInput.Count > 4)
-            {
-                ErrorProcessing("This combo collection has more than 4 combos inside. Only the first 4 will be considered.");
-                cmbInput.Resize(4);
-            }
+            //if(cmbInput.Count > 4)
+            //{
+            //    ErrorProcessing("This combo collection has more than 4 combos inside. Only the first 4 will be considered.");
+            //    cmbInput.Resize(4);
+            //}
 
             for (int i = 0; i < cmbInput.Count; i++)
             cbox_Controllers.Items.Add("Combo " + (i + 1));
@@ -1173,10 +1177,10 @@ namespace MupenUtils
             //}
 
             // Reset
-            inputListCtl1.Clear();
-            inputListCtl2.Clear();
-            inputListCtl3.Clear();
-            inputListCtl4.Clear();
+            foreach(var list in inputLists)
+            {
+                list.Clear();
+            }
 
             frame = 1;
             lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "Frame " + frame.ToString()));
@@ -1233,39 +1237,39 @@ namespace MupenUtils
             if (loadinputs)
                 while (findx <= frames)
                 {
-                    
 
 
 
 
-                        // this is really gross but its necessary to avoid evil m64s
 
-                        if (ControllersEnabled[0])
-                        {
-                            if (br.BaseStream.Position + 4 > lenfs)
-                                break;
-                            inputListCtl1.Add(br.ReadInt32());
-                        }
-                        if (ControllersEnabled[1])
-                        {
-                            if (br.BaseStream.Position + 4 > lenfs)
-                                break;
-                            inputListCtl2.Add(br.ReadInt32());
-                        }
-                        if (ControllersEnabled[2])
-                        {
-                            if (br.BaseStream.Position + 4 > lenfs)
-                                break;
-                            inputListCtl3.Add(br.ReadInt32());
-                        }
-                        if (ControllersEnabled[3])
-                        {
-                            if (br.BaseStream.Position + 4 > lenfs)
-                                break;
-                            inputListCtl4.Add(br.ReadInt32());
-                        }
-                        findx++;
-                    
+                    // this is really gross but its necessary to avoid evil m64s
+
+                    if (ControllersEnabled[0])
+                    {
+                        if (br.BaseStream.Position + 4 > lenfs)
+                            break;
+                        inputLists[0].Add(br.ReadInt32());
+                    }
+                    if (ControllersEnabled[1])
+                    {
+                        if (br.BaseStream.Position + 4 > lenfs)
+                            break;
+                        inputLists[1].Add(br.ReadInt32());
+                    }
+                    if (ControllersEnabled[2])
+                    {
+                        if (br.BaseStream.Position + 4 > lenfs)
+                            break;
+                        inputLists[2].Add(br.ReadInt32());
+                    }
+                    if (ControllersEnabled[3])
+                    {
+                        if (br.BaseStream.Position + 4 > lenfs)
+                            break;
+                        inputLists[3].Add(br.ReadInt32());
+                    }
+                    findx++;
+
                 }
 
 
@@ -1435,17 +1439,17 @@ namespace MupenUtils
             BinaryWriter br = new BinaryWriter(fs);
             if (saveSamplesOnly)
             {
-                for (int i = 0; i < inputListCtl1.Count/*All should have same amount of inputs... right*/; i++)
+                for (int i = 0; i < inputLists[0].Count/*All should have same amount of inputs... right*/; i++)
                 {
 
                     if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 0))
-                        br.Write(inputListCtl1[i]);
-                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 1) && i < inputListCtl2.Count)
-                        br.Write(inputListCtl2[i]);
-                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 2) && i < inputListCtl3.Count)
-                        br.Write(inputListCtl3[i]);
-                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 3) && i < inputListCtl4.Count)
-                        br.Write(inputListCtl4[i]);
+                        br.Write(inputLists[0][i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 1) && i < inputLists[1].Count)
+                        br.Write(inputLists[1][i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 2) && i < inputLists[2].Count)
+                        br.Write(inputLists[2][i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 3) && i < inputLists[3].Count)
+                        br.Write(inputLists[3][i]);
                     
                 }
             }
@@ -1534,16 +1538,16 @@ namespace MupenUtils
                 br.Write(desc, 0, 256);
 
                 
-                for (int i = 0; i < inputListCtl1.Count; i++)
+                for (int i = 0; i < inputLists[0].Count; i++)
                 {
                     if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 0))
-                        br.Write(inputListCtl1[i]);
-                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 1) && i < inputListCtl2.Count)
-                        br.Write(inputListCtl2[i]);
-                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 2) && i < inputListCtl3.Count)
-                        br.Write(inputListCtl3[i]);
-                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 3) && i < inputListCtl4.Count)
-                        br.Write(inputListCtl4[i]);
+                        br.Write(inputLists[0][i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 1) && i < inputLists[1].Count)
+                        br.Write(inputLists[1][i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 2) && i < inputLists[2].Count)
+                        br.Write(inputLists[2][i]);
+                    if (ExtensionMethods.GetBit(MovieHeader.controllerFlags, 3) && i < inputLists[3].Count)
+                        br.Write(inputLists[3][i]);
                 }
             }
 
@@ -2707,10 +2711,10 @@ namespace MupenUtils
         }
         private void inputStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputStatsForm.inputCtl1 = inputListCtl1;
-            InputStatsForm.inputCtl2 = inputListCtl2;
-            InputStatsForm.inputCtl3 = inputListCtl3;
-            InputStatsForm.inputCtl4 = inputListCtl4;
+            InputStatsForm.inputCtl1 = inputLists[0];
+            InputStatsForm.inputCtl2 = inputLists[1];
+            InputStatsForm.inputCtl3 = inputLists[2];
+            InputStatsForm.inputCtl4 = inputLists[3];
 
             if (inputStatisticsForm == null)
                 inputStatisticsForm = new InputStatsForm();
