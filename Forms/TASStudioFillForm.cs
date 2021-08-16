@@ -27,7 +27,9 @@ namespace MupenUtilities.Forms
 
         private void TASStudioFillForm_Shown(object sender, EventArgs e)
         {
-            
+            foreach (Control ctl in Controls)
+                ctl.Enabled = MainForm.FileLoaded;
+
         }
 
         private void btn_Go_Click(object sender, EventArgs e)

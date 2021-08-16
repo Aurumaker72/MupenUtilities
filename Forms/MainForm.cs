@@ -766,7 +766,24 @@ namespace MupenUtils
 
             dgv_Main.Refresh();
         }
-        
+        void TASStudioEndRegion()
+        {
+            if (tasStudioAutoScroll)
+                endRegion = dgv_Main.SelectedRows[0].Index;
+            else
+                endRegion = dgv_Main.SelectedCells[0].RowIndex;
+
+            UpdateTASStudioRegionUI();
+        }
+        void TASStudioBeginRegion()
+        {
+            if (tasStudioAutoScroll)
+                beginRegion = dgv_Main.SelectedRows[0].Index;
+            else
+                beginRegion = dgv_Main.SelectedCells[0].RowIndex;
+            UpdateTASStudioRegionUI();
+        }
+
         void UpdateSaveButtonsVisuals()
         {
             
@@ -1947,7 +1964,14 @@ namespace MupenUtils
                     tasStudioForm = new TASStudioMoreForm();
                 tasStudioForm.ShowDialog();
             }
-            
+            if(e.KeyCode == Keys.F5)
+            {
+                TASStudioBeginRegion();
+            }
+            if(e.KeyCode == Keys.F6)
+            {
+                TASStudioEndRegion();
+            }
             
             if (e.KeyCode == Keys.C && e.Modifiers == Keys.Control)
             {
@@ -2815,23 +2839,14 @@ namespace MupenUtils
         
         private void tsmi_EndRegion_Click(object sender, EventArgs e)
         {
-            if (tasStudioAutoScroll)
-                endRegion = dgv_Main.SelectedRows[0].Index;
-            else
-                endRegion = dgv_Main.SelectedCells[0].RowIndex;
-
-            UpdateTASStudioRegionUI();
+            TASStudioEndRegion();
             //MessageBox.Show("Set region end to frame " + endRegion, this.Text);
 
         }
 
         private void tsmi_BeginRegion_Click(object sender, EventArgs e)
         {
-            if (tasStudioAutoScroll)
-                beginRegion = dgv_Main.SelectedRows[0].Index;
-            else
-                beginRegion = dgv_Main.SelectedCells[0].RowIndex;
-            UpdateTASStudioRegionUI();
+            TASStudioBeginRegion();
 
             //MessageBox.Show("Set region begin to frame " + beginRegion, this.Text);
         }
