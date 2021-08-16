@@ -763,6 +763,7 @@ namespace MupenUtils
 
             tsmi_RegionReplacement.Enabled = regionExist;
             tsmi_RegToBase64.Enabled = regionExist;
+            tsmi_Regfill.Enabled = regionExist;
 
             dgv_Main.Refresh();
         }
