@@ -113,7 +113,7 @@ namespace MupenUtils
         static ExceptionForm exceptionForm;//= new ExceptionForm();
         InputStatsForm inputStatisticsForm; //= new InputStatsForm();
         MovieDiagnosticForm movieDiagForm;
-
+        TASStudioFillForm tasStudioFillForm;
         List<Color> ctlColor = new List<Color>();
 
         public static string Path, SavePath;
@@ -131,8 +131,10 @@ namespace MupenUtils
         public static int markedSizeCell = 10;
         public static bool forceGoto = false;
         public static bool forceResizeCell = false;
+        public static bool forceFill = false;
         public static bool tasStudioAutoScroll = true;
         public static bool reloadTASStudioOnControllerChange = true;
+        public static int fillbIndex = 0;
         int[] copied;
         int cellSize = 10;
 
@@ -2030,6 +2032,18 @@ namespace MupenUtils
 
                 notifiedReupdateControllerFlags = false;
             }
+            if (forceFill)
+            {
+                if (!regionExist) return;
+                for (int i = beginRegion; i < endRegion; i++)
+                {
+                    int tmp = inputLists[selectedController][i];
+                    ExtensionMethods.SetBit(ref tmp, true, fillbIndex);
+                    inputLists[selectedController][i] = tmp;
+                    UpdateTASStudio(i);
+                }
+                forceFill = false;
+            }
         }
 
         private void utilityToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2858,6 +2872,14 @@ namespace MupenUtils
 
 
         }
+        private void tsmi_Regfill_Click(object sender, EventArgs e)
+        {
+            if (tasStudioFillForm == null)
+                tasStudioFillForm = new TASStudioFillForm();
+
+            tasStudioFillForm.ShowDialog();
+
+        }
 
         private void cbox_Controllers_KeyUp(object sender, KeyEventArgs e)
         {
@@ -2899,6 +2921,7 @@ namespace MupenUtils
         {
             SetInputsGroupboxBig();
         }
+
         #endregion
 
         #region Joystick Behaviour
@@ -2974,10 +2997,6 @@ namespace MupenUtils
 
             ResumeLayout(true);
 
-            
-
-
-
         }
         
         private void nud_Angle_KeyDown(object sender, KeyEventArgs e)
@@ -3012,7 +3031,8 @@ namespace MupenUtils
         {
             this.ActiveControl = null;
         }
-        
+
+       
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

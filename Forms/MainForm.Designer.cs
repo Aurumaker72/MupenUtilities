@@ -159,6 +159,7 @@ namespace MupenUtils
             this.tsmi_DumpAppInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_CRCPopulate = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_FlipY = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Sticky = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_DBG_Crash = new System.Windows.Forms.ToolStripMenuItem();
@@ -185,7 +186,8 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_FlipY = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Regfill = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -1537,7 +1539,7 @@ namespace MupenUtils
             this.toolStripSeparator7,
             this.tsmi_DBG_Crash});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 472);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 444);
             // 
             // tsmi_SimpleMode
             // 
@@ -1681,6 +1683,13 @@ namespace MupenUtils
             this.tsmi_CRCPopulate.Text = "Load CRC Database";
             this.tsmi_CRCPopulate.Click += new System.EventHandler(this.tsmi_CRCPopulate_Click);
             // 
+            // tsmi_FlipY
+            // 
+            this.tsmi_FlipY.Name = "tsmi_FlipY";
+            this.tsmi_FlipY.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_FlipY.Text = "Flip Y axis permanent";
+            this.tsmi_FlipY.Click += new System.EventHandler(this.tsmi_FlipY_Click);
+            // 
             // tsmi_Input_Sticky
             // 
             this.tsmi_Input_Sticky.Name = "tsmi_Input_Sticky";
@@ -1713,7 +1722,7 @@ namespace MupenUtils
             this.toolStripSeparator6,
             this.tsmi_Markers});
             this.ctx_TasStudio.Name = "ctx_TasStudio";
-            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 172);
+            this.ctx_TasStudio.Size = new System.Drawing.Size(271, 200);
             // 
             // utilityToolStripMenuItem
             // 
@@ -1771,9 +1780,11 @@ namespace MupenUtils
             this.tsmi_EndRegion,
             this.tsmi_ClearRegion,
             this.toolStripSeparator8,
-            this.tsmi_RegToBase64,
+            this.tsmi_SelRegion,
+            this.toolStripSeparator9,
+            this.tsmi_Regfill,
             this.tsmi_RegionReplacement,
-            this.tsmi_SelRegion});
+            this.tsmi_RegToBase64});
             this.tsmi_Markers.Name = "tsmi_Markers";
             this.tsmi_Markers.Size = new System.Drawing.Size(270, 26);
             this.tsmi_Markers.Text = "Markers";
@@ -1882,12 +1893,17 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
             // 
-            // tsmi_FlipY
+            // tsmi_Regfill
             // 
-            this.tsmi_FlipY.Name = "tsmi_FlipY";
-            this.tsmi_FlipY.Size = new System.Drawing.Size(243, 26);
-            this.tsmi_FlipY.Text = "Flip Y axis permanent";
-            this.tsmi_FlipY.Click += new System.EventHandler(this.tsmi_FlipY_Click);
+            this.tsmi_Regfill.Name = "tsmi_Regfill";
+            this.tsmi_Regfill.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_Regfill.Text = "Region fill";
+            this.tsmi_Regfill.Click += new System.EventHandler(this.tsmi_Regfill_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(265, 6);
             // 
             // MainForm
             // 
@@ -2104,6 +2120,8 @@ namespace MupenUtils
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton rb_Trimmer;
         private System.Windows.Forms.ToolStripMenuItem tsmi_FlipY;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Regfill;
     }
 }
 

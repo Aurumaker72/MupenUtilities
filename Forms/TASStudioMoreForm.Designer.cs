@@ -30,6 +30,7 @@ namespace MupenUtils.Forms
         private void InitializeComponent()
         {
             this.gp_TasStudio_Help = new System.Windows.Forms.GroupBox();
+            this.lbl_Success = new System.Windows.Forms.Label();
             this.btn_TasStudio_EasterEggObunga = new System.Windows.Forms.Button();
             this.txt_CellSize = new System.Windows.Forms.TextBox();
             this.txt_TasStudio_Frame = new System.Windows.Forms.TextBox();
@@ -37,7 +38,6 @@ namespace MupenUtils.Forms
             this.btn_TasStudio_Goto = new System.Windows.Forms.Button();
             this.lbl_CellSize = new System.Windows.Forms.Label();
             this.lbl_TasStudio_Frame = new System.Windows.Forms.Label();
-            this.lbl_Success = new System.Windows.Forms.Label();
             this.gp_TasStudio_Help.SuspendLayout();
             this.gp_TasStudio_Goto.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +58,16 @@ namespace MupenUtils.Forms
             this.gp_TasStudio_Help.TabIndex = 0;
             this.gp_TasStudio_Help.TabStop = false;
             this.gp_TasStudio_Help.Text = "TAS Studio Commands";
+            // 
+            // lbl_Success
+            // 
+            this.lbl_Success.AutoSize = true;
+            this.lbl_Success.Location = new System.Drawing.Point(16, 296);
+            this.lbl_Success.Name = "lbl_Success";
+            this.lbl_Success.Size = new System.Drawing.Size(209, 32);
+            this.lbl_Success.TabIndex = 0;
+            this.lbl_Success.Text = "Applied all settings. \r\nClose this dialog to see the effects";
+            this.lbl_Success.Visible = false;
             // 
             // btn_TasStudio_EasterEggObunga
             // 
@@ -92,9 +102,9 @@ namespace MupenUtils.Forms
             // gp_TasStudio_Goto
             // 
             this.gp_TasStudio_Goto.Controls.Add(this.btn_TasStudio_Goto);
-            this.gp_TasStudio_Goto.Location = new System.Drawing.Point(320, 272);
+            this.gp_TasStudio_Goto.Location = new System.Drawing.Point(286, 272);
             this.gp_TasStudio_Goto.Name = "gp_TasStudio_Goto";
-            this.gp_TasStudio_Goto.Size = new System.Drawing.Size(208, 64);
+            this.gp_TasStudio_Goto.Size = new System.Drawing.Size(242, 64);
             this.gp_TasStudio_Goto.TabIndex = 2;
             this.gp_TasStudio_Goto.TabStop = false;
             this.gp_TasStudio_Goto.Text = "Apply";
@@ -104,7 +114,7 @@ namespace MupenUtils.Forms
             this.btn_TasStudio_Goto.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn_TasStudio_Goto.Location = new System.Drawing.Point(3, 18);
             this.btn_TasStudio_Goto.Name = "btn_TasStudio_Goto";
-            this.btn_TasStudio_Goto.Size = new System.Drawing.Size(202, 43);
+            this.btn_TasStudio_Goto.Size = new System.Drawing.Size(236, 43);
             this.btn_TasStudio_Goto.TabIndex = 0;
             this.btn_TasStudio_Goto.Text = "Apply all";
             this.btn_TasStudio_Goto.UseVisualStyleBackColor = true;
@@ -115,7 +125,7 @@ namespace MupenUtils.Forms
             this.lbl_CellSize.AutoSize = true;
             this.lbl_CellSize.Location = new System.Drawing.Point(16, 58);
             this.lbl_CellSize.Name = "lbl_CellSize";
-            this.lbl_CellSize.Size = new System.Drawing.Size(62, 17);
+            this.lbl_CellSize.Size = new System.Drawing.Size(59, 16);
             this.lbl_CellSize.TabIndex = 1;
             this.lbl_CellSize.Text = "Cell Size";
             // 
@@ -124,19 +134,9 @@ namespace MupenUtils.Forms
             this.lbl_TasStudio_Frame.AutoSize = true;
             this.lbl_TasStudio_Frame.Location = new System.Drawing.Point(16, 32);
             this.lbl_TasStudio_Frame.Name = "lbl_TasStudio_Frame";
-            this.lbl_TasStudio_Frame.Size = new System.Drawing.Size(94, 17);
+            this.lbl_TasStudio_Frame.Size = new System.Drawing.Size(89, 16);
             this.lbl_TasStudio_Frame.TabIndex = 1;
             this.lbl_TasStudio_Frame.Text = "Target Frame";
-            // 
-            // lbl_Success
-            // 
-            this.lbl_Success.AutoSize = true;
-            this.lbl_Success.Location = new System.Drawing.Point(16, 296);
-            this.lbl_Success.Name = "lbl_Success";
-            this.lbl_Success.Size = new System.Drawing.Size(224, 34);
-            this.lbl_Success.TabIndex = 0;
-            this.lbl_Success.Text = "Applied all settings. \r\nClose this dialog to see the effects";
-            this.lbl_Success.Visible = false;
             // 
             // TASStudioMoreForm
             // 
