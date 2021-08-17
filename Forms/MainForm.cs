@@ -618,6 +618,7 @@ namespace MupenUtils
             this.MaximizeBox = flag;
             gp_M64.Visible = flag;
             gp_Path.Dock = flag ? DockStyle.Top : DockStyle.Fill;
+            btn_Override.Text = ExpandedMenu ? "Collapse" : "Expand";
 
             SuspendLayout();
             this.Size = s;
