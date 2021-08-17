@@ -1131,7 +1131,7 @@ namespace MupenUtils
             {
                 // spawn on main thread to block ui
                 this.Invoke((MethodInvoker)(() => MessageBox.Show("A movie is already loading.", PROGRAM_NAME, MessageBoxButtons.OK, MessageBoxIcon.Warning)));
-                m64loadBusy = false;
+                //m64loadBusy = false;
                 return;
             }
             m64loadBusy = true;
@@ -1333,7 +1333,7 @@ namespace MupenUtils
 
             EnableM64View_ThreadSafe(true);
 
-
+            Thread.Sleep(1);
             //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
 
             m64loadBusy = false;
@@ -1375,7 +1375,7 @@ namespace MupenUtils
             }
 
 
-
+            
             lbl_ROMCRC.ForeColor = Color.Red;
             foreach (var crc in DataHelper.validCrcs)
             {
