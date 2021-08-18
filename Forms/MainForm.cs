@@ -1670,6 +1670,7 @@ namespace MupenUtils
 
             ((ISupportInitialize)dgv_Main).BeginInit();
 
+            
 
             for (int y = 0; y < inputLists[selectedController].Count - 1/*???*/; y++)
             {
@@ -1706,6 +1707,13 @@ namespace MupenUtils
             }
 
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
+
+            for (int i = 0; i < inputLists[selectedController].Count - 1; i++)
+            {
+                if (i % 2 == 0)
+                        dgv_Main.Rows[i].DefaultCellStyle.BackColor = Color.LightGray;
+            }
+
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
             ((ISupportInitialize)dgv_Main).EndInit();
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
