@@ -30,9 +30,18 @@ namespace MupenUtils.Forms
         {
             try
             {
-                MainForm.inputLists[MainForm.selectedController][selectedFrame] = Int32.Parse(txt_Debug_Uvalue.Text);
+                if (ExtensionMethods.ValidHexStringInt(txt_Debug_Uvalue.Text, int.MinValue, int.MaxValue))
+                {
+                    MainForm.inputLists[MainForm.selectedController][selectedFrame] = Convert.ToInt32(txt_Debug_Uvalue.Text, 16);
+
+                }
+                else
+                {
+                    MainForm.inputLists[MainForm.selectedController][selectedFrame] = Int32.Parse(txt_Debug_Uvalue.Text);
+
+                }
             }
-            catch { }
+            catch { /* tu */}
         }
 
         private void txt_Debug_Frame_TextChanged(object sender, EventArgs e)

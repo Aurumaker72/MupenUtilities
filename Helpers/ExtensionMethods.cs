@@ -604,7 +604,6 @@ public static class ExtensionMethods
         }
         catch (Exception)
         {
-
             return null;
         }
     }

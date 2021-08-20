@@ -1677,7 +1677,7 @@ namespace MupenUtils
                 // for each frame
                 rows.Add(new DataGridViewRow());
 
-                // this can be done in a nested loop, but somehow this is faster
+                // this can be done in a loop, but loop unrolling here saves a couple of miliseconds
                 // todo: replace this to only one condition to minimize branching (here we are doing if else for each button, meaning 30 branches)
                 // e.g:
                 // if(bit(inputlist[y])
