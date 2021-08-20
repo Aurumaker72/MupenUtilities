@@ -1196,7 +1196,6 @@ namespace MupenUtils
             ResetLblColors();
 
             // Read header
-            MovieHeader = M64.ParseMovie(Path);
             FileStream fs;
             try { fs = File.Open(Path, FileMode.Open); }
             catch
@@ -1205,6 +1204,9 @@ namespace MupenUtils
                 m64loadBusy = false;
                 return;
             }
+
+            MovieHeader = M64.ParseMovie(Path);
+            
             
             BinaryReader br = new BinaryReader(fs);
 
@@ -1707,12 +1709,12 @@ namespace MupenUtils
             }
 
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
-
             for (int i = 0; i < inputLists[selectedController].Count - 1; i++)
             {
                 if (i % 2 == 0)
-                        dgv_Main.Rows[i].DefaultCellStyle.BackColor = Color.LightGray;
+                    dgv_Main.Rows[i].DefaultCellStyle.BackColor = Color.LightGray;
             }
+
 
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = Path));
             ((ISupportInitialize)dgv_Main).EndInit();
