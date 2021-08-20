@@ -57,7 +57,7 @@ namespace MupenUtilities.Forms
             lb_Checks.Items.Clear();
 
             MovieStruct movieData;
-            movieData = M64.ParseMovie(MainForm.Path);
+            movieData = M64.ParseMovie(MainForm.Path).Item1;
 
             bool failedInputTest = false;
 

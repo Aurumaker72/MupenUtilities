@@ -1197,7 +1197,7 @@ namespace MupenUtils
 
             // Read header
             FileStream fs;
-            try { fs = File.Open(Path, FileMode.Open); }
+            try { fs = File.Open(Path, FileMode.Open); fs.Close(); }
             catch
             {
                 ErrorProcessing("File inaccessible.");
@@ -1205,9 +1205,16 @@ namespace MupenUtils
                 return;
             }
 
-            MovieHeader = M64.ParseMovie(Path);
-            
-            
+            (M64.MovieStruct, M64.MovieStatus) movieLoadResult = M64.ParseMovie(Path);
+            if(movieLoadResult.Item2 != M64.MovieStatus.Ok)
+            {
+                ErrorProcessing("Error happened in M64 header parsing subroutine.\nPlease post an issue on github about this along with your m64.");
+                m64loadBusy = false;
+                return;
+            }
+            MovieHeader = movieLoadResult.Item1;
+
+            fs = File.Open(Path, FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
 
             for (int i = 0; i < 4; i++)

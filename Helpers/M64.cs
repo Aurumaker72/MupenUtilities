@@ -42,10 +42,27 @@ namespace MupenUtilities.Helpers
 
 
         }
-
-        public static MovieStruct ParseMovie(string Path)
+        public enum MovieStatus
         {
-            FileStream fs = new FileStream(Path, FileMode.Open);
+            Ok,
+            Fail_AccessSteal
+        };
+
+        public static (MovieStruct, MovieStatus) ParseMovie(string Path)
+        {
+            FileStream fs = null;
+            try
+            {
+                fs = new FileStream(Path, FileMode.Open);
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("File inaccessible", "M64 Parsing Subroutine");
+                if(fs != null)
+                fs.Close();
+                return (new MovieStruct(), MovieStatus.Fail_AccessSteal);
+            }
+
             BinaryReader br = new BinaryReader(fs);
 
             MovieStruct movieData = new MovieStruct();
@@ -77,7 +94,7 @@ namespace MupenUtilities.Helpers
             movieData.description = Encoding.ASCII.GetString(br.ReadBytes(256));
 
             fs.Close(); br.Close();
-            return movieData;
+            return (movieData, MovieStatus.Ok);
         }
     }
 }
