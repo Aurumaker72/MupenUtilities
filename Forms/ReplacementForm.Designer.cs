@@ -59,6 +59,7 @@ namespace MupenUtils.Forms
             this.lbl_Output = new System.Windows.Forms.Label();
             this.gp_Repl_Trg = new System.Windows.Forms.Label();
             this.gp_Repl_Src = new System.Windows.Forms.Label();
+            this.chk_Autofill = new System.Windows.Forms.CheckBox();
             this.gpBox_Repl_Replacement.SuspendLayout();
             this.gp_Repl_Commands.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_RArrow)).BeginInit();
@@ -84,6 +85,7 @@ namespace MupenUtils.Forms
             // 
             // gp_Repl_Commands
             // 
+            this.gp_Repl_Commands.Controls.Add(this.chk_Autofill);
             this.gp_Repl_Commands.Controls.Add(this.pb_RArrow);
             this.gp_Repl_Commands.Controls.Add(this.groupBox1);
             this.gp_Repl_Commands.Controls.Add(this.gp_SourceRange);
@@ -137,12 +139,13 @@ namespace MupenUtils.Forms
             this.txt_Repl_Base_Trg.TabIndex = 0;
             this.txt_Repl_Base_Trg.TabStop = false;
             this.txt_Repl_Base_Trg.Text = "0";
-            this.txt_Repl_Base_Trg.TextChanged += new System.EventHandler(this.txt_Repl_FFrom_TextChanged);
+            this.txt_Repl_Base_Trg.TextChanged += new System.EventHandler(this.genericRegionTextChange);
             // 
             // txt_Repl_Fto_Trg
             // 
             this.txt_Repl_Fto_Trg.Location = new System.Drawing.Point(86, 63);
             this.txt_Repl_Fto_Trg.Name = "txt_Repl_Fto_Trg";
+            this.txt_Repl_Fto_Trg.ReadOnly = true;
             this.txt_Repl_Fto_Trg.Size = new System.Drawing.Size(112, 22);
             this.txt_Repl_Fto_Trg.TabIndex = 0;
             this.txt_Repl_Fto_Trg.TabStop = false;
@@ -187,7 +190,7 @@ namespace MupenUtils.Forms
             this.txt_Repl_FFrom_Src.TabIndex = 0;
             this.txt_Repl_FFrom_Src.TabStop = false;
             this.txt_Repl_FFrom_Src.Text = "0";
-            this.txt_Repl_FFrom_Src.TextChanged += new System.EventHandler(this.txt_Repl_FFrom_TextChanged);
+            this.txt_Repl_FFrom_Src.TextChanged += new System.EventHandler(this.genericRegionTextChange);
             // 
             // txt_Repl_Fto_Src
             // 
@@ -197,7 +200,7 @@ namespace MupenUtils.Forms
             this.txt_Repl_Fto_Src.TabIndex = 0;
             this.txt_Repl_Fto_Src.TabStop = false;
             this.txt_Repl_Fto_Src.Text = "0";
-            this.txt_Repl_Fto_Src.TextChanged += new System.EventHandler(this.txt_Repl_Fto_Src_TextChanged);
+            this.txt_Repl_Fto_Src.TextChanged += new System.EventHandler(this.genericRegionTextChange);
             // 
             // lbl_Repl_Fto
             // 
@@ -389,6 +392,19 @@ namespace MupenUtils.Forms
             this.gp_Repl_Src.TabIndex = 0;
             this.gp_Repl_Src.Text = "Source";
             // 
+            // chk_Autofill
+            // 
+            this.chk_Autofill.AutoSize = true;
+            this.chk_Autofill.Checked = true;
+            this.chk_Autofill.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_Autofill.Location = new System.Drawing.Point(477, 21);
+            this.chk_Autofill.Name = "chk_Autofill";
+            this.chk_Autofill.Size = new System.Drawing.Size(68, 20);
+            this.chk_Autofill.TabIndex = 3;
+            this.chk_Autofill.Text = "Autofill";
+            this.chk_Autofill.UseVisualStyleBackColor = true;
+            this.chk_Autofill.CheckedChanged += new System.EventHandler(this.chk_Autofill_CheckedChanged);
+            // 
             // ReplacementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -404,6 +420,7 @@ namespace MupenUtils.Forms
             this.gpBox_Repl_Replacement.ResumeLayout(false);
             this.gpBox_Repl_Replacement.PerformLayout();
             this.gp_Repl_Commands.ResumeLayout(false);
+            this.gp_Repl_Commands.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_RArrow)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -449,5 +466,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox gp_SourceRange;
         private System.Windows.Forms.PictureBox pb_RArrow;
+        private System.Windows.Forms.CheckBox chk_Autofill;
     }
 }

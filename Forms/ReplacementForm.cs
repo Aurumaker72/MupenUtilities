@@ -17,13 +17,14 @@ namespace MupenUtils.Forms
         public static List<int> inputSrc = new List<int>();
 
         bool generateNew = false;
+        bool autofill = true;
 
         enum ReplaceModes
         {
             Frame,
             Byte,
         };
-        ReplaceModes ReplaceMode = ReplaceModes.Byte;
+        ReplaceModes ReplaceMode = ReplaceModes.Frame;
         bool ReplaceUseNOT = false;
 
         public static int fromSrc = 0;
@@ -135,7 +136,7 @@ namespace MupenUtils.Forms
 
 
 
-            if (!useExternalData)
+            if (!useExternalData || !autofill)
             {
 
                 try
@@ -143,7 +144,12 @@ namespace MupenUtils.Forms
                     fromSrc = Int32.Parse(txt_Repl_FFrom_Src.Text);
                     toSrc = Int32.Parse(txt_Repl_Fto_Src.Text);
                     fromTrg = Int32.Parse(txt_Repl_Base_Trg.Text);
-                    toTrg = Int32.Parse(txt_Repl_Fto_Trg.Text);
+
+                    if (!autofill)
+                        toTrg = Int32.Parse(txt_Repl_Fto_Trg.Text);
+                    else
+                        toTrg = fromTrg + toSrc;
+
                 }
                 catch
                 {
@@ -245,13 +251,40 @@ namespace MupenUtils.Forms
 
         }
 
-        private void txt_Repl_FFrom_TextChanged(object sender, EventArgs e)
+        private void chk_Autofill_CheckedChanged(object sender, EventArgs e)
         {
+            autofill ^= true;
+            txt_Repl_Fto_Trg.ReadOnly = autofill;
         }
 
-        private void txt_Repl_Fto_Src_TextChanged(object sender, EventArgs e)
+        private void genericRegionTextChange(object sender, EventArgs e)
         {
+            if (!autofill) return; // dame tu fuck you
 
+            try
+            {
+                lbl_Repl_Status.Text = "";
+                lbl_Substatus.Text = "";
+
+                fromSrc = Int32.Parse(txt_Repl_FFrom_Src.Text);
+                toSrc = Int32.Parse(txt_Repl_Fto_Src.Text);
+                fromTrg = Int32.Parse(txt_Repl_Base_Trg.Text);
+
+                if(toSrc-fromSrc > 0)
+                toTrg = toSrc - fromSrc + fromTrg;
+                else
+                lbl_Repl_Status.Text = "Autofill fail";
+                lbl_Substatus.Text = "Invalid region";
+
+            }
+            catch
+            {
+                lbl_Repl_Status.Text = "Autofill fail";
+                lbl_Substatus.Text = "Integer parsing error";
+                return;
+            }
+
+            txt_Repl_Fto_Trg.Text = toTrg.ToString();
         }
     }
 }
