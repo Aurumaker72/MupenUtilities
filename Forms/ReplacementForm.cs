@@ -163,10 +163,7 @@ namespace MupenUtils.Forms
                 }
             }
 
-            fromSrc += 1024;
-            toSrc   += 1024;
-            fromTrg += 1024;
-            toTrg   += 1024;
+            
 
             if (ReplaceMode == ReplaceModes.Frame)
             {
@@ -177,8 +174,13 @@ namespace MupenUtils.Forms
                 toTrg *= 4;
             }
 
-            
-            if(fromSrc < 0          ||
+            fromSrc += 1024;
+            toSrc += 1024;
+            fromTrg += 1024;
+            toTrg += 1024;
+
+
+            if (fromSrc < 0          ||
                toSrc   > src.Length ||
                toSrc-fromSrc < 1    ||
                fromTrg < 0          ||
