@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,6 +51,7 @@ namespace MupenUtilities.Helpers
 
         public static (MovieStruct, MovieStatus) ParseMovie(string Path)
         {
+
             FileStream fs = null;
             try
             {
@@ -57,6 +59,7 @@ namespace MupenUtilities.Helpers
             }
             catch
             {
+
                 System.Windows.Forms.MessageBox.Show("File inaccessible", "M64 Parsing Subroutine");
                 if(fs != null)
                 fs.Close();

@@ -2882,8 +2882,8 @@ namespace MupenUtils
 
         private void replacementwithRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReplacementForm.from = beginRegion;
-            ReplacementForm.to = endRegion;
+            ReplacementForm.fromSrc = beginRegion;
+            ReplacementForm.toSrc = endRegion;
             ReplacementForm.useExternalData = true;
 
 

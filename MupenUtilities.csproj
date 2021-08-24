@@ -340,6 +340,7 @@
     <None Include="Resources\spain.bmp" />
     <None Include="Resources\unknown.bmp" />
     <None Include="Resources\usa.bmp" />
+    <None Include="Resources\RightArrow.png" />
     <Content Include="screenshot1.PNG" />
   </ItemGroup>
   <ItemGroup />
