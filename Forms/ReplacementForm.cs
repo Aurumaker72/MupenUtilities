@@ -8,7 +8,7 @@ namespace MupenUtils.Forms
 {
     public partial class ReplacementForm : Form
     {
-        const string HELP_COPYMODES = "From source - The begin of the region in the source m64.\nTo source - the end of the region in the source m64.\nFrom target - The begin of the region in the second m64.\nTo target - The end of the region in the second m64.\nUpon pressing \'Go\', the 1st m64\'s region (from source -> to source) will get copied into the 2nd m64\'s region.";
+        const string HELP_COPYMODES = "From source - The begin of the region in the source m64.\nTo source - the end of the region in the source m64.\nFrom target - The begin of the region in the second m64.\nTo target - The end of the region in the second m64.\nUpon pressing \'Go\', the 1st m64\'s region (from source -> to source) will get copied into the 2nd m64\'s region.\nWhen leaving Output empty, the resulting m64 will be put in the same folder as this executable.";
         const int INPUT_BEGIN = 1024;
 
         string pathSource = string.Empty;
@@ -32,6 +32,8 @@ namespace MupenUtils.Forms
         public static int fromTrg = 0;
         public static int toTrg = 0;
         public static bool useExternalData = false;
+
+        bool lockAll = false;
 
         public ReplacementForm()
         {
@@ -98,6 +100,8 @@ namespace MupenUtils.Forms
 
         void Replace()
         {
+            if (lockAll) return;
+
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -233,10 +237,34 @@ namespace MupenUtils.Forms
 
         private void txt_Output_TextChanged(object sender, EventArgs e)
         {
-            if (ExtensionMethods.ValidPath(txt_Output.Text))
-                pathOutput = txt_Output.Text;
+            lockAll = false;
+
+            pathOutput = txt_Output.Text;
+            PathSanity();
+
         }
 
+        void PathSanity()
+        {
+            if (!ExtensionMethods.ValidPath(pathOutput))
+            {
+                lbl_Repl_Status.Text = "Error";
+                lbl_Substatus.Text = "The output path is not valid.";
+                lockAll = true;
+            }
+            if (pathOutput.Equals(pathTarget, StringComparison.InvariantCultureIgnoreCase))
+            {
+                lbl_Repl_Status.Text = "Error";
+                lbl_Substatus.Text = "The output path will overwrite the target path.\nThis behaviour is not allowed and therefore\nyou can not start replacement.";
+                lockAll = true;
+            }
+            if (pathOutput.Equals(pathSource, StringComparison.InvariantCultureIgnoreCase))
+            {
+                lbl_Repl_Status.Text = "Error";
+                lbl_Substatus.Text = "The output path will overwrite the source path.\nThis behaviour is not allowed and therefore\nyou can not start replacement.";
+                lockAll = true;
+            }
+        }
         private void btn_BrowseOut_Click(object sender, EventArgs e)
         {
 
@@ -248,6 +276,8 @@ namespace MupenUtils.Forms
 
             txt_Output.Text = pathOutput;
             lbl_Repl_Status.Text = "Idle";
+
+            PathSanity();
 
         }
 
