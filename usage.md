@@ -34,18 +34,16 @@ On how to save your edited M64, visit [How to save a M64](###how-to-save-a-m64)
 - Select the range of frames from which you want to replace (e.g from frame 4 to frame 9)
 - Click "Go" to start the process.
 
-Enable the "Replace all" checkbox to completely copy the source movie inputs to the target movie. 
+From source - The begin of the region in the source m64.
 
-Erase from original will erase the selected range (from->to) from the original movie file. This option directly overwrites the file, so make sure to make a backup
+To source - the end of the region in the source m64.
 
-The copy mode dictates how the inputs get copied from one movie to another.
-- Default - Use the recommended settings. Dont change this unless you know what you are doing
-- Assign - Simple copy
-- OR - Perform a bitwise OR on the source
-- AND - Perform a bitwise AND on the source
-- XOR - Perform a bitwise XOR on the source
-- The 'NOT' checkbox is a modifier which, when checked, performs a bitwise NOT on the source before all other operations.
-- The 'Erase from original' checkbox is a modifier which, when checked, deletes the From-To frame data from the original movie.
+From target - The begin of the region in the second m64.
+
+To target - The end of the region in the second m64.
+
+Upon pressing 'Go', the 1st m64's region (from source -> to source) will get copied into the 2nd m64's region.
+
 
 #### Troubleshooting replacement
 "Identical Paths" - The source and target movie are the same
@@ -56,16 +54,11 @@ The copy mode dictates how the inputs get copied from one movie to another.
 
 "Integer parsing error" - The text in the "From frame" or "To frame" textboxes isn't a number
 
-**"Invalid from/to value"** is a vague error and can mean
+**"Invalid from/to/base value"** is a vague error and can mean
 
-- Begin frame value is larger than end frame value.
-
-- End frame value is larger than movie.
-
-- Frame values are equal.
-
-- Frame value is negative.
-
+- The difference of to/src target and from/src target is less than one.
+- From/to src/trg is too big
+- From/to src/trg is too small
 
 ### How to find the first button/joystick value in a movie
 Do you want to find the first frame at which a specific button or joystick combination is held?
