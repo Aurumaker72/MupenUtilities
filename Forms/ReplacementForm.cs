@@ -188,15 +188,15 @@ namespace MupenUtils.Forms
                     lbl_Substatus.Text += "\nFrom source is too small. ";
                 if(toSrc > src.Length)
                     lbl_Substatus.Text += "\nTo source is too big. ";
-                if(toSrc-fromSrc < 1)
-                    lbl_Substatus.Text += "\nThe difference of to source and from source is less than one. ";
+                if(toSrc <= fromSrc)
+                    lbl_Substatus.Text += "\nThe to source is lesser or equal to from source.";
 
                 if (fromTrg < 0)
                     lbl_Substatus.Text += "\nFrom target is too small. ";
                 if (toTrg > trg.Length)
                     lbl_Substatus.Text += "\nTo target is too big. ";
-                if (toTrg - fromTrg < 1)
-                    lbl_Substatus.Text += "\nThe difference of to target and from target is less than one. ";
+                if (toTrg <= fromTrg)
+                    lbl_Substatus.Text += "\nThe to target is lesser or equal to from target.";
 
                 return;
             }
