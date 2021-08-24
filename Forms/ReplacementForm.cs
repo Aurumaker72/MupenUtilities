@@ -270,7 +270,7 @@ namespace MupenUtils.Forms
                 toSrc = Int32.Parse(txt_Repl_Fto_Src.Text);
                 fromTrg = Int32.Parse(txt_Repl_Base_Trg.Text);
 
-                if(toSrc-fromSrc > 0)
+                if(toSrc > fromSrc)
                 toTrg = toSrc - fromSrc + fromTrg;
                 else
                 lbl_Repl_Status.Text = "Autofill fail";
