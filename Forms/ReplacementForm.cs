@@ -8,7 +8,7 @@ namespace MupenUtils.Forms
 {
     public partial class ReplacementForm : Form
     {
-        const string HELP_COPYMODES = "Erase from original will erase the selected range (from->to) from the original movie file. This option directly overwrites the file, so make sure to make a backup\nThe copy mode dictates how the inputs get copied from one movie to another.\nDefault - Simple copy\nAssign - Simple copy\nOR - Perform a bitwise OR on the source\nAND - Perform a bitwise AND on the source\nXOR - Perform a bitwise XOR on the source\nShl1Src - Perform a left shift once on the source\nNone - Copy only a value of zero to the target\nThe \'NOT\' checkbox is a modifier which, when checked, performs a bitwise NOT on the source before all other operations.";
+        const string HELP_COPYMODES = "From source - The begin of the region in the source m64.\nTo source - the end of the region in the source m64.\nFrom target - The begin of the region in the second m64.\nTo target - The end of the region in the second m64.\nUpon pressing \'Go\', the 1st m64\'s region (from source -> to source) will get copied into the 2nd m64\'s region.";
         const int INPUT_BEGIN = 1024;
 
         string pathSource = string.Empty;
