@@ -10,6 +10,9 @@ namespace MupenUtilities.Helpers
 {
     public static class M64
     {
+        public const int HEADER_LENGTH = 1024;
+        public const int HEADER_LENGTH_OLD = 512;
+
         public struct MovieStruct
         {
             public uint magic;    // M64\0x1a

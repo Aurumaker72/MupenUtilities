@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MupenUtilities.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +10,6 @@ namespace MupenUtils.Forms
     public partial class ReplacementForm : Form
     {
         const string HELP_COPYMODES = "From source - The begin of the region in the source m64.\nTo source - the end of the region in the source m64.\nFrom target - The begin of the region in the second m64.\nTo target - The end of the region in the second m64.\nUpon pressing \'Go\', the 1st m64\'s region (from source -> to source) will get copied into the 2nd m64\'s region.\nWhen leaving Output empty, the resulting m64 will be put in the same folder as this executable.";
-        const int INPUT_BEGIN = 1024;
 
         string pathSource = string.Empty;
         string pathTarget = string.Empty;
@@ -168,16 +168,16 @@ namespace MupenUtils.Forms
             if (ReplaceMode == ReplaceModes.Frame)
             {
                 //MessageBox.Show("use Byte logic mode and do the maths yourself");
-                fromSrc *= 4;
-                toSrc *= 4;
-                fromTrg *= 4;
-                toTrg *= 4;
+                fromSrc *= sizeof(int);
+                toSrc   *= sizeof(int);
+                fromTrg *= sizeof(int);
+                toTrg   *= sizeof(int);
             }
 
-            fromSrc += 1024;
-            toSrc += 1024;
-            fromTrg += 1024;
-            toTrg += 1024;
+            fromSrc += M64.HEADER_LENGTH;
+            toSrc   += M64.HEADER_LENGTH;
+            fromTrg += M64.HEADER_LENGTH;
+            toTrg   += M64.HEADER_LENGTH;
 
 
             if (fromSrc < 0          ||

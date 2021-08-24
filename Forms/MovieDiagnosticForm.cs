@@ -64,7 +64,7 @@ namespace MupenUtilities.Forms
             FileStream fs = new FileStream(MainForm.Path, FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
 
-            br.BaseStream.Seek(1024, SeekOrigin.Begin);
+            br.BaseStream.Seek(M64.HEADER_LENGTH, SeekOrigin.Begin);
             ulong findx = 0;
             while (findx < movieData.length_samples)
             {

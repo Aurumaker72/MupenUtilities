@@ -1229,9 +1229,9 @@ namespace MupenUtils
             
             // position 1024
             if(MovieHeader.version == 3)
-            br.BaseStream.Seek(1024, SeekOrigin.Begin);
+            br.BaseStream.Seek(M64.HEADER_LENGTH, SeekOrigin.Begin);
             else
-            br.BaseStream.Seek(0x200, SeekOrigin.Begin);
+            br.BaseStream.Seek(M64.HEADER_LENGTH_OLD, SeekOrigin.Begin);
 
             bool loadinputs = true;
             if(frames > MAXIMUM_SUGGESTED_FRAMES)
