@@ -261,21 +261,22 @@ namespace MupenUtils.Forms
         {
             if (!autofill) return; // dame tu fuck you
 
+            lbl_Repl_Status.Text = "";
+            lbl_Substatus.Text = "";
+
             try
             {
-                lbl_Repl_Status.Text = "";
-                lbl_Substatus.Text = "";
-
                 fromSrc = Int32.Parse(txt_Repl_FFrom_Src.Text);
                 toSrc = Int32.Parse(txt_Repl_Fto_Src.Text);
                 fromTrg = Int32.Parse(txt_Repl_Base_Trg.Text);
 
-                if(toSrc > fromSrc)
-                toTrg = toSrc - fromSrc + fromTrg;
+                if (toSrc > fromSrc)
+                    toTrg = toSrc - fromSrc + fromTrg;
                 else
-                lbl_Repl_Status.Text = "Autofill fail";
-                lbl_Substatus.Text = "Invalid region";
-
+                {
+                    lbl_Repl_Status.Text = "Autofill fail";
+                    lbl_Substatus.Text = "Invalid region";
+                }
             }
             catch
             {
