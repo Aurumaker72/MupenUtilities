@@ -76,6 +76,7 @@ Hook into Mupen64 process memory and view some data like version string.
 Keep in mind that this Mupen hook is very slow and might not work on some systems.
 
 ## Requirements
+
 __Using__
 - M64, ST or Mupen exe
 - OS newer than Windows 7
@@ -83,14 +84,16 @@ __Using__
 
 __Building__
 
-Points marked with ✔️ will be automatically installed by vs
-
-- Visual Studio 2019
+- Visual Studio 2019 or newer
 - WinSDK 10
-- ✔️VS .NET C# Packages
-- [CircularProgressBar](https://github.com/falahati/CircularProgressBar)
-- ✔️Octokit
+- VS .NET C# Packages
 
+You may need to manually [link](https://www.webucator.com/article/how-to-add-references-to-your-visual-studio-projec/) the following libraries.
+You can find the respective dll's for these libraries in the latest MupenUtilities release folder.
+- [CircularProgressBar](https://github.com/falahati/CircularProgressBar)
+- [Octokit](https://www.nuget.org/packages/Octokit/)
+- MRG.Controls.UI
+- ICSharpCode.SharpZipLib
 
 ## Building
 To build your own Mupen Utilities executable:
