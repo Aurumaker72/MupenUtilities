@@ -96,6 +96,9 @@ You can find the respective dll's for these libraries in the latest MupenUtiliti
 - ICSharpCode.SharpZipLib
 
 ## Building
+
+* You may need to manually set the /unsafe compiler flag.
+
 To build your own Mupen Utilities executable:
 - [Download](https://github.com/Aurumaker72/MupenUtilities/zipball/main) the repository
 - If needed, [Unblock](https://4sysops.com/wp-content/uploads/2015/01/Unblock-in-File-Explorer.png) the zip archive
