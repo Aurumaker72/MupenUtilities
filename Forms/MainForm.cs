@@ -570,16 +570,16 @@ namespace MupenUtils
             moreForm.ShowDialog();
         }
 
-        void RedControl(Control ctrl)
-        {
-            Color tempcolor = ctrl.ForeColor;
-            ctrl.ForeColor = Color.Red;
-            new Thread(() =>
-               {
-                   Thread.Sleep(1000);
-                   ctrl.ForeColor = tempcolor;
-               }).Start();
-        }
+        //void RedControl(Control ctrl)
+        //{
+        //    Color tempcolor = ctrl.ForeColor;
+        //    ctrl.ForeColor = Color.Red;
+        //    new Thread(() =>
+        //       {
+        //           Thread.Sleep(1000);
+        //           ctrl.ForeColor = tempcolor;
+        //       }).Start();
+        //}
         void ControlText(Control ctrl, string text)
         {
             string temptxt = ctrl.Text;
@@ -1060,7 +1060,6 @@ namespace MupenUtils
         {
             if (!FileLoaded)
             {
-                RedControl(btn_PathSel);
                 return;
             }
 
@@ -1408,7 +1407,6 @@ namespace MupenUtils
 
             if (!FileLoaded)
             {
-                RedControl(btn_PathSel);
                 return;
             }
             //if (MovieHeader.num_controllers != 1)
