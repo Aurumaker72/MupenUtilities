@@ -564,7 +564,7 @@ namespace MupenUtils
             return fungus;
 #else
             string final = PROGRAM_NAME + " " + PROGRAM_VERSION;
-            if (FileLoaded) fungus += " - " + Path;
+            if (FileLoaded) final += " - " + Path;
             return final;
             
 #endif
