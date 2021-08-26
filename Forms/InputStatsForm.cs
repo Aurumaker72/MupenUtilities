@@ -165,11 +165,19 @@ namespace MupenUtils.Forms
                 }
             }
 
-            if (MainForm.MovieHeader.rerecord_count < 4) confidence -= 0.6;
-            else confidence += (uint)MainForm.MovieHeader.rerecord_count / (inputList.Count / 2);
+
+            if (MainForm.MovieHeader.rerecord_count == 0) confidence -= 0.6;
+            else
+            {
+                if (inputList.Count / 2 == 0)
+                    confidence += 0; // idk what to do here
+                else
+                    confidence += (uint)MainForm.MovieHeader.rerecord_count / (inputList.Count / 2);
+            }
 
             if (all > 0)
-                confidence += inputList.Count / all;
+                if (inputList.Count != 0 && all != 0)
+                    confidence += inputList.Count / all;
 
 
             lbl_IsTAS.Text = confidence > 0.9 ? "Is TAS: Yes" : "Is TAS: No";
@@ -187,6 +195,7 @@ namespace MupenUtils.Forms
                 
             }
 
+            if(inputList.Count != 0 && buttonsCount != 0)
             lbl_BPS.Text = "Buttons/Sec Avg: " + buttonsCount/inputList.Count;
             lbl_Buttons.Text = "Total Buttons: " + buttonsCount;
 
