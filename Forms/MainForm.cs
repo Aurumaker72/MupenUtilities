@@ -78,7 +78,7 @@ namespace MupenUtils
     {
         #region Vars
 
-        public const string PROGRAM_VERSION = "1.9";
+        public const string PROGRAM_VERSION = "1.9.1";
         public const string PROGRAM_NAME = "Mupen Utilities";
 
         public const byte UPDATE_CLIENT_OUTDATED = 0;
@@ -383,7 +383,7 @@ namespace MupenUtils
             //#endif
             if (!BitConverter.IsLittleEndian)
             {
-                // incompatible because this program is somewhat endian dependent
+                // incompatible because this program is somewhat endian dependent due to the bit operations
                 this.Text += " - Unsupported";
                 MessageBox.Show("Your system is big-endian and this program might not work properly!");
             }
