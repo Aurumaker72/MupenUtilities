@@ -342,7 +342,7 @@ namespace MupenUtils
             gp_Path.Dock = DockStyle.Fill;
             JOY_Abs = new Point(pb_JoystickPic.Width / 2, pb_JoystickPic.Height / 2);
             this.KeyPreview = true;
-            ResetTitle();
+            SetTitleBar();
             this.AllowDrop = true;
 
             cbox_startType.Items.Add("Snapshot");
@@ -549,17 +549,33 @@ namespace MupenUtils
                 pb_JoystickPic.BackColor = Color.FromKnownColor(KnownColor.Control);
 
         }
-        void ResetTitle()
+        string GetTitleBar()
         {
 #if DEBUG
             string bitarh;
+            string fungus;
             bitarh = IntPtr.Size == 4 ? "32 bit" : "64 bit";
             standardBitArh = IntPtr.Size == 4;
-            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
-            this.Text += " DEBUG ";
+            fungus = PROGRAM_NAME + " " + PROGRAM_VERSION + " " + bitarh;
+            fungus += " DEBUG ";
+
+            if (FileLoaded) fungus += " - " + Path;
+
+            return fungus;
 #else
-            this.Text = PROGRAM_NAME + " " + PROGRAM_VERSION;
+            string final = PROGRAM_NAME + " " + PROGRAM_VERSION;
+            if (FileLoaded) fungus += " - " + Path;
+            return final;
+            
 #endif
+        }
+        void SetTitleBar()
+        {
+            // Thread-safe
+            if (this.InvokeRequired)
+                this.Invoke((MethodInvoker)(() => this.Text = GetTitleBar()));
+            else
+                this.Text = GetTitleBar();
         }
 
         void ShowTipsForm()
@@ -940,9 +956,13 @@ namespace MupenUtils
 
             txt_Path.Invoke((MethodInvoker)(() => txt_Path.Text = string.Empty));
 
+            SetTitleBar();
+
         }
         void LoadCombo()
         {
+            
+
             string errReason = "";
             if (!System.IO.Path.GetExtension(Path).Equals(".cmb", StringComparison.InvariantCultureIgnoreCase)) errReason += "Extension invalid. ";
             if (String.IsNullOrEmpty(Path) || String.IsNullOrWhiteSpace(Path) || !ExtensionMethods.ValidPath(Path)) errReason += "Path invalid. ";
@@ -1034,6 +1054,7 @@ namespace MupenUtils
 
             txt_CMBSamples.Text = cmbLens[selectedController].ToString();
             txt_ComboName.Text = cmbNames[selectedController].ToString();
+            SetTitleBar();
 
             //if(cmbInput.Count > 4)
             //{
@@ -1129,6 +1150,7 @@ namespace MupenUtils
 
         void ReadM64()
         {
+            
             if (m64loadBusy)
             {
                 // spawn on main thread to block ui
@@ -1195,6 +1217,7 @@ namespace MupenUtils
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Checked = readOnly));
             chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Read-only"));
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
+            SetTitleBar();
             ResetLblColors();
 
             // Read header
@@ -1332,6 +1355,7 @@ namespace MupenUtils
             for (int i = 0; i < MovieHeader.num_controllers; i++)
                 cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Add("Controller " + (i + 1))));
 
+            if(cbox_Controllers.Items.Count > 0)
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
 
             //cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = 0));
@@ -1343,6 +1367,8 @@ namespace MupenUtils
             CheckSuspiciousProperties();
 
             EnableM64View_ThreadSafe(true);
+
+            SetTitleBar();
 
             Thread.Sleep(1);
             //ShowStatus_ThreadSafe(M64_LOADED_TEXT);
@@ -2188,7 +2214,6 @@ namespace MupenUtils
 
             txt_Path.Text = (string)result[0];
             Path = (string)result[0];
-
 
             MupenUtilities.Properties.Settings.Default.LastPath = Path;
             MupenUtilities.Properties.Settings.Default.Save();
