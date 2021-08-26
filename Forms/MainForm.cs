@@ -197,7 +197,8 @@ namespace MupenUtils
             Default,
             Gray,
             Dark,
-            Transparent
+            Transparent,
+            Minimalistic
         };
         public static UIThemes UITheme = UIThemes.Default;
 
@@ -391,7 +392,7 @@ namespace MupenUtils
             cmb_Country.Items.Add("Demo");
             cmb_Country.Items.Add("Beta");
             cmb_Country.Items.Add("USA/Japan");
-            cmb_Country.Items.Add("German");
+            cmb_Country.Items.Add("Germany");
             cmb_Country.Items.Add("USA");
             cmb_Country.Items.Add("France");
             cmb_Country.Items.Add("Italy");
@@ -528,7 +529,12 @@ namespace MupenUtils
                         b.BackColor = btn_BackColor;
                         b.UseVisualStyleBackColor = uitheme == UIThemes.Default;
                     }
-                    if (c is TextBox) c.BackColor = txt_BackColor;
+                    if (c is TextBox)
+                    {
+                        c.BackColor = txt_BackColor;
+                        if (uitheme == UIThemes.Minimalistic) (c as TextBox).BorderStyle = BorderStyle.None;
+                        else (c as TextBox).BorderStyle = BorderStyle.Fixed3D;
+                    }
                 });
 
             tr_MovieScrub.BackColor = miscColor;
@@ -2956,7 +2962,11 @@ namespace MupenUtils
         {
             SetInputsGroupboxBig();
         }
-
+        private void cmb_UsageType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UsageType = (UsageTypes)cmb_UsageType.SelectedIndex;
+            UpdateVisualsTop(true);
+        }
         #endregion
 
         #region Joystick Behaviour
@@ -3067,11 +3077,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        private void cmb_UsageType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UsageType = (UsageTypes)cmb_UsageType.SelectedIndex;
-            UpdateVisualsTop(true);
-        }
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -3182,7 +3188,8 @@ namespace MupenUtils
                     e.Graphics.FillEllipse(linepen.Brush, xy.X - 4, xy.Y - 4, 8, 8);
                 }
             }
-            linepen.Dispose();
+            //linepen.Dispose();
+            // let it leak?
 
             if (tsmi_Agressive.Checked)
                 SetInput(frame);

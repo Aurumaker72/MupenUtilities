@@ -34,6 +34,7 @@ namespace MupenUtils
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
             this.gp_Path = new System.Windows.Forms.GroupBox();
+            this.cmb_UsageType = new System.Windows.Forms.ComboBox();
             this.btn_Tips = new System.Windows.Forms.Button();
             this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.btn_Override = new System.Windows.Forms.Button();
@@ -145,6 +146,7 @@ namespace MupenUtils
             this.grayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transparentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Minimalistic = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_MaximizeInputGp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
@@ -182,7 +184,6 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmb_UsageType = new System.Windows.Forms.ComboBox();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -249,6 +250,16 @@ namespace MupenUtils
             this.gp_Path.TabIndex = 2;
             this.gp_Path.TabStop = false;
             this.gp_Path.Text = "File";
+            // 
+            // cmb_UsageType
+            // 
+            this.cmb_UsageType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_UsageType.FormattingEnabled = true;
+            this.cmb_UsageType.Location = new System.Drawing.Point(11, 47);
+            this.cmb_UsageType.Name = "cmb_UsageType";
+            this.cmb_UsageType.Size = new System.Drawing.Size(169, 24);
+            this.cmb_UsageType.TabIndex = 2;
+            this.cmb_UsageType.SelectedIndexChanged += new System.EventHandler(this.cmb_UsageType_SelectedIndexChanged);
             // 
             // btn_Tips
             // 
@@ -1123,8 +1134,8 @@ namespace MupenUtils
             // pb_JoystickPic
             // 
             this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
-            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
-            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.mupenbw;
+            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pb_JoystickPic.Location = new System.Drawing.Point(3, 3);
             this.pb_JoystickPic.Name = "pb_JoystickPic";
             this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
@@ -1511,7 +1522,8 @@ namespace MupenUtils
             this.defaultLightToolStripMenuItem,
             this.grayToolStripMenuItem,
             this.darkToolStripMenuItem,
-            this.transparentToolStripMenuItem});
+            this.transparentToolStripMenuItem,
+            this.tsmi_Minimalistic});
             this.tsmi_Themes.Name = "tsmi_Themes";
             this.tsmi_Themes.Size = new System.Drawing.Size(243, 26);
             this.tsmi_Themes.Text = "Themes";
@@ -1519,30 +1531,37 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // transparentToolStripMenuItem
             // 
             this.transparentToolStripMenuItem.Name = "transparentToolStripMenuItem";
-            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.transparentToolStripMenuItem.Text = "Transparent";
             this.transparentToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
+            // 
+            // tsmi_Minimalistic
+            // 
+            this.tsmi_Minimalistic.Name = "tsmi_Minimalistic";
+            this.tsmi_Minimalistic.Size = new System.Drawing.Size(172, 26);
+            this.tsmi_Minimalistic.Text = "Minimalistic";
+            this.tsmi_Minimalistic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // tsmi_MaximizeInputGp
             // 
@@ -1822,16 +1841,6 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
             // 
-            // cmb_UsageType
-            // 
-            this.cmb_UsageType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_UsageType.FormattingEnabled = true;
-            this.cmb_UsageType.Location = new System.Drawing.Point(11, 47);
-            this.cmb_UsageType.Name = "cmb_UsageType";
-            this.cmb_UsageType.Size = new System.Drawing.Size(169, 24);
-            this.cmb_UsageType.TabIndex = 2;
-            this.cmb_UsageType.SelectedIndexChanged += new System.EventHandler(this.cmb_UsageType_SelectedIndexChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -2044,6 +2053,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Regfill;
         private System.Windows.Forms.ComboBox cmb_UsageType;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Minimalistic;
     }
 }
 
