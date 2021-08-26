@@ -34,15 +34,9 @@ namespace MupenUtils
             this.btn_PathSel = new System.Windows.Forms.Button();
             this.txt_Path = new System.Windows.Forms.TextBox();
             this.gp_Path = new System.Windows.Forms.GroupBox();
-            this.rb_Trimmer = new System.Windows.Forms.RadioButton();
             this.btn_Tips = new System.Windows.Forms.Button();
             this.chk_readonly = new System.Windows.Forms.CheckBox();
             this.btn_Override = new System.Windows.Forms.Button();
-            this.rb_ReplacementSel = new System.Windows.Forms.RadioButton();
-            this.rb_MUPSel = new System.Windows.Forms.RadioButton();
-            this.rb_STsel = new System.Windows.Forms.RadioButton();
-            this.rb_CMBSel = new System.Windows.Forms.RadioButton();
-            this.rb_M64sel = new System.Windows.Forms.RadioButton();
             this.btn_LoadLatest = new System.Windows.Forms.Button();
             this.btn_SaveAs = new System.Windows.Forms.Button();
             this.btn_Save = new System.Windows.Forms.Button();
@@ -69,6 +63,7 @@ namespace MupenUtils
             this.txt_Author = new System.Windows.Forms.TextBox();
             this.gpRom = new System.Windows.Forms.GroupBox();
             this.cmb_Country = new System.Windows.Forms.ComboBox();
+            this.pb_RomCountry = new System.Windows.Forms.PictureBox();
             this.txt_Rom = new System.Windows.Forms.TextBox();
             this.txt_Crc = new System.Windows.Forms.TextBox();
             this.lbl_ROMNAME = new System.Windows.Forms.Label();
@@ -113,6 +108,7 @@ namespace MupenUtils
             this.lbl_Deg = new System.Windows.Forms.Label();
             this.lbl_Y = new System.Windows.Forms.Label();
             this.lbl_X = new System.Windows.Forms.Label();
+            this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
             this.btn_FrameBack = new System.Windows.Forms.Button();
             this.btn_FrameBack2 = new System.Windows.Forms.Button();
             this.btn_FrameFront = new System.Windows.Forms.Button();
@@ -174,9 +170,11 @@ namespace MupenUtils
             this.tsmi_EndRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_ClearRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmi_RegToBase64 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_RegionReplacement = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SelRegion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmi_Regfill = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_RegionReplacement = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_RegToBase64 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_MovieScrub = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_movieScrubStep = new System.Windows.Forms.ToolStripTextBox();
@@ -184,16 +182,14 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_Regfill = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.pb_RomCountry = new System.Windows.Forms.PictureBox();
-            this.pb_JoystickPic = new System.Windows.Forms.PictureBox();
+            this.cmb_UsageType = new System.Windows.Forms.ComboBox();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
             this.gp_header.SuspendLayout();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).BeginInit();
             this.gp_M64_misc.SuspendLayout();
             this.gp_Plugins.SuspendLayout();
             this.gp_input.SuspendLayout();
@@ -202,6 +198,7 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.nud_Angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
             this.gp_TASStudio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
@@ -209,13 +206,11 @@ namespace MupenUtils
             this.ctx_TasStudio.SuspendLayout();
             this.ctx_MovieScrub.SuspendLayout();
             this.ctx_SaveOption.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_PathSel
             // 
-            this.btn_PathSel.Location = new System.Drawing.Point(488, 17);
+            this.btn_PathSel.Location = new System.Drawing.Point(280, 17);
             this.btn_PathSel.Margin = new System.Windows.Forms.Padding(4);
             this.btn_PathSel.Name = "btn_PathSel";
             this.btn_PathSel.Size = new System.Drawing.Size(100, 28);
@@ -231,21 +226,17 @@ namespace MupenUtils
             this.txt_Path.Margin = new System.Windows.Forms.Padding(4);
             this.txt_Path.Name = "txt_Path";
             this.txt_Path.ReadOnly = true;
-            this.txt_Path.Size = new System.Drawing.Size(469, 22);
+            this.txt_Path.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.txt_Path.Size = new System.Drawing.Size(260, 22);
             this.txt_Path.TabIndex = 0;
             this.txt_Path.TabStop = false;
             // 
             // gp_Path
             // 
-            this.gp_Path.Controls.Add(this.rb_Trimmer);
+            this.gp_Path.Controls.Add(this.cmb_UsageType);
             this.gp_Path.Controls.Add(this.btn_Tips);
             this.gp_Path.Controls.Add(this.chk_readonly);
             this.gp_Path.Controls.Add(this.btn_Override);
-            this.gp_Path.Controls.Add(this.rb_ReplacementSel);
-            this.gp_Path.Controls.Add(this.rb_MUPSel);
-            this.gp_Path.Controls.Add(this.rb_STsel);
-            this.gp_Path.Controls.Add(this.rb_CMBSel);
-            this.gp_Path.Controls.Add(this.rb_M64sel);
             this.gp_Path.Controls.Add(this.txt_Path);
             this.gp_Path.Controls.Add(this.btn_LoadLatest);
             this.gp_Path.Controls.Add(this.btn_PathSel);
@@ -259,21 +250,9 @@ namespace MupenUtils
             this.gp_Path.TabStop = false;
             this.gp_Path.Text = "File";
             // 
-            // rb_Trimmer
-            // 
-            this.rb_Trimmer.AutoSize = true;
-            this.rb_Trimmer.Location = new System.Drawing.Point(310, 50);
-            this.rb_Trimmer.Name = "rb_Trimmer";
-            this.rb_Trimmer.Size = new System.Drawing.Size(78, 20);
-            this.rb_Trimmer.TabIndex = 1;
-            this.rb_Trimmer.TabStop = true;
-            this.rb_Trimmer.Text = "Trimmer";
-            this.rb_Trimmer.UseVisualStyleBackColor = true;
-            this.rb_Trimmer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_Trimmer_MouseDown);
-            // 
             // btn_Tips
             // 
-            this.btn_Tips.Location = new System.Drawing.Point(590, 17);
+            this.btn_Tips.Location = new System.Drawing.Point(382, 17);
             this.btn_Tips.Name = "btn_Tips";
             this.btn_Tips.Size = new System.Drawing.Size(55, 28);
             this.btn_Tips.TabIndex = 0;
@@ -287,7 +266,7 @@ namespace MupenUtils
             this.chk_readonly.AutoSize = true;
             this.chk_readonly.Checked = true;
             this.chk_readonly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_readonly.Location = new System.Drawing.Point(394, 50);
+            this.chk_readonly.Location = new System.Drawing.Point(186, 49);
             this.chk_readonly.Name = "chk_readonly";
             this.chk_readonly.Size = new System.Drawing.Size(92, 20);
             this.chk_readonly.TabIndex = 0;
@@ -298,7 +277,7 @@ namespace MupenUtils
             // 
             // btn_Override
             // 
-            this.btn_Override.Location = new System.Drawing.Point(552, 46);
+            this.btn_Override.Location = new System.Drawing.Point(344, 46);
             this.btn_Override.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Override.Name = "btn_Override";
             this.btn_Override.Size = new System.Drawing.Size(93, 28);
@@ -308,69 +287,9 @@ namespace MupenUtils
             this.btn_Override.UseVisualStyleBackColor = true;
             this.btn_Override.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_Override_MouseDown);
             // 
-            // rb_ReplacementSel
-            // 
-            this.rb_ReplacementSel.AutoSize = true;
-            this.rb_ReplacementSel.Location = new System.Drawing.Point(253, 50);
-            this.rb_ReplacementSel.Margin = new System.Windows.Forms.Padding(4);
-            this.rb_ReplacementSel.Name = "rb_ReplacementSel";
-            this.rb_ReplacementSel.Size = new System.Drawing.Size(57, 20);
-            this.rb_ReplacementSel.TabIndex = 0;
-            this.rb_ReplacementSel.Text = "Repl";
-            this.rb_ReplacementSel.UseVisualStyleBackColor = true;
-            this.rb_ReplacementSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_ReplacementSel_MouseDown);
-            // 
-            // rb_MUPSel
-            // 
-            this.rb_MUPSel.AutoSize = true;
-            this.rb_MUPSel.Location = new System.Drawing.Point(119, 50);
-            this.rb_MUPSel.Margin = new System.Windows.Forms.Padding(4);
-            this.rb_MUPSel.Name = "rb_MUPSel";
-            this.rb_MUPSel.Size = new System.Drawing.Size(69, 20);
-            this.rb_MUPSel.TabIndex = 0;
-            this.rb_MUPSel.Text = "Mupen";
-            this.rb_MUPSel.UseVisualStyleBackColor = true;
-            this.rb_MUPSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_MUPsel_MouseDown);
-            // 
-            // rb_STsel
-            // 
-            this.rb_STsel.AutoSize = true;
-            this.rb_STsel.Location = new System.Drawing.Point(69, 50);
-            this.rb_STsel.Margin = new System.Windows.Forms.Padding(4);
-            this.rb_STsel.Name = "rb_STsel";
-            this.rb_STsel.Size = new System.Drawing.Size(46, 20);
-            this.rb_STsel.TabIndex = 0;
-            this.rb_STsel.Text = "ST";
-            this.rb_STsel.UseVisualStyleBackColor = true;
-            this.rb_STsel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_STsel_MouseDown);
-            // 
-            // rb_CMBSel
-            // 
-            this.rb_CMBSel.AutoSize = true;
-            this.rb_CMBSel.Location = new System.Drawing.Point(192, 50);
-            this.rb_CMBSel.Margin = new System.Windows.Forms.Padding(4);
-            this.rb_CMBSel.Name = "rb_CMBSel";
-            this.rb_CMBSel.Size = new System.Drawing.Size(57, 20);
-            this.rb_CMBSel.TabIndex = 0;
-            this.rb_CMBSel.Text = "CMB";
-            this.rb_CMBSel.UseVisualStyleBackColor = true;
-            this.rb_CMBSel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_CMBSel_MouseDown);
-            // 
-            // rb_M64sel
-            // 
-            this.rb_M64sel.AutoSize = true;
-            this.rb_M64sel.Location = new System.Drawing.Point(12, 50);
-            this.rb_M64sel.Margin = new System.Windows.Forms.Padding(4);
-            this.rb_M64sel.Name = "rb_M64sel";
-            this.rb_M64sel.Size = new System.Drawing.Size(53, 20);
-            this.rb_M64sel.TabIndex = 0;
-            this.rb_M64sel.Text = "M64";
-            this.rb_M64sel.UseVisualStyleBackColor = true;
-            this.rb_M64sel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rb_M64sel_MouseDown);
-            // 
             // btn_LoadLatest
             // 
-            this.btn_LoadLatest.Location = new System.Drawing.Point(488, 46);
+            this.btn_LoadLatest.Location = new System.Drawing.Point(280, 46);
             this.btn_LoadLatest.Margin = new System.Windows.Forms.Padding(4);
             this.btn_LoadLatest.Name = "btn_LoadLatest";
             this.btn_LoadLatest.Size = new System.Drawing.Size(62, 28);
@@ -663,6 +582,16 @@ namespace MupenUtils
             this.cmb_Country.TabIndex = 0;
             this.cmb_Country.TabStop = false;
             this.cmb_Country.SelectedIndexChanged += new System.EventHandler(this.cmb_Country_SelectedIndexChanged);
+            // 
+            // pb_RomCountry
+            // 
+            this.pb_RomCountry.BackColor = System.Drawing.Color.Transparent;
+            this.pb_RomCountry.Location = new System.Drawing.Point(100, 84);
+            this.pb_RomCountry.Name = "pb_RomCountry";
+            this.pb_RomCountry.Size = new System.Drawing.Size(24, 24);
+            this.pb_RomCountry.TabIndex = 1;
+            this.pb_RomCountry.TabStop = false;
+            this.pb_RomCountry.Click += new System.EventHandler(this.pb_RomCountry_Click);
             // 
             // txt_Rom
             // 
@@ -1190,6 +1119,22 @@ namespace MupenUtils
             this.lbl_X.Size = new System.Drawing.Size(15, 16);
             this.lbl_X.TabIndex = 0;
             this.lbl_X.Text = "X";
+            // 
+            // pb_JoystickPic
+            // 
+            this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
+            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
+            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pb_JoystickPic.Location = new System.Drawing.Point(3, 3);
+            this.pb_JoystickPic.Name = "pb_JoystickPic";
+            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
+            this.pb_JoystickPic.TabIndex = 3;
+            this.pb_JoystickPic.TabStop = false;
+            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
+            this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
+            this.pb_JoystickPic.MouseLeave += new System.EventHandler(this.pb_JoystickPic_MouseLeave);
+            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
+            this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
             // 
             // btn_FrameBack
             // 
@@ -1789,12 +1734,24 @@ namespace MupenUtils
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(265, 6);
             // 
-            // tsmi_RegToBase64
+            // tsmi_SelRegion
             // 
-            this.tsmi_RegToBase64.Name = "tsmi_RegToBase64";
-            this.tsmi_RegToBase64.Size = new System.Drawing.Size(268, 26);
-            this.tsmi_RegToBase64.Text = "Region to Base64";
-            this.tsmi_RegToBase64.Click += new System.EventHandler(this.tsmi_RegToBase64_Click);
+            this.tsmi_SelRegion.Name = "tsmi_SelRegion";
+            this.tsmi_SelRegion.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_SelRegion.Text = "Select Region";
+            this.tsmi_SelRegion.Click += new System.EventHandler(this.tsmi_SelRegion_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(265, 6);
+            // 
+            // tsmi_Regfill
+            // 
+            this.tsmi_Regfill.Name = "tsmi_Regfill";
+            this.tsmi_Regfill.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_Regfill.Text = "Region fill";
+            this.tsmi_Regfill.Click += new System.EventHandler(this.tsmi_Regfill_Click);
             // 
             // tsmi_RegionReplacement
             // 
@@ -1803,12 +1760,12 @@ namespace MupenUtils
             this.tsmi_RegionReplacement.Text = "Replacement (with region)";
             this.tsmi_RegionReplacement.Click += new System.EventHandler(this.replacementwithRegionToolStripMenuItem_Click);
             // 
-            // tsmi_SelRegion
+            // tsmi_RegToBase64
             // 
-            this.tsmi_SelRegion.Name = "tsmi_SelRegion";
-            this.tsmi_SelRegion.Size = new System.Drawing.Size(268, 26);
-            this.tsmi_SelRegion.Text = "Select Region";
-            this.tsmi_SelRegion.Click += new System.EventHandler(this.tsmi_SelRegion_Click);
+            this.tsmi_RegToBase64.Name = "tsmi_RegToBase64";
+            this.tsmi_RegToBase64.Size = new System.Drawing.Size(268, 26);
+            this.tsmi_RegToBase64.Text = "Region to Base64";
+            this.tsmi_RegToBase64.Click += new System.EventHandler(this.tsmi_RegToBase64_Click);
             // 
             // toolStripSeparator1
             // 
@@ -1826,7 +1783,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1836,7 +1792,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
@@ -1867,43 +1822,15 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
             // 
-            // tsmi_Regfill
+            // cmb_UsageType
             // 
-            this.tsmi_Regfill.Name = "tsmi_Regfill";
-            this.tsmi_Regfill.Size = new System.Drawing.Size(268, 26);
-            this.tsmi_Regfill.Text = "Region fill";
-            this.tsmi_Regfill.Click += new System.EventHandler(this.tsmi_Regfill_Click);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(265, 6);
-            // 
-            // pb_RomCountry
-            // 
-            this.pb_RomCountry.BackColor = System.Drawing.Color.Transparent;
-            this.pb_RomCountry.Location = new System.Drawing.Point(100, 84);
-            this.pb_RomCountry.Name = "pb_RomCountry";
-            this.pb_RomCountry.Size = new System.Drawing.Size(24, 24);
-            this.pb_RomCountry.TabIndex = 1;
-            this.pb_RomCountry.TabStop = false;
-            this.pb_RomCountry.Click += new System.EventHandler(this.pb_RomCountry_Click);
-            // 
-            // pb_JoystickPic
-            // 
-            this.pb_JoystickPic.BackColor = System.Drawing.SystemColors.Control;
-            this.pb_JoystickPic.BackgroundImage = global::MupenUtilities.Properties.Resources.logoPng;
-            this.pb_JoystickPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pb_JoystickPic.Location = new System.Drawing.Point(3, 3);
-            this.pb_JoystickPic.Name = "pb_JoystickPic";
-            this.pb_JoystickPic.Size = new System.Drawing.Size(165, 165);
-            this.pb_JoystickPic.TabIndex = 3;
-            this.pb_JoystickPic.TabStop = false;
-            this.pb_JoystickPic.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_JoystickPic_Paint);
-            this.pb_JoystickPic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseDown);
-            this.pb_JoystickPic.MouseLeave += new System.EventHandler(this.pb_JoystickPic_MouseLeave);
-            this.pb_JoystickPic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseMove);
-            this.pb_JoystickPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_JoystickPic_MouseUp);
+            this.cmb_UsageType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_UsageType.FormattingEnabled = true;
+            this.cmb_UsageType.Location = new System.Drawing.Point(11, 47);
+            this.cmb_UsageType.Name = "cmb_UsageType";
+            this.cmb_UsageType.Size = new System.Drawing.Size(169, 24);
+            this.cmb_UsageType.TabIndex = 2;
+            this.cmb_UsageType.SelectedIndexChanged += new System.EventHandler(this.cmb_UsageType_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -1936,6 +1863,7 @@ namespace MupenUtils
             this.gp_User.PerformLayout();
             this.gpRom.ResumeLayout(false);
             this.gpRom.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).EndInit();
             this.gp_M64_misc.ResumeLayout(false);
             this.gp_M64_misc.PerformLayout();
             this.gp_Plugins.ResumeLayout(false);
@@ -1949,6 +1877,7 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.nud_Angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
             this.gp_TASStudio.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
@@ -1957,8 +1886,6 @@ namespace MupenUtils
             this.ctx_MovieScrub.ResumeLayout(false);
             this.ctx_MovieScrub.PerformLayout();
             this.ctx_SaveOption.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pb_RomCountry)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1968,8 +1895,6 @@ namespace MupenUtils
         private System.Windows.Forms.Button btn_PathSel;
         private System.Windows.Forms.TextBox txt_Path;
         private System.Windows.Forms.GroupBox gp_Path;
-        private System.Windows.Forms.RadioButton rb_STsel;
-        private System.Windows.Forms.RadioButton rb_M64sel;
         private System.Windows.Forms.GroupBox gp_M64;
         private System.Windows.Forms.Button btn_Override;
         private System.Windows.Forms.GroupBox gp_input;
@@ -2021,7 +1946,6 @@ namespace MupenUtils
         private System.Windows.Forms.Label lbl_Y;
         private System.Windows.Forms.ComboBox cbox_Controllers;
         private System.Windows.Forms.ToolStripMenuItem tsmi_GetInput;
-        private System.Windows.Forms.RadioButton rb_MUPSel;
         private System.Windows.Forms.GroupBox gp_header;
         private System.Windows.Forms.GroupBox gp_User;
         private System.Windows.Forms.TextBox txt_PathName;
@@ -2064,7 +1988,6 @@ namespace MupenUtils
         private System.Windows.Forms.Label lbl_Input;
         private System.Windows.Forms.TextBox txt_Rsp;
         private System.Windows.Forms.ToolStripMenuItem tsmi_LiveTasStudio;
-        private System.Windows.Forms.RadioButton rb_ReplacementSel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem inputStatisticsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -2100,7 +2023,6 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem tsmi_SelRegion;
         private System.Windows.Forms.Label lbl_Deg;
-        private System.Windows.Forms.RadioButton rb_CMBSel;
         private System.Windows.Forms.GroupBox gp_CMB;
         private System.Windows.Forms.Label lbl_CMBName;
         private System.Windows.Forms.TextBox txt_CMBSamples;
@@ -2118,10 +2040,10 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_MaximizeInputGp;
         private System.Windows.Forms.Panel panel_Input;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton rb_Trimmer;
         private System.Windows.Forms.ToolStripMenuItem tsmi_FlipY;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Regfill;
+        private System.Windows.Forms.ComboBox cmb_UsageType;
     }
 }
 

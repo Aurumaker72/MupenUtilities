@@ -181,7 +181,6 @@ namespace MupenUtils
 
         public enum UsageTypes
         {
-            Any,
             M64,
             ST,
             Mupen,
@@ -189,6 +188,7 @@ namespace MupenUtils
             Combo,
             Autodetect,
             Trimmer,
+            Any,
         };
         public static UsageTypes UsageType = UsageTypes.M64;
 
@@ -330,8 +330,12 @@ namespace MupenUtils
                 inputLists.Add(new List<int>());
             }
 
-            rb_M64sel.Checked = true;
-            rb_M64sel.TabStop = false;
+            foreach(var item in Enum.GetValues(typeof(UsageTypes)))
+            {
+                cmb_UsageType.Items.Add(item);
+            }
+            cmb_UsageType.SelectedIndex = MupenUtilities.Properties.Settings.Default.UsageType;
+
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             gp_M64.Visible = false;
             gp_Path.Dock = DockStyle.Fill;
@@ -706,7 +710,6 @@ namespace MupenUtils
                     break;
                 case UsageTypes.M64:
                     txt = "Browse M64";
-                    rb_M64sel.Checked = true;
                     gp_header.Visible = true;
                     gp_M64.Text = "M64";
                     gp_input.Dock = DockStyle.Right;
@@ -716,26 +719,21 @@ namespace MupenUtils
                     break;
                 case UsageTypes.ST:
                     txt = "Browse ST";
-                    rb_STsel.Checked = true;
                     break;
                 case UsageTypes.Mupen:
                     txt = "Hook";
                     btn_LoadLatest.Enabled = false;
-                    rb_MUPSel.Checked = true;
                     break;
                 case UsageTypes.Replacement:
                     txt = "Replacement";
                     btn_LoadLatest.Enabled = false;
-                    rb_ReplacementSel.Checked = true;
                     break;
                 case UsageTypes.Trimmer:
                     txt = "Trimmer";
                     btn_LoadLatest.Enabled = false;
-                    rb_Trimmer.Checked = true;
                     break;
                 case UsageTypes.Combo:
                     txt = "Browse CMB";
-                    rb_CMBSel.Checked = true;
                     gp_header.Visible = false;
                     gp_M64.Text = "Combo";
                     gp_CMB.Visible = true;
@@ -746,7 +744,6 @@ namespace MupenUtils
                     txt = "Autodetect";
                     btn_LoadLatest.Enabled = false;
                     // special care
-                    rb_M64sel.Checked = rb_MUPSel.Checked = rb_ReplacementSel.Checked = rb_STsel.Checked = false;
                     break;
             }
 
@@ -3070,7 +3067,11 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-       
+        private void cmb_UsageType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UsageType = (UsageTypes)cmb_UsageType.SelectedIndex;
+            UpdateVisualsTop(true);
+        }
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
