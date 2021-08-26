@@ -8,6 +8,13 @@ Please note that the latter option will make TASStudio unusable on multicontroll
 ### Joystick is slow
 If you are experiencing lag when dragging the joystick, click the "More..." button in the Input groupbox and disable "Antialiased Joystick"
 
+### Joystick doesn't work
+If your joystick shows this,
+
+![](https://github.com/Aurumaker72/MupenUtilities/blob/main/bwJoystick.png)
+
+select another theme and restart the program.
+
 ### Can't type in textboxes
 If you are experiencing focus loss and unresponsiveness when typing in textboxes, click the "More..." button in the Input groupbox and disable "Joystick Keyboard"
 
