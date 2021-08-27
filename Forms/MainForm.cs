@@ -681,6 +681,66 @@ namespace MupenUtils
 
         }
 
+        void ResetTASStudio()
+        {
+            dgv_Main.Rows.Clear();
+            dgv_Main.Columns.Clear();
+
+            dgv_Main.Enabled = false;
+
+        }
+
+        void ResetTxt()
+        {
+            for (int i = 0; i < gp_User.Controls.Count; i++)
+            {
+                if (gp_User.Controls[i] is TextBox)
+                {
+                    TextBox lbl = gp_User.Controls[i] as TextBox;
+                    lbl.Invoke((MethodInvoker)(() => lbl.Text = string.Empty));
+                }
+            }
+            for (int i = 0; i < gp_M64_misc.Controls.Count; i++)
+            {
+                if (gp_M64_misc.Controls[i] is TextBox)
+                {
+                    TextBox lbl = gp_M64_misc.Controls[i] as TextBox;
+                    lbl.Invoke((MethodInvoker)(() => lbl.Text = string.Empty));
+                }
+            }
+            for (int i = 0; i < gpRom.Controls.Count; i++)
+            {
+                if (gpRom.Controls[i] is TextBox)
+                {
+                    TextBox lbl = gpRom.Controls[i] as TextBox;
+                    lbl.Invoke((MethodInvoker)(() => lbl.Text = string.Empty));
+                }
+            }
+            for (int i = 0; i < gp_M64.Controls.Count; i++)
+            {
+                if (gp_User.Controls[i] is TextBox)
+                {
+                    TextBox lbl = gp_User.Controls[i] as TextBox;
+                    lbl.Invoke((MethodInvoker)(() => lbl.Text = string.Empty));
+                }
+            }
+            for (int i = 0; i < gp_Plugins.Controls.Count; i++)
+            {
+                if (gp_Plugins.Controls[i] is TextBox)
+                {
+                    TextBox lbl = gp_Plugins.Controls[i] as TextBox;
+                    lbl.Invoke((MethodInvoker)(() => lbl.Text = string.Empty));
+                }
+            }
+            for (int i = 0; i < gp_CMB.Controls.Count; i++)
+            {
+                if (gp_CMB.Controls[i] is TextBox)
+                {
+                    TextBox lbl = gp_CMB.Controls[i] as TextBox;
+                    lbl.Invoke((MethodInvoker)(() => lbl.Text = string.Empty));
+                }
+            }
+        }
         void ResetLblColors()
         {
 
@@ -812,6 +872,61 @@ namespace MupenUtils
         void UpdateSaveButtonsVisuals()
         {
             
+        }
+
+        // warning: 
+        // has side effects!
+        void FreeData(UsageTypes Type)
+        {
+            FileLoaded = false;
+
+            // destroy everything
+            foreach (var list in inputLists)
+            {
+                list.Clear();
+            }
+
+            if (Type == UsageTypes.Combo)
+            {
+                cbox_Controllers.Items.Clear();
+                SetJoystickValue(new Point(0, 0), RELATIVE, false);
+                foreach (var l in cmbInput) l.Clear();
+                cmbInput.Clear();
+                cmbLens.Clear();
+                cmbNames.Clear();
+            }
+            else if (Type == UsageTypes.M64)
+            {
+
+                frame = MINIMUM_FRAME;
+                lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "Frame " + frame.ToString()));
+                txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = frame.ToString()));
+                tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = MINIMUM_FRAME));
+                tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = MINIMUM_FRAME));
+                gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
+                Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
+                chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Checked = readOnly));
+                chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Read-only"));
+                cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
+
+                MovieHeader = default; // expunge header
+
+            }
+
+            cmb_Country.ResetText();
+            cmb_Country.SelectedIndex = -1;
+            cbox_startType.ResetText();
+            cbox_startType.SelectedIndex = -1;
+
+            cbox_Controllers.SelectedIndex = -1;
+            cbox_Controllers.Items.Clear();
+
+            ResetTASStudio();
+
+            ResetLblColors();
+            ResetTxt();
+            SetTitleBar();
+
         }
 
         #endregion
@@ -984,17 +1099,7 @@ namespace MupenUtils
                 return;
             }
 
-            // destroy everything
-            foreach (var list in inputLists)
-            {
-                list.Clear();
-            }
-            cbox_Controllers.Items.Clear();
-            SetJoystickValue(new Point(0, 0),RELATIVE,false);
-            foreach (var l in cmbInput) l.Clear();
-            cmbInput.Clear();
-            cmbLens.Clear();
-            cmbNames.Clear();
+            FreeData(UsageTypes.Combo);
 
             BinaryReader br = new BinaryReader(fs);
 
@@ -1192,33 +1297,15 @@ namespace MupenUtils
                 return;
             }
 
-            //foreach (Process procarr in Process.GetProcesses())
-            //{
-            //    if (String.Equals(procarr.ProcessName, "mupen64", StringComparison.InvariantCultureIgnoreCase) || procarr.ProcessName.Contains("mupen64"))
-            //    {
-            //        mupenRunning = true;
-            //        break;
-            //    }
-            //}
+            
+            
+            mupenRunning = Process.GetProcessesByName("mupen64").Length > 0;
+            
 
-            // Reset
-            foreach(var list in inputLists)
-            {
-                list.Clear();
-            }
 
-            frame = 1;
-            lbl_FrameSelected.Invoke((MethodInvoker)(() => lbl_FrameSelected.Text = "Frame " + frame.ToString()));
-            txt_Frame.Invoke((MethodInvoker)(() => txt_Frame.Text = frame.ToString()));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Minimum = MINIMUM_FRAME));
-            tr_MovieScrub.Invoke((MethodInvoker)(() => tr_MovieScrub.Value = MINIMUM_FRAME));
-            gp_input.Invoke((MethodInvoker)(() => gp_input.Enabled = true));
-            Invoke((MethodInvoker)(() => tr_MovieScrub.Enabled = true));
-            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Checked = readOnly));
-            chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Read-only"));
-            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
-            SetTitleBar();
-            ResetLblColors();
+            FreeData(UsageTypes.M64); // destroy movie
+
+            
 
             // Read header
             FileStream fs;
@@ -1677,6 +1764,9 @@ namespace MupenUtils
              * It loads input data into the datagridview
              * 
              */
+
+            
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Enabled = true));
 
             // nuke all old data
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Clear()));
@@ -2767,11 +2857,12 @@ namespace MupenUtils
 
         private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //if (!tasStudioAutoScroll) return;
-            //
-            //if (e.RowIndex >= MINIMUM_FRAME && e.RowIndex < inputLists[selectedController].Count)
-            //SetFrame(e.RowIndex);
-            //
+            if (!(sender is DataGridView dgv)) return;
+
+            if (e.RowIndex == frame)
+            {
+                TASStudioCellSet(e.ColumnIndex, e.RowIndex);
+            }
         }
 
         private void tsmi_Autoscroll_Click(object sender, EventArgs e)
@@ -2839,15 +2930,14 @@ namespace MupenUtils
             if (tsmi.Text.Contains("Change")) tsmi.Text = "";
         }
 
-        private void dgv_Main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        void TASStudioCellSet(int colIndex, int rowIndex)
         {
             if (readOnly || m64loadBusy) return;
-            if (!(sender is DataGridView dgv)) return;
 
-            int structIndex = e.ColumnIndex;
-            int index = e.RowIndex;
+            int structIndex = colIndex;
+            int index = rowIndex;
 
-            DataGridViewCell cell = dgv.Rows[index].Cells[e.ColumnIndex];
+            DataGridViewCell cell = dgv_Main.Rows[index].Cells[colIndex];
 
             if (structIndex >= 16)
             {
@@ -2869,6 +2959,12 @@ namespace MupenUtils
             Debug.WriteLine(ExtensionMethods.GetBit(buffer, index));
 
             SetInputPure(index, buffer);
+        }
+        private void dgv_Main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!(sender is DataGridView dgv)) return;
+
+            TASStudioCellSet(e.ColumnIndex, e.RowIndex);
         }
 
 
@@ -2990,6 +3086,12 @@ namespace MupenUtils
             UsageType = (UsageTypes)cmb_UsageType.SelectedIndex;
             UpdateVisualsTop(true);
         }
+        private void btn_Unload_Click(object sender, EventArgs e)
+        {
+            FreeData(UsageType);
+            EnableM64View(false, false, false);
+        }
+
         #endregion
 
         #region Joystick Behaviour

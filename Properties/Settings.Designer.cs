@@ -73,6 +73,18 @@ namespace MupenUtilities.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ReloadTASStudioOnControllerChange {
+            get {
+                return ((bool)(this["ReloadTASStudioOnControllerChange"]));
+            }
+            set {
+                this["ReloadTASStudioOnControllerChange"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LastPath {
             get {
@@ -104,18 +116,6 @@ namespace MupenUtilities.Properties {
             }
             set {
                 this["LastPathReplaceTrg"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ReloadTASStudioOnControllerChange {
-            get {
-                return ((bool)(this["ReloadTASStudioOnControllerChange"]));
-            }
-            set {
-                this["ReloadTASStudioOnControllerChange"] = value;
             }
         }
     }

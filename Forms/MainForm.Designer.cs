@@ -184,6 +184,7 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_Unload = new System.Windows.Forms.Button();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -312,7 +313,7 @@ namespace MupenUtils
             // 
             // btn_SaveAs
             // 
-            this.btn_SaveAs.Location = new System.Drawing.Point(373, 448);
+            this.btn_SaveAs.Location = new System.Drawing.Point(238, 448);
             this.btn_SaveAs.Margin = new System.Windows.Forms.Padding(4);
             this.btn_SaveAs.Name = "btn_SaveAs";
             this.btn_SaveAs.Size = new System.Drawing.Size(98, 28);
@@ -324,7 +325,7 @@ namespace MupenUtils
             // 
             // btn_Save
             // 
-            this.btn_Save.Location = new System.Drawing.Point(267, 448);
+            this.btn_Save.Location = new System.Drawing.Point(132, 448);
             this.btn_Save.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(98, 28);
@@ -340,6 +341,7 @@ namespace MupenUtils
             this.gp_M64.Controls.Add(this.btn_SaveOptions);
             this.gp_M64.Controls.Add(this.gp_CMB);
             this.gp_M64.Controls.Add(this.gp_header);
+            this.gp_M64.Controls.Add(this.btn_Unload);
             this.gp_M64.Controls.Add(this.btn_Reload);
             this.gp_M64.Controls.Add(this.btn_SaveAs);
             this.gp_M64.Controls.Add(this.btn_Save);
@@ -356,7 +358,7 @@ namespace MupenUtils
             // 
             // btn_SaveOptions
             // 
-            this.btn_SaveOptions.Location = new System.Drawing.Point(139, 448);
+            this.btn_SaveOptions.Location = new System.Drawing.Point(4, 448);
             this.btn_SaveOptions.Name = "btn_SaveOptions";
             this.btn_SaveOptions.Size = new System.Drawing.Size(121, 28);
             this.btn_SaveOptions.TabIndex = 1;
@@ -895,7 +897,7 @@ namespace MupenUtils
             // 
             // btn_Reload
             // 
-            this.btn_Reload.Location = new System.Drawing.Point(479, 448);
+            this.btn_Reload.Location = new System.Drawing.Point(344, 448);
             this.btn_Reload.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Reload.Name = "btn_Reload";
             this.btn_Reload.Size = new System.Drawing.Size(98, 28);
@@ -1802,6 +1804,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
+            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1811,6 +1814,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
+            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
@@ -1840,6 +1844,18 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Size = new System.Drawing.Size(356, 24);
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
+            // 
+            // btn_Unload
+            // 
+            this.btn_Unload.Location = new System.Drawing.Point(450, 448);
+            this.btn_Unload.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Unload.Name = "btn_Unload";
+            this.btn_Unload.Size = new System.Drawing.Size(98, 28);
+            this.btn_Unload.TabIndex = 0;
+            this.btn_Unload.TabStop = false;
+            this.btn_Unload.Text = "Unload";
+            this.btn_Unload.UseVisualStyleBackColor = true;
+            this.btn_Unload.Click += new System.EventHandler(this.btn_Unload_Click);
             // 
             // MainForm
             // 
@@ -2054,6 +2070,7 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem tsmi_Regfill;
         private System.Windows.Forms.ComboBox cmb_UsageType;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Minimalistic;
+        private System.Windows.Forms.Button btn_Unload;
     }
 }
 
