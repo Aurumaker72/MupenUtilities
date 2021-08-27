@@ -54,7 +54,7 @@ namespace MupenUtils.Forms
             this.gp_TasStudio_Help.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_TasStudio_Help.Location = new System.Drawing.Point(0, 0);
             this.gp_TasStudio_Help.Name = "gp_TasStudio_Help";
-            this.gp_TasStudio_Help.Size = new System.Drawing.Size(532, 343);
+            this.gp_TasStudio_Help.Size = new System.Drawing.Size(532, 151);
             this.gp_TasStudio_Help.TabIndex = 0;
             this.gp_TasStudio_Help.TabStop = false;
             this.gp_TasStudio_Help.Text = "TAS Studio Commands";
@@ -62,7 +62,7 @@ namespace MupenUtils.Forms
             // lbl_Success
             // 
             this.lbl_Success.AutoSize = true;
-            this.lbl_Success.Location = new System.Drawing.Point(16, 296);
+            this.lbl_Success.Location = new System.Drawing.Point(16, 110);
             this.lbl_Success.Name = "lbl_Success";
             this.lbl_Success.Size = new System.Drawing.Size(209, 32);
             this.lbl_Success.TabIndex = 0;
@@ -102,7 +102,7 @@ namespace MupenUtils.Forms
             // gp_TasStudio_Goto
             // 
             this.gp_TasStudio_Goto.Controls.Add(this.btn_TasStudio_Goto);
-            this.gp_TasStudio_Goto.Location = new System.Drawing.Point(286, 272);
+            this.gp_TasStudio_Goto.Location = new System.Drawing.Point(284, 81);
             this.gp_TasStudio_Goto.Name = "gp_TasStudio_Goto";
             this.gp_TasStudio_Goto.Size = new System.Drawing.Size(242, 64);
             this.gp_TasStudio_Goto.TabIndex = 2;
@@ -142,7 +142,7 @@ namespace MupenUtils.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(532, 343);
+            this.ClientSize = new System.Drawing.Size(532, 151);
             this.Controls.Add(this.gp_TasStudio_Help);
             this.MaximizeBox = false;
             this.Name = "TASStudioMoreForm";
