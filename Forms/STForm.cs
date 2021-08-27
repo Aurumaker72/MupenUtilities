@@ -144,10 +144,12 @@ namespace MupenUtils.Forms
             nud_Lives.Value = lives;
             nud_Health.Value = health;
         }
+
+
         void SM64Push()
         {
-            Array.Copy(BitConverter.GetBytes(coins), 0, savestate, COINS_COUNT_ADDRESS, 2);
-            Array.Copy(BitConverter.GetBytes(stars), 0, savestate, STARS_COUNT_ADDRESS, 2);
+            Buffer.BlockCopy(BitConverter.GetBytes(coins), 0, savestate, (int)COINS_COUNT_ADDRESS, BitConverter.GetBytes(coins).Length);
+            Buffer.BlockCopy(BitConverter.GetBytes(stars), 0, savestate, (int)STARS_COUNT_ADDRESS, BitConverter.GetBytes(stars).Length);
             savestate[LIVES_COUNT_ADDRESS] = (byte)lives;
             savestate[HEALTH_ADDRESS] = (byte)health;
         }
