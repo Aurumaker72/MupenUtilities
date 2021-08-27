@@ -1718,21 +1718,13 @@ namespace MupenUtils
 
             if (decompressed.Length < 10485760)
             {
-                ErrorProcessing("Too small.");
+                ErrorProcessing("Decompressed data is too small for savestate.");
                 return;
             }
 
 
-            BinaryReader br = new BinaryReader(new MemoryStream(decompressed));
-
-            //defFs.Read(STForm.savestateRDRAM, 0, (int)deStream.BaseStream.Length);
-            br.BaseStream.Seek(0x1B0, SeekOrigin.Begin); // have fun figuring this out without docs
-            STForm.savestateRDRAM = br.ReadBytes(8388608);
-
-            br.BaseStream.Seek(0, SeekOrigin.Begin);
+            
             STForm.savestate = decompressed;
-
-            br.Close();
 
             string tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
             while (File.Exists(tmpPath))
