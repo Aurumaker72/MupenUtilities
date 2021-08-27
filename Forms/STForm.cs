@@ -13,8 +13,6 @@ namespace MupenUtils.Forms
     {
         public static byte[] savestate = new byte[10496988];
 
-        public static byte[] savestateRDRAM = new byte[8388608];
-
         public static Thread stLoadThread;
         public static int selectedOffset = 0;
         public static List<int> disallowedOffsets = new List<int>();
@@ -60,7 +58,7 @@ namespace MupenUtils.Forms
             txt_RDRAM.ForeColor = Color.Black;
             int tmp = selectedOffset;
 
-            if (ExtensionMethods.ValidStringInt(txt_rdramoffset.Text, 0, savestateRDRAM.Length))
+            if (ExtensionMethods.ValidStringInt(txt_rdramoffset.Text, 0, 8388608))
                 selectedOffset = int.Parse(txt_rdramoffset.Text);
 
             for (int i = 0; i < disallowedOffsets.Count; i++)
@@ -76,7 +74,7 @@ namespace MupenUtils.Forms
             }
 
             //txt_RDRAM.Clear();
-            txt_RDRAM.Text = savestateRDRAM[selectedOffset].ToString("X2");
+            txt_RDRAM.Text = savestate[0x1B0 + selectedOffset].ToString("X2");
 
 
         }
@@ -88,7 +86,7 @@ namespace MupenUtils.Forms
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            string final = selectedOffset.ToString("X2") + " | " + savestateRDRAM[selectedOffset].ToString("X2");
+            string final = selectedOffset.ToString("X2") + " | " + savestate[0x1B0 + selectedOffset].ToString("X2");
 
             foreach (string s in ls_SAVED.Items)
                 if (s == final) return;
@@ -103,7 +101,7 @@ namespace MupenUtils.Forms
         }
         private void btn_Disallow_Click(object sender, EventArgs e)
         {
-            ls_SAVED.Items.Remove(selectedOffset.ToString("X2") + " | " + savestateRDRAM[selectedOffset].ToString("X2"));
+            ls_SAVED.Items.Remove(selectedOffset.ToString("X2") + " | " + savestate[0x1B0+selectedOffset].ToString("X2"));
             for (int i = 0; i < disallowedOffsets.Count; i++) if (selectedOffset == disallowedOffsets[i]) disallowedOffsets.RemoveAt(i);
             disallowedOffsets.Add(selectedOffset);
         }
@@ -126,8 +124,8 @@ namespace MupenUtils.Forms
             else
                 final = byte.Parse(txt_Edit.Text);
 
-            savestateRDRAM[selectedOffset] = final;
-            txt_RDRAM.Text = savestateRDRAM[selectedOffset].ToString("X2");
+            savestate[0x1B0+selectedOffset] = final;
+            txt_RDRAM.Text = savestate[0x1B0+selectedOffset].ToString("X2");
         }
         #endregion
 
@@ -143,11 +141,15 @@ namespace MupenUtils.Forms
             nud_Stars.Value = stars;
             nud_Lives.Value = lives;
             nud_Health.Value = health;
-        }
+        }   
 
 
         void SM64Push()
         {
+            coins = (short)nud_Coins.Value;
+            stars = (short)nud_Stars.Value;
+            lives = (sbyte)nud_Lives.Value;
+            health = (sbyte)nud_Health.Value;
             Buffer.BlockCopy(BitConverter.GetBytes(coins), 0, savestate, (int)COINS_COUNT_ADDRESS, BitConverter.GetBytes(coins).Length);
             Buffer.BlockCopy(BitConverter.GetBytes(stars), 0, savestate, (int)STARS_COUNT_ADDRESS, BitConverter.GetBytes(stars).Length);
             savestate[LIVES_COUNT_ADDRESS] = (byte)lives;
@@ -160,10 +162,9 @@ namespace MupenUtils.Forms
             SM64Push();
 
             byte[] st = savestate.ToArray();
+
             long oldSize = st.Length;
-
-            Array.Copy(savestateRDRAM, 0, st, 0x1B0, 8388608);
-
+            
             // compress st array
             st = ExtensionMethods.Compress(st);
 
@@ -201,13 +202,6 @@ namespace MupenUtils.Forms
             }
         }
 
-        private void gamePropertyChanged(object sender, MouseEventArgs e)
-        {
-            Debug.WriteLine("st update value");
-            coins = (short)nud_Coins.Value;
-            stars = (short)nud_Stars.Value;
-            lives = (sbyte)nud_Lives.Value;
-            health = (sbyte)nud_Health.Value;
-        }
+        
     }
 }

@@ -74,7 +74,7 @@ namespace MupenUtils.Forms
             this.gp_st.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_st.Location = new System.Drawing.Point(0, 0);
             this.gp_st.Name = "gp_st";
-            this.gp_st.Size = new System.Drawing.Size(762, 453);
+            this.gp_st.Size = new System.Drawing.Size(762, 316);
             this.gp_st.TabIndex = 1;
             this.gp_st.TabStop = false;
             this.gp_st.Text = "Savestate";
@@ -83,7 +83,7 @@ namespace MupenUtils.Forms
             // 
             this.cmb_Editmode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_Editmode.FormattingEnabled = true;
-            this.cmb_Editmode.Location = new System.Drawing.Point(192, 405);
+            this.cmb_Editmode.Location = new System.Drawing.Point(192, 279);
             this.cmb_Editmode.Name = "cmb_Editmode";
             this.cmb_Editmode.Size = new System.Drawing.Size(121, 24);
             this.cmb_Editmode.TabIndex = 0;
@@ -92,9 +92,9 @@ namespace MupenUtils.Forms
             // 
             // btn_SaveST
             // 
-            this.btn_SaveST.Location = new System.Drawing.Point(6, 405);
+            this.btn_SaveST.Location = new System.Drawing.Point(6, 279);
             this.btn_SaveST.Name = "btn_SaveST";
-            this.btn_SaveST.Size = new System.Drawing.Size(129, 42);
+            this.btn_SaveST.Size = new System.Drawing.Size(129, 34);
             this.btn_SaveST.TabIndex = 0;
             this.btn_SaveST.TabStop = false;
             this.btn_SaveST.Text = "Save ST";
@@ -114,7 +114,7 @@ namespace MupenUtils.Forms
             this.gp_Values.Dock = System.Windows.Forms.DockStyle.Right;
             this.gp_Values.Location = new System.Drawing.Point(451, 18);
             this.gp_Values.Name = "gp_Values";
-            this.gp_Values.Size = new System.Drawing.Size(308, 432);
+            this.gp_Values.Size = new System.Drawing.Size(308, 295);
             this.gp_Values.TabIndex = 0;
             this.gp_Values.TabStop = false;
             this.gp_Values.Text = "Super Mario 64 USA";
@@ -130,7 +130,6 @@ namespace MupenUtils.Forms
             this.nud_Health.Name = "nud_Health";
             this.nud_Health.Size = new System.Drawing.Size(120, 22);
             this.nud_Health.TabIndex = 0;
-            this.nud_Health.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gamePropertyChanged);
             // 
             // nud_Coins
             // 
@@ -143,7 +142,6 @@ namespace MupenUtils.Forms
             this.nud_Coins.Name = "nud_Coins";
             this.nud_Coins.Size = new System.Drawing.Size(120, 22);
             this.nud_Coins.TabIndex = 0;
-            this.nud_Coins.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gamePropertyChanged);
             // 
             // lbl_Health
             // 
@@ -174,7 +172,6 @@ namespace MupenUtils.Forms
             this.nud_Lives.Name = "nud_Lives";
             this.nud_Lives.Size = new System.Drawing.Size(120, 22);
             this.nud_Lives.TabIndex = 0;
-            this.nud_Lives.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gamePropertyChanged);
             // 
             // lbl_Lives
             // 
@@ -196,7 +193,6 @@ namespace MupenUtils.Forms
             this.nud_Stars.Name = "nud_Stars";
             this.nud_Stars.Size = new System.Drawing.Size(120, 22);
             this.nud_Stars.TabIndex = 0;
-            this.nud_Stars.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gamePropertyChanged);
             // 
             // lbl_Star
             // 
@@ -223,7 +219,7 @@ namespace MupenUtils.Forms
             this.gp_RDRAM.Controls.Add(this.ls_SAVED);
             this.gp_RDRAM.Location = new System.Drawing.Point(3, 18);
             this.gp_RDRAM.Name = "gp_RDRAM";
-            this.gp_RDRAM.Size = new System.Drawing.Size(442, 369);
+            this.gp_RDRAM.Size = new System.Drawing.Size(442, 255);
             this.gp_RDRAM.TabIndex = 1;
             this.gp_RDRAM.TabStop = false;
             this.gp_RDRAM.Text = "RDRAM";
@@ -310,7 +306,7 @@ namespace MupenUtils.Forms
             // 
             // btn_RDRAMOffsetHelp
             // 
-            this.btn_RDRAMOffsetHelp.Location = new System.Drawing.Point(8, 336);
+            this.btn_RDRAMOffsetHelp.Location = new System.Drawing.Point(8, 212);
             this.btn_RDRAMOffsetHelp.Name = "btn_RDRAMOffsetHelp";
             this.btn_RDRAMOffsetHelp.Size = new System.Drawing.Size(24, 24);
             this.btn_RDRAMOffsetHelp.TabIndex = 0;
@@ -322,7 +318,7 @@ namespace MupenUtils.Forms
             // lbl_RDRAMOff
             // 
             this.lbl_RDRAMOff.AutoSize = true;
-            this.lbl_RDRAMOff.Location = new System.Drawing.Point(40, 339);
+            this.lbl_RDRAMOff.Location = new System.Drawing.Point(40, 215);
             this.lbl_RDRAMOff.Name = "lbl_RDRAMOff";
             this.lbl_RDRAMOff.Size = new System.Drawing.Size(92, 16);
             this.lbl_RDRAMOff.TabIndex = 0;
@@ -330,7 +326,7 @@ namespace MupenUtils.Forms
             // 
             // txt_rdramoffset
             // 
-            this.txt_rdramoffset.Location = new System.Drawing.Point(144, 339);
+            this.txt_rdramoffset.Location = new System.Drawing.Point(144, 215);
             this.txt_rdramoffset.Name = "txt_rdramoffset";
             this.txt_rdramoffset.Size = new System.Drawing.Size(100, 22);
             this.txt_rdramoffset.TabIndex = 0;
@@ -349,7 +345,7 @@ namespace MupenUtils.Forms
             // lbl_MOde
             // 
             this.lbl_MOde.AutoSize = true;
-            this.lbl_MOde.Location = new System.Drawing.Point(144, 408);
+            this.lbl_MOde.Location = new System.Drawing.Point(144, 282);
             this.lbl_MOde.Name = "lbl_MOde";
             this.lbl_MOde.Size = new System.Drawing.Size(42, 16);
             this.lbl_MOde.TabIndex = 0;
@@ -360,7 +356,7 @@ namespace MupenUtils.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(762, 453);
+            this.ClientSize = new System.Drawing.Size(762, 316);
             this.Controls.Add(this.gp_st);
             this.MaximizeBox = false;
             this.Name = "STForm";
