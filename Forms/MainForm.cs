@@ -179,6 +179,8 @@ namespace MupenUtils
 
         public static bool notifiedReupdateControllerFlags;
 
+        Pen linepen = Pens.Red;
+
         public enum UsageTypes
         {
             M64,
@@ -3214,7 +3216,7 @@ namespace MupenUtils
 
             e.Graphics.SmoothingMode = JOY_SmoothingMode;
 
-            Pen linepen = Pens.Red;
+            
 
             if (readOnly) linepen = new Pen(Color.Gray, 3);
 
@@ -3254,7 +3256,7 @@ namespace MupenUtils
 
                 e.Graphics.DrawEllipse(readOnly ? Pens.DarkGray : Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
 
-                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, 1, JOY_middle.Y-1, pb_JoystickPic.Width, JOY_middle.Y);
+                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, 1, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
                 e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, 1);
 
                 e.Graphics.DrawLine(linepen, JOY_middle, xy);
