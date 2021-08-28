@@ -165,6 +165,7 @@ namespace MupenUtils
 
         public static int frame;
         System.Windows.Forms.Timer stepFrameTimer = new System.Windows.Forms.Timer();
+        System.Windows.Forms.Timer joystickTimer = new System.Windows.Forms.Timer();
 
 
         // Joystick input
@@ -181,6 +182,7 @@ namespace MupenUtils
 
         Pen linepen = Pens.Red;
 
+        
         public enum UsageTypes
         {
             M64,
@@ -313,6 +315,10 @@ namespace MupenUtils
             stepFrameTimer.Tick += new EventHandler(AdvanceInputAuto);
             stepFrameTimer.Interval = 1000 / 30; // 30 fps
             stepFrameTimer.Stop();
+
+            joystickTimer.Tick += new EventHandler(JoystickCallbackTimerAuto);
+            joystickTimer.Interval = 1000 / 120; // 120 fps
+            joystickTimer.Start();
 
             JOY_middle.X = pb_JoystickPic.Width / 2;
             JOY_middle.Y = pb_JoystickPic.Height / 2;
@@ -2433,6 +2439,16 @@ namespace MupenUtils
             if(index <= tr_MovieScrub.Maximum && index >= tr_MovieScrub.Minimum) tr_MovieScrub.Value = frame;
             
         }
+        
+        void JoystickCallbackTimerAuto(object obj, EventArgs e)
+        {
+            if (JOY_followMouse)
+            {
+                Point j = MousePosition;
+                j = pb_JoystickPic.PointToClient(j);
+                SetJoystickValue(j, true, true);
+            }
+        }
         void AdvanceInputAuto(object obj, EventArgs e)
         {
             StepFrameAuto();
@@ -3185,7 +3201,10 @@ namespace MupenUtils
 
         
         private void pb_JoystickPic_Paint(object sender, PaintEventArgs e) => DrawJoystick(e);
-        private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e) => JOY_mouseDown = JOY_followMouse;
+        private void pb_JoystickPic_MouseUp(object sender, MouseEventArgs e)
+        {
+            JOY_mouseDown = JOY_followMouse;
+        }
         private void pb_JoystickPic_MouseMove(object sender, MouseEventArgs e)
         {
             if (JOY_mouseDown) SetJoystickValue(e.Location, ABSOLUTE, true);
@@ -3205,6 +3224,9 @@ namespace MupenUtils
             JOY_followMouse = e.Button != MouseButtons.Right || !JOY_followMouse;
             JOY_followMouse = !(e.Button == MouseButtons.Left && JOY_followMouse);
             JOY_mouseDown = true;
+            if(JOY_followMouse && !joystickTimer.Enabled) joystickTimer.Start();
+            if (!JOY_followMouse && joystickTimer.Enabled) joystickTimer.Stop();
+
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
