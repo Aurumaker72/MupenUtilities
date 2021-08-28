@@ -62,7 +62,7 @@ namespace MupenUtils.Forms
             // llbl_Issues
             // 
             this.llbl_Issues.AutoSize = true;
-            this.llbl_Issues.Location = new System.Drawing.Point(16, 192);
+            this.llbl_Issues.Location = new System.Drawing.Point(13, 184);
             this.llbl_Issues.Name = "llbl_Issues";
             this.llbl_Issues.Size = new System.Drawing.Size(110, 16);
             this.llbl_Issues.TabIndex = 0;
@@ -72,7 +72,7 @@ namespace MupenUtils.Forms
             // 
             // btn_Continue
             // 
-            this.btn_Continue.Location = new System.Drawing.Point(208, 296);
+            this.btn_Continue.Location = new System.Drawing.Point(205, 176);
             this.btn_Continue.Name = "btn_Continue";
             this.btn_Continue.Size = new System.Drawing.Size(88, 32);
             this.btn_Continue.TabIndex = 0;
@@ -95,7 +95,7 @@ namespace MupenUtils.Forms
             // 
             // btn_Quit
             // 
-            this.btn_Quit.Location = new System.Drawing.Point(504, 296);
+            this.btn_Quit.Location = new System.Drawing.Point(501, 176);
             this.btn_Quit.Name = "btn_Quit";
             this.btn_Quit.Size = new System.Drawing.Size(88, 32);
             this.btn_Quit.TabIndex = 0;
@@ -106,7 +106,7 @@ namespace MupenUtils.Forms
             // 
             // btn_CrashLog
             // 
-            this.btn_CrashLog.Location = new System.Drawing.Point(304, 296);
+            this.btn_CrashLog.Location = new System.Drawing.Point(301, 176);
             this.btn_CrashLog.Name = "btn_CrashLog";
             this.btn_CrashLog.Size = new System.Drawing.Size(192, 32);
             this.btn_CrashLog.TabIndex = 0;
@@ -119,7 +119,7 @@ namespace MupenUtils.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(599, 338);
+            this.ClientSize = new System.Drawing.Size(599, 214);
             this.Controls.Add(this.btn_CrashLog);
             this.Controls.Add(this.btn_Quit);
             this.Controls.Add(this.btn_Continue);

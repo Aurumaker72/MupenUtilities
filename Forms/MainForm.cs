@@ -3249,62 +3249,18 @@ namespace MupenUtils
 
 
             // TODO: somehow optimize this because branching in wm_paint is not good
-            // but this isnt too bad because gdi+ isn't hardware accelerated, so no hardware waiting for eachother
-            if (!readOnly)
-            {
-                if (UITheme == UIThemes.Default)
-                {
-                    e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                    e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                    e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                    e.Graphics.FillEllipse(Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
-                }
-                else if (UITheme == UIThemes.Gray)
-                {
-                    e.Graphics.DrawEllipse(Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                    e.Graphics.DrawLine(Pens.Black, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                    e.Graphics.DrawLine(Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                    e.Graphics.FillEllipse(Brushes.Black, xy.X - 4, xy.Y - 4, 8, 8);
+            // but on flip side this isnt too bad because gdi+ isn't hardware accelerated, so no hardware waiting for eachother
+            
 
-                }
-                else if (UITheme == UIThemes.Dark)
-                {
-                    e.Graphics.DrawEllipse(linepen, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                    e.Graphics.DrawLine(linepen, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                    e.Graphics.DrawLine(linepen, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                    e.Graphics.FillEllipse(linepen.Brush, xy.X - 4, xy.Y - 4, 8, 8);
-                }
-            }
-            else
-            {
-                if (UITheme == UIThemes.Default)
-                {
-                    e.Graphics.DrawEllipse(Pens.DarkGray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                    e.Graphics.DrawLine(Pens.DarkGray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                    e.Graphics.DrawLine(Pens.DarkGray, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                    e.Graphics.FillEllipse(Brushes.DarkGray, xy.X - 4, xy.Y - 4, 8, 8);
-                }
-                else if (UITheme == UIThemes.Gray)
-                {
-                    e.Graphics.DrawEllipse(Pens.DarkGray, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                    e.Graphics.DrawLine(Pens.DarkGray, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                    e.Graphics.DrawLine(Pens.DarkGray, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                    e.Graphics.FillEllipse(Brushes.DarkGray, xy.X - 4, xy.Y - 4, 8, 8);
-                }
-                else if (UITheme == UIThemes.Dark)
-                {
-                    e.Graphics.DrawEllipse(linepen, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
-                    e.Graphics.DrawLine(linepen, 0, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                    e.Graphics.DrawLine(linepen, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, -pb_JoystickPic.Height);
-                    e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                    e.Graphics.FillEllipse(linepen.Brush, xy.X - 4, xy.Y - 4, 8, 8);
-                }
-            }
+                e.Graphics.DrawEllipse(readOnly ? Pens.DarkGray : Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
+
+                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, 1, JOY_middle.Y-1, pb_JoystickPic.Width, JOY_middle.Y);
+                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, 1);
+
+                e.Graphics.DrawLine(linepen, JOY_middle, xy);
+                e.Graphics.FillEllipse(readOnly ? Brushes.DarkGray : Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+
+            
             //linepen.Dispose();
             // let it leak?
 

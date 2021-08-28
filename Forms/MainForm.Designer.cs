@@ -92,6 +92,7 @@ namespace MupenUtils
             this.txtbox_Audioplugin = new System.Windows.Forms.TextBox();
             this.lbl_Input = new System.Windows.Forms.Label();
             this.txt_Rsp = new System.Windows.Forms.TextBox();
+            this.btn_Unload = new System.Windows.Forms.Button();
             this.btn_Reload = new System.Windows.Forms.Button();
             this.gp_input = new System.Windows.Forms.GroupBox();
             this.panel_Input = new System.Windows.Forms.Panel();
@@ -135,7 +136,6 @@ namespace MupenUtils
             this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.ctx_Input_Debug = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.inputStatisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_MovieDiagnostic = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_SetInput = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,7 +184,6 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_Unload = new System.Windows.Forms.Button();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -338,14 +337,14 @@ namespace MupenUtils
             // gp_M64
             // 
             this.gp_M64.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gp_M64.Controls.Add(this.gp_input);
             this.gp_M64.Controls.Add(this.btn_SaveOptions);
             this.gp_M64.Controls.Add(this.gp_CMB);
-            this.gp_M64.Controls.Add(this.gp_header);
             this.gp_M64.Controls.Add(this.btn_Unload);
             this.gp_M64.Controls.Add(this.btn_Reload);
             this.gp_M64.Controls.Add(this.btn_SaveAs);
             this.gp_M64.Controls.Add(this.btn_Save);
-            this.gp_M64.Controls.Add(this.gp_input);
+            this.gp_M64.Controls.Add(this.gp_header);
             this.gp_M64.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gp_M64.Location = new System.Drawing.Point(0, 89);
             this.gp_M64.Margin = new System.Windows.Forms.Padding(4);
@@ -420,9 +419,10 @@ namespace MupenUtils
             this.gp_header.Controls.Add(this.gpRom);
             this.gp_header.Controls.Add(this.gp_M64_misc);
             this.gp_header.Controls.Add(this.gp_Plugins);
+            this.gp_header.Dock = System.Windows.Forms.DockStyle.Left;
             this.gp_header.Location = new System.Drawing.Point(4, 19);
             this.gp_header.Name = "gp_header";
-            this.gp_header.Size = new System.Drawing.Size(573, 422);
+            this.gp_header.Size = new System.Drawing.Size(573, 461);
             this.gp_header.TabIndex = 0;
             this.gp_header.TabStop = false;
             this.gp_header.Text = "Header";
@@ -895,6 +895,18 @@ namespace MupenUtils
             this.txt_Rsp.TabIndex = 0;
             this.txt_Rsp.TabStop = false;
             // 
+            // btn_Unload
+            // 
+            this.btn_Unload.Location = new System.Drawing.Point(450, 448);
+            this.btn_Unload.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Unload.Name = "btn_Unload";
+            this.btn_Unload.Size = new System.Drawing.Size(98, 28);
+            this.btn_Unload.TabIndex = 0;
+            this.btn_Unload.TabStop = false;
+            this.btn_Unload.Text = "Unload";
+            this.btn_Unload.UseVisualStyleBackColor = true;
+            this.btn_Unload.Click += new System.EventHandler(this.btn_Unload_Click);
+            // 
             // btn_Reload
             // 
             this.btn_Reload.Location = new System.Drawing.Point(344, 448);
@@ -909,14 +921,14 @@ namespace MupenUtils
             // 
             // gp_input
             // 
-            this.gp_input.Controls.Add(this.panel_Input);
             this.gp_input.Controls.Add(this.gp_TASStudio);
-            this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_input.Location = new System.Drawing.Point(585, 19);
+            this.gp_input.Controls.Add(this.panel_Input);
+            this.gp_input.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gp_input.Location = new System.Drawing.Point(577, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
             this.gp_input.Padding = new System.Windows.Forms.Padding(4);
-            this.gp_input.Size = new System.Drawing.Size(831, 461);
+            this.gp_input.Size = new System.Drawing.Size(839, 461);
             this.gp_input.TabIndex = 0;
             this.gp_input.TabStop = false;
             this.gp_input.Text = "Input";
@@ -1418,7 +1430,7 @@ namespace MupenUtils
             // 
             this.gp_TASStudio.Controls.Add(this.dgv_Main);
             this.gp_TASStudio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gp_TASStudio.Location = new System.Drawing.Point(359, 19);
+            this.gp_TASStudio.Location = new System.Drawing.Point(367, 19);
             this.gp_TASStudio.Name = "gp_TASStudio";
             this.gp_TASStudio.Size = new System.Drawing.Size(468, 438);
             this.gp_TASStudio.TabIndex = 0;
@@ -1450,12 +1462,9 @@ namespace MupenUtils
             // 
             this.ctx_Input_Debug.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ctx_Input_Debug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_SimpleMode,
-            this.toolStripSeparator2,
             this.inputStatisticsToolStripMenuItem,
             this.tsmi_MovieDiagnostic,
             this.tsmi_Input_SetInput,
-            this.tsmi_GetInput,
             this.toolStripSeparator3,
             this.tsmi_Themes,
             this.tsmi_MaximizeInputGp,
@@ -1463,15 +1472,17 @@ namespace MupenUtils
             this.tsmi_AAJoystick,
             this.tsmi_Agressive,
             this.tsmi_JoyKeyboard,
+            this.tsmi_SimpleMode,
             this.tsmi_DumpAppInfo,
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_CRCPopulate,
             this.tsmi_FlipY,
+            this.tsmi_GetInput,
             this.tsmi_Input_Sticky,
             this.toolStripSeparator7,
             this.tsmi_DBG_Crash});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 444);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 438);
             // 
             // tsmi_SimpleMode
             // 
@@ -1479,11 +1490,6 @@ namespace MupenUtils
             this.tsmi_SimpleMode.Size = new System.Drawing.Size(243, 26);
             this.tsmi_SimpleMode.Text = "Simple mode";
             this.tsmi_SimpleMode.Click += new System.EventHandler(this.tsmi_SimpleMode_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(240, 6);
             // 
             // inputStatisticsToolStripMenuItem
             // 
@@ -1533,35 +1539,35 @@ namespace MupenUtils
             // defaultLightToolStripMenuItem
             // 
             this.defaultLightToolStripMenuItem.Name = "defaultLightToolStripMenuItem";
-            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
+            this.defaultLightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.defaultLightToolStripMenuItem.Text = "Light";
             this.defaultLightToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // transparentToolStripMenuItem
             // 
             this.transparentToolStripMenuItem.Name = "transparentToolStripMenuItem";
-            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
+            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.transparentToolStripMenuItem.Text = "Transparent";
             this.transparentToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
             // tsmi_Minimalistic
             // 
             this.tsmi_Minimalistic.Name = "tsmi_Minimalistic";
-            this.tsmi_Minimalistic.Size = new System.Drawing.Size(172, 26);
+            this.tsmi_Minimalistic.Size = new System.Drawing.Size(224, 26);
             this.tsmi_Minimalistic.Text = "Minimalistic";
             this.tsmi_Minimalistic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.themeSelectedClick);
             // 
@@ -1804,7 +1810,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1814,7 +1819,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
@@ -1844,18 +1848,6 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Size = new System.Drawing.Size(356, 24);
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
-            // 
-            // btn_Unload
-            // 
-            this.btn_Unload.Location = new System.Drawing.Point(450, 448);
-            this.btn_Unload.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_Unload.Name = "btn_Unload";
-            this.btn_Unload.Size = new System.Drawing.Size(98, 28);
-            this.btn_Unload.TabIndex = 0;
-            this.btn_Unload.TabStop = false;
-            this.btn_Unload.Text = "Unload";
-            this.btn_Unload.UseVisualStyleBackColor = true;
-            this.btn_Unload.Click += new System.EventHandler(this.btn_Unload_Click);
             // 
             // MainForm
             // 
@@ -1965,7 +1957,6 @@ namespace MupenUtils
         private System.Windows.Forms.ToolStripMenuItem utilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmi_TasStudio_Big;
         private System.Windows.Forms.ToolStripMenuItem tsmi_AAJoystick;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem tsmi_SimpleMode;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Agressive;
         private System.Windows.Forms.Label lbl_Y;
