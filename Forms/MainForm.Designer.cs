@@ -184,6 +184,7 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_snapEach45Degrees = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_input.SuspendLayout();
@@ -1472,6 +1473,7 @@ namespace MupenUtils
             this.tsmi_AAJoystick,
             this.tsmi_Agressive,
             this.tsmi_JoyKeyboard,
+            this.tsmi_snapEach45Degrees,
             this.tsmi_SimpleMode,
             this.tsmi_DumpAppInfo,
             this.tsmi_Input_Debug_DumpData,
@@ -1482,7 +1484,7 @@ namespace MupenUtils
             this.toolStripSeparator7,
             this.tsmi_DBG_Crash});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 438);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 492);
             // 
             // inputStatisticsToolStripMenuItem
             // 
@@ -1810,7 +1812,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
-            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1820,7 +1821,6 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
-            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
@@ -1850,6 +1850,13 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Size = new System.Drawing.Size(356, 24);
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
+            // 
+            // tsmi_snapEach45Degrees
+            // 
+            this.tsmi_snapEach45Degrees.Name = "tsmi_snapEach45Degrees";
+            this.tsmi_snapEach45Degrees.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_snapEach45Degrees.Text = "Snap each quarter";
+            this.tsmi_snapEach45Degrees.Click += new System.EventHandler(this.tsmi_snapEach45Degrees_Click);
             // 
             // MainForm
             // 
@@ -2064,6 +2071,7 @@ namespace MupenUtils
         private System.Windows.Forms.ComboBox cmb_UsageType;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Minimalistic;
         private System.Windows.Forms.Button btn_Unload;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_snapEach45Degrees;
     }
 }
 

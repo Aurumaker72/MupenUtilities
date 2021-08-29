@@ -175,6 +175,7 @@ namespace MupenUtils
         bool lockType;
         UpdateNotifier updateNotifier = new UpdateNotifier();
         SmoothingMode JOY_SmoothingMode = SmoothingMode.AntiAlias;
+        bool quarterSnap;
 
         Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0,0) };
 
@@ -3132,6 +3133,61 @@ namespace MupenUtils
                 JOY_Rel.Y = 0;
                 JOY_Abs.Y = pb_JoystickPic.Height / 2;
             }
+
+
+
+            // awful code
+            if (quarterSnap)
+            {
+                if (nud_Angle.Value > 45 - 7 && nud_Angle.Value < 45 + 7)
+                {
+                    double x, y, trgtheta;
+                    trgtheta = 45 * Math.PI / 180;
+                    x = Math.Cos(trgtheta) * 127;
+                    y = Math.Sin(trgtheta) * 128;
+
+                    JOY_Rel.X = (int)x;
+                    JOY_Rel.Y = (int)y;
+                    JOY_Abs = RelativeToAbsolute(new Point((int)x, (int)y));
+
+                }
+                if (nud_Angle.Value > -45 - 7 && nud_Angle.Value < -45 + 7)
+                {
+                    double x, y, trgtheta;
+                    trgtheta = -45 * Math.PI / 180;
+                    x = Math.Cos(trgtheta) * 127;
+                    y = Math.Sin(trgtheta) * 128;
+
+                    JOY_Rel.X = (int)x;
+                    JOY_Rel.Y = (int)y;
+                    JOY_Abs = RelativeToAbsolute(new Point((int)x, (int)y));
+
+                }
+                if (nud_Angle.Value > -135 - 7 && nud_Angle.Value < -135 + 7)
+                {
+                    double x, y, trgtheta;
+                    trgtheta = -135 * Math.PI / 180;
+                    x = Math.Cos(trgtheta) * 127;
+                    y = Math.Sin(trgtheta) * 128;
+
+                    JOY_Rel.X = (int)x;
+                    JOY_Rel.Y = (int)y;
+                    JOY_Abs = RelativeToAbsolute(new Point((int)x, (int)y));
+
+                }
+                if (nud_Angle.Value > 135 - 7 && nud_Angle.Value < 135 + 7)
+                {
+                    double x, y, trgtheta;
+                    trgtheta = 135 * Math.PI / 180;
+                    x = Math.Cos(trgtheta) * 127;
+                    y = Math.Sin(trgtheta) * 128;
+
+                    JOY_Rel.X = (int)x;
+                    JOY_Rel.Y = (int)y;
+                    JOY_Abs = RelativeToAbsolute(new Point((int)x, (int)y));
+
+                }
+            }
         }
 
         Point RelativeToAbsolute(Point pt)
@@ -3221,7 +3277,12 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        
+        private void tsmi_snapEach45Degrees_Click(object sender, EventArgs e)
+        {
+            quarterSnap ^= true;
+            tsmi_snapEach45Degrees.Checked = quarterSnap;
+            pb_JoystickPic.Invalidate();
+        }
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -3285,6 +3346,14 @@ namespace MupenUtils
             e.Graphics.DrawLine(linepen, JOY_middle, xy);
             e.Graphics.FillEllipse(readOnly ? Brushes.DarkGray : Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
 
+            if (quarterSnap)
+            {
+                // i dont want to do complicated maths again so i will hardcode this
+                const int ADJUSTED = 25;
+                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, ADJUSTED, ADJUSTED, pb_JoystickPic.Width-ADJUSTED, pb_JoystickPic.Height-ADJUSTED);
+                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, pb_JoystickPic.Width- ADJUSTED, ADJUSTED, ADJUSTED, pb_JoystickPic.Height- ADJUSTED);
+
+            }
 
             //linepen.Dispose();
             // let it leak?
