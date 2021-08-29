@@ -3143,8 +3143,8 @@ namespace MupenUtils
                 {
                     double x, y, trgtheta;
                     trgtheta = 45 * Math.PI / 180;
-                    x = Math.Cos(trgtheta) * 127;
-                    y = Math.Sin(trgtheta) * 128;
+                    x = Math.Cos(trgtheta) * 127/JOY_Rel.X;
+                    y = Math.Sin(trgtheta) * 128/JOY_Rel.Y;
 
                     JOY_Rel.X = (int)x;
                     JOY_Rel.Y = (int)y;
@@ -3155,8 +3155,8 @@ namespace MupenUtils
                 {
                     double x, y, trgtheta;
                     trgtheta = -45 * Math.PI / 180;
-                    x = Math.Cos(trgtheta) * 127;
-                    y = Math.Sin(trgtheta) * 128;
+                    x = Math.Cos(trgtheta) * 127 / JOY_Rel.X;
+                    y = Math.Sin(trgtheta) * 128 / JOY_Rel.Y;
 
                     JOY_Rel.X = (int)x;
                     JOY_Rel.Y = (int)y;
@@ -3167,8 +3167,8 @@ namespace MupenUtils
                 {
                     double x, y, trgtheta;
                     trgtheta = -135 * Math.PI / 180;
-                    x = Math.Cos(trgtheta) * 127;
-                    y = Math.Sin(trgtheta) * 128;
+                    x = Math.Cos(trgtheta) * 127 / JOY_Rel.X;
+                    y = Math.Sin(trgtheta) * 128 / JOY_Rel.Y;
 
                     JOY_Rel.X = (int)x;
                     JOY_Rel.Y = (int)y;
@@ -3179,8 +3179,8 @@ namespace MupenUtils
                 {
                     double x, y, trgtheta;
                     trgtheta = 135 * Math.PI / 180;
-                    x = Math.Cos(trgtheta) * 127;
-                    y = Math.Sin(trgtheta) * 128;
+                    x = Math.Cos(trgtheta) * 127 / JOY_Rel.X;
+                    y = Math.Sin(trgtheta) * 128 / JOY_Rel.Y;
 
                     JOY_Rel.X = (int)x;
                     JOY_Rel.Y = (int)y;
@@ -3336,24 +3336,28 @@ namespace MupenUtils
 
             // TODO: somehow optimize this because branching in wm_paint is not good
             // but on flip side this isnt too bad because gdi+ isn't hardware accelerated, so no hardware waiting for eachother
-
+            
 
             e.Graphics.DrawEllipse(readOnly ? Pens.DarkGray : Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
 
             e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, 1, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
             e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, 1);
-
-            e.Graphics.DrawLine(linepen, JOY_middle, xy);
-            e.Graphics.FillEllipse(readOnly ? Brushes.DarkGray : Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
-
+            
             if (quarterSnap)
             {
                 // i dont want to do complicated maths again so i will hardcode this
                 const int ADJUSTED = 25;
-                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, ADJUSTED, ADJUSTED, pb_JoystickPic.Width-ADJUSTED, pb_JoystickPic.Height-ADJUSTED);
-                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, pb_JoystickPic.Width- ADJUSTED, ADJUSTED, ADJUSTED, pb_JoystickPic.Height- ADJUSTED);
+                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, ADJUSTED, ADJUSTED, pb_JoystickPic.Width - ADJUSTED, pb_JoystickPic.Height - ADJUSTED);
+                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, pb_JoystickPic.Width - ADJUSTED, ADJUSTED, ADJUSTED, pb_JoystickPic.Height - ADJUSTED);
 
             }
+
+
+            e.Graphics.DrawLine(linepen, JOY_middle, xy);
+            e.Graphics.FillEllipse(readOnly ? Brushes.DarkGray : Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+
+
+            
 
             //linepen.Dispose();
             // let it leak?
