@@ -2476,7 +2476,8 @@ namespace MupenUtils
             }
             if (!readOnly && JOY_Keyboard)
             {
-                if (this.ActiveControl == pb_JoystickPic) return;
+                //if (this.ActiveControl == pb_JoystickPic) return;
+                // lmfao what
                 Debug.Write("key\n");
                 Point target = new Point(0, 0);
 
