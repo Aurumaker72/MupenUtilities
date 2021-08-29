@@ -118,5 +118,53 @@ namespace MupenUtilities.Properties {
                 this["LastPathReplaceTrg"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AntialiasedJoystick {
+            get {
+                return ((bool)(this["AntialiasedJoystick"]));
+            }
+            set {
+                this["AntialiasedJoystick"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AggressiveOverride {
+            get {
+                return ((bool)(this["AggressiveOverride"]));
+            }
+            set {
+                this["AggressiveOverride"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MaximizedTASStudio {
+            get {
+                return ((bool)(this["MaximizedTASStudio"]));
+            }
+            set {
+                this["MaximizedTASStudio"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MaximizedInput {
+            get {
+                return ((bool)(this["MaximizedInput"]));
+            }
+            set {
+                this["MaximizedInput"] = value;
+            }
+        }
     }
 }

@@ -425,6 +425,11 @@ namespace MupenUtils
             reloadTASStudioOnControllerChange = MupenUtilities.Properties.Settings.Default.ReloadTASStudioOnControllerChange;
             tsmi_ReloadTASStudioOnCtlChange.Checked = reloadTASStudioOnControllerChange;
 
+            JOY_SmoothingMode = MupenUtilities.Properties.Settings.Default.AntialiasedJoystick ? SmoothingMode.AntiAlias : SmoothingMode.None;
+            tsmi_AAJoystick.Checked = MupenUtilities.Properties.Settings.Default.AntialiasedJoystick;
+
+            tsmi_Agressive.Checked = MupenUtilities.Properties.Settings.Default.AggressiveOverride;
+
             nud_X.Minimum = -128;
             nud_X.Maximum = 127;
 
@@ -691,11 +696,9 @@ namespace MupenUtils
 
         void ResetTASStudio()
         {
-            dgv_Main.Rows.Clear();
-            dgv_Main.Columns.Clear();
-
-            dgv_Main.Enabled = false;
-
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.Clear()));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Columns.Clear()));
+            dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Enabled = false));
         }
 
         void ResetTxt()
@@ -921,13 +924,12 @@ namespace MupenUtils
 
             }
 
-            cmb_Country.ResetText();
-            cmb_Country.SelectedIndex = -1;
-            cbox_startType.ResetText();
-            cbox_startType.SelectedIndex = -1;
-
-            cbox_Controllers.SelectedIndex = -1;
-            cbox_Controllers.Items.Clear();
+            cmb_Country.Invoke((MethodInvoker)(() => cmb_Country.ResetText()));
+            cmb_Country.Invoke((MethodInvoker)(() => cmb_Country.SelectedIndex = -1));
+            cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.ResetText()));
+            cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.SelectedIndex = -1));
+            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = -1));
+            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
 
             ResetTASStudio();
 
@@ -2569,6 +2571,7 @@ namespace MupenUtils
         {
             JOY_SmoothingMode = JOY_SmoothingMode == SmoothingMode.AntiAlias ? SmoothingMode.None : SmoothingMode.AntiAlias;
             tsmi_AAJoystick.Checked = JOY_SmoothingMode == SmoothingMode.AntiAlias;
+            MupenUtilities.Properties.Settings.Default.AntialiasedJoystick = tsmi_AAJoystick.Checked;
             pb_JoystickPic.Invalidate();
         }
 
@@ -2623,6 +2626,8 @@ namespace MupenUtils
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            MupenUtilities.Properties.Settings.Default.Save();
+
             if (m64load != null && m64load.IsAlive)
             {
                 bool exit;
@@ -2762,6 +2767,7 @@ namespace MupenUtils
         private void tsmi_Agressive_Click(object sender, EventArgs e)
         {
             tsmi_Agressive.Checked ^= true;
+            MupenUtilities.Properties.Settings.Default.AggressiveOverride = tsmi_Agressive.Checked;
         }
         
         private void tsmi_MovieDiagnostic_Click(object sender, EventArgs e)
