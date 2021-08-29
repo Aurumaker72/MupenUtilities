@@ -3124,13 +3124,11 @@ namespace MupenUtils
 
         void SnapJoystick()
         {
-            if (JOY_Rel.X < 8 && JOY_Rel.X > -8)
-            {
+            if (JOY_Rel.X < 7 && JOY_Rel.X > -7) {
                 JOY_Rel.X = 0;
                 JOY_Abs.X = pb_JoystickPic.Width / 2;
             }
-            else if (JOY_Rel.Y < 8 && JOY_Rel.Y > -8)
-            {
+            if (JOY_Rel.Y < 7 && JOY_Rel.Y > -7) {
                 JOY_Rel.Y = 0;
                 JOY_Abs.Y = pb_JoystickPic.Height / 2;
             }
