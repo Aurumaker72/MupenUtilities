@@ -3143,8 +3143,8 @@ namespace MupenUtils
                 {
                     double x, y, trgtheta;
                     trgtheta = 45 * Math.PI / 180;
-                    x = Math.Cos(trgtheta) * 127/JOY_Rel.X;
-                    y = Math.Sin(trgtheta) * 128/JOY_Rel.Y;
+                    x = Math.Cos(trgtheta) * 127;
+                    y = Math.Sin(trgtheta) * 128;
 
                     JOY_Rel.X = (int)x;
                     JOY_Rel.Y = (int)y;
@@ -3155,8 +3155,8 @@ namespace MupenUtils
                 {
                     double x, y, trgtheta;
                     trgtheta = -45 * Math.PI / 180;
-                    x = Math.Cos(trgtheta) * 127 / JOY_Rel.X;
-                    y = Math.Sin(trgtheta) * 128 / JOY_Rel.Y;
+                    x = Math.Cos(trgtheta) * 127;
+                    y = Math.Sin(trgtheta) * 128;
 
                     JOY_Rel.X = (int)x;
                     JOY_Rel.Y = (int)y;
@@ -3167,8 +3167,8 @@ namespace MupenUtils
                 {
                     double x, y, trgtheta;
                     trgtheta = -135 * Math.PI / 180;
-                    x = Math.Cos(trgtheta) * 127 / JOY_Rel.X;
-                    y = Math.Sin(trgtheta) * 128 / JOY_Rel.Y;
+                    x = Math.Cos(trgtheta) * 127;
+                    y = Math.Sin(trgtheta) * 128;
 
                     JOY_Rel.X = (int)x;
                     JOY_Rel.Y = (int)y;
@@ -3179,8 +3179,8 @@ namespace MupenUtils
                 {
                     double x, y, trgtheta;
                     trgtheta = 135 * Math.PI / 180;
-                    x = Math.Cos(trgtheta) * 127 / JOY_Rel.X;
-                    y = Math.Sin(trgtheta) * 128 / JOY_Rel.Y;
+                    x = Math.Cos(trgtheta) * 127;
+                    y = Math.Sin(trgtheta) * 128;
 
                     JOY_Rel.X = (int)x;
                     JOY_Rel.Y = (int)y;
