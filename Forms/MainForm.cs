@@ -2483,20 +2483,19 @@ namespace MupenUtils
                 //cringe 
                 if (Keyboard.IsKeyDown(Key.W) || Keyboard.IsKeyDown(Key.Up))
                 {
-                    target = new Point(0, -127);
-
+                    target.Y += -127;
                 }
                 if (Keyboard.IsKeyDown(Key.A) || Keyboard.IsKeyDown(Key.Left))
                 {
-                    target = new Point(-128, 0);
+                    target.X += -128;
                 }
                 if (Keyboard.IsKeyDown(Key.S) || Keyboard.IsKeyDown(Key.Down))
                 {
-                    target = new Point(0, 127);
+                    target.Y += 127;
                 }
                 if (Keyboard.IsKeyDown(Key.D) || Keyboard.IsKeyDown(Key.Right))
                 {
-                    target = new Point(127, 0);
+                    target.X += 127;
                 }
 
 
