@@ -159,6 +159,7 @@ namespace MupenUtils.Forms
                         all++;
 
                 }
+                if(i+4<inputList.Count)
                 if (ExtensionMethods.GetBit(inputList[i], 4) && !ExtensionMethods.GetBit(inputList[i + 1], 4) && ExtensionMethods.GetBit(inputList[i + 2], 4) && !ExtensionMethods.GetBit(inputList[i + 3], 4))
                 {
                     confidence += 0.6;
