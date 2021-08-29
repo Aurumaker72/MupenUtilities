@@ -3172,6 +3172,8 @@ namespace MupenUtils
             JOY_Theta = Math.Atan2(JOY_Rel.Y, JOY_Rel.X);
             nud_Angle.Value = (decimal)Math.Round((JOY_Theta * (180/Math.PI)));
 
+            if(abs == ABSOLUTE) // if dragging manually
+            SnapJoystick();
 
             pb_JoystickPic.Refresh();
 
@@ -3230,7 +3232,7 @@ namespace MupenUtils
             SetJoystickValue(e.Location, ABSOLUTE, true);
         }
 
-        
+
 
         private void DrawJoystick(PaintEventArgs e)
         {
@@ -3238,7 +3240,7 @@ namespace MupenUtils
 
             e.Graphics.SmoothingMode = JOY_SmoothingMode;
 
-            
+
 
             if (readOnly) linepen = new Pen(Color.Gray, 3);
 
@@ -3258,33 +3260,28 @@ namespace MupenUtils
             else if (UITheme == UIThemes.Dark) e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 50, 50, 50)), pb_JoystickPic.ClientRectangle);
 
             //Console.WriteLine("Repaint! " + JOY_Abs.X + "/" + JOY_Abs.Y);
-            if (lockType)
-            {
-                SnapJoystick(); // warning: is this desync proof and accurate?
-            }
+                 // warning: is this desync proof and accurate?
 
             Point xy;
             if (lockType)
                 xy = JOY_Abs;
             else
-            {
                 xy = RelativeToAbsolute(JOY_Rel);
-            }
 
 
             // TODO: somehow optimize this because branching in wm_paint is not good
             // but on flip side this isnt too bad because gdi+ isn't hardware accelerated, so no hardware waiting for eachother
-            
 
-                e.Graphics.DrawEllipse(readOnly ? Pens.DarkGray : Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
 
-                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, 1, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
-                e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, 1);
+            e.Graphics.DrawEllipse(readOnly ? Pens.DarkGray : Pens.Black, 1, 1, pb_JoystickPic.Width - 2, pb_JoystickPic.Height - 2);
 
-                e.Graphics.DrawLine(linepen, JOY_middle, xy);
-                e.Graphics.FillEllipse(readOnly ? Brushes.DarkGray : Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+            e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, 1, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
+            e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, 1);
 
-            
+            e.Graphics.DrawLine(linepen, JOY_middle, xy);
+            e.Graphics.FillEllipse(readOnly ? Brushes.DarkGray : Brushes.Red, xy.X - 4, xy.Y - 4, 8, 8);
+
+
             //linepen.Dispose();
             // let it leak?
 
