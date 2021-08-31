@@ -150,6 +150,7 @@ namespace MupenUtils
             this.tsmi_AAJoystick = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Agressive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_JoyKeyboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_snapEach45Degrees = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SimpleMode = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_DumpAppInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Input_Debug_DumpData = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,7 +185,6 @@ namespace MupenUtils
             this.ctx_SaveOption = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_snapEach45Degrees = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_input.SuspendLayout();
@@ -338,9 +338,9 @@ namespace MupenUtils
             // gp_M64
             // 
             this.gp_M64.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gp_M64.Controls.Add(this.gp_CMB);
             this.gp_M64.Controls.Add(this.gp_input);
             this.gp_M64.Controls.Add(this.btn_SaveOptions);
-            this.gp_M64.Controls.Add(this.gp_CMB);
             this.gp_M64.Controls.Add(this.btn_Unload);
             this.gp_M64.Controls.Add(this.btn_Reload);
             this.gp_M64.Controls.Add(this.btn_SaveAs);
@@ -360,7 +360,7 @@ namespace MupenUtils
             // 
             this.gp_input.Controls.Add(this.gp_TASStudio);
             this.gp_input.Controls.Add(this.panel_Input);
-            this.gp_input.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gp_input.Dock = System.Windows.Forms.DockStyle.Right;
             this.gp_input.Location = new System.Drawing.Point(577, 19);
             this.gp_input.Margin = new System.Windows.Forms.Padding(4);
             this.gp_input.Name = "gp_input";
@@ -911,9 +911,9 @@ namespace MupenUtils
             this.gp_CMB.Controls.Add(this.lbl_CMBSamples);
             this.gp_CMB.Controls.Add(this.txt_ComboName);
             this.gp_CMB.Controls.Add(this.lbl_CMBName);
-            this.gp_CMB.Location = new System.Drawing.Point(11, 19);
+            this.gp_CMB.Location = new System.Drawing.Point(7, 19);
             this.gp_CMB.Name = "gp_CMB";
-            this.gp_CMB.Size = new System.Drawing.Size(566, 91);
+            this.gp_CMB.Size = new System.Drawing.Size(570, 116);
             this.gp_CMB.TabIndex = 0;
             this.gp_CMB.TabStop = false;
             this.gp_CMB.Text = "Header (Combo)";
@@ -1484,7 +1484,7 @@ namespace MupenUtils
             this.toolStripSeparator7,
             this.tsmi_DBG_Crash});
             this.ctx_Input_Debug.Name = "ctx_Input_Debug";
-            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 492);
+            this.ctx_Input_Debug.Size = new System.Drawing.Size(244, 464);
             // 
             // inputStatisticsToolStripMenuItem
             // 
@@ -1595,6 +1595,13 @@ namespace MupenUtils
             this.tsmi_JoyKeyboard.Size = new System.Drawing.Size(243, 26);
             this.tsmi_JoyKeyboard.Text = "Joystick Keyboard";
             this.tsmi_JoyKeyboard.Click += new System.EventHandler(this.tsmi_JoyKeyboard_Click);
+            // 
+            // tsmi_snapEach45Degrees
+            // 
+            this.tsmi_snapEach45Degrees.Name = "tsmi_snapEach45Degrees";
+            this.tsmi_snapEach45Degrees.Size = new System.Drawing.Size(243, 26);
+            this.tsmi_snapEach45Degrees.Text = "Snap each quarter";
+            this.tsmi_snapEach45Degrees.Click += new System.EventHandler(this.tsmi_snapEach45Degrees_Click);
             // 
             // tsmi_SimpleMode
             // 
@@ -1850,13 +1857,6 @@ namespace MupenUtils
             this.tsmi_samplesOnly.Size = new System.Drawing.Size(356, 24);
             this.tsmi_samplesOnly.Text = "Save Samples Only";
             this.tsmi_samplesOnly.Click += new System.EventHandler(this.tsmi_samplesOnly_Click);
-            // 
-            // tsmi_snapEach45Degrees
-            // 
-            this.tsmi_snapEach45Degrees.Name = "tsmi_snapEach45Degrees";
-            this.tsmi_snapEach45Degrees.Size = new System.Drawing.Size(243, 26);
-            this.tsmi_snapEach45Degrees.Text = "Snap each quarter";
-            this.tsmi_snapEach45Degrees.Click += new System.EventHandler(this.tsmi_snapEach45Degrees_Click);
             // 
             // MainForm
             // 
