@@ -1115,7 +1115,7 @@ namespace MupenUtils
             BinaryReader br = new BinaryReader(fs);
 
             int iter = 0;
-            
+
 
             while (br.PeekChar() != -1)
             {
@@ -1125,7 +1125,7 @@ namespace MupenUtils
                 char buffer = 'd'; // ame tu cosita 
                 while (buffer != '\0')
                 {
-                    if(br.PeekChar() == -1)
+                    if (ExtensionMethods.Eof(br.BaseStream))
                     {
                         // ran through entire file but no NUL terminator...
                         ErrorProcessing("Malformed combo file: No NUL Terminator.");
@@ -1151,8 +1151,11 @@ namespace MupenUtils
                     return;
                 }
                 for (int i = 0; i < cmbLen; i++)
+                {
+                    if (br.BaseStream.Position+4>br.BaseStream.Length)
+                        continue;
                     cmbInput[iter].Add(br.ReadInt32());
-
+                }
 
                 // finished loading one combo off to next one
                 iter++;

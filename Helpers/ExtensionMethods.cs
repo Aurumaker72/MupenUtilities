@@ -31,6 +31,10 @@ public static class ExtensionMethods
     public static int HighWord(this int number) => (int)(number & 0xFFFF0000);
     public static int HighWord(this int number, int newValue) => (number & 0x0000FFFF) + (newValue << 16);
 
+    public static bool Eof(Stream s)
+    {
+        return (s.Position + 1 > s.Length);
+    }
     public static int Clamp(int value, int min, int max)
     {
         return (value < min) ? min : (value > max) ? max : value;
