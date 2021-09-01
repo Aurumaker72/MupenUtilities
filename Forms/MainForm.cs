@@ -1858,8 +1858,7 @@ namespace MupenUtils
             inputLists[selectedController][frameTarget] /*|*/= value;
 
 
-            GetInput(inputLists[selectedController][frameTarget], false, frameTarget);
-
+            //GetInput(inputLists[selectedController][frameTarget], false, frameTarget);
 
             UpdateTASStudio(frameTarget);
 
@@ -1911,7 +1910,6 @@ namespace MupenUtils
         }
         void UpdateTASStudio(int frameTarget)
         {
-
             //if (UsageType == UsageTypes.Combo) return;
             if (liveTasStudio)
             {
@@ -1939,6 +1937,7 @@ namespace MupenUtils
                 }
             }
         }
+
         void GetInput(int value, bool setinput, int targetFrame)
         {
             for (int i = 0; i < controllerButtonsChk.Length; i++)
@@ -2875,13 +2874,37 @@ namespace MupenUtils
             inputStatisticsForm.ShowDialog();
         }
 
+        private void dgv_Main_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // allow bizhawk tastudio-style dragging set buttons
+
+            if (!(sender is DataGridView dgv)) return;
+            
+            // not efficient code but more readable and functional
+
+            if(e.Button == MouseButtons.Left)
+            {
+                // set
+                TASStudioCellSetExplicit(e.ColumnIndex, e.RowIndex, true);
+            }
+            else if(e.Button == MouseButtons.Middle)
+            {
+                TASStudioCellSetExplicit(e.ColumnIndex, e.RowIndex, false);
+            }
+            else
+            {
+                // no
+                ;
+            }
+        }
+
         private void dgv_Main_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (!(sender is DataGridView dgv)) return;
-
+            
             if (e.RowIndex == frame)
             {
-                TASStudioCellSet(e.ColumnIndex, e.RowIndex);
+                TASStudioCellSetToggle(e.ColumnIndex, e.RowIndex);
             }
         }
 
@@ -2950,12 +2973,45 @@ namespace MupenUtils
             if (tsmi.Text.Contains("Change")) tsmi.Text = "";
         }
 
-        void TASStudioCellSet(int colIndex, int rowIndex)
+        void TASStudioCellSetExplicit(int colIndex, int rowIndex, bool bEnabled)
         {
             if (readOnly || m64loadBusy) return;
+            if (colIndex == -1 || rowIndex == -1) return;
+
+            Debug.WriteLine(inputStructNames[colIndex]);
 
             int structIndex = colIndex;
             int index = rowIndex;
+
+            if (colIndex == -1 || rowIndex == -1 || colIndex > inputStructNames.Length-2) return;
+
+            DataGridViewCell cell = dgv_Main.Rows[index].Cells[colIndex];
+
+            if (structIndex >= 16)
+            {
+                // if you are trying to change joystick
+                MessageBox.Show("Please use the joystick to perform this action", PROGRAM_NAME + " - TAS Studio Warning");
+                return;
+            }
+
+            if (cell.Value is string) cell.Value = cell.Value.ToString() == inputStructNames[structIndex] ? "" : inputStructNames[structIndex];
+
+            bool toggled = bEnabled;
+
+            int buffer = inputLists[selectedController][index];
+
+            ExtensionMethods.SetBit(ref buffer, toggled, structIndex);
+
+            SetInputPure(index, buffer);
+        }
+        void TASStudioCellSetToggle(int colIndex, int rowIndex)
+        {
+            if (readOnly || m64loadBusy) return;
+            if (colIndex == -1 || rowIndex == -1) return;
+
+            int structIndex = colIndex;
+            int index = rowIndex;
+
 
             DataGridViewCell cell = dgv_Main.Rows[index].Cells[colIndex];
 
@@ -2972,11 +3028,7 @@ namespace MupenUtils
 
             int buffer = inputLists[selectedController][index];
 
-            Debug.WriteLine(ExtensionMethods.GetBit(buffer, index) + " target: " + toggled + " | index " + structIndex);
-
             ExtensionMethods.SetBit(ref buffer, toggled, structIndex);
-
-            Debug.WriteLine(ExtensionMethods.GetBit(buffer, index));
 
             SetInputPure(index, buffer);
         }
@@ -2984,7 +3036,7 @@ namespace MupenUtils
         {
             if (!(sender is DataGridView dgv)) return;
 
-            TASStudioCellSet(e.ColumnIndex, e.RowIndex);
+            TASStudioCellSetToggle(e.ColumnIndex, e.RowIndex);
         }
 
 
@@ -3286,6 +3338,8 @@ namespace MupenUtils
             tsmi_snapEach45Degrees.Checked = quarterSnap;
             pb_JoystickPic.Invalidate();
         }
+
+        
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {

@@ -42,6 +42,11 @@ namespace MupenUtils
             this.btn_SaveAs = new System.Windows.Forms.Button();
             this.btn_Save = new System.Windows.Forms.Button();
             this.gp_M64 = new System.Windows.Forms.GroupBox();
+            this.gp_CMB = new System.Windows.Forms.GroupBox();
+            this.txt_CMBSamples = new System.Windows.Forms.TextBox();
+            this.lbl_CMBSamples = new System.Windows.Forms.Label();
+            this.txt_ComboName = new System.Windows.Forms.TextBox();
+            this.lbl_CMBName = new System.Windows.Forms.Label();
             this.gp_input = new System.Windows.Forms.GroupBox();
             this.gp_TASStudio = new System.Windows.Forms.GroupBox();
             this.dgv_Main = new System.Windows.Forms.DataGridView();
@@ -83,11 +88,6 @@ namespace MupenUtils
             this.chk_Cright = new System.Windows.Forms.CheckBox();
             this.chk_Cdown = new System.Windows.Forms.CheckBox();
             this.btn_SaveOptions = new System.Windows.Forms.Button();
-            this.gp_CMB = new System.Windows.Forms.GroupBox();
-            this.txt_CMBSamples = new System.Windows.Forms.TextBox();
-            this.lbl_CMBSamples = new System.Windows.Forms.Label();
-            this.txt_ComboName = new System.Windows.Forms.TextBox();
-            this.lbl_CMBName = new System.Windows.Forms.Label();
             this.btn_Unload = new System.Windows.Forms.Button();
             this.btn_Reload = new System.Windows.Forms.Button();
             this.gp_header = new System.Windows.Forms.GroupBox();
@@ -187,6 +187,7 @@ namespace MupenUtils
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
+            this.gp_CMB.SuspendLayout();
             this.gp_input.SuspendLayout();
             this.gp_TASStudio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
@@ -197,7 +198,6 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).BeginInit();
-            this.gp_CMB.SuspendLayout();
             this.gp_header.SuspendLayout();
             this.gp_User.SuspendLayout();
             this.gpRom.SuspendLayout();
@@ -356,6 +356,54 @@ namespace MupenUtils
             this.gp_M64.TabStop = false;
             this.gp_M64.Text = "M64";
             // 
+            // gp_CMB
+            // 
+            this.gp_CMB.Controls.Add(this.txt_CMBSamples);
+            this.gp_CMB.Controls.Add(this.lbl_CMBSamples);
+            this.gp_CMB.Controls.Add(this.txt_ComboName);
+            this.gp_CMB.Controls.Add(this.lbl_CMBName);
+            this.gp_CMB.Location = new System.Drawing.Point(7, 19);
+            this.gp_CMB.Name = "gp_CMB";
+            this.gp_CMB.Size = new System.Drawing.Size(570, 116);
+            this.gp_CMB.TabIndex = 0;
+            this.gp_CMB.TabStop = false;
+            this.gp_CMB.Text = "Header (Combo)";
+            this.gp_CMB.Visible = false;
+            // 
+            // txt_CMBSamples
+            // 
+            this.txt_CMBSamples.Location = new System.Drawing.Point(77, 59);
+            this.txt_CMBSamples.Name = "txt_CMBSamples";
+            this.txt_CMBSamples.Size = new System.Drawing.Size(132, 22);
+            this.txt_CMBSamples.TabIndex = 0;
+            this.txt_CMBSamples.TabStop = false;
+            // 
+            // lbl_CMBSamples
+            // 
+            this.lbl_CMBSamples.AutoSize = true;
+            this.lbl_CMBSamples.Location = new System.Drawing.Point(14, 63);
+            this.lbl_CMBSamples.Name = "lbl_CMBSamples";
+            this.lbl_CMBSamples.Size = new System.Drawing.Size(53, 16);
+            this.lbl_CMBSamples.TabIndex = 0;
+            this.lbl_CMBSamples.Text = "Frames";
+            // 
+            // txt_ComboName
+            // 
+            this.txt_ComboName.Location = new System.Drawing.Point(77, 30);
+            this.txt_ComboName.Name = "txt_ComboName";
+            this.txt_ComboName.Size = new System.Drawing.Size(264, 22);
+            this.txt_ComboName.TabIndex = 0;
+            this.txt_ComboName.TabStop = false;
+            // 
+            // lbl_CMBName
+            // 
+            this.lbl_CMBName.AutoSize = true;
+            this.lbl_CMBName.Location = new System.Drawing.Point(14, 34);
+            this.lbl_CMBName.Name = "lbl_CMBName";
+            this.lbl_CMBName.Size = new System.Drawing.Size(44, 16);
+            this.lbl_CMBName.TabIndex = 0;
+            this.lbl_CMBName.Text = "Name";
+            // 
             // gp_input
             // 
             this.gp_input.Controls.Add(this.gp_TASStudio);
@@ -396,6 +444,7 @@ namespace MupenUtils
             this.dgv_Main.TabStop = false;
             this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Main_CellDoubleClick);
             this.dgv_Main.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_Main_CellMouseDown);
+            this.dgv_Main.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_Main_CellMouseMove);
             this.dgv_Main.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_Main_RowPostPaint);
             this.dgv_Main.SelectionChanged += new System.EventHandler(this.dgv_Main_SelectionChanged);
             this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_Main_KeyDown);
@@ -904,54 +953,6 @@ namespace MupenUtils
             this.btn_SaveOptions.Text = "Save Options";
             this.btn_SaveOptions.UseVisualStyleBackColor = true;
             this.btn_SaveOptions.Click += new System.EventHandler(this.btn_SaveOptions_Click);
-            // 
-            // gp_CMB
-            // 
-            this.gp_CMB.Controls.Add(this.txt_CMBSamples);
-            this.gp_CMB.Controls.Add(this.lbl_CMBSamples);
-            this.gp_CMB.Controls.Add(this.txt_ComboName);
-            this.gp_CMB.Controls.Add(this.lbl_CMBName);
-            this.gp_CMB.Location = new System.Drawing.Point(7, 19);
-            this.gp_CMB.Name = "gp_CMB";
-            this.gp_CMB.Size = new System.Drawing.Size(570, 116);
-            this.gp_CMB.TabIndex = 0;
-            this.gp_CMB.TabStop = false;
-            this.gp_CMB.Text = "Header (Combo)";
-            this.gp_CMB.Visible = false;
-            // 
-            // txt_CMBSamples
-            // 
-            this.txt_CMBSamples.Location = new System.Drawing.Point(77, 59);
-            this.txt_CMBSamples.Name = "txt_CMBSamples";
-            this.txt_CMBSamples.Size = new System.Drawing.Size(132, 22);
-            this.txt_CMBSamples.TabIndex = 0;
-            this.txt_CMBSamples.TabStop = false;
-            // 
-            // lbl_CMBSamples
-            // 
-            this.lbl_CMBSamples.AutoSize = true;
-            this.lbl_CMBSamples.Location = new System.Drawing.Point(14, 63);
-            this.lbl_CMBSamples.Name = "lbl_CMBSamples";
-            this.lbl_CMBSamples.Size = new System.Drawing.Size(53, 16);
-            this.lbl_CMBSamples.TabIndex = 0;
-            this.lbl_CMBSamples.Text = "Frames";
-            // 
-            // txt_ComboName
-            // 
-            this.txt_ComboName.Location = new System.Drawing.Point(77, 30);
-            this.txt_ComboName.Name = "txt_ComboName";
-            this.txt_ComboName.Size = new System.Drawing.Size(264, 22);
-            this.txt_ComboName.TabIndex = 0;
-            this.txt_ComboName.TabStop = false;
-            // 
-            // lbl_CMBName
-            // 
-            this.lbl_CMBName.AutoSize = true;
-            this.lbl_CMBName.Location = new System.Drawing.Point(14, 34);
-            this.lbl_CMBName.Name = "lbl_CMBName";
-            this.lbl_CMBName.Size = new System.Drawing.Size(44, 16);
-            this.lbl_CMBName.TabIndex = 0;
-            this.lbl_CMBName.Text = "Name";
             // 
             // btn_Unload
             // 
@@ -1819,6 +1820,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStep
             // 
+            this.tsmi_movieScrubStep.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStep.Name = "tsmi_movieScrubStep";
             this.tsmi_movieScrubStep.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStep.Text = "Small Change (arrow keys)";
@@ -1828,6 +1830,7 @@ namespace MupenUtils
             // 
             // tsmi_movieScrubStepLarge
             // 
+            this.tsmi_movieScrubStepLarge.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tsmi_movieScrubStepLarge.Name = "tsmi_movieScrubStepLarge";
             this.tsmi_movieScrubStepLarge.Size = new System.Drawing.Size(100, 27);
             this.tsmi_movieScrubStepLarge.Text = "Large Change (Page buttons)";
@@ -1882,6 +1885,8 @@ namespace MupenUtils
             this.gp_Path.ResumeLayout(false);
             this.gp_Path.PerformLayout();
             this.gp_M64.ResumeLayout(false);
+            this.gp_CMB.ResumeLayout(false);
+            this.gp_CMB.PerformLayout();
             this.gp_input.ResumeLayout(false);
             this.gp_input.PerformLayout();
             this.gp_TASStudio.ResumeLayout(false);
@@ -1895,8 +1900,6 @@ namespace MupenUtils
             ((System.ComponentModel.ISupportInitialize)(this.nud_X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_JoystickPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tr_MovieScrub)).EndInit();
-            this.gp_CMB.ResumeLayout(false);
-            this.gp_CMB.PerformLayout();
             this.gp_header.ResumeLayout(false);
             this.gp_User.ResumeLayout(false);
             this.gp_User.PerformLayout();
