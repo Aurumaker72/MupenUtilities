@@ -866,16 +866,29 @@ namespace MupenUtils
         void TASStudioEndRegion()
         {
             if (tasStudioAutoScroll)
-                endRegion = dgv_Main.SelectedRows[0].Index;
+                if (endRegion == dgv_Main.SelectedRows[0].Index)
+                    endRegion = -1;
+                else
+                    endRegion = dgv_Main.SelectedRows[0].Index;
+                
+            else
+                if (endRegion == dgv_Main.SelectedCells[0].RowIndex)
+                endRegion = -1;
             else
                 endRegion = dgv_Main.SelectedCells[0].RowIndex;
-
             UpdateTASStudioRegionUI();
         }
         void TASStudioBeginRegion()
         {
             if (tasStudioAutoScroll)
+                if (beginRegion == dgv_Main.SelectedRows[0].Index)
+                    beginRegion = -1;
+                else
                 beginRegion = dgv_Main.SelectedRows[0].Index;
+                
+            else
+                if (beginRegion == dgv_Main.SelectedCells[0].RowIndex)
+                beginRegion = -1;
             else
                 beginRegion = dgv_Main.SelectedCells[0].RowIndex;
             UpdateTASStudioRegionUI();
