@@ -1333,17 +1333,10 @@ namespace MupenUtils
 
             FreeData(UsageTypes.M64); // destroy movie
 
-            
+
 
             // Read header
             FileStream fs;
-            try { fs = File.Open(Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite); fs.Close(); }
-            catch
-            {
-                ErrorProcessing("File inaccessible.");
-                m64loadBusy = false;
-                return;
-            }
 
             (M64.MovieStruct, M64.MovieStatus) movieLoadResult = M64.ParseMovie(Path);
             if(movieLoadResult.Item2 != M64.MovieStatus.Ok)
