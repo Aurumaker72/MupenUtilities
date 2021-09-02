@@ -1354,7 +1354,15 @@ namespace MupenUtils
             }
             MovieHeader = movieLoadResult.Item1;
 
-            fs = File.Open(Path, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+
+            try { fs = File.Open(Path, FileMode.Open, FileAccess.Read, FileShare.Read); }
+            catch
+            {
+                ErrorProcessing("File inaccessible.");
+                m64loadBusy = false;
+                return;
+            }
             BinaryReader br = new BinaryReader(fs);
 
             for (int i = 0; i < 4; i++)
