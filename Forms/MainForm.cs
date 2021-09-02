@@ -1354,7 +1354,7 @@ namespace MupenUtils
             }
             MovieHeader = movieLoadResult.Item1;
 
-            fs = File.Open(Path, FileMode.Open);
+            fs = File.Open(Path, FileMode.Open, FileAccess.Read, FileShare.Read);
             BinaryReader br = new BinaryReader(fs);
 
             for (int i = 0; i < 4; i++)
