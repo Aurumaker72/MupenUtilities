@@ -58,7 +58,7 @@ namespace MupenUtilities.Helpers
             FileStream fs = null;
             try
             {
-                fs = new FileStream(Path, FileMode.Open);
+                fs = new FileStream(Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             }
             catch
             {

@@ -963,7 +963,7 @@ namespace MupenUtils
             BinaryWriter br;
             try
             {
-                fs = File.Open("inputs.bin", FileMode.Create);
+                fs = File.Open("inputs.bin", FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
                 br = new BinaryWriter(fs);
 
             }
@@ -1115,7 +1115,8 @@ namespace MupenUtils
             FileStream fs;
             try
             {
-                fs = File.Open(Path, FileMode.Open);
+                fs = File.Open(Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+
             }
             catch
             {
@@ -1245,7 +1246,7 @@ namespace MupenUtils
             SavePath = tmpPath;
 
 
-            FileStream fs = new FileStream(SavePath, FileMode.Create);
+            FileStream fs = new FileStream(SavePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
             BinaryWriter br = new BinaryWriter(fs);
             if (saveSamplesOnly)
             {
@@ -1336,7 +1337,7 @@ namespace MupenUtils
 
             // Read header
             FileStream fs;
-            try { fs = File.Open(Path, FileMode.Open); fs.Close(); }
+            try { fs = File.Open(Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite); fs.Close(); }
             catch
             {
                 ErrorProcessing("File inaccessible.");
@@ -1586,7 +1587,7 @@ namespace MupenUtils
 
             File.Delete(SavePath);
 
-            FileStream fs = File.Open(SavePath, FileMode.Create);
+            FileStream fs = File.Open(SavePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
             BinaryWriter br = new BinaryWriter(fs);
             if (saveSamplesOnly)
             {
