@@ -1821,7 +1821,7 @@ namespace MupenUtils
 
             
 
-            for (int y = 0; y < inputLists[selectedController].Count - 1/*???*/; y++)
+            for (int y = 0; y < inputLists[selectedController].Count - 0/*???*/; y++)
             {
                 // for each frame
                 rows.Add(new DataGridViewRow());
@@ -1855,7 +1855,10 @@ namespace MupenUtils
 
             }
 
+            rows.RemoveAt(rows.Count - 1); // HACK: remove last "ghost" row which does not correspond to any frame and causes crashes
+
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
+
             for (int i = 0; i < inputLists[selectedController].Count - 1; i++)
             {
                 if (i % 2 == 0)
