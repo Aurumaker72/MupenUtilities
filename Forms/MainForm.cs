@@ -1440,8 +1440,6 @@ namespace MupenUtils
             txt_RR.Invoke((MethodInvoker)(() => txt_RR.Text = MovieHeader.rerecord_count.ToString()));
             txt_CTRLS.Invoke((MethodInvoker)(() => txt_CTRLS.Text = MovieHeader.num_controllers.ToString()));
 
-
-
             cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.SelectedItem = DataHelper.GetMovieStartupType(MovieHeader.startFlags)));
 
             txt_videoplugin.Invoke((MethodInvoker)(() => txt_videoplugin.Text = MovieHeader.videoPluginName));
@@ -1632,10 +1630,14 @@ namespace MupenUtils
                     MovieHeader.description = txt_Desc.Text;
                     MovieHeader.vis_per_second = byte.Parse(txt_VI_s.Text);
                     MovieHeader.romCRC = uint.Parse(txt_Crc.Text);
-                }catch(FormatException e)
+                }catch(Exception e)
                 {
                     // aaahh idiot user you dumbass
-                    MessageBox.Show("Error parsing a textbox\'s text. Please double check that you wrote valid text in each modified property. The saving process will attempt to continue", PROGRAM_NAME);
+
+                    if (e is OverflowException)
+                        MessageBox.Show("Error parsing a textbox\'s text. A value is too big for the respective data storage type. The saving process will attempt to continue", PROGRAM_NAME);
+                    if (e is FormatException)
+                        MessageBox.Show("Error parsing a textbox\'s text. Please double check that you wrote valid text in each modified property. The saving process will attempt to continue", PROGRAM_NAME);
                 }
 
                 // lol cringe
