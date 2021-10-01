@@ -211,6 +211,7 @@ namespace MupenUtils
         /* Save Options */
         public static bool saveCompressed = false;
         public static bool saveSamplesOnly = false;
+        public static bool overwriteOriginal = false;
 
         #region WINAPI extern
         const int PROCESS_QUERY_INFORMATION = 0x0400;
@@ -410,6 +411,13 @@ namespace MupenUtils
             cmb_Country.Items.Add("Australia");
             cmb_Country.Items.Add("Europe");
             cmb_Country.Items.Add("Unknown");
+
+            cmb_CRC.Items.Add("Preserve Original");
+            cmb_CRC.Items.Add("Unknown");
+            foreach (var CRCTuple in DataHelper.GetCRCs())
+            {
+                cmb_CRC.Items.Add(CRCTuple.GameName);
+            }
 
             UpdateReadOnly();
 
@@ -1218,31 +1226,37 @@ namespace MupenUtils
             }
 
             string tmpPath;
-            if (saveAs)
+            if (!overwriteOriginal)
             {
-                object[] res = UIHelper.SaveFileDialog("Save As", "Combo Files (*.cmb)|*.cmb|All files (*.*)|*.*");
-                if ((bool)res[1])
-                    tmpPath = (string)res[0];
+                if (saveAs)
+                {
+                    object[] res = UIHelper.SaveFileDialog("Save As", "Combo Files (*.cmb)|*.cmb|All files (*.*)|*.*");
+                    if ((bool)res[1])
+                        tmpPath = (string)res[0];
+                    else
+                    {
+                        return;
+                    }
+                }
                 else
                 {
-                    return;
+                    tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
+
+                    while (File.Exists(tmpPath))
+                    {
+
+                        Debug.WriteLine("File already exists, trying " + tmpPath);
+                        tmpPath = tmpPath + "-modified";
+                    }
+
+                    tmpPath = tmpPath + ".cmb";
+
                 }
             }
             else
             {
-                tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
-
-                while (File.Exists(tmpPath))
-                {
-
-                    Debug.WriteLine("File already exists, trying " + tmpPath);
-                    tmpPath = tmpPath + "-modified";
-                }
-
-                tmpPath = tmpPath + ".cmb";
-
+                tmpPath = Path;
             }
-
             SavePath = tmpPath;
 
 
@@ -1448,7 +1462,22 @@ namespace MupenUtils
             txt_Rsp.Invoke((MethodInvoker)(() => txt_Rsp.Text = MovieHeader.rspPluginName));
 
             txt_Rom.Invoke((MethodInvoker)(() => txt_Rom.Text = MovieHeader.romNom));
-            txt_Crc.Invoke((MethodInvoker)(() => txt_Crc.Text = MovieHeader.romCRC.ToString()));
+
+            //bool foundcrc = false;
+            //foreach (var CRCTuple in DataHelper.GetCRCs())
+            //{
+            //    if(CRCTuple.Crc == MovieHeader.romCRC)
+            //    {
+            //        cmb_CRC.Invoke((MethodInvoker)(() => cmb_CRC.SelectedIndex = CRCTuple.ComboIndex));
+            //        foundcrc = true;
+            //    }
+            //}
+            //if (!foundcrc)
+            //{
+            //    cmb_CRC.Invoke((MethodInvoker)(() => cmb_CRC.SelectedIndex = 0));
+            //    cmb_CRC.Invoke((MethodInvoker)(() => cmb_CRC.Items[0] = MovieHeader.romCRC.ToString()));
+            //}
+            cmb_CRC.Invoke((MethodInvoker)(() => cmb_CRC.SelectedIndex = 0));
 
             object[] countryData = DataHelper.GetCountryResource(MovieHeader.romCountry);
             Image countryImage = (Image)countryData[1];
@@ -1556,31 +1585,37 @@ namespace MupenUtils
             //}
 
             string tmpPath;
-            if (saveAs)
+            if (!overwriteOriginal)
             {
-                object[] res = UIHelper.SaveFileDialog("Save As", "M64 Files (*.m64)|*.m64|All files (*.*)|*.*");
-                if ((bool)res[1])
-                    tmpPath = (string)res[0];
+                if (saveAs)
+                {
+                    object[] res = UIHelper.SaveFileDialog("Save As", "M64 Files (*.m64)|*.m64|All files (*.*)|*.*");
+                    if ((bool)res[1])
+                        tmpPath = (string)res[0];
+                    else
+                    {
+                        return;
+                    }
+                }
                 else
                 {
-                    return;
+                    tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
+
+                    while (File.Exists(tmpPath))
+                    {
+
+                        Debug.WriteLine("File already exists, trying " + tmpPath);
+                        tmpPath = tmpPath + "-modified";
+                    }
+
+                    tmpPath = tmpPath + ".m64";
+
                 }
             }
             else
             {
-                tmpPath = System.IO.Path.GetFileNameWithoutExtension(Path) + "-modified";
-
-                while (File.Exists(tmpPath))
-                {
-
-                    Debug.WriteLine("File already exists, trying " + tmpPath);
-                    tmpPath = tmpPath + "-modified";
-                }
-
-                tmpPath = tmpPath + ".m64";
-
+                tmpPath = Path;
             }
-
             SavePath = tmpPath;
             Debug.WriteLine(tmpPath);
 
@@ -1617,7 +1652,7 @@ namespace MupenUtils
                     uid = BitConverter.GetBytes(Convert.ToUInt32(txt_misc_UID.Text, 16));
                     Array.Reverse(uid);
 
-                    MovieHeader.uid = BitConverter.ToUInt32(uid,0);
+                    MovieHeader.uid = BitConverter.ToUInt32(uid, 0);
                     MovieHeader.length_vis = UInt32.Parse(txt_VIs.Text);
                     MovieHeader.rerecord_count = UInt32.Parse(txt_RR.Text);
                     MovieHeader.num_controllers = byte.Parse(txt_CTRLS.Text);
@@ -1629,8 +1664,28 @@ namespace MupenUtils
                     MovieHeader.authorInfos = txt_Author.Text;
                     MovieHeader.description = txt_Desc.Text;
                     MovieHeader.vis_per_second = byte.Parse(txt_VI_s.Text);
-                    MovieHeader.romCRC = uint.Parse(txt_Crc.Text);
-                }catch(Exception e)
+
+                    if (cmb_CRC.SelectedIndex == 0)
+                        MovieHeader.romCRC = MovieHeader.romCRC; // do nothing
+                    else if (cmb_CRC.SelectedIndex == 1)
+                        //MovieHeader.romCRC = uint.Parse(cmb_CRC.SelectedItem.ToString());
+                        MovieHeader.romCRC = 0;
+                    else
+                    {
+                        var CRCTuples = DataHelper.GetCRCs();
+                        foreach (var CRCTuple in CRCTuples)
+                        {
+                            if (CRCTuple.ComboIndex == cmb_CRC.SelectedIndex)
+                            {
+                                MovieHeader.romCRC = CRCTuple.Crc;
+                                break;
+                            }
+                        }
+
+                    }
+
+                }
+                catch (Exception e)
                 {
                     // aaahh idiot user you dumbass
 
@@ -2735,7 +2790,7 @@ namespace MupenUtils
             }
             txt_Rom.ReadOnly = readOnly;
             txt_CTRLS.ReadOnly = readOnly;
-            txt_Crc.ReadOnly = readOnly;
+            cmb_CRC.Enabled = !readOnly;
             cbox_startType.Enabled = !readOnly;
             foreach (Control ctl in gp_Plugins.Controls)
             {
@@ -2862,7 +2917,21 @@ namespace MupenUtils
         {
             MessageBox.Show("The movie\'s country is " + (string)DataHelper.GetCountryResource(MovieHeader.romCountry)[0] + ", with the country code of " + MovieHeader.romCountry + " (Hex: " + ExtensionMethods.ByteArrayToString(BitConverter.GetBytes(MovieHeader.romCountry)) + ")", this.Text);
         }
+        private void pb_CRC_Click(object sender, EventArgs e)
+        {
+            string DetectedLinkedName = "Unknown (Could not detect)";
+            foreach (var CRCTuple in DataHelper.GetCRCs())
+            {
+                if(CRCTuple.Crc == MovieHeader.romCRC)
+                {
+                    DetectedLinkedName = CRCTuple.GameName;
+                    break;
+                }
+            }
 
+            MessageBox.Show("The movie\'s crc is " + MovieHeader.romCRC.ToString() + ", with the linked CRC name of " + DetectedLinkedName, this.Text);
+
+        }
         private void themeSelectedClick(object sender, MouseEventArgs e)
         {
             ToolStripMenuItem btn = sender as ToolStripMenuItem;
@@ -3163,6 +3232,11 @@ namespace MupenUtils
         {
             saveSamplesOnly ^= true;
             tsmi_samplesOnly.Checked = saveSamplesOnly;
+        }
+        private void tsmi_OverwriteOriginal_Click(object sender, EventArgs e)
+        {
+            overwriteOriginal ^= true;
+            tsmi_OverwriteOriginal.Checked ^= true;
         }
 
         private void btn_SaveOptions_Click(object sender, EventArgs e)

@@ -263,6 +263,20 @@ namespace MupenUtils
         }
 
         
+        public static List<(uint Crc, string GameName, int ComboIndex)> GetCRCs()
+        {
+            List<(UInt32 Crc, string GameName, int ComboIndex)> CRCTuples = new List<(uint Crc, string GameName, int ComboIndex)>();
+            CRCTuples.Add((0x03048DE6, "Super Mario 64 Europe 1", 2));
+            CRCTuples.Add((0x11FB579B, "Super Mario 64 Europe 2", 3));
+            CRCTuples.Add((0xDD801954, "Super Mario 64 Japan 1", 4));
+            CRCTuples.Add((0x5CF7952A, "Super Mario 64 Japan 2", 5));
+            CRCTuples.Add((0xA1E15117, "Super Mario 64 Japan Rev3 1", 6));
+            CRCTuples.Add((0xA1E15117, "Super Mario 64 Japan Rev3 2", 7));
+            CRCTuples.Add((0x3CE60709, "Super Mario 64 USA 1", 8));
+            CRCTuples.Add((0x42C43204, "Super Mario 64 USA 2", 9));
+            CRCTuples.Add((0x34133275, "YAMA", 10));
+            return CRCTuples;
+        }
 
         public static string GetFriendlyValue(int value)
         {
