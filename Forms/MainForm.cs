@@ -119,8 +119,6 @@ namespace MupenUtils
         public static string Path, SavePath;
         public static bool FileLoaded = false;
         bool ExpandedMenu = false;
-        bool Sticky = false;
-        bool liveTasStudio = true;
         bool forwardsPlayback = true;
         public static bool readOnly = true;
         public static bool rehookMupen = false;
@@ -175,7 +173,6 @@ namespace MupenUtils
         bool lockType;
         UpdateNotifier updateNotifier = new UpdateNotifier();
         SmoothingMode JOY_SmoothingMode = SmoothingMode.AntiAlias;
-        bool quarterSnap;
 
         Point[] originalGroupboxLocation = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0,0) };
 
@@ -207,11 +204,6 @@ namespace MupenUtils
         };
         public static UIThemes UITheme = UIThemes.Default;
 
-
-        /* Save Options */
-        public static bool saveCompressed = false;
-        public static bool saveSamplesOnly = false;
-        public static bool overwriteOriginal = false;
 
         #region WINAPI extern
         const int PROCESS_QUERY_INFORMATION = 0x0400;
@@ -380,7 +372,7 @@ namespace MupenUtils
             //#if DEBUG
             tsmi_DBG_Crash.MouseDown += (s, e) => throw new Exception("Intentional crash");
             tsmi_DBG_Crash.Text = "Debug - Crash";
-            ctx_Input_Debug.Items.Add(tsmi_DBG_Crash);
+            ctx_Input.Items.Add(tsmi_DBG_Crash);
 
             if (!System.Windows.Forms.SystemInformation.TerminalServerSession)
             {
@@ -941,6 +933,9 @@ namespace MupenUtils
                 chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Checked = readOnly));
                 chk_readonly.Invoke((MethodInvoker)(() => chk_readonly.Text = "Read-only"));
                 cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
+                cbox_startType.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
+                //cmb_CRC.Invoke((MethodInvoker)(() => cmb_CRC.Items.Clear()));
+                //cmb_Country.Invoke((MethodInvoker)(() => cmb_Country.Items.Clear()));
 
                 MovieHeader = default; // expunge header
 
@@ -950,8 +945,12 @@ namespace MupenUtils
             cmb_Country.Invoke((MethodInvoker)(() => cmb_Country.SelectedIndex = -1));
             cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.ResetText()));
             cbox_startType.Invoke((MethodInvoker)(() => cbox_startType.SelectedIndex = -1));
+            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.ResetText()));
             cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.SelectedIndex = -1));
-            cbox_Controllers.Invoke((MethodInvoker)(() => cbox_Controllers.Items.Clear()));
+            cmb_CRC.Invoke((MethodInvoker)(() => cmb_CRC.ResetText()));
+            cmb_CRC.Invoke((MethodInvoker)(() => cmb_CRC.SelectedIndex = -1));
+            cmb_Country.Invoke((MethodInvoker)(() => cmb_Country.ResetText()));
+            cmb_Country.Invoke((MethodInvoker)(() => cmb_Country.SelectedIndex = -1));
 
             ResetTASStudio();
 
@@ -1226,7 +1225,7 @@ namespace MupenUtils
             }
 
             string tmpPath;
-            if (!overwriteOriginal)
+            if (!tsmi_OverwriteOriginal.Checked)
             {
                 if (saveAs)
                 {
@@ -1262,7 +1261,7 @@ namespace MupenUtils
 
             FileStream fs = new FileStream(SavePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
             BinaryWriter br = new BinaryWriter(fs);
-            if (saveSamplesOnly)
+            if (tsmi_samplesOnly.Checked)
             {
                 for (int i = 0; i < cmbInput.Count; i++)
                 {
@@ -1585,7 +1584,7 @@ namespace MupenUtils
             //}
 
             string tmpPath;
-            if (!overwriteOriginal)
+            if (!tsmi_OverwriteOriginal.Checked)
             {
                 if (saveAs)
                 {
@@ -1623,7 +1622,7 @@ namespace MupenUtils
 
             FileStream fs = File.Open(SavePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
             BinaryWriter br = new BinaryWriter(fs);
-            if (saveSamplesOnly)
+            if (tsmi_samplesOnly.Checked)
             {
                 for (int i = 0; i < inputLists[0].Count/*All should have same amount of inputs... right*/; i++)
                 {
@@ -1986,7 +1985,7 @@ namespace MupenUtils
         void UpdateTASStudio(int frameTarget)
         {
             //if (UsageType == UsageTypes.Combo) return;
-            if (liveTasStudio)
+            if (tsmi_LiveTasStudio.Checked)
             {
                 for (int i = 0; i < inputStructNames.Length; i++)
                 {
@@ -2125,7 +2124,7 @@ namespace MupenUtils
 
         private void btn_Input_Debug_Click(object sender, EventArgs e)
         {
-            ctx_Input_Debug.Show(MousePosition);
+            ctx_Input.Show(MousePosition);
         }
 
         private void dgv_Main_MouseClick(object sender, MouseEventArgs e)
@@ -2148,11 +2147,6 @@ namespace MupenUtils
             DumpInputsFile(false);
         }
 
-        private void tsmi_Input_Sticky_Click(object sender, EventArgs e)
-        {
-            Sticky = !Sticky;
-            tsmi_Input_Sticky.Checked = Sticky;
-        }
 
         private void tsmi_Input_SetInput_Click(object sender, EventArgs e)
         {
@@ -2902,11 +2896,7 @@ namespace MupenUtils
 
             }
         }
-        private void tsmi_LiveTasStudio_Click_1(object sender, EventArgs e)
-        {
-            liveTasStudio ^= true;
-            tsmi_LiveTasStudio.Checked = liveTasStudio;
-        }
+
         private void btn_VIMAX_Click(object sender, EventArgs e)
         {
             MovieHeader.length_vis = UInt32.MaxValue;
@@ -3222,22 +3212,7 @@ namespace MupenUtils
             MupenUtilities.Properties.Settings.Default.Save();
         }
 
-        private void tsmi_saveCompressed_Click(object sender, EventArgs e)
-        {
-            saveCompressed ^= true;
-            tsmi_saveCompressed.Checked = saveCompressed;
-        }
-
-        private void tsmi_samplesOnly_Click(object sender, EventArgs e)
-        {
-            saveSamplesOnly ^= true;
-            tsmi_samplesOnly.Checked = saveSamplesOnly;
-        }
-        private void tsmi_OverwriteOriginal_Click(object sender, EventArgs e)
-        {
-            overwriteOriginal ^= true;
-            tsmi_OverwriteOriginal.Checked ^= true;
-        }
+        
 
         private void btn_SaveOptions_Click(object sender, EventArgs e)
         {
@@ -3257,7 +3232,10 @@ namespace MupenUtils
             FreeData(UsageType);
             EnableM64View(false, false, false);
         }
-
+        private void tsmi_snapEach45Degrees_Click(object sender, EventArgs e)
+        {
+            pb_JoystickPic.Refresh();
+        }
         #endregion
 
         #region Joystick Behaviour
@@ -3286,7 +3264,7 @@ namespace MupenUtils
 
 
             // awful code
-            if (quarterSnap)
+            if (tsmi_snapEach45Degrees.Checked)
             {
                 if (nud_Angle.Value > 45 - 7 && nud_Angle.Value < 45 + 7)
                 {
@@ -3426,14 +3404,7 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-        private void tsmi_snapEach45Degrees_Click(object sender, EventArgs e)
-        {
-            quarterSnap ^= true;
-            tsmi_snapEach45Degrees.Checked = quarterSnap;
-            pb_JoystickPic.Invalidate();
-        }
-
-        
+      
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -3494,7 +3465,7 @@ namespace MupenUtils
             e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, 1, JOY_middle.Y, pb_JoystickPic.Width, JOY_middle.Y);
             e.Graphics.DrawLine(readOnly ? Pens.DarkGray : Pens.Black, JOY_middle.X, pb_JoystickPic.Height, JOY_middle.X, 1);
             
-            if (quarterSnap)
+            if (tsmi_snapEach45Degrees.Checked)
             {
                 // i dont want to do complicated maths again so i will hardcode this
                 const int ADJUSTED = 25;
@@ -3569,7 +3540,7 @@ namespace MupenUtils
             str += "theme: " + UITheme.ToString() + "\n";
             str += "os: " + ExtensionMethods.FriendlyName() + "\n";
             str += "cores: " + Environment.ProcessorCount + "\n";
-            foreach(var ctl in ctx_Input_Debug.Items)
+            foreach(var ctl in ctx_Input.Items)
             {
                 if (ctl is ToolStripSeparator) continue;
                 ToolStripMenuItem tsmi = ctl as ToolStripMenuItem;
