@@ -2138,8 +2138,12 @@ namespace MupenUtils
 
             cellSize += Math.Sign(e.Delta) * 5;
 
+            cellSize = Math.Abs(cellSize);
+
             for (int i = 0; i < dgv_Main.Columns.Count; i++)
                 dgv_Main.Columns[i].Width = cellSize;
+
+            Console.WriteLine(cellSize);
 
         }
         private void tsmi_Input_Debug_DumpData_Click(object sender, EventArgs e)
