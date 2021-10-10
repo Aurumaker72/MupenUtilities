@@ -410,6 +410,7 @@ namespace MupenUtils
             {
                 cmb_CRC.Items.Add(CRCTuple.GameName);
             }
+            cmb_CRC.DropDownWidth = ExtensionMethods.DropDownWidth(cmb_CRC);
 
             UpdateReadOnly();
 

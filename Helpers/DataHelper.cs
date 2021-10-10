@@ -274,7 +274,8 @@ namespace MupenUtils
             CRCTuples.Add((0xA1E15117, "Super Mario 64 Japan Rev3 2", 7));
             CRCTuples.Add((0x3CE60709, "Super Mario 64 USA 1", 8));
             CRCTuples.Add((0x42C43204, "Super Mario 64 USA 2", 9));
-            CRCTuples.Add((0x34133275, "YAMA", 10));
+            CRCTuples.Add((0xFF2B5A63, "Super Mario 64 USA 3", 10));
+            CRCTuples.Add((0x34133275, "YAMA", 11));
             return CRCTuples;
         }
 
