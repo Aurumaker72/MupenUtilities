@@ -1914,6 +1914,7 @@ namespace MupenUtils
 
             }
 
+            if(rows.Count-1 > 0)
             rows.RemoveAt(rows.Count - 1); // HACK: remove last "ghost" row which does not correspond to any frame and causes crashes
 
             dgv_Main.Invoke((MethodInvoker)(() => dgv_Main.Rows.AddRange(rows.ToArray())));
@@ -2952,10 +2953,7 @@ namespace MupenUtils
         }
         private void inputStatisticsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputStatsForm.inputCtl1 = inputLists[0];
-            InputStatsForm.inputCtl2 = inputLists[1];
-            InputStatsForm.inputCtl3 = inputLists[2];
-            InputStatsForm.inputCtl4 = inputLists[3];
+            InputStatsForm.inputLists = inputLists;
 
             if (inputStatisticsForm == null)
                 inputStatisticsForm = new InputStatsForm();

@@ -8,12 +8,9 @@ namespace MupenUtils.Forms
     {
         int selectedController = 0;
 
-        public static List<int> inputCtl1 = new List<int>();
-        public static List<int> inputCtl2 = new List<int>();
-        public static List<int> inputCtl3 = new List<int>();
-        public static List<int> inputCtl4 = new List<int>();
 
-        public static List<int>[] inputLists = { inputCtl1, inputCtl2, inputCtl3, inputCtl4 };
+
+        public static List<List<int>> inputLists = new List<List<int>>();
 
 
         // buttonStats[controller][button];
@@ -57,6 +54,10 @@ namespace MupenUtils.Forms
         {
             if (!MainForm.FileLoaded) return;
 
+            //inputLists = new List<List<int>>();
+            inputLists = MainForm.inputLists; // ?
+            buttonStats = new int[MainForm.inputLists.Count, 16];
+            sumX = sumY = emptyFrames = new int[MainForm.inputLists.Count];
 
             for (int i1 = 0; i1 < sumX.Length; i1++)
                 sumX[i1] = 0;
@@ -70,53 +71,21 @@ namespace MupenUtils.Forms
 
             Array.Clear(buttonStats, 0, buttonStats.Length);
 
-            for (int i = 0; i < inputCtl1.Count; i++)
+            for (int i = 0; i < MainForm.inputLists.Count; i++)
             {
-                if (inputCtl1[i] == 0) emptyFrames[0]++;
+                foreach (var frame in MainForm.inputLists[i])
+                {
 
-                for (int x = 0; x < 16; x++)
-                    if (ExtensionMethods.GetBit(inputCtl1[i], x))
-                        buttonStats[0, x]++;
+                    if (frame == 0) emptyFrames[i]++;
 
-                byte[] data = BitConverter.GetBytes(inputCtl1[i]);
-                sumX[0] += data[2];
-                sumY[0] += data[3];
-            }
-            for (int i = 0; i < inputCtl2.Count; i++)
-            {
-                if (inputCtl2[i] == 0) emptyFrames[1]++;
+                    for (int x = 0; x < 16; x++)
+                        if (ExtensionMethods.GetBit(frame, x))
+                            buttonStats[i, x]++;
 
-                for (int x = 0; x < 16; x++)
-                    if (ExtensionMethods.GetBit(inputCtl2[i], x))
-                        buttonStats[1, x]++;
-
-                byte[] data = BitConverter.GetBytes(inputCtl2[i]);
-                sumX[1] += data[2];
-                sumY[1] += data[3];
-            }
-            for (int i = 0; i < inputCtl3.Count; i++)
-            {
-                if (inputCtl3[i] == 0) emptyFrames[2]++;
-
-                for (int x = 0; x < 16; x++)
-                    if (ExtensionMethods.GetBit(inputCtl3[i], x))
-                        buttonStats[2, x]++;
-
-                byte[] data = BitConverter.GetBytes(inputCtl3[i]);
-                sumX[2] += data[2];
-                sumY[2] += data[3];
-            }
-            for (int i = 0; i < inputCtl4.Count; i++)
-            {
-                if (inputCtl4[i] == 0) emptyFrames[3]++;
-
-                for (int x = 0; x < 16; x++)
-                    if (ExtensionMethods.GetBit(inputCtl4[i], x))
-                        buttonStats[3, x]++;
-
-                byte[] data = BitConverter.GetBytes(inputCtl4[i]);
-                sumX[3] += data[2];
-                sumY[3] += data[3];
+                    byte[] data = BitConverter.GetBytes(frame);
+                    sumX[i] += data[2];
+                    sumY[i] += data[3];
+                }
             }
 
             selectedController = cbox_Ctl.SelectedIndex;
@@ -125,6 +94,18 @@ namespace MupenUtils.Forms
                 cbox_Ctl.SelectedIndex = 0;
                 selectedController = cbox_Ctl.SelectedIndex;
             }
+
+
+            //try
+            //{
+            //    // precaution
+            //    if (buttonStats[selectedController, 16] == null) ;
+            //}
+            //catch
+            //{
+            //    return;
+            //}
+
             for (int i = 0; i < 16; i++)
             {
                 labels[i].Text = MainForm.inputStructNames[i] + ": " + buttonStats[selectedController, i];
@@ -142,14 +123,8 @@ namespace MupenUtils.Forms
             List<int> inputList;
             int all = 0;
             double confidence = 0;
-            switch (selectedController)
-            {
-                case 0: inputList = inputCtl1; break;
-                case 1: inputList = inputCtl2; break;
-                case 2: inputList = inputCtl3; break;
-                case 3: inputList = inputCtl4; break;
-                default: MessageBox.Show("oob controller"); return;
-            }
+
+            inputList = inputLists[selectedController];
 
             for (int i = 0; i < inputList.Count; i++)
             {
@@ -233,7 +208,7 @@ namespace MupenUtils.Forms
         private void btn_GoBruteforceButton_Click(object sender, EventArgs e)
         {
             
-            List<int> inputList;
+            List<int> inputList = inputLists[selectedController];
             int searchedButton = cmb_Buttons.SelectedIndex;
             foundFrame = null;
 
@@ -242,15 +217,7 @@ namespace MupenUtils.Forms
                 lbl_StatusButton.Text = "Wrong button index";
                 return;
             }
-            switch (selectedController)
-            {
-                case 0: inputList = inputCtl1; break;
-                case 1: inputList = inputCtl2; break;
-                case 2: inputList = inputCtl3; break;
-                case 3: inputList = inputCtl4; break;
-                default: MessageBox.Show("oob controller"); return;
-            }
-            
+
             for (int i = 0; i < inputList.Count; i++)
             {
                 if(ExtensionMethods.GetBit(inputList[i], searchedButton))
@@ -269,6 +236,7 @@ namespace MupenUtils.Forms
         private void btn_GoJoystickFind_Click(object sender, EventArgs e)
         {
             List<int> inputList;
+            inputList = inputLists[selectedController];
 
             int? searchedX = (int)nud_X.Value;
             int? searchedY = (int)nud_Y.Value;
@@ -282,15 +250,6 @@ namespace MupenUtils.Forms
             }
 
             foundFrame = null;
-
-            switch (selectedController)
-            {
-                case 0: inputList = inputCtl1; break;
-                case 1: inputList = inputCtl2; break;
-                case 2: inputList = inputCtl3; break;
-                case 3: inputList = inputCtl4; break;
-                default: MessageBox.Show("oob controller"); return;
-            }
 
             for (int i = 0; i < inputList.Count; i++)
             {
