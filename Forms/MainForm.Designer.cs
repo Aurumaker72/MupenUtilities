@@ -1163,6 +1163,8 @@ namespace MupenUtils
             this.cmb_CRC.Size = new System.Drawing.Size(132, 24);
             this.cmb_CRC.TabIndex = 0;
             this.cmb_CRC.TabStop = false;
+            this.cmb_CRC.SelectedIndexChanged += new System.EventHandler(this.cmb_CRC_SelectedIndexChanged);
+            this.cmb_CRC.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cmb_CRC_MouseUp);
             // 
             // cmb_Country
             // 

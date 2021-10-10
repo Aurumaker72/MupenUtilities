@@ -411,7 +411,7 @@ namespace MupenUtils
                 cmb_CRC.Items.Add(CRCTuple.GameName);
             }
             cmb_CRC.DropDownWidth = ExtensionMethods.DropDownWidth(cmb_CRC);
-
+            
             UpdateReadOnly();
 
             EnableM64View(false, true, false);
@@ -1518,6 +1518,27 @@ namespace MupenUtils
 
             m64loadBusy = false;
         }
+        void SetHeaderCrcFromCmb()
+        {
+            if (cmb_CRC.SelectedIndex == 0)
+                MovieHeader.romCRC = MovieHeader.romCRC; // do nothing
+            else if (cmb_CRC.SelectedIndex == 1)
+                //MovieHeader.romCRC = uint.Parse(cmb_CRC.SelectedItem.ToString());
+                MovieHeader.romCRC = 0;
+            else
+            {
+                var CRCTuples = DataHelper.GetCRCs();
+                foreach (var CRCTuple in CRCTuples)
+                {
+                    if (CRCTuple.ComboIndex == cmb_CRC.SelectedIndex)
+                    {
+                        MovieHeader.romCRC = CRCTuple.Crc;
+                        break;
+                    }
+                }
+
+            }
+        }
         void CheckSuspiciousProperties()
         {
             bool triggerDiag = false;
@@ -1664,25 +1685,8 @@ namespace MupenUtils
                     MovieHeader.authorInfos = txt_Author.Text;
                     MovieHeader.description = txt_Desc.Text;
                     MovieHeader.vis_per_second = byte.Parse(txt_VI_s.Text);
-
-                    if (cmb_CRC.SelectedIndex == 0)
-                        MovieHeader.romCRC = MovieHeader.romCRC; // do nothing
-                    else if (cmb_CRC.SelectedIndex == 1)
-                        //MovieHeader.romCRC = uint.Parse(cmb_CRC.SelectedItem.ToString());
-                        MovieHeader.romCRC = 0;
-                    else
-                    {
-                        var CRCTuples = DataHelper.GetCRCs();
-                        foreach (var CRCTuple in CRCTuples)
-                        {
-                            if (CRCTuple.ComboIndex == cmb_CRC.SelectedIndex)
-                            {
-                                MovieHeader.romCRC = CRCTuple.Crc;
-                                break;
-                            }
-                        }
-
-                    }
+                    SetHeaderCrcFromCmb();
+                   
 
                 }
                 catch (Exception e)
@@ -3409,7 +3413,15 @@ namespace MupenUtils
             this.ActiveControl = null;
         }
 
-      
+        private void cmb_CRC_MouseUp(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void cmb_CRC_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetHeaderCrcFromCmb();
+        }
 
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
