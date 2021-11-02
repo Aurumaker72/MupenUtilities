@@ -187,6 +187,7 @@ namespace MupenUtils
             this.tsmi_saveCompressed = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_samplesOnly = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_OverwriteOriginal = new System.Windows.Forms.ToolStripMenuItem();
+            this.rNGConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gp_Path.SuspendLayout();
             this.gp_M64.SuspendLayout();
             this.gp_CMB.SuspendLayout();
@@ -1501,12 +1502,13 @@ namespace MupenUtils
             this.tsmi_Input_Debug_DumpData,
             this.tsmi_CRCPopulate,
             this.tsmi_FlipY,
+            this.rNGConverterToolStripMenuItem,
             this.tsmi_GetInput,
             this.tsmi_Input_Sticky,
             this.toolStripSeparator7,
             this.tsmi_DBG_Crash});
             this.ctx_Input.Name = "ctx_Input_Debug";
-            this.ctx_Input.Size = new System.Drawing.Size(244, 464);
+            this.ctx_Input.Size = new System.Drawing.Size(244, 518);
             // 
             // inputStatisticsToolStripMenuItem
             // 
@@ -1891,6 +1893,13 @@ namespace MupenUtils
             this.tsmi_OverwriteOriginal.Size = new System.Drawing.Size(356, 24);
             this.tsmi_OverwriteOriginal.Text = "Overwrite Original";
             // 
+            // rNGConverterToolStripMenuItem
+            // 
+            this.rNGConverterToolStripMenuItem.Name = "rNGConverterToolStripMenuItem";
+            this.rNGConverterToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.rNGConverterToolStripMenuItem.Text = "RNG Converter";
+            this.rNGConverterToolStripMenuItem.Click += new System.EventHandler(this.rNGConverterToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -2108,6 +2117,7 @@ namespace MupenUtils
         private System.Windows.Forms.ComboBox cmb_CRC;
         private System.Windows.Forms.ToolStripMenuItem tsmi_OverwriteOriginal;
         private System.Windows.Forms.PictureBox pb_CRC;
+        private System.Windows.Forms.ToolStripMenuItem rNGConverterToolStripMenuItem;
     }
 }
 

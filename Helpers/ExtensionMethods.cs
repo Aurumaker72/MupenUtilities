@@ -314,6 +314,10 @@ public static class ExtensionMethods
             return true;
         return false;
     }
+    public static bool IsEmpty(this string str)
+    {
+        return (str.Length == 0 || String.IsNullOrEmpty(str) || String.IsNullOrWhiteSpace(str));
+    }
     public static bool ValidStringSByte(string str)
     {
         if (str.Length == 0 || String.IsNullOrEmpty(str) || String.IsNullOrWhiteSpace(str)) return false;

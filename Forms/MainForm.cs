@@ -3421,6 +3421,11 @@ namespace MupenUtils
             SetHeaderCrcFromCmb();
         }
 
+        private void rNGConverterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new RNGConverterForm().ShowDialog();
+        }
+
         private void pb_JoystickPic_MouseDown(object sender, MouseEventArgs e)
         {
             this.ActiveControl = pb_JoystickPic;

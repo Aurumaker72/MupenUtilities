@@ -54,6 +54,38 @@ namespace MupenUtils
             0xC76319D8,
         };
 
+        // following 2 methods stolen from STROOP
+        public static ushort GetNextRNG(ushort rng, bool earlyReset = true)
+        {
+            if (rng == 0x560A)
+                rng = 0;
+            ushort s0 = (ushort)(rng << 8);
+            s0 ^= rng;
+            rng = (ushort)((s0 >> 8) | (s0 << 8));
+            s0 = (ushort)((s0 & 0x00FF) << 1);
+            s0 ^= rng;
+            ushort s1 = (ushort)(0xFF80 ^ (s0 >> 1));
+            if ((s0 & 1) == 0)
+            {
+                if ((s1 == 0xAA55) && earlyReset)
+                    rng = 0;
+                else
+                    rng = (ushort)(s1 ^ 0x1FF4);
+            }
+            else
+                rng = (ushort)(s1 ^ 0x8180);
+
+            return rng;
+        }
+
+        public static int NonNegativeModulus(int value, int modulus)
+        {
+            value %= modulus;
+            if (value < 0) value += modulus;
+            return value;
+        }
+
+
         public static short GetMovieStartupTypeIndex(string stype)
         {
             short type;
