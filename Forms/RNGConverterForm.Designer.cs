@@ -37,6 +37,7 @@ namespace MupenUtils.Forms
             this.label1 = new System.Windows.Forms.Label();
             this.txt_RngValues = new System.Windows.Forms.TextBox();
             this.chk_Ascending = new System.Windows.Forms.CheckBox();
+            this.Label_Status = new System.Windows.Forms.Label();
             this.gp_Rngconverter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -72,6 +73,7 @@ namespace MupenUtils.Forms
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.Label_Status);
             this.panel1.Controls.Add(this.chk_Ascending);
             this.panel1.Controls.Add(this.btn_Go);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -138,6 +140,17 @@ namespace MupenUtils.Forms
             this.chk_Ascending.Text = "Ascending";
             this.chk_Ascending.UseVisualStyleBackColor = true;
             // 
+            // Label_Status
+            // 
+            this.Label_Status.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.Label_Status.Location = new System.Drawing.Point(0, 241);
+            this.Label_Status.Name = "Label_Status";
+            this.Label_Status.Size = new System.Drawing.Size(124, 126);
+            this.Label_Status.TabIndex = 7;
+            this.Label_Status.Text = "Idle";
+            this.Label_Status.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.Label_Status.UseMnemonic = false;
+            // 
             // RNGConverterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -169,5 +182,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.TextBox txt_RngIndicies;
         private System.Windows.Forms.Button btn_Go;
         private System.Windows.Forms.CheckBox chk_Ascending;
+        private System.Windows.Forms.Label Label_Status;
     }
 }

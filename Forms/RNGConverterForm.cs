@@ -54,7 +54,6 @@ namespace MupenUtils.Forms
 
         private void btn_Go_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(txt_RngValues.Lines.Length.ToString());
 
             if (txt_RngValues.Text.Length == 0) return;
 
@@ -62,12 +61,15 @@ namespace MupenUtils.Forms
 
             List<int> rngValues = new List<int>();
             List<int> rngIndicies = new List<int>();
-
-            MessageBox.Show(txt_RngValues.Lines.Length.ToString());
+            int skipped = 0;
 
             for (int i = 0; i < txt_RngValues.Lines.Length; i++)
             {
-                if (txt_RngValues.Lines[i].IsEmpty()) continue; // ok no
+                if (txt_RngValues.Lines[i].IsEmpty() || ExtensionMethods.ValidStringInt(txt_RngValues.Lines[i], ushort.MinValue, ushort.MaxValue))
+                {
+                    skipped++;
+                    continue;
+                }
                 rngValues.Add(Convert.ToInt32(txt_RngValues.Lines[i]));
 
             }
@@ -88,7 +90,10 @@ namespace MupenUtils.Forms
 
 
             txt_RngIndicies.Text = builtValues;
-            
+
+            if (skipped > 1) Label_Status.Text = String.Format("Finished, but skipped {0} lines", skipped);
+            else Label_Status.Text = String.Format("Done");
+
         }
 
         public int GetRngIndex(ushort rngValue)
