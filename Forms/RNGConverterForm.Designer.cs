@@ -36,6 +36,7 @@ namespace MupenUtils.Forms
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txt_RngValues = new System.Windows.Forms.TextBox();
+            this.chk_Ascending = new System.Windows.Forms.CheckBox();
             this.gp_Rngconverter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -71,6 +72,7 @@ namespace MupenUtils.Forms
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chk_Ascending);
             this.panel1.Controls.Add(this.btn_Go);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label1);
@@ -82,9 +84,10 @@ namespace MupenUtils.Forms
             // 
             // btn_Go
             // 
-            this.btn_Go.Location = new System.Drawing.Point(4, 397);
+            this.btn_Go.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btn_Go.Location = new System.Drawing.Point(0, 387);
             this.btn_Go.Name = "btn_Go";
-            this.btn_Go.Size = new System.Drawing.Size(114, 23);
+            this.btn_Go.Size = new System.Drawing.Size(124, 43);
             this.btn_Go.TabIndex = 5;
             this.btn_Go.Text = "Go";
             this.btn_Go.UseVisualStyleBackColor = true;
@@ -124,6 +127,17 @@ namespace MupenUtils.Forms
             this.txt_RngValues.TabStop = false;
             this.txt_RngValues.WordWrap = false;
             // 
+            // chk_Ascending
+            // 
+            this.chk_Ascending.AutoSize = true;
+            this.chk_Ascending.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.chk_Ascending.Location = new System.Drawing.Point(0, 367);
+            this.chk_Ascending.Name = "chk_Ascending";
+            this.chk_Ascending.Size = new System.Drawing.Size(124, 20);
+            this.chk_Ascending.TabIndex = 6;
+            this.chk_Ascending.Text = "Ascending";
+            this.chk_Ascending.UseVisualStyleBackColor = true;
+            // 
             // RNGConverterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -154,5 +168,6 @@ namespace MupenUtils.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txt_RngIndicies;
         private System.Windows.Forms.Button btn_Go;
+        private System.Windows.Forms.CheckBox chk_Ascending;
     }
 }

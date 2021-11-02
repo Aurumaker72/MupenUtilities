@@ -58,23 +58,35 @@ namespace MupenUtils.Forms
 
             if (txt_RngValues.Text.Length == 0) return;
 
-            int[] rngValues = new int[txt_RngValues.Lines.Length + 1];
+            txt_RngIndicies.Text = string.Empty;
+
+            List<int> rngValues = new List<int>();
+            List<int> rngIndicies = new List<int>();
+
+            MessageBox.Show(txt_RngValues.Lines.Length.ToString());
+
             for (int i = 0; i < txt_RngValues.Lines.Length; i++)
             {
                 if (txt_RngValues.Lines[i].IsEmpty()) continue; // ok no
-                //rngValues[i] = ExtensionMethods.ValidHexStringInt(txt_RngValues.Lines[i], int.MinValue, int.MaxValue)
-                //    ? Convert.ToInt32(txt_RngValues.Lines[i], 16)
-                //    : Convert.ToInt32(txt_RngValues.Lines[i]);
-                rngValues[i] = Convert.ToInt32(txt_RngValues.Lines[i]);
+                rngValues.Add(Convert.ToInt32(txt_RngValues.Lines[i]));
 
             }
 
-            txt_RngIndicies.Text = string.Empty;
             string builtValues = string.Empty;
-            for (int i = 0; i < rngValues.Length; i++)
+
+            for (int i = 0; i < rngValues.Count; i++)
             {
-                builtValues += GetRngIndex((ushort)rngValues[i]) + "\r\n";
+                rngIndicies.Add(GetRngIndex((ushort)rngValues[i]));
             }
+
+            if (chk_Ascending.Checked) rngIndicies.Sort();
+
+            for (int i = 0; i < rngIndicies.Count; i++)
+            {
+                builtValues += rngIndicies[i] + "\r\n";
+            }
+
+
             txt_RngIndicies.Text = builtValues;
             
         }
