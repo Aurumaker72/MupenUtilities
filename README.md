@@ -125,3 +125,4 @@ In the bin/x86/Release folder you will find a MupenUtilities executable and the 
 
 -This application features a special exception handler which allows fast reporting of bugs
 
+-I do not have all the time in the world to maintain this, and began this project with less knowledge than now, so expect bad code
