@@ -2,7 +2,7 @@
 [![s](https://forthebadge.com/images/badges/not-a-bug-a-feature.svg)](https://forthebadge.com) [![the](https://forthebadge.com/images/badges/no-ragrets.svg)](https://forthebadge.com) [![aaa](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](https://forthebadge.com)
 
 [![Release](https://img.shields.io/github/v/release/Aurumaker72/MupenUtilities?label=Release)](https://github.com/Aurumaker72/MupenUtilities/releases)
-![Badge2](https://img.shields.io/github/last-commit/Aurumaker72/MupenUtilities?label=Latest%20Commit) ![Badge3](https://img.shields.io/github/license/Aurumaker72/MupenUtilities?label=License) ![Badge3](https://img.shields.io/badge/Maintained-yes-green) 
+![Badge2](https://img.shields.io/github/last-commit/Aurumaker72/MupenUtilities?label=Latest%20Commit) ![Badge3](https://img.shields.io/github/license/Aurumaker72/MupenUtilities?label=License) ![Badge3](https://img.shields.io/badge/Maintained-partial-orange) 
 
 
 
