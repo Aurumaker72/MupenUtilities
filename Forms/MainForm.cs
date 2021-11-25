@@ -49,6 +49,11 @@
 
  By Aurumaker72
 
+ ---
+
+ Code contained herewithin is from days where I had less knowledge than now, be tolerant.
+ There is no consistent code style or other guidelines.
+
 */
 
 
@@ -71,6 +76,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
+using System.Linq;
 
 namespace MupenUtils
 {
@@ -130,9 +136,10 @@ namespace MupenUtils
         public static bool forceGoto = false;
         public static bool forceResizeCell = false;
         public static bool forceFill = false;
-        public static bool tasStudioAutoScroll = true;
+        public static bool tasStudioSelectionMode = true;
         public static bool reloadTASStudioOnControllerChange = true;
         public static int fillbIndex = 0;
+        public static List<int> clipboardBuffer = new List<int>();
         int[] copied;
         int cellSize = 10;
 
@@ -180,7 +187,17 @@ namespace MupenUtils
 
         Pen linepen = Pens.Red;
 
-        
+        public enum CopyMode
+        {
+            Copy,
+            And,
+            Or,
+            XOR,
+            Shl,
+            Shr,
+        }
+        public static CopyMode currentCopyMode = CopyMode.Copy;
+
         public enum UsageTypes
         {
             M64,
@@ -410,6 +427,27 @@ namespace MupenUtils
             {
                 cmb_CRC.Items.Add(CRCTuple.GameName);
             }
+            int itercopym = 0;
+            foreach (var copymode in Enum.GetNames(typeof(CopyMode)))
+            {
+                tsmi_PasteMode.DropDownItems.Add(copymode);
+                tsmi_PasteMode.DropDownItems[itercopym].Click += (object sender, EventArgs e) => {
+                    ToolStripMenuItem item = sender as ToolStripMenuItem;
+                    if (item != null)
+                    {
+                        int index = (item.OwnerItem as ToolStripMenuItem).DropDownItems.IndexOf(item);
+
+                        currentCopyMode = (CopyMode)index;
+                        foreach (ToolStripMenuItem ttt in tsmi_PasteMode.DropDownItems) ttt.Checked = false;
+
+                        (tsmi_PasteMode.DropDownItems[index] as ToolStripMenuItem).Checked = true;
+
+                    }
+                };
+                itercopym++;
+            }
+            (tsmi_PasteMode.DropDownItems[0] as ToolStripMenuItem).Checked = true;
+
             cmb_CRC.DropDownWidth = ExtensionMethods.DropDownWidth(cmb_CRC);
             
             UpdateReadOnly();
@@ -866,7 +904,7 @@ namespace MupenUtils
         }
         void TASStudioEndRegion()
         {
-            if (tasStudioAutoScroll)
+            if (tasStudioSelectionMode)
                 if (endRegion == dgv_Main.SelectedRows[0].Index)
                     endRegion = -1;
                 else
@@ -881,7 +919,7 @@ namespace MupenUtils
         }
         void TASStudioBeginRegion()
         {
-            if (tasStudioAutoScroll)
+            if (tasStudioSelectionMode)
                 if (beginRegion == dgv_Main.SelectedRows[0].Index)
                     beginRegion = -1;
                 else
@@ -1930,13 +1968,35 @@ namespace MupenUtils
             ((ISupportInitialize)dgv_Main).EndInit();
             gp_TASStudio.Invoke((MethodInvoker)(() => gp_TASStudio.Text = "TAS Studio"));
         }
-        void SetInputPure(int frameTarget, int value)
+        void SetInputPure(int frameTarget, int value, CopyMode pasteMode = CopyMode.Copy, bool invokedByTASStudio = true) // horrible
         {
             if (!FileLoaded) return;
             if (m64loadBusy) return;
 
-            inputLists[selectedController][frameTarget] /*|*/= value;
-
+            if (!invokedByTASStudio)
+            {
+                switch (pasteMode)
+                {
+                    case CopyMode.Copy:
+                        inputLists[selectedController][frameTarget] = value;
+                        break;
+                    case CopyMode.And:
+                        inputLists[selectedController][frameTarget] &= value;
+                        break;
+                    case CopyMode.Or:
+                        inputLists[selectedController][frameTarget] |= value;
+                        break;
+                    case CopyMode.XOR:
+                        inputLists[selectedController][frameTarget] ^= value;
+                        break;
+                    default:
+                        MessageBox.Show("Please select another paste mode. Defaulting to assignment...", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        inputLists[selectedController][frameTarget] = value;
+                        break;
+                }
+            }
+            else
+                inputLists[selectedController][frameTarget] = value;
 
             //GetInput(inputLists[selectedController][frameTarget], false, frameTarget);
 
@@ -2199,54 +2259,113 @@ namespace MupenUtils
             
             if (e.KeyCode == Keys.C && e.Modifiers == Keys.Control)
             {
-                if (tasStudioAutoScroll)
-                {
-                    MessageBox.Show("Please disable Move Mode for copy/paste functionality.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                // ctrl + c
                 // copy selection into buffer
 
-                int selectedRows = 0;
+                // if (!tasStudioSelectionMode) return;
+                //if (dgv_Main.SelectedCells.Count > 0)
+                //    SetFrame(dgv_Main.SelectedCells[dgv_Main.SelectedCells.Count - 1].RowIndex);
 
-                for (int i = 1; i < dgv_Main.SelectedCells.Count; i++)
-                    if (dgv_Main.SelectedCells[i].RowIndex != dgv_Main.SelectedCells[i - 1].RowIndex) selectedRows++;
+                clipboardBuffer.Clear();
 
-                copied = new int[selectedRows];
-                for (int i = 0; i < selectedRows; i++)
+                if (!tasStudioSelectionMode)
                 {
-                    DataGridViewRow row = (DataGridViewRow)dgv_Main.Rows[dgv_Main.SelectedCells[i].RowIndex];
-                    copied[i] = inputLists[selectedController][row.Index];
-                }
 
+                    // ok yea this is super messy and hacky just dont allow it 
+                    MessageBox.Show("You can not copy in Move Mode", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+
+                    // cringe, we need to reverse it
+                    //for (int i = dgv_Main.SelectedCells.Count - 1; i >= 0; i--)
+                    //{
+                    //    // HACK: do not add duplicates
+                    //    DataGridViewCell cell = (DataGridViewCell)dgv_Main.SelectedCells[i];
+                    //    if (i > 0 && cell.RowIndex == dgv_Main.SelectedCells[i - 1].RowIndex) continue;
+                    //
+                    //    clipboardBuffer.Add(inputLists[selectedController][cell.RowIndex]);
+                    //    Debug.Print($"adding frame {cell.RowIndex} from controller {selectedController} to clipboard...");
+                    //} 
+
+                    // sanitization
+                    // 1. reverse
+                    // 2. keep only one column
+                    DataGridViewCell[] cells = new DataGridViewCell[dgv_Main.SelectedCells.Count];
+                    dgv_Main.SelectedCells.CopyTo(cells, 0);
+
+                    List<DataGridViewCell> sanitizedCells = cells.ToList();
+
+                    int smallestColumn = 999;
+
+                    for (int i = 0; i < sanitizedCells.Count; i++)
+                    {
+                        if (i > 0 && cells[i].RowIndex == dgv_Main.SelectedCells[i - 1].RowIndex) continue;
+
+                        if (cells[i].ColumnIndex < smallestColumn) smallestColumn = cells[i].ColumnIndex;
+                    }
+
+                    
+
+                    for (int i = 0; i < sanitizedCells.Count; i++)
+                    {
+                        if (cells[i].ColumnIndex >= smallestColumn) sanitizedCells.RemoveAt(i);
+                    }
+
+
+                    foreach (var cell in sanitizedCells)
+                    {
+                        Debug.Print($"adding frame {cell.RowIndex} (column/bit {cell.ColumnIndex}) from controller {selectedController} to clipboard...");
+                    }
+
+                    
+                }
+                else
+                {
+                    foreach (DataGridViewRow row in dgv_Main.SelectedRows)
+                    {
+                        clipboardBuffer.Add(inputLists[selectedController][row.Index]);
+                        Debug.Print($"adding frame {row.Index} from controller {selectedController} to clipboard...");
+                    }
+                }
+                
 
             }
             if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
             {
-                if (tasStudioAutoScroll)
+                if (readOnly)
                 {
-                    MessageBox.Show("Please disable Move Mode for copy/paste functionality.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Read only mode active. Please disable Read only mode for this.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                Debug.WriteLine("paste tasstudio {0}", copied.Length);
-
-                for (int i = dgv_Main.SelectedCells[0].RowIndex; i < copied.Length; i++)
+                // perform inplace insertion
+                if (!tasStudioSelectionMode)
                 {
-                    inputLists[selectedController][i] = copied[i];
-                    for (int j = 0; j < inputStructNames.Length - 2; j++)
+                    if (dgv_Main.SelectedCells.Count == 0)
                     {
-                        dgv_Main.Rows[i].Cells[j].Value = ExtensionMethods.GetBit(copied[i], j) ? inputStructNames[j].ToString() : "";
+                        MessageBox.Show("Please select a base cell frame", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
-                    //UpdateTASStudio(dgv_Main.SelectedCells[i].RowIndex);
-                    Debug.WriteLine("pasting value {0} at {1}", copied[i], i);
+
                 }
-                
+                else
+                {
+                    if (dgv_Main.SelectedRows.Count == 0)
+                    {
+                        MessageBox.Show("Please select a base row frame", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
 
-                
+                var baseFrame = !tasStudioSelectionMode ? dgv_Main.SelectedCells[0].RowIndex : dgv_Main.SelectedRows[0].Index;
+                int i1 = 0;
+                for (int i = baseFrame; i < clipboardBuffer.Count+baseFrame; i++)
+                {
+                    Debug.Print($"Pasting from clipboardBuffer[{i1}] to frame {i}...");
+                    SetInputPure(i, clipboardBuffer[i1], currentCopyMode, false);
+                    i++;
+                }
 
-                //ControlText(dgv_Main, String.Format("{0} - In-place paste {1} frames", "TAS Studio", copied.Length));
+
+
             }
         }
 
@@ -2996,13 +3115,14 @@ namespace MupenUtils
 
         private void tsmi_Autoscroll_Click(object sender, EventArgs e)
         {
-            tasStudioAutoScroll ^= true;
-            tsmi_Autoscroll.Checked = tasStudioAutoScroll;
+            tasStudioSelectionMode ^= true;
+            tsmi_Autoscroll.Checked = tasStudioSelectionMode;
         }
 
         private void dgv_Main_SelectionChanged(object sender, EventArgs e)
         {
-            if (!tasStudioAutoScroll) return;
+            if (!tasStudioSelectionMode)
+                return;
 
             if (dgv_Main.SelectedCells.Count > 0)
                 SetFrame(dgv_Main.SelectedCells[dgv_Main.SelectedCells.Count - 1].RowIndex);
