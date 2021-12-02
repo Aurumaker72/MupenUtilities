@@ -10,6 +10,7 @@
 ### [Usage Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/usage.md) 
 [Troubleshooting Guide](https://github.com/Aurumaker72/MupenUtilities/blob/main/troubleshooting.md)
 
+ ⚠️ *This program has had time for stability fixes, but it is still very unstable. Please report any instabilities or bugs and I will try my best, with my limited time, to fix them.* ⚠️
 
 ![](https://github.com/Aurumaker72/MupenUtilities/blob/main/showcase.PNG)
 
