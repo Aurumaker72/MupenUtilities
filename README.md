@@ -39,27 +39,30 @@ You can view and edit all M64 Inputs on each frame in a clean, interactive TASIn
 Modifying the controller flags is possible too, for example enabling or disabling a controller, its' mempak and rumblepak
 
 ### Hex Viewer
-View any byte (offset) of the selected movie as hexadecimal string.
-
-This opens up limitless possibilities of finding data in a movie file.
+View any byte- or offset range of the selected movie interpreted in different datatypes.
 
 ### Frame Control
-You can seek back and forth, reverse playback, step frames and more intuitive controls.
+You can seek back and forth, reverse playback, step frames and more intuitive controls. Press backslash for frame advance.
 
 Playing the movie back in real-time (30 FPS) is also possible.
 
-### Replacement
+### Replacement ⚠️*WIP*
 Same as M64 Editors' "Replacement" feature. Allows you to replace any sequence of frames from one movie to another. 
 
 ### TAS Studio
-You can view and edit all inputs in a neatly arranged and compact grid.
+You can view and edit all inputs in a neatly arranged and compact grid, where every 2nd row has another background color for clarity.
+Please note that TAS Studio can be used in a "live" mode, where it dynamically updates based on movie data changes and allows you to directly input from TAS Studio to the movie by dragging, clicking, etc..., but also includes a "static" mode, where it merely displays the original movie data.
 
 ### Advanced
-Dump a movie's raw input data to a file.
+Convert RNG Values to Indicies, modify Savestates, modify values bytewise, change the CRC.
 
-Change the raw input value at any frame in a debug menu located under "More" button.
+### Input Analysis
+View processed statistics and data about your movies' input sets controller-wise.
 
-Get the raw input value at any frame in a dialog located under "More" button. 
+## Combo
+
+### General
+Everything but "Replacement" is also available for [combo files](https://github.com/mkdasher/mupen64-rr-lua-/blob/master/tasinput_plugin/src/DefDI.cpp#L1549).
 
 ## Savestate
 
@@ -70,7 +73,7 @@ View and edit savestates' RDRAM section. You can save and block special addresse
 View and edit some simple game variables.
 
 Supported Games:
-- Super Mario 64 USA
+- Super Mario 64 USA 1
 
 ## Mupen
 Hook into Mupen64 process memory and view some data like version string.
@@ -114,7 +117,7 @@ In the bin/x86/Release folder you will find a MupenUtilities executable and the 
 **Important:** Do not separate the dlls and executable.
 
 ## Other
--This program automatically checks for updates when internet is connected
+-This program automatically checks for updates when internet is connected, so expect longer start-up times with slow internet
 
 -This program accesses other program's memory and might be marked as unsafe
 
