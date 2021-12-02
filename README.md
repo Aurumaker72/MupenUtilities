@@ -96,8 +96,8 @@ You may need to manually [link](https://www.webucator.com/article/how-to-add-ref
 You can find the respective dll's for these libraries in the latest MupenUtilities release folder.
 - [CircularProgressBar](https://github.com/falahati/CircularProgressBar)
 - [Octokit](https://www.nuget.org/packages/Octokit/)
-- MRG.Controls.UI
-- ICSharpCode.SharpZipLib
+- ~~MRG.Controls.UI~~
+- *ICSharpCode.SharpZipLib*
 
 ## Building
 
