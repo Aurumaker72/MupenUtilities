@@ -1,3 +1,11 @@
+## 🛑 Please refer to my continuation of MupenUtilities, [MupenToolkit](https://github.com/Aurumaker72/MupenToolkit)
+### This project is not actively maintained due to technical reasons, however, [MupenToolkit](https://github.com/Aurumaker72/MupenToolkit) is. 
+
+-
+-
+-
+-
+
 # MupenUtilities<img src="https://github.com/Aurumaker72/MupenUtilities/blob/main/Resources/mupengreen.png" align="right" />
 [![s](https://forthebadge.com/images/badges/not-a-bug-a-feature.svg)](https://forthebadge.com) [![the](https://forthebadge.com/images/badges/no-ragrets.svg)](https://forthebadge.com) [![aaa](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](https://forthebadge.com)
 
